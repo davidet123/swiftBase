@@ -60,7 +60,10 @@
   const dbStore = usegDatabaseStore()
 
   dbStore.cargarDb()
-  
+
+  dbStore.addPlayer({nombre: "Antonio",
+        numero: 7,
+        posicion: "DC"})
   
   gStore.getLista()
   

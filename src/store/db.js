@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { collection, onSnapshot } from "firebase/firestore"
+import { collection, onSnapshot, addDoc } from "firebase/firestore"
 // the firestore instance
 import db from '../firebase/init.js'
 
@@ -17,6 +17,10 @@ export const usegDatabaseStore = defineStore('database', {
           console.log(change.doc.data())
         })
       })
+    },
+    async addPlayer(obj) {
+      await addDoc(collection(db, "test"), obj)
+
     }
 
   }
