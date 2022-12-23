@@ -6,6 +6,7 @@
       <v-row>
         <v-col class="text-center">
           <p>{{ tempNombre }}</p>
+          <v-btn to="/futbol">FUTBOL</v-btn>
         </v-col>
       </v-row>
       <div class="text-center">
@@ -53,8 +54,13 @@
 <script setup>
   import { ref } from "vue"
   import { usegSheetStore } from "../store/gSheet"
+  import { usegDatabaseStore } from "../store/db"
 
   const gStore = usegSheetStore()
+  const dbStore = usegDatabaseStore()
+
+  dbStore.cargarDb()
+  
   
   gStore.getLista()
   

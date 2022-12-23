@@ -31,6 +31,7 @@ export const usegSheetStore = defineStore('gSheet', {
       .then((lista)=>{
         return lista.json()
       }).then((valores)=>{
+        console.log(valores)
         let tempValores = []
         valores.values.slice(1,-1).forEach(el => {
           if(el.length > 1){
