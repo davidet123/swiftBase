@@ -1,0 +1,77 @@
+
+<template>
+  <main>
+    <v-app-bar title="Swift CG Controller"></v-app-bar>
+    <v-main>
+      <v-row>
+        <v-col class="text-center">
+          <p>{{ tempNombre }}</p>
+        </v-col>
+      </v-row>
+      <div class="text-center">
+        <v-progress-circular v-if="gStore.gSheetLoading"
+        indeterminate
+        color="red"
+        class="text-center"
+      ></v-progress-circular>
+
+      </div>
+      <v-row>
+        <v-col cols="6">
+
+          <v-table class="mx-2" v-if="!gStore.gSheetLoading">
+            <thead>
+              <tr>
+                <th class="text-left">
+                  Name
+                </th>
+                <th class="text-left">
+                  Enviar
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="(item) in gStore.valoresHoja"
+                :key="item.id"
+              >
+                <td><p :class="tempNombre == item.nombre.join(' ') ? 'font-weight-black' : 'font-weight-regular'">{{ item.nombre.join(" ") }}</p></td>
+                <td><v-btn 
+                  :color="tempNombre == item.nombre.join(' ') ? 'red' : 'green'"
+                  size="x-small" @click="mostrarNombre(item.nombre.join(' '))">
+                  {{ tempNombre !== item.nombre.join(' ') ? "mostrar" : "ocultar" }} 
+                </v-btn></td>
+              </tr>
+            </tbody>
+          </v-table>
+        </v-col>
+      </v-row>
+    </v-main>
+  </main>
+</template>
+
+<script setup>
+  import { ref } from "vue"
+  import { usegSheetStore } from "../store/gSheet"
+
+  const gStore = usegSheetStore()
+  
+  gStore.getLista()
+
+  let tempNombre = ref("-")
+
+  const mostrarNombre = (nombre) => {
+    if (nombre !== tempNombre.value) {
+      tempNombre.value = nombre
+
+    } else {
+      tempNombre.value = "-"
+    }
+  }
+
+
+
+
+
+
+</script>
