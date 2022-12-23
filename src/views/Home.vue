@@ -57,6 +57,7 @@
   const gStore = usegSheetStore()
   
   gStore.getLista()
+  
 
   let tempNombre = ref("-")
 

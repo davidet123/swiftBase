@@ -24,8 +24,8 @@ export const usegSheetStore = defineStore('gSheet', {
       // fetch es un método nativo para hacer peticiones http
       // en el navegador 
       this.gSheetLoading = true
-      const apiKey = 'AIzaSyC9gTJHpMf-ybBRacyQ0Lwri9KQCfUlP7o'
-      const idSheets = '17URuizMfKV_da55Whk7bU5ZO7boCa6TKRnJJm_emIIg'
+      const apiKey = import.meta.env.VITE_APP_APIKEY
+      const idSheets =  import.meta.env.VITE_APP_IDSHEETS
       const values = 'A1:D100'
       fetch("https://content-sheets.googleapis.com/v4/spreadsheets/" +   idSheets + "/values/" + values + "?access_token="+ apiKey +"&key="+  apiKey)
       .then((lista)=>{
