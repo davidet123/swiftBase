@@ -61,9 +61,9 @@
 
   dbStore.cargarDb()
 
-  dbStore.addPlayer({nombre: "Antonio",
+  /* dbStore.addPlayer({nombre: "Antonio",
         numero: 7,
-        posicion: "DC"})
+        posicion: "DC"}) */
   
   gStore.getLista()
   

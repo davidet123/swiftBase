@@ -3,6 +3,9 @@ import { collection, onSnapshot, addDoc } from "firebase/firestore"
 // the firestore instance
 import db from '../firebase/init.js'
 
+
+
+
 export const usegDatabaseStore = defineStore('database', {
   state: () => ({
    temp: null
