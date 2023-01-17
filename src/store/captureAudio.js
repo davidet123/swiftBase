@@ -8,12 +8,25 @@ export const useCaptureAudioStore = defineStore('captureAudio', {
     streaming: true,
     audioContext: null,
     valorVumetro: 0,
-    frameRate: 0
+    frameRate: 0,
+    minIn: 0,
+    maxIn: 150,
+    minOut: 0,
+    maxOut: 15
   }),
   getters: {
+    nivelVumetro (state) {
+      // (number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin
+      return Math.round((state.valorVumetro - state.minIn) * (state.maxOut - state.minIn) / (state.maxIn - state.minIn) + state.minOut)
+    },
+    textoVumetro (state) {
+      return state.valorVumetro.toFixed(2)
+    }
+
   },
   actions: {
     captureAudio() {
+      this.recording = true
       // console.log(this.recording)
       const self = this
       navigator.mediaDevices.getUserMedia({
@@ -31,9 +44,7 @@ export const useCaptureAudioStore = defineStore('captureAudio', {
           let factorVolumen = 0.7;
           
           self.valorVumetro = 0;
-          
-          
-      
+
           analyser.smoothingTimeConstant = 0.8;
           analyser.fftSize = 1024;
       
@@ -41,7 +52,6 @@ export const useCaptureAudioStore = defineStore('captureAudio', {
           analyser.connect(scriptProcessor);
           scriptProcessor.connect(self.audioContext.destination);
           scriptProcessor.onaudioprocess = function() {
-            console.log("audio process")
             const array = new Uint8Array(analyser.frequencyBinCount);
             analyser.getByteFrequencyData(array);
             // analyser.getByteTimeDomainData(array);
@@ -93,7 +103,9 @@ export const useCaptureAudioStore = defineStore('captureAudio', {
     
     stopCaptureAudio() {
       if(this.audioContext != null) {
+        this.recording = false
         this.audioContext.close()
+        this.valorVumetro = 0
       }
     }
     
