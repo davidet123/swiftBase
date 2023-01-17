@@ -7,6 +7,7 @@
         <v-col class="text-center">
           <p>{{ tempNombre }}</p>
           <v-btn to="/futbol">FUTBOL</v-btn>
+          <v-btn to="/vumetro">VUMETRO</v-btn>
         </v-col>
       </v-row>
       <div class="text-center">
