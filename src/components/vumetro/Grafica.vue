@@ -11,32 +11,10 @@ import Chart from 'chart.js/auto';
 import { useWebsocketStore } from "../../store/websocket"
 import { watch } from 'vue';
 
-
 const websocketStore = useWebsocketStore()
 
-/* let labels = []
-let data = [] */
-
-/* websocketStore.arrayValues.forEach(el => {
-  if (el.y >= maxValue.y) {
-    maxValue2.x = el.x
-    maxValue2.y = el.y
-  }
-  if(el.x % 1 == 0) {
-    data.push(el.y)
-    labels.push(el.x)
-    if (el.y >= maxValue.y) {
-      maxValue.x = el.x
-      maxValue.y = el.y
-    }
-  }
-}) */
-
-
+// Watch para los datos
 watch(() =>websocketStore.arrayValues, val => {
-  /* while (val) {
-    console.log("DATA")
-  } */
   const valor = val.slice(-1)[0].y
   const label = val.slice(-1)[0].x
   addData(chart1, label, valor)
@@ -47,14 +25,12 @@ watch(() =>websocketStore.arrayValues, val => {
   deep: true
 })
 
-
-
-
-
+// Hook para montar la grafica
 onMounted(() => {
     crearGrafica()
   })
 
+// Grafica
 let chart1 = null
 
 const crearGrafica = () => {
@@ -64,9 +40,9 @@ const crearGrafica = () => {
     data: {
       labels: [],
       datasets: [{
-        label: "TEST",
+        label: false,
         data: [],
-        borderWidth: 1,
+        borderWidth: 2,
         /* fill: {
           target: 'origin',
           above: 'rgb(0, 192, 0)',
@@ -81,13 +57,35 @@ const crearGrafica = () => {
     options: {
       scales: {
         y: {
-            beginAtZero: true
+            beginAtZero: true,
+            grid: {
+              display: true,
+              lineWidth: 2
+            }
+          },
+        x: {
+          grid: {
+            display: false
+          },
+            ticks: {
+              display: false
+            }
+          }        
+        },
+        aspectRatio: 5,
+        plugins: {
+          legend: {
+              display: false,
           }
+        },
+        animation: {
+          duration: 0
         }
       }
     })
 }
 
+// Añadir datos a la gráfica
 function addData(chart, label, data) {
   console.log(chart)
     chart.data.labels.push(label);
@@ -96,11 +94,10 @@ function addData(chart, label, data) {
     });
     chart.update();
 }
-
-
-  
-  
-  
-  
-  
 </script>
+
+<style>
+  #grafica {
+    background-color: white;
+  }
+</style>

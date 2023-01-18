@@ -3,7 +3,7 @@
   <main>
     <h1 class="text-center">Vumetro Swift</h1>
     <v-row>
-      <v-col cols="3">
+      <v-col cols="2">
         <v-row>
           <v-col class="d-flex flex-column ma-3 align-center"  cols="12">
             <h4>CONEXION SWIFT</h4>
@@ -12,15 +12,7 @@
             <h4>CONEXIONES DATOS</h4>
             <v-btn class="ma-1" width="80%" :color="captura.color" x-small @click="capturar()">{{ captura.texto }}</v-btn>
             <p>{{ websocketStore.errorMSG }}</p>
-            <!-- <p>Status swift {{ swiftConnectionStatus }}</p> -->
-          </v-col>
-          <v-col class="d-flex flex-column ma-3 align-center"  cols="12">
-            <h4>CONTROL SWIFT</h4>
-            <v-btn class="ma-1 botonSwift" color="success" x-small @click="bringOn()">Insertar vumetro</v-btn>
-            <v-btn class="ma-1 botonSwift" color="success" x-small @click="takeOff()">Quitar vumetro</v-btn>
-            
-          </v-col>
-          <v-col>
+            <v-col>
             <v-switch
             class="d-flex justify-center"
               v-model="entrada"
@@ -29,10 +21,30 @@
               inset
             ></v-switch>
           </v-col>
+            <!-- <p>Status swift {{ swiftConnectionStatus }}</p> -->
+          </v-col>
+        </v-row>
+      </v-col>
+      <v-col cols="2">
+        <v-row>
+          <v-col class="d-flex flex-column ma-3 align-center"  cols="12">
+            <h4>CONTROL SWIFT</h4>
+            <v-row class="d-flex align-center justify-space-between mt-4">
+              <h4>Vúmetro</h4>
+              <v-col>
+                <v-btn @click="insertarGrafico('Vumetro')" :class="vumetroLive">LIVE</v-btn>
+              </v-col>
+              
+            </v-row>
+            
+            
+            
+          </v-col>
+          
         </v-row>
 
       </v-col>
-      <v-col cols="9">
+      <v-col cols="8">
         <v-row>
           <v-col class="text-center">
             <video id="myVideoId" width="620" height="480" autoplay muted playsinline/>
@@ -77,9 +89,9 @@ const { valorVumetro } = storeToRefs(audioStore)
 
 
 // Inicializar la conexión con Swift
-console.log(swiftConnectionStatus)
+// console.log(swiftConnectionStatus)
 
-// OpenConnection()
+OpenConnection()
 
 
 // Selector entrada
@@ -87,18 +99,51 @@ console.log(swiftConnectionStatus)
 let errorMsg = ref(null)
 let entrada = ref(false)
 
-let grafico = "Vumetro"
+// let grafico = "Vumetro"
 let node = "valor_vumetro"
 
 // Métodos Swift
-const bringOn = () => {
-  rtRemote.playGraphic(grafico)
-  rtRemote.playMethod(grafico + "::bringOn")
-  rtRemote.updateFields(grafico + "::n1_DUPL", "NumDuplicates", 0)
+
+let vumetroIn = false
+/* let swiftLive = computed(() => {
+  if (vumetroIn) {
+    return 'vumetroIn'
+  } 
+  return 'vumetroOut'
+
+} ) */
+
+const graficosLive = [{
+  nombre: "Vumetro",
+  live: false
+}]
+const vumetroLive = ref('vumetroOut')
+
+const insertarGrafico = (metodo => {
+  const grafico = graficosLive.find(el => {
+    return el.nombre == metodo
+  })
+  if(!grafico.live) {
+    bringOn(metodo)
+    vumetroLive.value = 'vumetroIn'
+
+  } else {
+    takeOff(metodo)
+    vumetroLive.value = 'vumetroOut'
+  }
+  grafico.live = !grafico.live
+
+})
+
+
+const bringOn = (metodo) => {
+  rtRemote.playGraphic(metodo)
+  rtRemote.playMethod(metodo + "::bringOn")
+  rtRemote.updateFields(metodo + "::n1_DUPL", "NumDuplicates", 0)
 }
-const takeOff = () => {
-  rtRemote.playGraphic(grafico)
-  rtRemote.playMethod(grafico + "::takeOff")
+const takeOff = (metodo) => {
+  rtRemote.playGraphic(metodo)
+  rtRemote.playMethod(metodo + "::takeOff")
 }
 
 // Iniciar captura de audio en audio store
@@ -208,11 +253,21 @@ watch(() => websocketStore.connectionState, val => {
   }
 
   .botonSwift {
-    width: 50%;
+    /* width: 60%; */
     height: 6em !important;
   }
    
   .activo {
     color: rgb(189, 9, 9)
+  }
+
+  .vumetroOut {
+    background-color: white;
+    color: rgb(189, 9, 9) !important;
+  }
+
+  .vumetroIn {
+    background-color: rgb(189, 9, 9);
+    color: white !important
   }
 </style>
