@@ -44,12 +44,12 @@
     
     
 
-    <v-row>
+   <!--  <v-row>
       <v-col class="text-center">
         <h1>Valor {{ entrada ? " AUDIO" : " WEBSOCKET"}} => {{ textoVumetro }}</h1>
         <h1>Nivel {{ entrada ? " AUDIO" : " WEBSOCKET"}} => {{ nivelVumetro }}</h1>
       </v-col>
-    </v-row>
+    </v-row> -->
     <v-row>
       <v-col>
         <grafica />
@@ -107,12 +107,14 @@ let captura = reactive({
   texto: "CAPTURAR DATOS",
   color: "success"
 })
-console.log(websocketStore.recording)
+// console.log(websocketStore.recording)
 const capturar = () => {
   if (!websocketStore.recording) {
+    websocketStore.recording = true
     startCaptureData()
     
   } else {
+    websocketStore.recording = false
     stopCaptureData()
     
   }
@@ -153,7 +155,7 @@ const nivelVumetro = computed(() => {
 // Envío de datos a swift
 
 watch(() => textoVumetro.value, (val) => {
-  console.log(val)
+  // console.log(val)
   try {
     rtRemote.updateFields(grafico + "::" + node + "TEXT", "String", val)
   } catch (err) {
@@ -180,7 +182,7 @@ watch(() => websocketStore.connectionState, val => {
       errorMsg.value = "Cerrando conexión..."
       break
     case 3:
-      console.log(val)
+      // console.log(val)
       stopCaptureData()
       break
     default:

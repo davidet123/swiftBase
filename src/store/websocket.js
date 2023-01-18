@@ -13,7 +13,9 @@ export const useWebsocketStore = defineStore('websocket', {
     minOut: 0,
     maxOut: 15,
     recording: false,
-    data: null
+    dataValue: null,
+    arrayValues: [],
+    factorVolumen: 0.7
   }),
   getters: {
     nivelVumetro (state) {
@@ -78,6 +80,14 @@ export const useWebsocketStore = defineStore('websocket', {
       this.socket.addEventListener('message', function (event) {
         // incializar_vumetro(event.data)
         self.valor = parseFloat(event.data)
+        // Añadir valores al array
+        self.dataValue = Math.floor(event.data * self.factorVolumen)
+        if (self.recording) {
+          // chartjsArray.push(dataValue)
+          self.arrayValues.push({x:Date.now(), y: self.dataValue})
+          // localCounter++
+        }
+
         if (self.valor >= self.maxValue) {
           self.maxValue = parseFloat(event.data)
         }

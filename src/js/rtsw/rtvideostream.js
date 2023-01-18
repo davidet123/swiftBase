@@ -53,7 +53,7 @@ function RTVideoStream(rtswProtocol, protocolId, paramVideoId)
 	this.onRemoteTrack = function(event) {
 		var video = document.getElementById(this.videoId);
 		video.srcObject = event.streams[0];
-    console.log(event.streams[0])
+    // console.log(event.streams[0])
 	}
 
 	this.onAnswer = function(event)
