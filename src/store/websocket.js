@@ -5,13 +5,15 @@ export const useWebsocketStore = defineStore('websocket', {
 
   state: () => ({
     valor: 0,
-    state: null,
+    connectionState: null,
     socket: null,
     maxValue: 0,
     minIn: 0,
     maxIn: 150,
     minOut: 0,
-    maxOut: 15
+    maxOut: 15,
+    recording: false,
+    data: null
   }),
   getters: {
     nivelVumetro (state) {
@@ -21,6 +23,25 @@ export const useWebsocketStore = defineStore('websocket', {
     },
     textoVumetro (state) {
       return parseFloat(state.valor).toFixed(2)
+    },
+    errorMSG (state) {
+      switch (state.connectionState) {
+        case 0:
+          return "Conectando..."
+          break
+        case 1:
+          return "CONECTADO"
+          break
+        case 2:
+          return "Cerrando conexión..."
+          break
+        case 3:
+          return "NO HAY CONEXIÓN"
+          break
+        default:
+          return "ESPERANDO CONEXIÓN"
+          break
+      }
     }
 
   },
@@ -35,10 +56,11 @@ export const useWebsocketStore = defineStore('websocket', {
       
       // Abre la conexión
       this.socket.addEventListener('open', function (event) {
-        self.state = event.currentTarget.readyState
+        self.connectionState = event.currentTarget.readyState
         self.socket.send('Conexión websocket establecida');
       })
       this.socket.addEventListener('close', function(event) {
+        self.connectionState = event.currentTarget.readyState
         console.log(event)
         self.valor = 0
         // incializar_vumetro(0)
@@ -47,6 +69,7 @@ export const useWebsocketStore = defineStore('websocket', {
       })
       this.socket.addEventListener('error', function (event) {
         // incializar_vumetro(0)
+        self.connectionState = event.currentTarget.readyState
         self.valor = 0
         self.socket.close()
       })

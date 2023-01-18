@@ -409,6 +409,11 @@
     "protobufjs" "^7.0.0"
     "yargs" "^16.2.0"
 
+"@kurkle/color@^0.3.0":
+  "integrity" "sha512-fuscdXJ9G1qb7W8VdHi+IwRqij3lBkosAm4ydQtEmbY58OzHXqQhvlxqEkoz0yssNVn38bcpRWgA9PP+OGoisw=="
+  "resolved" "https://registry.npmjs.org/@kurkle/color/-/color-0.3.2.tgz"
+  "version" "0.3.2"
+
 "@mdi/font@7.0.96":
   "integrity" "sha512-rzlxTfR64hqY8yiBzDjmANfcd8rv+T5C0Yedv/TWk2QyAQYdc66e0kaN1ipmnYU3RukHRTRcBARHzzm+tIhL7w=="
   "resolved" "https://registry.npmjs.org/@mdi/font/-/font-7.0.96.tgz"
@@ -596,6 +601,13 @@
   "version" "4.3.0"
   dependencies:
     "color-convert" "^2.0.1"
+
+"chart.js@^4.1.2":
+  "integrity" "sha512-9L1w6WLPq6ztiWVVOYtDtpo0CUsBKDWPrUEdwChAyzczaikqeSwNKEv3QpJ7EO4ICcLSi6UDVhgvcnUhRJidRA=="
+  "resolved" "https://registry.npmjs.org/chart.js/-/chart.js-4.1.2.tgz"
+  "version" "4.1.2"
+  dependencies:
+    "@kurkle/color" "^0.3.0"
 
 "cliui@^7.0.2":
   "integrity" "sha512-OcRE68cOsVMXp1Yvonl/fzkQOyjLSu/8bhPDfQt0e0/Eb283TKP20Fs2MqoPsr9SwA595rRCA+QMzYc9nBP+JQ=="
