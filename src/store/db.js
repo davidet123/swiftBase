@@ -24,9 +24,9 @@ export const useDatabaseStore = defineStore('database', {
     async addPlayer(obj) {
       await addDoc(collection(db, "test"), obj)
     },
-    async addDatos(coleccion, payload) {
+    /* async addDatos(coleccion, payload) {
       await addDoc(collection(coleccion, payload))
-    }
+    } */
 
   }
 

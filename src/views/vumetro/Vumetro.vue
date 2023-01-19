@@ -12,6 +12,8 @@
             <h4>CONEXIONES DATOS</h4>
             <v-btn class="ma-1" width="80%" :color="captura.color" x-small @click="capturar()">{{ captura.texto }}</v-btn>
             <p>{{ websocketStore.errorMSG }}</p>
+            <v-btn class="ma-1" width="80%" color="success" x-small @click="swiftConnectionStore.cambiarImagen()">Enviar gráfica a Swift</v-btn>
+            <v-btn class="ma-1" width="80%" color="success" x-small @click="borrarDatos()">Borrar gráfica</v-btn>
             <v-col>
             <v-switch
             class="d-flex justify-center"
@@ -32,9 +34,14 @@
             <v-row class="d-flex align-center justify-space-between mt-4">
               <h4>Vúmetro</h4>
               <v-col>
-                <v-btn @click="insertarGrafico('Vumetro')" :class="vumetroLive">LIVE</v-btn>
+                <v-btn @click="insertarGrafico('Vumetro')" :class="graficosLive[0].class">LIVE</v-btn>
               </v-col>
-              
+            </v-row>
+            <v-row class="d-flex align-center justify-space-between mt-4">
+              <h4>Estadística</h4>
+              <v-col>
+                <v-btn @click="insertarGrafico('Estadistica')" :class="graficosLive[1].class">LIVE</v-btn>
+              </v-col>
             </v-row>
             
             
@@ -115,16 +122,19 @@ let vumetroIn = false
 
 } ) */
 
-const graficosLive = [{
+const graficosLive = reactive([{
   nombre: "Vumetro",
-  live: false
+  live: false,
+  class: ref('vumetroOut')
   },
   {
     nombre: "Estadistica",
-    live: false
+    live: false,
+    class: ref('vumetroOut')
   }
-]
-const vumetroLive = ref('vumetroOut')
+])
+// const vumetroLive = ref('vumetroOut')
+// const estadisticaLive = ref('vumetroOut')
 
 const insertarGrafico = (metodo => {
   grafico = graficosLive.find(el => {
@@ -132,11 +142,11 @@ const insertarGrafico = (metodo => {
   })
   if(!grafico.live) {
     bringOn(metodo)
-    vumetroLive.value = 'vumetroIn'
+    grafico.class = 'vumetroIn'
 
   } else {
     takeOff(metodo)
-    vumetroLive.value = 'vumetroOut'
+    grafico.class = 'vumetroOut'
   }
   grafico.live = !grafico.live
 
@@ -208,6 +218,10 @@ const stopCaptureData = () => {
   }
 }
 
+const borrarDatos = () => {
+  websocketStore.borrarDatos()
+}
+
 const textoVumetro = computed( () => {
   return entrada.value ? audioStore.textoVumetro : websocketStore.textoVumetro
 })
@@ -234,7 +248,7 @@ watch(() => nivelVumetro.value, (val) => {
   }
 })
 
-watch(() => websocketStore.connectionState, val => {
+/* watch(() => websocketStore.connectionState, val => {
   switch (val) {
     case 0:
       errorMsg.value = "Conectando..."
@@ -254,7 +268,7 @@ watch(() => websocketStore.connectionState, val => {
       break
   }
 
-})
+}) */
 
 </script>
 

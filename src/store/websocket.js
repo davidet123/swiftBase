@@ -1,6 +1,10 @@
 
 import { defineStore } from 'pinia'
 
+import { collection, onSnapshot, addDoc } from "firebase/firestore"
+// the firestore instance
+import db from '../firebase/init.js'
+
 export const useWebsocketStore = defineStore('websocket', {
 
   state: () => ({
@@ -98,8 +102,20 @@ export const useWebsocketStore = defineStore('websocket', {
       // if(this.socket) {
         
         this.socket.close()
+        console.log("parar ws")
+        // this.addDatos(this.arrayValues)
+
 
       // }
+    },
+    borrarDatos() {
+      this.arrayValues = []
+    },
+    async addDatos(datos) {
+      const docRef = await addDoc(collection(db, 'graficas'), {
+        arrayDatos: datos
+      })
+      console.log("añadido documento: ", docRef.id)
     }
   }
 })

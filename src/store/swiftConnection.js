@@ -7,6 +7,7 @@ state: () => ({
   videoStream: null,
   rtRemote: null,
   swiftConnectionStatus: 0,
+  fileName: null
 }),
 
 getters: {
@@ -32,6 +33,14 @@ actions: {
       this.swiftConnectionStatus = 0
       OpenConnection();
       }
+  },
+  cambiarImagen() {
+    console.log(this.rtRemote)
+    const grafico = 'Estadistica'
+    const node = 'grafica'
+    const ruta = 'C:\\Users\\deimo\\Downloads\\' + this.fileName
+    console.log(ruta)
+    this.rtRemote.updateFields(grafico + "::" + node + "SHDR", "TextureImage", ruta)
   }
 
 }

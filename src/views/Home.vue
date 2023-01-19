@@ -55,10 +55,10 @@
 <script setup>
   import { ref } from "vue"
   import { usegSheetStore } from "../store/gSheet"
-  import { usegDatabaseStore } from "../store/db"
+  import { useDatabaseStore } from "../store/db"
 
   const gStore = usegSheetStore()
-  const dbStore = usegDatabaseStore()
+  const dbStore = useDatabaseStore()
 
   dbStore.cargarDb()
 
