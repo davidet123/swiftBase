@@ -6,7 +6,7 @@ import db from '../firebase/init.js'
 
 
 
-export const usegDatabaseStore = defineStore('database', {
+export const useDatabaseStore = defineStore('database', {
   state: () => ({
    temp: null
   }),
@@ -23,7 +23,9 @@ export const usegDatabaseStore = defineStore('database', {
     },
     async addPlayer(obj) {
       await addDoc(collection(db, "test"), obj)
-
+    },
+    async addDatos(coleccion, payload) {
+      await addDoc(collection(coleccion, payload))
     }
 
   }

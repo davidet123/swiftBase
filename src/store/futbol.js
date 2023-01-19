@@ -273,14 +273,14 @@ export const usegFutbolStore = defineStore('futbol', {
           if (change.type === "added") {
             let jugador = change.doc.data()
             jugador.id = change.doc.id
-            console.log(change.doc.id)
+            // console.log(change.doc.id)
             this.local.push(jugador)
           }
         })
       })
     },
     eliminarJugador(id) {
-      console.log( this.equipos[0].jugadores)
+      // console.log( this.equipos[0].jugadores)
       const nuevaLista = this.equipos[0].jugadores.filter(jug => {
         console.log(jug.id_jugador !== id)
         return jug.id_jugador !== id

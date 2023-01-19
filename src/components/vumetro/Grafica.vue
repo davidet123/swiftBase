@@ -19,7 +19,7 @@ watch(() =>websocketStore.arrayValues, val => {
   const label = val.slice(-1)[0].x
   addData(chart1, label, valor)
 
-  console.log(val.slice(-1)[0])
+  // console.log(val.slice(-1)[0])
 },
 {
   deep: true
@@ -87,7 +87,7 @@ const crearGrafica = () => {
 
 // Añadir datos a la gráfica
 function addData(chart, label, data) {
-  console.log(chart)
+  // console.log(chart)
     chart.data.labels.push(label);
     chart.data.datasets.forEach((dataset) => {
         dataset.data.push(data);

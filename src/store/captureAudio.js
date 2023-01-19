@@ -1,5 +1,8 @@
 
 import { defineStore } from 'pinia'
+import { useWebsocketStore } from "./websocket"
+
+
 
 export const useCaptureAudioStore = defineStore('captureAudio', {
 
@@ -26,6 +29,8 @@ export const useCaptureAudioStore = defineStore('captureAudio', {
   },
   actions: {
     captureAudio() {
+      const websocketStore = useWebsocketStore()
+      console.log("FROM WEBSOCKET STORE " + websocketStore.factorVolumen)
       this.recording = true
       // console.log(this.recording)
       const self = this
@@ -72,6 +77,7 @@ export const useCaptureAudioStore = defineStore('captureAudio', {
         
                 // valorVumetroEl.innerHTML = Math.round(valorVumetro * 100) / 100 + 60;
                 if (self.recording) {
+                  websocketStore.arrayValues.push({x:Date.now(), y: self.dataValue})
                   // newDataPoints.push({y: parseFloat((valorVumetro * factorVolumen).toFixed(2))})
                   // newDataPoints.push({y: parseInt(Math.floor(valorVumetro * factorVolumen))})
                   // newChart.updateData(parseInt(Math.floor(valorVumetro * factorVolumen)))

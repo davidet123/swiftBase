@@ -1,14 +1,14 @@
 
 <template>
   <main>
-    <h1 class="text-center">Vumetro Swift</h1>
+    <h1 class="text-center">Vúmetro</h1>
     <v-row>
       <v-col cols="2">
         <v-row>
           <v-col class="d-flex flex-column ma-3 align-center"  cols="12">
             <h4>CONEXION SWIFT</h4>
-            <p>Status Swift: {{ swiftConnectionStatus }}</p>
-            <v-btn class="ma-1 mb-5" width="80%" color="success" x-small @click="OpenConnection()">Open Connection</v-btn>
+            <p>Status Swift: {{ swiftConnectionStore.swiftConnectionStatus }}</p>
+            <v-btn class="ma-1 mb-5" width="80%" color="success" x-small @click="swiftConnectionStore.OpenConnection()">Open Connection</v-btn>
             <h4>CONEXIONES DATOS</h4>
             <v-btn class="ma-1" width="80%" :color="captura.color" x-small @click="capturar()">{{ captura.texto }}</v-btn>
             <p>{{ websocketStore.errorMSG }}</p>
@@ -73,10 +73,11 @@
 <script setup>
 import { ref, watch, computed, reactive } from 'vue';
 
-import {OpenConnection, rtRemote, videoStream, swiftConnectionStatus} from '@/composables/swiftConnection.js'
+// import {OpenConnection, rtRemote, videoStream, swiftConnectionStatus} from '@/composables/swiftConnection.js'
 
 import { useCaptureAudioStore } from "../../store/captureAudio"
 import { useWebsocketStore } from "../../store/websocket"
+import { useSwiftConnectionStore } from "../../store/swiftConnection"
 import { storeToRefs } from "pinia";
 
 import grafica from '@/components/vumetro/Grafica.vue'
@@ -84,6 +85,7 @@ import grafica from '@/components/vumetro/Grafica.vue'
 
 const audioStore = useCaptureAudioStore()
 const websocketStore = useWebsocketStore()
+const swiftConnectionStore = useSwiftConnectionStore()
 
 const { valorVumetro } = storeToRefs(audioStore)
 
@@ -91,7 +93,7 @@ const { valorVumetro } = storeToRefs(audioStore)
 // Inicializar la conexión con Swift
 // console.log(swiftConnectionStatus)
 
-OpenConnection()
+swiftConnectionStore.OpenConnection()
 
 
 // Selector entrada
@@ -99,7 +101,7 @@ OpenConnection()
 let errorMsg = ref(null)
 let entrada = ref(false)
 
-// let grafico = "Vumetro"
+let grafico = "Vumetro"
 let node = "valor_vumetro"
 
 // Métodos Swift
@@ -116,11 +118,16 @@ let vumetroIn = false
 const graficosLive = [{
   nombre: "Vumetro",
   live: false
-}]
+  },
+  {
+    nombre: "Estadistica",
+    live: false
+  }
+]
 const vumetroLive = ref('vumetroOut')
 
 const insertarGrafico = (metodo => {
-  const grafico = graficosLive.find(el => {
+  grafico = graficosLive.find(el => {
     return el.nombre == metodo
   })
   if(!grafico.live) {
@@ -137,13 +144,14 @@ const insertarGrafico = (metodo => {
 
 
 const bringOn = (metodo) => {
-  rtRemote.playGraphic(metodo)
-  rtRemote.playMethod(metodo + "::bringOn")
-  rtRemote.updateFields(metodo + "::n1_DUPL", "NumDuplicates", 0)
+  console.log(swiftConnectionStore.rtRemote)
+  swiftConnectionStore.rtRemote.playGraphic(metodo)
+  swiftConnectionStore.rtRemote.playMethod(metodo + "::bringOn")
+  swiftConnectionStore.rtRemote.updateFields(metodo + "::n1_DUPL", "NumDuplicates", 0)
 }
 const takeOff = (metodo) => {
-  rtRemote.playGraphic(metodo)
-  rtRemote.playMethod(metodo + "::takeOff")
+  swiftConnectionStore.rtRemote.playGraphic(metodo)
+  swiftConnectionStore.rtRemote.playMethod(metodo + "::takeOff")
 }
 
 // Iniciar captura de audio en audio store
@@ -154,15 +162,27 @@ let captura = reactive({
 })
 // console.log(websocketStore.recording)
 const capturar = () => {
-  if (!websocketStore.recording) {
-    websocketStore.recording = true
-    startCaptureData()
-    
+  if(entrada.value) {
+    if(!audioStore.recording) {
+      audioStore.recording = true
+      startCaptureData()
+    } else {
+      audioStore.recording = false
+      startCaptureData()
+    }
   } else {
-    websocketStore.recording = false
-    stopCaptureData()
-    
+    if (!websocketStore.recording) {
+      websocketStore.recording = true
+      startCaptureData()
+      
+    } else {
+      websocketStore.recording = false
+      stopCaptureData()
+      
+    }
   }
+
+
 }
 
 const startCaptureData = () => {
@@ -200,16 +220,15 @@ const nivelVumetro = computed(() => {
 // Envío de datos a swift
 
 watch(() => textoVumetro.value, (val) => {
-  // console.log(val)
   try {
-    rtRemote.updateFields(grafico + "::" + node + "TEXT", "String", val)
+    swiftConnectionStore.rtRemote.updateFields(grafico.nombre + "::" + node + "TEXT", "String", val)
   } catch (err) {
     console.log(err)
   }
 })
 watch(() => nivelVumetro.value, (val) => {
   try {
-  rtRemote.updateFields(grafico + "::n1_DUPL", "NumDuplicates", val);
+    swiftConnectionStore.rtRemote.updateFields(grafico.nombre + "::n1_DUPL", "NumDuplicates", val);
 } catch (err) {
     console.log(err)
   }
