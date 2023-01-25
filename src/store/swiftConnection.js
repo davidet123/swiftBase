@@ -1,9 +1,13 @@
 import { defineStore } from 'pinia'
 
+import { doc, updateDoc } from "firebase/firestore"
+// the firestore instance
+import db from '../firebase/init.js'
+
 export const useSwiftConnectionStore = defineStore('swiftConnection', {
 
 state: () => ({
-  url: "ws:localhost:5555",
+  URLSwift: "ws:localhost:5555",
   videoStream: null,
   rtRemote: null,
   swiftConnectionStatus: 0,
@@ -14,9 +18,14 @@ getters: {
 
 },
 actions: {
+  async setUrl(payload) {
+    this.URLWebsocket = payload
+    const docRef = doc(db, 'settings', 'swift')
+    await updateDoc(docRef, {url: payload})
+  },
   OpenConnection()
   {
-    const rtConnection = new RTConnection(this.url, 5, 2);
+    const rtConnection = new RTConnection(this.URLSwift, 5, 2);
     const self = this
     rtConnection.onOpen = function() {
       trace("Connection opened");

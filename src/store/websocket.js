@@ -1,7 +1,7 @@
 
 import { defineStore } from 'pinia'
 
-import { collection, onSnapshot, addDoc } from "firebase/firestore"
+import { doc, collection, onSnapshot, addDoc, updateDoc } from "firebase/firestore"
 // the firestore instance
 import db from '../firebase/init.js'
 
@@ -19,7 +19,8 @@ export const useWebsocketStore = defineStore('websocket', {
     recording: false,
     dataValue: null,
     arrayValues: [],
-    factorVolumen: 0.7
+    factorVolumen: 0.7,
+    URLWebsocket: 'ws://localhost:8080',
   }),
   getters: {
     nivelVumetro (state) {
@@ -52,9 +53,14 @@ export const useWebsocketStore = defineStore('websocket', {
 
   },
   actions: {
+    async setUrl(payload) {
+      this.URLWebsocket = payload
+      const docRef = doc(db, 'settings', 'websocket')
+      await updateDoc(docRef, {url: payload})
+    },
     conectarWS() {
       // Crea una nueva conexión.
-      this.socket = new WebSocket('ws://localhost:8080');
+      this.socket = new WebSocket(this.URLWebsocket);
       // let state = document.querySelector(".websocketOff")
       const self = this
 
