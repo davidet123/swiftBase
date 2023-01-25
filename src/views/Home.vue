@@ -2,15 +2,34 @@
 <template>
   <main>
     <v-app-bar title="Swift CG Controller"></v-app-bar>
-    <v-main>
+    <v-main class="main_bg">
       <v-row>
         <v-col class="text-center">
-          <p>{{ tempNombre }}</p>
+          <img src="@/assets/loao_a_punt.svg" alt="logo a punt" class="logo">
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col class="text-center">
+          <h3>APLICACIONS</h3>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col class="text-center">
           <v-btn to="/futbol">FUTBOL</v-btn>
           <v-btn to="/vumetro">VUMETRO</v-btn>
         </v-col>
       </v-row>
-      <div class="text-center">
+      <v-row>
+        <v-col class="text-center">
+          <h3>AJUSTOS</h3>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col class="text-center">
+          <v-btn to="/settings">SETTINGS</v-btn>
+        </v-col>
+      </v-row>
+      <!-- <div class="text-center">
         <v-progress-circular v-if="gStore.gSheetLoading"
         indeterminate
         color="red"
@@ -47,7 +66,7 @@
             </tbody>
           </v-table>
         </v-col>
-      </v-row>
+      </v-row> -->
     </v-main>
   </main>
 </template>
@@ -82,3 +101,13 @@
 
 
 </script>
+
+<style>
+  .main_bg {
+    background-color: black;
+    color: white
+  }
+  .logo {
+    width: 10%
+  }
+</style>

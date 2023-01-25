@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="main_bg">
     <v-main>
       <RouterView />
     </v-main>
@@ -15,5 +15,11 @@
 
   
 </script>
+
+<style>
+  v-.main_bg {
+    background-color: black 
+  }
+</style>
 
 

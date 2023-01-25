@@ -1,6 +1,6 @@
 
 <template>
-  <main>
+  <main class="main_vumetro">
     <h1 class="text-center">Vúmetro</h1>
     <v-row>
       <v-col cols="2">
@@ -273,7 +273,7 @@ watch(() => nivelVumetro.value, (val) => {
 </script>
 
 <style>
-  main {
+  .main_vumetro {
     background-color: #567189;
     color: white;
     

@@ -53,10 +53,10 @@
           label: false,
           data: [],
           borderWidth: 2,
-          /* fill: {
+          fill: {
             target: 'origin',
             above: 'rgb(0, 192, 0)',
-          }, */
+          },
           pointRadius: 0,
           borderColor: 'rgb(75, 192, 192)',
           tension: 0.1,
