@@ -11,7 +11,9 @@
   import { usegFutbolStore } from "./store/futbol"
 
   const futbolStore = usegFutbolStore()
-  futbolStore.cargarEquipo()
+
+  // Cargar desde firebase
+  // futbolStore.cargarEquipo()
 
   
 </script>

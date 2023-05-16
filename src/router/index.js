@@ -1,7 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Proyecto from '../views/Proyecto.vue'
+import Simple from '../views/simple/Simple.vue'
 import Futbol from '../views/futbol/Futbol.vue'
+import EstFutbol from '../views/futbol/EstFutbol.vue'
+import AddEquipoFutbol from '../views/futbol/AddEquipoFutbol.vue'
+import AddPartidoFutbol from '../views/futbol/AddPartidoFutbol.vue'
+import EditarPartidoFutbol from '../views/futbol/EditarPartidoFutbol.vue'
+import EditarEquipoFutbol from '../views/futbol/EditarEquipoFutbol.vue'
+import ListaEquiposFutbol from '../views/futbol/ListaEquiposFutbol.vue'
 import Vumetro from '../views/vumetro/Vumetro.vue'
 import Settings from '../views/Settings.vue'
 
@@ -19,9 +26,44 @@ const router = createRouter({
       component: Proyecto
     },
     {
+      path: '/simple',
+      name: 'simple',
+      component: Simple
+    },
+    {
       path: '/futbol',
       name: 'futbol',
       component: Futbol
+    },
+    {
+      path: '/futbol/listaequiposfutbol',
+      name: 'listaequiposfutbol',
+      component: ListaEquiposFutbol
+    },
+    {
+      path: '/futbol/addpartidofutbol',
+      name: 'addpartidofutbol',
+      component: AddPartidoFutbol
+    },
+    {
+      path: '/futbol/estfutbol/:id',
+      name: 'estfutbol',
+      component: EstFutbol
+    },
+    {
+      path: '/futbol/addequipofutbol',
+      name: 'addequipofutbol',
+      component: AddEquipoFutbol
+    },
+    {
+      path: '/futbol/editarpartidofutbol/:id',
+      name: 'editarpartidofutbol',
+      component: EditarPartidoFutbol
+    },
+    {
+      path: '/futbol/editarequipofutbol/:id',
+      name: 'editarequipofutbol',
+      component: EditarEquipoFutbol
     },
     {
       path: '/vumetro',

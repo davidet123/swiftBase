@@ -6,14 +6,22 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12" class="text-center"><v-btn>NUEVO PARTIDO</v-btn></v-col>
-      <v-col cols="12" class="text-center">LISTADO PARTIDOS</v-col>
+      <v-col cols="12" class="text-center"><v-btn color="success"  @click="router.push(`/futbol/addpartidofutbol`)">NUEVO PARTIDO</v-btn></v-col>
+      <v-col cols="2" offset="4" class="text-center"><v-btn color="success"  @click="router.push(`/futbol/addequipofutbol`)">NUEVO EQUIPO</v-btn></v-col>
+      <v-col cols="2" class="text-center"><v-btn color="success" @click="router.push(`/futbol/listaequiposfutbol`)">EDITAR EQUIPO</v-btn></v-col>
+      <!-- <v-col cols="12" class="text-center"><v-btn color="success" @click="crono">CRONO</v-btn></v-col> -->
     </v-row>
+    <!-- <v-row>
+      <v-col class="text-center">
+        <video id="myVideoId" width="620" height="480" autoplay muted playsinline/>
+
+      </v-col>
+    </v-row> -->
     <v-row>
-      <v-col cols="12">Listado jugadores</v-col>
-      <v-col cols="12" v-for="jugador in jugadores" :id="jugador.id">
-        <JugadorFutbolnd :jugador="jugador" @borrarJugador="id => borrarJugador(id)"/>
-        <!-- {{ jugador }} -->
+      <v-col cols="12" class="text-center"><h4>Partidos</h4></v-col>
+      <v-col cols="6" v-for="partido in partidos" :id="partido.id_partido">
+        <PartidoIndividual :partido="partido" /> 
+        <!-- <JugadorFutbolnd :jugador="jugador" @borrarJugador="id => borrarJugador(id)"/> -->
       </v-col>
     </v-row>
   </v-main>
@@ -23,18 +31,37 @@
 import { ref, computed } from "vue"
 
 import { usegFutbolStore } from "../../store/futbol"
-import JugadorFutbolnd from "../../components/futbol/JugadorFutbolInd.vue"
+import PartidoIndividual from "../../components/futbol/PartidoIndividual.vue"
 import { storeToRefs } from "pinia";
 
+
+// import { useSwiftConnectionStore } from "../../store/swiftConnection"
+import { useRouter } from 'vue-router';
+
+
+const router = useRouter()
+
+
+
+// const swiftConnectionStore = useSwiftConnectionStore()
+// swiftConnectionStore.OpenConnection()
+
+
 const futbolStore = usegFutbolStore()
-const { equipos } = storeToRefs(futbolStore)
-const jugadores = computed(() => equipos.value[0].jugadores)
-// console.log(equipos.value[0])
-/* console.log(futbolStore.equipos[0].jugadores[0].apodo) */
-const borrarJugador = (id) => {
-  console.log(id)
-  futbolStore.eliminarJugador(id)
-}
+const { partidos } = storeToRefs(futbolStore)
+// const jugadores = computed(() => equipos.value[0].jugadores)
+
+// const borrarJugador = (id) => {
+//   console.log(id)
+//   futbolStore.eliminarJugador(id)
+// }
+
+/* const crono = () => {
+  swiftConnectionStore.rtRemote.playGraphic("Crono")
+  swiftConnectionStore.rtRemote.playMethod("Crono::bringOn")
+  swiftConnectionStore.rtRemote.updateFields("Crono::text1TEXT", "String", "testads")
+
+} */
 
 
 </script>

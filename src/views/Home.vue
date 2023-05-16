@@ -17,6 +17,7 @@
         <v-col class="text-center">
           <v-btn to="/futbol">FUTBOL</v-btn>
           <v-btn to="/vumetro">VUMETRO</v-btn>
+          <v-btn to="/simple">GRAFISME SIMPLE</v-btn>
         </v-col>
       </v-row>
       <v-row>

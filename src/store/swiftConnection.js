@@ -23,6 +23,42 @@ actions: {
     const docRef = doc(db, 'settings', 'swift')
     await updateDoc(docRef, {url: payload})
   },
+  startVideo() {
+    const rtConnection = new RTConnection(this.URLSwift, 5, 2);
+    const self = this
+    rtConnection.onOpen = function() {
+      trace("Connection opened");
+      self.videoStream = new RTVideoStream(rtConnection, "videoProtocol", "myVideoId");
+      self.swiftConnectionStatus = 1
+      // console.log(self.rtRemote)
+      // return {videoStream, rtRemote}
+    }
+    rtConnection.onClose = function() {
+      trace("Connection Closed, try again…");
+      // If the connection closes, attempt to reopen it.
+      this.swiftConnectionStatus = 0
+      startVideo();
+      }
+
+  },
+  startConnection() {
+    const rtConnection1 = new RTConnection(this.URLSwift, 5, 2);
+    const self = this
+    rtConnection1.onOpen = function() {
+      trace("Connection opened");
+      self.rtRemote = new RTRemote(rtConnection1, "remote");
+      self.rtRemote.getStatus("Project","Current")
+      self.swiftConnectionStatus = 1
+      // console.log(self.rtRemote)
+      // return {videoStream, rtRemote}
+    }
+    rtConnection1.onClose = function() {
+      trace("Connection Closed, try again…");
+      // If the connection closes, attempt to reopen it.
+      this.swiftConnectionStatus = 0
+      startConnection();
+      }
+  },
   OpenConnection()
   {
     const rtConnection = new RTConnection(this.URLSwift, 5, 2);
