@@ -101,8 +101,11 @@ export const usegFutbolStore = defineStore('futbol', {
           fueras_de_juego: 0,
           corners: 0,
           tiros_a_puerta: 0,
-          posesión: "0%"
-        },
+          posesión: "0%",
+          disparos: 0,
+          disparos_al_arco: 0,
+          saques_de_esquina: 0
+        }, 
         jugadores: [
           {
             id_jugador: 1,
@@ -117,7 +120,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -133,7 +138,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -149,7 +156,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -165,7 +174,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -181,7 +192,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -197,7 +210,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -213,7 +228,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -229,7 +246,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -245,7 +264,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -261,7 +282,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -277,7 +300,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -293,7 +318,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -309,7 +336,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -325,7 +354,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -341,7 +372,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -357,7 +390,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -373,7 +408,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -389,7 +426,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -405,7 +444,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
         ]
@@ -419,8 +460,11 @@ export const usegFutbolStore = defineStore('futbol', {
           fueras_de_juego: 0,
           corners: 0,
           tiros_a_puerta: 0,
-          posesión: "0%"
-        },
+          posesión: "0%",
+          disparos: 0,
+          disparos_al_arco: 0,
+          saques_de_esquina: 0
+        }, 
         jugadores: [
           {
             id_jugador: 1,
@@ -435,7 +479,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -451,7 +497,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -467,7 +515,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -483,7 +533,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -499,7 +551,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -515,7 +569,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -531,7 +587,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -547,7 +605,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -563,7 +623,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -579,7 +641,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -595,7 +659,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -611,7 +677,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -627,7 +695,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -643,7 +713,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -659,7 +731,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -675,7 +749,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -691,7 +767,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -707,7 +785,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
           {
@@ -723,7 +803,9 @@ export const usegFutbolStore = defineStore('futbol', {
               tarjetas_amarillas: 0,
               tarjeta_roja: 0,
               goles: 0,
-              faltas: 0
+              faltas: 0,
+              disparos: 0,
+              disparos_al_arco: 0
             }
           },
         ]

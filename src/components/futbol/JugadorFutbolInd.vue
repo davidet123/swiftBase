@@ -1,12 +1,12 @@
 <template>
-  <v-main v-if="jugador">
+  <v-main v-if="jugador" class="my-1">
     <v-row>
       <v-col class="tarjeta">
         <v-card
           max-width="1200px"
          :color="fondo == 'local' ? '#385F73' : '#37571a'"
          theme="dark"
-         class="mx-auto">
+         class="mx-auto pa-1">
          <v-card-subtitle>
           <v-row class="tarjeta">
             <v-col cols="2">
@@ -75,6 +75,27 @@
                     </v-col>
                   </v-row>
                 </v-col>
+                <v-col cols="4">
+                  <v-row>
+                    <v-col cols="12" class="text-center pa-0">
+                      <p>DISPAROS A PUERTA ({{ jugador.estadistica.disparos_al_arco }} /{{ jugador.estadistica.disparos }})</p>
+                      <v-btn size="x-small" color="success">LIVE</v-btn>
+                    </v-col>
+                    <v-col cols="6" class="text-center">
+                      <p>DISPARO</p>
+                      <v-btn size="x-small" color="success" @click="disparo(1)">+</v-btn>
+                      <v-btn size="x-small" color="error" @click="disparo(-1)">-</v-btn>
+                    </v-col>
+                    <v-col cols="6" class="text-center">
+                      <p>A PUERTA</p>
+                      <v-btn size="x-small" color="success" @click="disparoAPuerta(1)">+</v-btn>
+                      <v-btn size="x-small" color="error" @click="disparoAPuerta(-1)">-</v-btn>
+                    </v-col>
+                  </v-row>
+                </v-col>
+
+
+
               </v-row>
             </v-col>
           </v-row>
@@ -121,6 +142,14 @@ const tarjetaRoja = val => {
 
 const falta = val => {
   jug.estadistica.faltas += val
+}
+
+const disparo = val => {
+  jug.estadistica.disparos += val
+}
+const disparoAPuerta = val => {
+  disparo(val)
+  jug.estadistica.disparos_al_arco += val
 }
 
 

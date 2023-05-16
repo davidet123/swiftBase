@@ -19,6 +19,9 @@
           <p>GOLES: {{ golesLocalTotales }}</p>
         </v-col>
         <v-col cols="2" class="text-center">
+          <p>DISPAROS A PUERTA: {{ disparosLocalTotal }}</p>
+        </v-col>
+        <v-col cols="2" class="text-center">
           <p>TARJETAS AMARILLAS: {{ taLocalTotales }}</p>
         </v-col>
         <v-col cols="2" class="text-center">
@@ -62,6 +65,9 @@
         </v-col>
         <v-col cols="2" class="text-center">
           <p>TARJETAS ROJAS: {{ trVisitanteTotales }}</p>
+        </v-col>
+        <v-col cols="2" class="text-center">
+          <p>DISPAROS A PUERTA: {{ disparosVisitantelTotal }}</p>
         </v-col>
         <v-col cols="2" class="text-center">
           <p>FALTAS: {{ faltasVisitanteTotales }}</p>
@@ -229,6 +235,29 @@ const faltasVisitanteTotales = computed(() => {
     faltas += jug.estadistica.faltas
   })
   return faltas
+})
+
+const disparosLocalTotal = computed(() => {
+  let disparos = 0
+  equipo_local.jugadores.forEach(jug => {
+    disparos += jug.estadistica.disparos
+  })
+  let disparosAPuerta = 0
+  equipo_local.jugadores.forEach(jug => {
+    disparosAPuerta += jug.estadistica.disparos_al_arco
+  })
+  return disparosAPuerta + " / " +  disparos
+})
+const disparosVisitantelTotal = computed(() => {
+  let disparos = 0
+  equipo_visitante.jugadores.forEach(jug => {
+    disparos += jug.estadistica.disparos
+  })
+  let disparosAPuerta = 0
+  equipo_visitante.jugadores.forEach(jug => {
+    disparosAPuerta += jug.estadistica.disparos_al_arco
+  })
+  return disparosAPuerta + " / " +  disparos
 })
 
 
