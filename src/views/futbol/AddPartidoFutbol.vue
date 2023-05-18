@@ -7,20 +7,20 @@
   <v-row>
     <v-col cols="6">
       <v-select
-        v-model="partido.equipo_local"
+        v-model="idLocal"
         :items="equipos"
         item-title="nombre_equipo"
-        item-value="nombre_equipo"
+        item-value="id_equipo"
         density="compact"
         label="Equipo Local"
       ></v-select> 
     </v-col>
     <v-col cols="6">
       <v-select
-        v-model="partido.equipo_visitante"
+        v-model="idVisitante"
         :items="equipos"
         item-title="nombre_equipo"
-        item-value="nombre_equipo"
+        item-value="id_equipo"
         density="compact"
         label="Equipo Visitante"
       ></v-select>
@@ -52,21 +52,35 @@
   </v-row>
   <v-row>
     <v-col>
-      <v-btn color="success" @click="crearPartido()">ACEPTAR</v-btn>
+      <v-btn color="success" :disabled="!activarBoton" @click="crearPartido()">ACEPTAR</v-btn>
     </v-col>
   </v-row>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { usegFutbolStore } from "../../store/futbol"
 import { computed } from 'vue';
 
 const futbolStore = usegFutbolStore()
 
+const idLocal = ref(null)
+const idVisitante = ref(null)
+
+const listaEquipoLocal = ref(null)
+const listaEquipoVisitante = ref(null)
+
+
+const activarBoton = computed(() => listaEquipoLocal.value !== null && listaEquipoVisitante.value !== null)
+
+
+// CARGAR JUGADORES
+// futbolStore.cargarJugadores()
+
+
 
 const partido = ref({
-  id_partido: Date.now(),
+  // id_partido: null,
   equipo_local: null,
   id_equipo_local: null,
   equipo_visitante: null,
@@ -86,17 +100,72 @@ const partido = ref({
 
 const equipos = futbolStore.getEquipos
 
-// const idLocal = futbolStore.getIdEquipo(partido.value.equipo_local)
-// const idVisitante = futbolStore.getIdEquipo(partido.value.visitante)
 
 const crearPartido = () => {
-  // console.log(futbolStore.getIdEquipo(partido.value.equipo_visitante))
-  if (partido.value.equipo_local) partido.value.id_equipo_local = futbolStore.getIdEquipo(partido.value.equipo_local)
-  if (partido.value.equipo_visitante) partido.value.id_equipo_visitante = futbolStore.getIdEquipo(partido.value.equipo_visitante)
-  console.log(partido.value)
 
-  futbolStore.addPartido(partido.value)
+  if(idLocal.value && idVisitante.value) {
+
+    console.log(listaEquipoVisitante.value)
+
+    let equipoLocal = futbolStore.getEquipoById(idLocal.value)
+    let equipoVisitante = futbolStore.getEquipoById(idVisitante.value)   
+
+
+    listaEquipoLocal.value.forEach(jug => {
+      jug.estadistica = {
+          tarjetas_amarillas: 0,
+          tarjeta_roja: 0,
+          goles: 0,
+          faltas: 0,
+          disparos: 0,
+          disparos_al_arco: 0
+        }
+    })
+    listaEquipoVisitante.value.forEach(jug => {
+      jug.estadistica = {
+          tarjetas_amarillas: 0,
+          tarjeta_roja: 0,
+          goles: 0,
+          faltas: 0,
+          disparos: 0,
+          disparos_al_arco: 0
+        }
+    })
+    
+    partido.value.equipo_local = equipoLocal
+    partido.value.equipo_visitante = equipoVisitante
+    partido.value.id_equipo_local = idLocal.value
+    partido.value.id_equipo_visitante = idVisitante.value
+        
+    partido.value.equipo_local.jugadores = listaEquipoLocal.value
+    partido.value.equipo_visitante.jugadores = listaEquipoVisitante.value
+
+  }
+  
+  
+
+futbolStore.addPartido(partido.value)
+
 }
 
+watch(() => idLocal.value, (val) => {
+  try {
+    // console.log(val)
+    const equipoLocal = futbolStore.getEquipoById(val)
+    const displayNameLocal = equipoLocal.display_name
+    listaEquipoLocal.value = futbolStore.cargarJugadoresEquipo(displayNameLocal)
+  } catch (err) {
+    console.log(err)
+  }
+})
+watch(() => idVisitante.value, (val) => {
+  try {
+    const equipoVisitante = futbolStore.getEquipoById(val)
+    const displayNameVisitante = equipoVisitante.display_name
+    listaEquipoVisitante.value = futbolStore.cargarJugadoresEquipo(displayNameVisitante)
+  } catch (err) {
+    console.log(err)
+  }
+})
 
 </script>

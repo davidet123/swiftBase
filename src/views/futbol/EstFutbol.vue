@@ -126,8 +126,54 @@ const id = route.params.id
 
 const partido = futbolStore.buscarPartido(id)
 
-const equipo_local = futbolStore.buscarEquipo(partido.id_equipo_local)
-const equipo_visitante = futbolStore.buscarEquipo(partido.id_equipo_visitante)
+
+// BUSCAR EQUIPOS
+let equipo_local = {...futbolStore.buscarEquipo(partido.id_equipo_local)}
+let equipo_visitante = {...futbolStore.buscarEquipo(partido.id_equipo_visitante)}
+
+
+// AÑADIR JUGADORES
+
+let jugadoresLocal = []
+let jugadoresVisitante = []
+
+equipo_local.jugadores.forEach(jug => {
+  // console.log(jug)
+  let nuevoJugador = futbolStore.buscarJugador(jug)
+  // console.log(nuevoJugador)
+  nuevoJugador.estadistica = {
+      tarjetas_amarillas: 0,
+      tarjeta_roja: 0,
+      goles: 0,
+      faltas: 0,
+      disparos: 0,
+      disparos_al_arco: 0
+    }
+  jugadoresLocal.push(nuevoJugador)
+})
+
+equipo_visitante.jugadores.forEach(jug => {
+  let nuevoJugador = futbolStore.buscarJugador(jug)
+  nuevoJugador.estadistica = {
+      tarjetas_amarillas: 0,
+      tarjeta_roja: 0,
+      goles: 0,
+      faltas: 0,
+      disparos: 0,
+      disparos_al_arco: 0
+    }
+  jugadoresVisitante.push(nuevoJugador)
+})
+
+// REEMPLAZAR JUGADORES
+
+equipo_local.jugadores = jugadoresLocal
+equipo_visitante.jugadores = jugadoresVisitante
+
+console.log(equipo_local)
+
+
+
 
 let dorsalLocal = ref(null)
 let dorsalVisitante = ref(null)
@@ -177,16 +223,39 @@ const limpiarDorsal = (equipo) => {
   }
 }
 
+const estadisticasTotales = (jugadores, estadistica) => {
+  return jugadores.reduce((total, jugador) => total + jugador.estadistica[estadistica], 0);
+};
 
-const golesLocalTotales = computed(() => {
+const golesLocalTotales = computed(() => estadisticasTotales(equipo_local.jugadores, 'goles'))
+const taLocalTotales = computed(() => estadisticasTotales(equipo_local.jugadores, 'tarjetas_amarillas'))
+const trLocalTotales = computed(() => estadisticasTotales(equipo_local.jugadores, 'tarjeta_roja'))
+const faltasLocalTotales = computed(() => estadisticasTotales(equipo_local.jugadores, 'faltas'))
+
+const golesVisitanteTotales = computed(() => estadisticasTotales(equipo_visitante.jugadores, 'goles'));
+const taVisitanteTotales = computed(() => estadisticasTotales(equipo_visitante.jugadores, 'tarjetas_amarillas'));
+const trVisitanteTotales = computed(() => estadisticasTotales(equipo_visitante.jugadores, 'tarjeta_roja'));
+const faltasVisitanteTotales = computed(() => estadisticasTotales(equipo_visitante.jugadores, 'faltas'));
+
+const disparosTotales = (jugadores, estadistica1, estadistica2) => {
+  const total = estadisticasTotales(jugadores, estadistica1);
+  const totalAPuerta = estadisticasTotales(jugadores, estadistica2);
+  return `${totalAPuerta} / ${total}`;
+};
+
+const disparosLocalTotal = computed(() => disparosTotales(equipo_local.jugadores, 'disparos', 'disparos_al_arco'));
+const disparosVisitantelTotal = computed(() => disparosTotales(equipo_visitante.jugadores, 'disparos', 'disparos_al_arco'));
+
+
+/* const golesLocalTotales = computed(() => {
   let goles = 0
   equipo_local.jugadores.forEach(jug => {
     goles += jug.estadistica.goles
   })
   return goles
-})
+}) */
 
-const taLocalTotales = computed(() => {
+/* const taLocalTotales = computed(() => {
   let ta = 0
   equipo_local.jugadores.forEach(jug => {
     ta += jug.estadistica.tarjetas_amarillas
@@ -206,7 +275,7 @@ const faltasLocalTotales = computed(() => {
     faltas += jug.estadistica.faltas
   })
   return faltas
-})
+}) 
 const golesVisitanteTotales = computed(() => {
   let goles = 0
   equipo_visitante.jugadores.forEach(jug => {
@@ -235,9 +304,9 @@ const faltasVisitanteTotales = computed(() => {
     faltas += jug.estadistica.faltas
   })
   return faltas
-})
+})*/
 
-const disparosLocalTotal = computed(() => {
+/* const disparosLocalTotal = computed(() => {
   let disparos = 0
   equipo_local.jugadores.forEach(jug => {
     disparos += jug.estadistica.disparos
@@ -258,7 +327,7 @@ const disparosVisitantelTotal = computed(() => {
     disparosAPuerta += jug.estadistica.disparos_al_arco
   })
   return disparosAPuerta + " / " +  disparos
-})
+}) */
 
 
 

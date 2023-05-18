@@ -48,6 +48,16 @@ const router = useRouter()
 
 
 const futbolStore = usegFutbolStore()
+
+
+// CARGAR JUGADORES
+// futbolStore.cargarJugadores()
+// console.log(futbolStore.jugadores)
+
+// CARGAR PARTIDOS 
+
+futbolStore.cargarPartidos()
+
 const { partidos } = storeToRefs(futbolStore)
 // const jugadores = computed(() => equipos.value[0].jugadores)
 
@@ -62,6 +72,10 @@ const { partidos } = storeToRefs(futbolStore)
   swiftConnectionStore.rtRemote.updateFields("Crono::text1TEXT", "String", "testads")
 
 } */
+
+
+// Enviar jugadores a la base de datos temporal -----------------------------
+// futbolStore.addJugsToDb()
 
 
 </script>

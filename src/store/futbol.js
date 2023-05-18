@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-import { collection, onSnapshot, addDoc } from "firebase/firestore"
+import { collection, onSnapshot, addDoc, query, where, getDocs } from "firebase/firestore"
 // the firestore instance
 import db from '../firebase/init.js'
 
@@ -52,7 +52,8 @@ export const usegFutbolStore = defineStore('futbol', {
     ],
     local: [],
     visitante: [],
-    partidos: [{
+    partidos: [],
+    /* partidos: [{
       id_partido: "001",
       equipo_local: "Gandia",
       id_equipo_local: "1234",
@@ -90,7 +91,7 @@ export const usegFutbolStore = defineStore('futbol', {
       }
 
     }
-    ],
+    ], */
     equipos: [
       {
         id_equipo: "1234",
@@ -106,9 +107,10 @@ export const usegFutbolStore = defineStore('futbol', {
           disparos_al_arco: 0,
           saques_de_esquina: 0
         }, 
-        jugadores: [
+        jugadores: ['GCF1', 'GCF2', 'GCF3']
+        /* jugadores: [
           {
-            id_jugador: 1,
+            id_jugador: 'GCF1',
             nombre_jugador: "Vicent Company Gregori",
             apodo: "Company",
             numero: 1,
@@ -126,7 +128,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 2,
+            id_jugador: 'GCF2',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 2,
@@ -144,7 +146,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 3,
+            id_jugador: 'GCF3',
             nombre_jugador: "Ayoze Espinar González",
             apodo: "Ayoze",
             numero: 3,
@@ -162,7 +164,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 4,
+            id_jugador: 'GCF4',
             nombre_jugador: "Álvaro Escobar García",
             apodo: "Escobar",
             numero: 4,
@@ -180,7 +182,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 5,
+            id_jugador: 'GCF5',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 5,
@@ -198,7 +200,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 6,
+            id_jugador: 'GCF6',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 6,
@@ -216,7 +218,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 7,
+            id_jugador: 'GCF7',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 7,
@@ -234,7 +236,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 8,
+            id_jugador: 'GCF8',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 8,
@@ -252,7 +254,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 9,
+            id_jugador: 'GCF9',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 9,
@@ -270,7 +272,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 10,
+            id_jugador: 'GCF10',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 10,
@@ -288,7 +290,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 11,
+            id_jugador: 'GCF11',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 11,
@@ -306,7 +308,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 12,
+            id_jugador: 'GCF12',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 12,
@@ -324,7 +326,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 13,
+            id_jugador: 'GCF13',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 13,
@@ -342,7 +344,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 14,
+            id_jugador: 'GCF14',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 14,
@@ -360,7 +362,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 15,
+            id_jugador: 'GCF15',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 15,
@@ -378,7 +380,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 16,
+            id_jugador: 'GCF16',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 16,
@@ -396,7 +398,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 17,
+            id_jugador: 'GCF17',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 17,
@@ -414,7 +416,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 18,
+            id_jugador: 'GCF18',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 18,
@@ -432,7 +434,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 19,
+            id_jugador: 'GCF19',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 19,
@@ -449,7 +451,7 @@ export const usegFutbolStore = defineStore('futbol', {
               disparos_al_arco: 0
             }
           },
-        ]
+        ] */
       },
       {
         id_equipo: "4567",
@@ -465,9 +467,10 @@ export const usegFutbolStore = defineStore('futbol', {
           disparos_al_arco: 0,
           saques_de_esquina: 0
         }, 
-        jugadores: [
+        jugadores: ['OLI1', 'OLI2', 'OLI3', 'OLI4']
+        /* jugadores: [
           {
-            id_jugador: 1,
+            id_jugador: "OLI1",
             nombre_jugador: "Pepet garcia gomez",
             apodo: "Pepet",
             numero: 22,
@@ -485,7 +488,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 2,
+            id_jugador: "OLI2",
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 2,
@@ -503,7 +506,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 3,
+            id_jugador: 'OLI3',
             nombre_jugador: "Ayoze Espinar González",
             apodo: "Ayoze",
             numero: 3,
@@ -521,7 +524,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 4,
+            id_jugador: 'OLI4',
             nombre_jugador: "Álvaro Escobar García",
             apodo: "Escobar",
             numero: 4,
@@ -539,7 +542,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 5,
+            id_jugador: 'OLI5',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 5,
@@ -557,7 +560,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 6,
+            id_jugador: 'OLI6',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 6,
@@ -575,7 +578,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 7,
+            id_jugador: 'OLI7',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 7,
@@ -593,7 +596,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 8,
+            id_jugador: 'OLI8',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 8,
@@ -611,7 +614,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 9,
+            id_jugador: 'OLI9',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 9,
@@ -629,7 +632,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 10,
+            id_jugador: 'OLI10',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 10,
@@ -647,7 +650,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 11,
+            id_jugador: 'OLI11',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 11,
@@ -665,7 +668,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 12,
+            id_jugador: 'OLI12',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 12,
@@ -683,7 +686,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 13,
+            id_jugador: 'OLI13',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 13,
@@ -701,7 +704,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 14,
+            id_jugador: 'OLI14',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 14,
@@ -719,7 +722,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 15,
+            id_jugador: 'OLI15',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 15,
@@ -737,7 +740,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 16,
+            id_jugador: 'OLI16',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 16,
@@ -755,7 +758,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 17,
+            id_jugador: 'OLI17',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 17,
@@ -773,7 +776,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 18,
+            id_jugador: 'OLI18',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 18,
@@ -791,7 +794,7 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           },
           {
-            id_jugador: 19,
+            id_jugador: 'OLI19',
             nombre_jugador: "Vicent Puig Sendra",
             apodo: "Vicent Puig",
             numero: 19,
@@ -808,24 +811,182 @@ export const usegFutbolStore = defineStore('futbol', {
               disparos_al_arco: 0
             }
           },
-        ]
+        ] */
       },
     ],
+    jugadores: [],
+    /* jugadores: [
+      {
+        id_jugador: 'GCF1',
+        nombre_jugador: "Vicent Company Gregori",
+        apodo: "Company",
+        numero: 1,
+        posicion: "Portero",
+        nacionalidad: "española",
+        fecha_nacimiento: "12/13/2000",
+        altura: "1,83 m",
+        estadistica: {
+          tarjetas_amarillas: 0,
+          tarjeta_roja: 0,
+          goles: 0,
+          faltas: 0,
+          disparos: 0,
+          disparos_al_arco: 0
+        }
+      },
+      {
+        id_jugador: 'GCF2',
+        nombre_jugador: "Vicent Puig Sendra",
+        apodo: "Vicent Puig",
+        numero: 2,
+        posicion: "Portero",
+        nacionalidad: "española",
+        fecha_nacimiento: "12/13/2000",
+        altura: "1,83 m",
+        estadistica: {
+          tarjetas_amarillas: 0,
+          tarjeta_roja: 0,
+          goles: 0,
+          faltas: 0,
+          disparos: 0,
+          disparos_al_arco: 0
+        }
+      },
+      {
+        id_jugador: 'GCF3',
+        nombre_jugador: "Ayoze Espinar González",
+        apodo: "Ayoze",
+        numero: 3,
+        posicion: "Lateral derecho",
+        nacionalidad: "española",
+        fecha_nacimiento: "12/13/2000",
+        altura: "1,83 m",
+        estadistica: {
+          tarjetas_amarillas: 0,
+          tarjeta_roja: 0,
+          goles: 0,
+          faltas: 0,
+          disparos: 0,
+          disparos_al_arco: 0
+        }
+      },
+      {
+        id_jugador: "OLI1",
+        nombre_jugador: "Pepet garcia gomez",
+        apodo: "Pepet",
+        numero: 22,
+        posicion: "Portero",
+        nacionalidad: "española",
+        fecha_nacimiento: "12/13/2000",
+        altura: "1,83 m",
+        estadistica: {
+          tarjetas_amarillas: 0,
+          tarjeta_roja: 0,
+          goles: 0,
+          faltas: 0,
+          disparos: 0,
+          disparos_al_arco: 0
+        }
+      },
+      {
+        id_jugador: "OLI2",
+        nombre_jugador: "Vicent Puig Sendra",
+        apodo: "Vicent Puig",
+        numero: 2,
+        posicion: "Portero",
+        nacionalidad: "española",
+        fecha_nacimiento: "12/13/2000",
+        altura: "1,83 m",
+        estadistica: {
+          tarjetas_amarillas: 0,
+          tarjeta_roja: 0,
+          goles: 0,
+          faltas: 0,
+          disparos: 0,
+          disparos_al_arco: 0
+        }
+      },
+      {
+        id_jugador: 'OLI3',
+        nombre_jugador: "Ayoze Espinar González",
+        apodo: "Ayoze",
+        numero: 3,
+        posicion: "Lateral derecho",
+        nacionalidad: "española",
+        fecha_nacimiento: "12/13/2000",
+        altura: "1,83 m",
+        estadistica: {
+          tarjetas_amarillas: 0,
+          tarjeta_roja: 0,
+          goles: 0,
+          faltas: 0,
+          disparos: 0,
+          disparos_al_arco: 0
+        }
+      },
+      {
+        id_jugador: 'OLI4',
+        nombre_jugador: "Álvaro Escobar García",
+        apodo: "Escobar",
+        numero: 4,
+        posicion: "Lateral derecho",
+        nacionalidad: "española",
+        fecha_nacimiento: "12/13/2000",
+        altura: "1,83 m",
+        estadistica: {
+          tarjetas_amarillas: 0,
+          tarjeta_roja: 0,
+          goles: 0,
+          faltas: 0,
+          disparos: 0,
+          disparos_al_arco: 0
+        }
+      },
+      {
+        id_jugador: 'OLI5',
+        nombre_jugador: "Vicent Puig Sendra",
+        apodo: "Vicent Puig",
+        numero: 5,
+        posicion: "Portero",
+        nacionalidad: "española",
+        fecha_nacimiento: "12/13/2000",
+        altura: "1,83 m",
+        estadistica: {
+          tarjetas_amarillas: 0,
+          tarjeta_roja: 0,
+          goles: 0,
+          faltas: 0,
+          disparos: 0,
+          disparos_al_arco: 0
+        }
+      },
+      {
+        id_jugador: 'OLI6',
+        nombre_jugador: "Vicent Puig Sendra",
+        apodo: "Vicent Puig",
+        numero: 6,
+        posicion: "Portero",
+        nacionalidad: "española",
+        fecha_nacimiento: "12/13/2000",
+        altura: "1,83 m",
+        estadistica: {
+          tarjetas_amarillas: 0,
+          tarjeta_roja: 0,
+          goles: 0,
+          faltas: 0,
+          disparos: 0,
+          disparos_al_arco: 0
+        }
+      },
+    ] */
 
   }),
   getters: {
-    marcador: state => {
-      return state.partidos[0].marcador
-    },
-    tiempo: state => {
-      return state.partidos[0].tiempo
-    },
-    getPosiciones: state => {
-      return state.posiciones
-    },
-    getEquipos: state => {
-      return state.equipos
-    }
+    marcador: state => state.partidos[0].marcador,
+    tiempo: state => state.partidos[0].tiempo,
+    getPosiciones: state => state.posiciones,
+    getEquipos: state => state.equipos,
+    getJugadores: state => state.jugadores,
 
   },
   actions: {
@@ -850,9 +1011,13 @@ export const usegFutbolStore = defineStore('futbol', {
 
     // PARTIDOS --------------------------------------------
 
-    addPartido(partido) {
+    async addPartido(partido) {
+      const docRef = await addDoc(collection(db, 'partidos_futbol'), partido)
+      partido.id_partido = docRef.id      
+      // console.log(partido)
       this.partidos.push(partido)
     },
+
     editarPartido(partido) {
 
       let partidoAntiguo = this.buscarPartido(partido.id_partido)
@@ -895,6 +1060,19 @@ export const usegFutbolStore = defineStore('futbol', {
 
     },
 
+    async cargarPartidos() {
+      const docSnap = onSnapshot(collection(db, "partidos_futbol"), (doc) => {
+        doc.docChanges().forEach((change) => {
+          if (change.type === "added") {
+            let partido = change.doc.data()
+            partido.id_partido = change.doc.id
+            // console.log(change.doc.id)
+            this.partidos.push(partido)
+          }
+        })
+      })
+    },
+
 
 
     // MARCADOR --------------------------------------------------------
@@ -912,15 +1090,23 @@ export const usegFutbolStore = defineStore('futbol', {
 
     // EQUIPOS ---------------------------------------------------------
 
-    addEquipo(equipo) {
+    async addEquipo(equipo) {
+      const docRef = await addDoc(collection(db, 'equipos_futbol'), equipo)
+      equipo.id_equipo = docRef.id      
       this.equipos.push(equipo)
     },
 
 
 
+    editarEquipo(id) {
 
+    },
 
-    // JUGADORES -----------------------------------------------------
+    getEquipoById(id) {
+      return this.equipos.find(equipo => {
+        return equipo.id_equipo == id
+      })
+    },
     cargarEquipo() {
       const docSnap = onSnapshot(collection(db, "futbol_local"), (doc) => {
         doc.docChanges().forEach((change) => {
@@ -934,6 +1120,85 @@ export const usegFutbolStore = defineStore('futbol', {
       })
     },
 
+   
+
+
+
+
+    // JUGADORES -----------------------------------------------------
+
+
+    cargarJugadores() {
+      const docSnap = onSnapshot(collection(db, "jugadores_futbol"), (doc) => {
+        doc.docChanges().forEach((change) => {
+          if (change.type === "added") {
+            let jugador = change.doc.data()
+            jugador.id_jugador = change.doc.id
+            // console.log(change.doc.id)
+            this.jugadores.push(jugador)
+          }
+        })
+      })
+
+    },
+    addJugadores(jugadores) {
+      jugadores.forEach(jugador => {
+        this.addJugadorToDb(jugador)
+        this.jugadores.push(jugador)
+      })
+    },
+    async addToDb(jugador) {
+
+      const docRef = await addDoc(collection(db, 'jugadores_futbol'), jugador)
+      jugador.id_jugador = docRef.id
+      
+      // this.partidos.push(partido)
+    },
+    async addJugadorToDb(jugador) {
+
+      const docRef = await addDoc(collection(db, 'jugadores_futbol'), jugador)
+      jugador.id_jugador_db = docRef.id
+      
+      // this.jugadores.push(jugadores)
+    },
+
+    
+
+    buscarJugador(id) {
+      return this.jugadores.find(jug => {
+        return jug.id_jugador === id
+      })
+    },
+    BuscarJugadorPorEquipo(equipo) {
+      return this.jugadores.filter(jug => {
+        return jug.id_equipo !== equipo
+      })
+    },
+
+    cargarJugadoresEquipo(equipo) {
+      let tempEquipo = []
+      const q = query(collection(db, "jugadores_futbol"), where("equipo", "==", equipo));
+      const querySnapshot = getDocs(q)
+      .then(res => {
+        res.forEach(doc => {
+          // console.log(doc.data())
+          tempEquipo.push(doc.data())
+        })
+      })
+      return tempEquipo
+      /* // return querySnapshot
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        tempEquipo.push(doc.data())
+        // console.log(doc.data())
+        // console.log(doc.id, " => ", doc.data());
+      }); 
+      return tempEquipo */
+
+
+
+    },
+
 
     eliminarJugador(id) {
       // console.log( this.equipos[0].jugadores)
@@ -945,9 +1210,7 @@ export const usegFutbolStore = defineStore('futbol', {
       console.log( this.equipos[0].jugadores)
     },
 
-    editarEquipo(id) {
-
-    }
+    
     
 
   }

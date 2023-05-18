@@ -80,7 +80,7 @@
   const gStore = usegSheetStore()
   const dbStore = useDatabaseStore()
 
-  dbStore.cargarDb()
+  // dbStore.cargarDb()
 
   /* dbStore.addPlayer({nombre: "Antonio",
         numero: 7,

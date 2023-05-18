@@ -4,7 +4,7 @@
   <v-card class="mx-4">
     <v-card-item>
       <v-card-title>
-       {{ partido.equipo_local }} vs {{ partido.equipo_visitante }}
+       {{ partido.equipo_local.nombre_equipo }} vs {{ partido.equipo_visitante.nombre_equipo }}
       </v-card-title>
       <v-card-subtitle>
         
@@ -50,5 +50,7 @@ const irPartido = id => {
 const editarPartido = id => {
   router.push(`/futbol/editarpartidofutbol/${id}`)
 }
+
+// console.log(props.partido)
 
 </script>

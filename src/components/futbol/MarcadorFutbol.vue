@@ -19,10 +19,25 @@
               </v-col>
             </v-row>
           </v-col>
-          <v-col cols="2">
-            <p>{{ porcentajeLocal }}</p>
-            <p class="text-h2">{{ marcador.local }} | {{ marcador.visitante }}</p>
-            <p>{{ porcentajeVisitante }}</p>
+          <v-col cols="4">
+            <v-row>
+              <v-col cols="1">
+                <p>{{ porcentajeLocal }}</p>
+              </v-col>
+              <v-col cols="1">
+                <p class="text-h1">.</p>
+              </v-col>
+              <v-col cols="8">
+                <p class="text-h2"><span :class="equipoEnPosesion == 'local' ? 'underline' : ''">{{ marcador.local }}</span> | <span :class="equipoEnPosesion == 'visitante' ? 'underline' : ''">{{ marcador.visitante }}</span></p>                
+                {{ equipoEnPosesion }}
+              </v-col>
+              <v-col cols="1">
+                <p>{{ porcentajeVisitante }}</p>
+              </v-col>
+              <v-col cols="2">
+                <p>{{ porcentajeVisitante }}</p>
+              </v-col>
+            </v-row>
             <!-- <h1>{{ marcador.local }} | {{ marcador.visitante }}</h1> -->
           </v-col>
           <v-col cols="2">
@@ -116,12 +131,13 @@
   let porcentajeLocal = ref('0%')
   let porcentajeVisitante = ref('0%')
 
-  let equipoEnPosesion = "local"
+  let equipoEnPosesion = ref("local")
 
   let inicioPosesion = null
 
 
-  const añadido = ref(60) // tiempo en minutos
+  const añadido = ref(2) // tiempo en minutos
+  const tiempoJuego = ref(5) // tiempo en minutos
 
   const tiempoMarcador = ref('00:00')
   const añadidoMarcador = ref('00:00')
@@ -145,11 +161,11 @@
     temporizador = setInterval(() => {
       const ahora = Date.now()
       let dif = ahora - inicio
-      if(dif > parseInt(añadido.value) * 1000 + 5 && !añadidoIniciado) {
+      if(dif > parseInt(tiempoJuego.value) * 1000 + 5  && !añadidoIniciado) {
         inicio = Date.now()
         props.tiempo.añadidoPrimera = inicio
         añadidoIniciado = true
-        dif = 1000
+        dif = 2000
         swiftConnectionStore.rtRemote.playMethod("MARCADOR::suplOn")
       }
       if(!añadidoIniciado) {
@@ -157,7 +173,7 @@
         swiftConnectionStore.rtRemote.updateFields("MARCADOR::TIEMPOTEXT","String", tiempoMarcador.value)
       } else {
         añadidoMarcador.value = (millisToMinutesAndSeconds(dif))
-        swiftConnectionStore.rtRemote.updateFields("MARCADOR::SUPLTEXT","String", añadidoMarcador.value)
+        swiftConnectionStore.rtRemote.updateFields("MARCADOR::SUPLTEXT","String", añadido.value)
         
       }
       // calcularPosesion(dif)
@@ -213,13 +229,6 @@
     }
 
 
-  const calcularPosesion = (val) => {
-    if(equipoEnPosesion == 'local') {
-      posesionLocalTotal
-    }
-  
-
-  }
 
   const cambioDePosesion = () => {
     if(inicioPosesion) {
@@ -227,12 +236,12 @@
       const finPosesion = Date.now()
       const duracionPosesion = finPosesion - inicioPosesion
       inicioPosesion = finPosesion
-      if(equipoEnPosesion == 'local') {
+      if(equipoEnPosesion.value == 'local') {
         posesionLocalTotal.value += duracionPosesion
         equipoEnPosesion = 'visitante'
-      } else if (equipoEnPosesion == 'visitante') {
+      } else if (equipoEnPosesion.value == 'visitante') {
         posesionVisitanteTotal.value += duracionPosesion
-        equipoEnPosesion = 'local'
+        equipoEnPosesion.value = 'local'
       }
       // console.log(millisToMinutesAndSeconds(posesionLocalTotal.value), millisToMinutesAndSeconds(posesionVisitanteTotal.value))
       porcentajeLocal.value = Math.round(posesionLocalTotal.value / (finPosesion - tiempoInicio) * 100) 
@@ -290,4 +299,8 @@
   .centered-input input {
       text-align: center
     }
+
+  .underline {
+    border-bottom: 2px solid white;
+  }
 </style>

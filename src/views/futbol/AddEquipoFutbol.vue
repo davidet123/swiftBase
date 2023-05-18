@@ -132,12 +132,10 @@ const cuerpo_tecnico = ref([
     nacionalidad: null
   }
 ])
-const id_jugador = computed(() => {
-  return jugadores.value.length + 1
-})
+
 
 const nuevo_jugador = {
-  id_jugador: Date.now(),
+  id_jugador: null,
   nombre_jugador: null,
   apodo: null,
   numero: null,
@@ -145,22 +143,31 @@ const nuevo_jugador = {
   nacionalidad: null,
   fecha_nacimiento: null,
   altura:null,
-  estadistica: {
+  equipo: null
+ /*  estadistica: {
     tarjetas_amarillas: 0,
     tarjeta_roja: 0,
     goles: 0,
     faltas: 0,
     disparos: 0,
     disparos_al_arco: 0
-  }
+  } */
 }
 const nuevoJugador = () => {
-  jugadores.value.push({...nuevo_jugador,})
+  let nuevo = {...nuevo_jugador,}
+  nuevo.id_jugador = display_name.value + jugadores.value.length
+  nuevo.equipo = display_name.value
+  jugadores.value.push(nuevo)
 }
 
 const enviar = () => {
+  
+  const listadoJugadores = []
+  jugadores.value.forEach(jug => {
+    listadoJugadores.push(jug.id_jugador)
+  })
   const nuevo_equipo = {
-        id_equipo: Date.now(),
+        // id_equipo: Date.now(),
         nombre_equipo: nombre_equipo.value,
         display_name: display_name.value,
         localidad: localidad.value,
@@ -173,10 +180,21 @@ const enviar = () => {
           disparos_al_arco: 0,
           saques_de_esquina: 0
         }, 
-        jugadores: jugadores.value,
+        jugadores: listadoJugadores,
         cuerpo_tecnico: cuerpo_tecnico.value
       }
-  // console.log(nuevo_equipo)
+  console.log(nuevo_equipo)
+
+
+    /* 
+      - Añadir jugadores a la base de datos
+      - Recuperar id del jugador
+      - Crear array con las nuevas id 
+
+    */
+
+
+  futbolStore.addJugadores(jugadores.value)
   futbolStore.addEquipo(nuevo_equipo)
 }
 
