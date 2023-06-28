@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import Proyecto from '../views/Proyecto.vue'
 import Simple from '../views/simple/Simple.vue'
 import Futbol from '../views/futbol/Futbol.vue'
+import FutbolInicio from '../views/futbol/FutbolInicio.vue'
 import EstFutbol from '../views/futbol/EstFutbol.vue'
 import AddEquipoFutbol from '../views/futbol/AddEquipoFutbol.vue'
 import AddPartidoFutbol from '../views/futbol/AddPartidoFutbol.vue'
@@ -34,6 +35,11 @@ const router = createRouter({
       path: '/futbol',
       name: 'futbol',
       component: Futbol
+    },
+    {
+      path: '/futbolinicio',
+      name: 'futbolinicio',
+      component: FutbolInicio
     },
     {
       path: '/futbol/listaequiposfutbol',

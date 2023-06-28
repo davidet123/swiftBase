@@ -1,98 +1,104 @@
 <template>
   <v-row>
-    <v-row class="text-center">
-      <v-col cols="2" offset="0">
-        <BotonSimple nombre="MARCADOR" @activar="activarGrafico"/>
-      </v-col>
-      <v-col cols="10" class=" mt-5 pt-5">
-        <v-row justify="center" align="center">
-          <v-col cols="2">
-            <v-row>
-              <v-col cols="12">
-                <h4>GOL LOCAL</h4>
-              </v-col>
-              <v-col cols="6">
-                <v-btn color="success" size="x-small" @click="gol('local', 1)">+</v-btn>
-              </v-col>
-              <v-col cols="6">
-                <v-btn color="error" size="x-small" @click="gol('local', -1)">-</v-btn>
-              </v-col>
-            </v-row>
+    <v-col cols="7">
+      <v-row>
+        <v-row class="text-center">
+          <v-col cols="2" offset="0">
+            <BotonSimple nombre="MARCADOR" @activar="activarGrafico"/>
           </v-col>
-          <v-col cols="4">
-            <v-row>
-              <v-col cols="1">
-                <p>{{ porcentajeLocal }}</p>
+          <v-col cols="10" class=" mt-5 pt-5">
+            <v-row justify="center" align="center">
+              <v-col cols="2">
+                <v-row>
+                  <v-col cols="12">
+                    <h4>GOL LOCAL</h4>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-btn color="success" size="x-small" @click="gol('local', 1)">+</v-btn>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-btn color="error" size="x-small" @click="gol('local', -1)">-</v-btn>
+                  </v-col>
+                </v-row>
               </v-col>
-              <v-col cols="1">
-                <p class="text-h1">.</p>
-              </v-col>
-              <v-col cols="8">
-                <p class="text-h2"><span :class="equipoEnPosesion == 'local' ? 'underline' : ''">{{ marcador.local }}</span> | <span :class="equipoEnPosesion == 'visitante' ? 'underline' : ''">{{ marcador.visitante }}</span></p>                
-                {{ equipoEnPosesion }}
-              </v-col>
-              <v-col cols="1">
-                <p>{{ porcentajeVisitante }}</p>
+              <v-col cols="4">
+                <v-row>
+                  <v-col cols="1">
+                    <p>{{ porcentajeLocal }}</p>
+                  </v-col>
+                  <v-col cols="8">
+                    <p class="text-h2"><span :class="equipoEnPosesion == 'local' ? 'underline' : ''">{{ marcador.local }}</span> | <span :class="equipoEnPosesion == 'visitante' ? 'underline' : ''">{{ marcador.visitante }}</span></p>                
+                  </v-col>
+                  <v-col cols="1">
+                    <p>{{ porcentajeVisitante }}</p>
+                  </v-col>
+                </v-row>
+                <!-- <h1>{{ marcador.local }} | {{ marcador.visitante }}</h1> -->
               </v-col>
               <v-col cols="2">
-                <p>{{ porcentajeVisitante }}</p>
-              </v-col>
-            </v-row>
-            <!-- <h1>{{ marcador.local }} | {{ marcador.visitante }}</h1> -->
-          </v-col>
-          <v-col cols="2">
-            <v-row>
-              <v-col cols="12">
-                <h4>GOL VISITANTE</h4>
-              </v-col>
-              <v-col cols="6">
-                <v-btn color="success" size="x-small" @click="gol('visitante', 1)">+</v-btn>
-              </v-col>
-              <v-col cols="6">
-                <v-btn color="error" size="x-small" @click="gol('visitante', -1)">-</v-btn>
+                <v-row>
+                  <v-col cols="12">
+                    <h4>GOL VISITANTE</h4>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-btn color="success" size="x-small" @click="gol('visitante', 1)">+</v-btn>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-btn color="error" size="x-small" @click="gol('visitante', -1)">-</v-btn>
+                  </v-col>
+                </v-row>
               </v-col>
             </v-row>
           </v-col>
         </v-row>
-      </v-col>
-    </v-row>
-  </v-row>
-  <v-row>
-    <v-col cols="4">
+      </v-row>
       <v-row>
-        <v-col cols="12" class="text-center">
-          <p class="text-h1">{{ tiempoMarcador }}</p>
+        <v-col cols="4">
+          <v-row>
+            <v-col cols="12" class="text-center">
+              <p class="text-h1">{{ tiempoMarcador }}</p>
+            </v-col>
+            <v-col cols="12" class="text-center"><v-btn size="x-small" color="success" @click="iniciarTiempo()" :disabled="tiempoIniciado">START</v-btn>
+            <v-btn size="x-small" color="success" :disabled="!tiempoIniciado" @click="pararTiempo()">STOP</v-btn>
+            <v-btn size="x-small" color="success" :disabled="tiempoIniciado" @click="resetTiempo()">RESET</v-btn>
+            </v-col>
+          </v-row>
         </v-col>
-        <v-col cols="12" class="text-center"><v-btn size="x-small" color="success" @click="iniciarTiempo()" :disabled="tiempoIniciado">START</v-btn>
-        <v-btn size="x-small" color="success" :disabled="!tiempoIniciado" @click="pararTiempo()">STOP</v-btn>
-        <v-btn size="x-small" color="success" :disabled="tiempoIniciado" @click="resetTiempo()">RESET</v-btn>
+        <v-col cols="4">
+          <v-row>
+            <v-col cols="12" class="text-center">
+              <h3>Tiempo añadido</h3>
+            </v-col>
+            <v-col cols="6" class="text-center mx-auto">
+              <v-text-field class="text-center" v-model="añadido" label="tiempo añadido"></v-text-field>
+            </v-col>
+            <v-col cols="6" class="text-center">
+              <p class="text-h2">{{ añadidoMarcador }}</p>
+            </v-col>
+          </v-row>
+        </v-col>
+        <v-col cols="4">
+          <v-row>
+            <v-col cols="12" class="text-center">
+              <h3>Parte en juego</h3>
+            </v-col>
+            <v-col cols="6" class="mx-auto">
+              <v-text-field class="centered-input" v-model="parteEnJuego" label="parte"></v-text-field>
+            </v-col>
+          </v-row>
+          <v-btn color="success" @click="cambioDePosesion()">CAMBIO POSESION</v-btn>
+        </v-col>
+      </v-row>
+
+    </v-col>
+    <v-col cols="5" class="contenedor-video">
+      <v-row>
+        <v-col class="text-center">
+          <video id="myVideoId" width="620" height="349" autoplay muted playsinline/>
         </v-col>
       </v-row>
     </v-col>
-    <v-col cols="4">
-      <v-row>
-        <v-col cols="12" class="text-center">
-          <h3>Tiempo añadido</h3>
-        </v-col>
-        <v-col cols="6" class="text-center mx-auto">
-          <v-text-field class="text-center" v-model="añadido" label="tiempo añadido"></v-text-field>
-        </v-col>
-        <v-col cols="6" class="text-center">
-          <p class="text-h2">{{ añadidoMarcador }}</p>
-        </v-col>
-      </v-row>
-    </v-col>
-    <v-col cols="4">
-      <v-row>
-        <v-col cols="12" class="text-center">
-          <h3>Parte en juego</h3>
-        </v-col>
-        <v-col cols="6" class="mx-auto">
-          <v-text-field class="centered-input" v-model="parteEnJuego" label="parte"></v-text-field>
-        </v-col>
-      </v-row>
-      <v-btn color="success" @click="cambioDePosesion()">CAMBIO POSESION</v-btn>
-    </v-col>
+
   </v-row>
 </template>
 
@@ -238,7 +244,7 @@
       inicioPosesion = finPosesion
       if(equipoEnPosesion.value == 'local') {
         posesionLocalTotal.value += duracionPosesion
-        equipoEnPosesion = 'visitante'
+        equipoEnPosesion.value = 'visitante'
       } else if (equipoEnPosesion.value == 'visitante') {
         posesionVisitanteTotal.value += duracionPosesion
         equipoEnPosesion.value = 'local'
@@ -295,12 +301,26 @@
 </script>
 
 
-<style>
+<style scoped>
   .centered-input input {
       text-align: center
     }
 
   .underline {
     border-bottom: 2px solid white;
+  }
+  .contenedor-video {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* border: 2px solid white; */
+    background-color: #303030;
+  }
+  video {
+    margin: 0;
+    padding: 0;
+  }
+  #myVideoId {
+    border: 1px solid white;
   }
 </style>

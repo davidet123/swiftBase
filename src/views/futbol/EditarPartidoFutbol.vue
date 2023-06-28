@@ -1,60 +1,74 @@
 <template>
-  <v-row>
-    <v-col cols="12" class="text-center">
-      <h1>EDITAR PARTIDO</h1>
-    </v-col>
-  </v-row>
-  <v-row>
-    <v-col cols="6">
-      <v-select
-        v-model="partido.equipo_local"
-        :items="equipos"
-        item-title="nombre_equipo"
-        item-value="nombre_equipo"
-        density="compact"
-        label="Equipo Local"
-      ></v-select> 
-    </v-col>
-    <v-col cols="6">
-      <v-select
-        v-model="partido.equipo_visitante"
-        :items="equipos"
-        item-title="nombre_equipo"
-        item-value="nombre_equipo"
-        density="compact"
-        label="Equipo Visitante"
-      ></v-select>
-    </v-col>
-    <v-col cols="3">
-      <v-text-field
-        v-model="partido.estadio"
-        label="Estadio"
-      ></v-text-field>
-    </v-col>
-    <v-col cols="3">
-      <v-text-field
-        v-model="partido.lugar"
-        label="Lugar"
-      ></v-text-field>
-    </v-col>
-    <v-col cols="3">
-      <v-text-field
-        v-model="partido.fecha"
-        label="Fecha"
-      ></v-text-field>
-    </v-col>
-    <v-col cols="3">
-      <v-text-field
-        v-model="partido.hora"
-        label="Hora"
-      ></v-text-field>
-    </v-col>
-  </v-row>
-  <v-row>
-    <v-col>
-      <v-btn color="success" @click="editarPartido()">ACEPTAR</v-btn>
-    </v-col>
-  </v-row>
+  <!-- {{ !cargando_equipos  && !cargando_partidos }} -->
+
+  <div v-if="cargando_equipos || cargando_partidos" class="text-center" style="margin-top:200px;">
+    <v-progress-circular
+      indeterminate
+      color="primary"
+      size="50"
+    ></v-progress-circular>
+  </div>
+
+  <div v-if="!cargando_equipos && !cargando_partidos">
+    <!-- {{ partido.id_partido }} -->
+
+    <v-row>
+      <v-col cols="12" class="text-center">
+        <h3>EDITAR PARTIDO {{ partido.equipo_local.nombre_equipo }} vs {{ partido.equipo_visitante.nombre_equipo }}</h3>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="6">
+        <v-select
+          v-model="nuevoPartido.equipo_local.nombre_equipo"
+          :items="equipos"
+          item-title="nombre_equipo"
+          item-value="nombre_equipo"
+          density="compact"
+          label="Equipo Local"
+        ></v-select> 
+      </v-col>
+      <v-col cols="6">
+        <v-select
+          v-model="nuevoPartido.equipo_visitante.nombre_equipo"
+          :items="equipos"
+          item-title="nombre_equipo"
+          item-value="nombre_equipo"
+          density="compact"
+          label="Equipo Visitante"
+        ></v-select>
+      </v-col>
+      <v-col cols="3">
+        <v-text-field
+          v-model="nuevoPartido.estadio"
+          label="Estadio"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="3">
+        <v-text-field
+          v-model="nuevoPartido.lugar"
+          label="Lugar"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="3">
+        <v-text-field
+          v-model="nuevoPartido.fecha"
+          label="Fecha"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="3">
+        <v-text-field
+          v-model="nuevoPartido.hora"
+          label="Hora"
+        ></v-text-field>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-btn color="success" @click="editarPartido()">ACEPTAR</v-btn>
+      </v-col>
+    </v-row>
+  </div>
   <!-- <v-row>
     <v-col cols="12" class="text-center">
       <h2>Editar Partido</h2>
@@ -102,20 +116,59 @@
 
   import { useRoute } from 'vue-router';
   import { usegFutbolStore } from "../../store/futbol"
-  
+
+  import { storeToRefs } from "pinia";
+  import { computed } from 'vue';
+
   
   const futbolStore = usegFutbolStore()
   const route = useRoute()
-
+  
+  // const cargandoPartidos = futbolStore.cargandoPartidos
+  // const loading = futbolStore.loading
+  
   const id = route.params.id
+  
+  const { cargando_equipos, cargando_partidos, equipos, partidos } = storeToRefs(futbolStore)
+  
+  // futbolStore.cargarEquipos()
+  // futbolStore.cargarPartidos()
 
-  const equipos = futbolStore.getEquipos
+  
+  let nuevoPartido = ref({
+    equipo_local: null,
+    id_equipo_local: null,
+    equipo_visitante: null,
+    id_equipo_visitante: null,
+    fecha: null,
+    hora: null,
+    lugar: null,
+    estadio: null,
+    })
+  
+  const partido = computed(() => {
+    const refPartido =  partidos.value.find(partido=> {
+    return partido.id_partido == id
+    })
 
-  const partido = ref({...futbolStore.buscarPartido(id)})
+    console.log(refPartido)
+   
+    nuevoPartido.value = {...refPartido}
+    return refPartido
+  })
+
+
+ /*  const refPartido = computed(() => {
+    return partidos.value.find(partido => {
+    console.log(partido)
+    return partido.id_partido == id
+    })
+  }) */
+ 
 
   const editarPartido = () => {
-    // console.log(partido.value)
-    futbolStore.editarPartido(partido.value)
+    // console.log(nuevoPartido.value)
+    futbolStore.editarPartido(nuevoPartido.value)
   }
 /* 
   const equipo_local = futbolStore.buscarEquipo(partido.id_equipo_local)

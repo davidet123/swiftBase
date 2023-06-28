@@ -6,8 +6,8 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12" class="text-center"><v-btn color="success"  @click="router.push(`/futbol/addpartidofutbol`)">NUEVO PARTIDO</v-btn></v-col>
-      <v-col cols="2" offset="4" class="text-center"><v-btn color="success"  @click="router.push(`/futbol/addequipofutbol`)">NUEVO EQUIPO</v-btn></v-col>
+      <v-col cols="2" class="text-center"><v-btn color="success"  @click="router.push(`/futbol/addpartidofutbol`)">NUEVO PARTIDO</v-btn></v-col>
+      <v-col cols="2" class="text-center"><v-btn color="success"  @click="router.push(`/futbol/addequipofutbol`)">NUEVO EQUIPO</v-btn></v-col>
       <v-col cols="2" class="text-center"><v-btn color="success" @click="router.push(`/futbol/listaequiposfutbol`)">EDITAR EQUIPO</v-btn></v-col>
       <!-- <v-col cols="12" class="text-center"><v-btn color="success" @click="crono">CRONO</v-btn></v-col> -->
     </v-row>
@@ -18,8 +18,8 @@
       </v-col>
     </v-row> -->
     <v-row>
-      <v-col cols="12" class="text-center"><h4>Partidos</h4></v-col>
-      <v-col cols="6" v-for="partido in partidos" :id="partido.id_partido">
+      <v-col cols="12" class="text-center"><h2>Listado partidos</h2></v-col>
+      <v-col cols="12" v-for="partido in partidos" :id="partido.id_partido">
         <PartidoIndividual :partido="partido" /> 
         <!-- <JugadorFutbolnd :jugador="jugador" @borrarJugador="id => borrarJugador(id)"/> -->
       </v-col>
@@ -49,6 +49,10 @@ const router = useRouter()
 
 const futbolStore = usegFutbolStore()
 
+// futbolStore.cargarEquipos()
+
+// futbolStore.cargarPartidos()
+
 
 // CARGAR JUGADORES
 // futbolStore.cargarJugadores()
@@ -56,7 +60,8 @@ const futbolStore = usegFutbolStore()
 
 // CARGAR PARTIDOS 
 
-futbolStore.cargarPartidos()
+// futbolStore.addEquiposToDb()
+
 
 const { partidos } = storeToRefs(futbolStore)
 // const jugadores = computed(() => equipos.value[0].jugadores)
