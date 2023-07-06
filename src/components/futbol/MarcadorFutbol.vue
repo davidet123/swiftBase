@@ -94,7 +94,7 @@
     <v-col cols="5" class="contenedor-video">
       <v-row>
         <v-col class="text-center">
-          <video id="myVideoId" width="620" height="349" autoplay muted playsinline/>
+          <!-- <video id="myVideoId" width="620" height="349" autoplay muted playsinline/> -->
         </v-col>
       </v-row>
     </v-col>
@@ -114,7 +114,7 @@
 
   const futbolStore = usegFutbolStore()
   const swiftConnectionStore = useSwiftConnectionStore()
-  swiftConnectionStore.startConnection()
+  // swiftConnectionStore.startConnection()
   // console.log(swiftConnectionStore)
   // const { marcador } = storeToRefs(futbolStore)
 

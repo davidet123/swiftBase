@@ -57,6 +57,7 @@ export const usegFutbolStore = defineStore('futbol', {
     local: [],
     visitante: [],
     partidos: [],
+    partido_cargado: null,
     /* partidos: [{
       id_partido: "001",
       equipo_local: "Gandia",
@@ -1055,6 +1056,10 @@ export const usegFutbolStore = defineStore('futbol', {
     },
     
     // PARTIDOS --------------------------------------------
+
+    setPartidoEnJuego(id) {
+      this.partido_cargado = id
+    },
     buscarPartido(id) {
       // console.log(this.partidos)
       // if(this.partidos.length == 0) {
@@ -1071,7 +1076,7 @@ export const usegFutbolStore = defineStore('futbol', {
       const docRef = await addDoc(collection(db, 'partidos_futbol'), partido)
       partido.id_partido = docRef.id      
       // console.log(partido)
-      this.partidos.push(partido)
+      // this.partidos.push(partido)
     },
 
     async editarPartido(partido) {
@@ -1107,12 +1112,13 @@ export const usegFutbolStore = defineStore('futbol', {
               partido.id_partido = change.doc.id
               // console.log(change.doc.id)
               this.partidos.push(partido)
-            } else if (change.type == "modified") {
-              let equipo = change.doc.data()
-              console.log(equipo)
+            } else if (change.type === "modified") {
+              console.log("modified")
+              let nuevo_partido = change.doc.data()
+              nuevo_partido.id_partido = change.doc.id
+              this.actualizarPartido(nuevo_partido)
             }
           })
-          // console.log(this.partidos)
         })
         
       } catch (err) {
@@ -1121,8 +1127,48 @@ export const usegFutbolStore = defineStore('futbol', {
         this.cargando_partidos = false
 
       }
+    },
+    actualizarPartido(partido) {
+      console.log('actualizando store')
+      let part = this.partidos.find(p => {
+        return p.id_partido === partido.id_partido
+      })
+      part.equipo_local = partido.equipo_local
+      part.equipo_visitante = partido.equipo_visitante
+    },
 
+    async updateEstPartido(id_partido, jugador) {
+      // console.log("updateEstPartido")
+      // console.log(jugador.estadistica.goles)
+      console.log("STORE", jugador)
 
+      const docRef = doc(db, "partidos_futbol", id_partido)
+      // console.log(docRef)
+      const partido = this.partidos.find(part => {
+        return part.id_partido === id_partido
+      })
+      // console.log(partido)
+      let buscaJugador
+      buscaJugador = partido.equipo_local.jugadores.find(jug => {
+        return jug.id_jugador === jugador.id_jugador
+      })
+      // console.log(buscaJugador)
+      if (!buscaJugador) {
+        buscaJugador = partido.equipo_visitante.jugadores.find(jug => {
+          return jug.id_jugador === jugador.id_jugador
+        })
+      }
+      // console.log(partido.equipo_local.jugadores[0].estadistica.goles)
+      // console.log(this.partidos[1].equipo_local.jugadores[0].estadistica.goles)
+
+      buscaJugador.estadistica = jugador.estadistica
+      await updateDoc(docRef, {
+        equipo_local: partido.equipo_local,
+        equipo_visitante: partido.equipo_visitante
+      })
+      // console.log(partido)
+      
+      
 
     },
     /* async cargarPartidos() {
@@ -1258,10 +1304,24 @@ export const usegFutbolStore = defineStore('futbol', {
 
     
 
-    buscarJugador(id) {
-      return this.jugadores.find(jug => {
-        return jug.id_jugador === id
+    buscarJugador(id_jugador) {
+      const id_partido = this.partido_cargado
+      const partido = this.partidos.find(part => {
+        return part.id_partido === id_partido
       })
+      let buscaJugador
+      buscaJugador = partido.equipo_local.jugadores.find(jug => {
+        return jug.id_jugador === id_jugador
+      })
+      // console.log(buscaJugador)
+      if (!buscaJugador) {
+        buscaJugador = partido.equipo_visitante.jugadores.find(jug => {
+          return jug.id_jugador === id_jugador
+        })
+      }
+      console.log(buscaJugador)
+
+      return buscaJugador
     },
     BuscarJugadorPorEquipo(equipo) {
       return this.jugadores.filter(jug => {

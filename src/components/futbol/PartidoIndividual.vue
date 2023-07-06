@@ -15,11 +15,12 @@
         <v-col cols="8">
           {{ partido.fecha }} | {{ partido.hora }} | {{ partido.lugar }}
         </v-col>
-        <v-col cols="4">
+        <v-col cols="2">
           <v-btn color="success" @click="irPartido(partido.id_partido)">ESTADISTICA</v-btn>
+        </v-col>
+        <v-col cols="2">
           <v-btn color="success" @click="editarPartido(partido.id_partido)">editar</v-btn>
         </v-col>
-
       </v-row>
     </v-card-text>
 
@@ -31,7 +32,10 @@
 <script setup>
 
 import { useRouter, useRoute } from 'vue-router';
+import { usegFutbolStore } from "../../store/futbol"
 
+
+const futbolStore = usegFutbolStore()
 
 const router = useRouter()
 const route = useRoute()
@@ -44,6 +48,7 @@ const props = defineProps(["partido"])
 
 
 const irPartido = id => {
+  futbolStore.setPartidoEnJuego(id)
   router.push(`/futbol/estfutbol/${id}`)
 }
 

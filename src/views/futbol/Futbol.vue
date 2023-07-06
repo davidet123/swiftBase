@@ -19,7 +19,7 @@
     </v-row> -->
     <v-row>
       <v-col cols="12" class="text-center"><h2>Listado partidos</h2></v-col>
-      <v-col cols="12" v-for="partido in partidos" :id="partido.id_partido">
+      <v-col cols="8" offset="2" v-for="partido in partidos" :id="partido.id_partido">
         <PartidoIndividual :partido="partido" /> 
         <!-- <JugadorFutbolnd :jugador="jugador" @borrarJugador="id => borrarJugador(id)"/> -->
       </v-col>

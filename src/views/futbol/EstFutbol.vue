@@ -9,7 +9,7 @@
     ></v-progress-circular>
   </div>
   <!-- <div v-if="!cargando_equipos && !cargando_partidos"> -->
-  <div v-if="partido">
+  <div v-if="partido" class="mb-4 pb-4">
     <!-- {{ partido }} -->
       <v-row>
         <v-col cols="12">
@@ -17,7 +17,7 @@
         </v-col>
       </v-row>
        <v-row>
-        <v-col cols="6">
+        <v-col cols="4" offset="1">
           <v-row>
             <v-col cols="12" class="text-center">
               <h4 >{{ partido.equipo_local.nombre_equipo}}</h4>
@@ -42,7 +42,6 @@
             </v-col>
           </v-row>
           <v-row>
-              
             <v-col cols="6"  align="center">
               <v-select label="Dorsal" :items="listadoDorsalesLocal" v-model="dorsalLocal" density="compact"></v-select>
             </v-col>
@@ -51,15 +50,16 @@
             </v-col>
             <v-row>
                 <v-col v-if="dorsalLocal !== null" cols="12">
-                  <JugadorFutbolInd :jugador="listadoLocal[0]" :fondo="'local'"/>
+                  <JugadorFutbolInd :jugador="listadoLocal[0]" :fondo="'local'" class="ml-4" @test="test"/>
                 </v-col>
                 <v-col v-else v-for="jugador in equipo_local.jugadores" :key="jugador.id_jugador" cols="12" class="clearMargin">
-                  <JugadorFutbolInd  :jugador="jugador" :fondo="'local'"/>
+                  <p>{{ jugador.estadistica.goles }}</p>
+                  <JugadorFutbolInd :jugador = "jugador" :id_jugador = "jugador.id_jugador" :fondo="'local'" class="ml-4" @test="test"/>
                 </v-col>
             </v-row>
           </v-row>
         </v-col>
-        <v-col cols="6" class="px-2">
+        <v-col cols="4" class="px-2" offset="2">
           <v-row>
             <v-col cols="12" class="text-center">
               <h4>{{ equipo_visitante.nombre_equipo}}</h4>          
@@ -82,18 +82,18 @@
             <v-col cols="2" class="text-center">
               <p>FUERAS DE JUEGO: 0</p>
             </v-col>
-            <v-col cols="6"  align="center">
+            <v-col cols="6" align="center">
               <v-select label="Dorsal" :items="listadoDorsalesVisitante" v-model="dorsalVisitante" density="compact"></v-select>
             </v-col>
             <v-col cols="6">
               <v-btn color="error" size="x-small" @click="limpiarDorsal('visitante')">X</v-btn>
             </v-col>
             <v-row class="clearMargin">
-                <v-col v-if="dorsalVisitante !== null" cols="12">
+                <v-col v-if="dorsalVisitante !== null" cols="12" class="mr-2">
                   <JugadorFutbolInd :jugador="listadoVisitante[0]" :fondo="'visitante'"/>
                 </v-col>
                 <v-col v-else v-for="jugador in equipo_visitante.jugadores" :key="jugador.id_jugador" cols="12" class="clearMargin">
-                  <JugadorFutbolInd  :jugador="jugador" :fondo="'visitante'"/>
+                  <JugadorFutbolInd  :jugador = "jugador" :id_jugador = "jugador.id_jugador" :fondo="'visitante'" class="mr-2"/>
                 </v-col>
             </v-row>
           </v-row>
@@ -135,7 +135,13 @@ const route = useRoute()
 
 const id = route.params.id
 
-const { partidos } = storeToRefs(futbolStore)
+const { partidos, partido_cargado } = storeToRefs(futbolStore)
+
+if(!partido_cargado.value) {
+  futbolStore.setPartidoEnJuego(id)
+}
+
+console.log(partido_cargado.value)
 // const { cargando_equipos, cargando_partidos } = storeToRefs(futbolStore)
 
 // console.log(partidos.value)
@@ -169,6 +175,7 @@ onBeforeMount(() => {
 // console.log(partido)
 
 
+
 const partido = computed(() => {
   return partidos.value.find( el => {
     // console.log(el)
@@ -181,6 +188,21 @@ const partido = computed(() => {
 let equipo_local = computed(() => partido.value.equipo_local)
 let equipo_visitante = computed(() => partido.value.equipo_visitante)
 
+const test = (jugador) => {
+  // console.log(partidos.value[1].equipo_local.jugadores[0].estadistica.goles)
+  // console.log(equipo_local.value.jugadores[0].estadistica.goles)
+  const nuevaEst = equipo_local.value.jugadores.find(jug => {
+    return jug.id_jugador === jugador.id_jugador
+  })
+  nuevaEst.estadistica = jugador.estadistica
+  // console.log(partidos.value[1].equipo_local.jugadores[0].estadistica.goles)
+  // console.log(partidos.value)
+  // console.log('Componente => ' + partido.value.equipo_local.nombre_equipo)
+  // console.log('Store => ' + partidos.value[1].equipo_local.nombre_equipo)
+  // partido.value.equipo_local.nombre_equipo = "TEST3"
+  // console.log('Componente => ' + partido.value.equipo_local.nombre_equipo)
+  // console.log('Store => ' + partidos.value[1].equipo_local.nombre_equipo)
+}
 // let equipo_local = ref(partido.equipo_local)
 // let equipo_visitante = ref(partido.equipo_visitante)
 
@@ -383,10 +405,12 @@ const disparosVisitantelTotal = computed(() => {
   return disparosAPuerta + " / " +  disparos
 }) */
 
-/* 
+
 watch(() => partido, val => {
-  console.log(val)
-})*/
+  console.log(val.value)
+},{
+  deep: true
+})
 
 </script> 
 <style scoped>
