@@ -10,6 +10,7 @@ import AddPartidoFutbol from '../views/futbol/AddPartidoFutbol.vue'
 import EditarPartidoFutbol from '../views/futbol/EditarPartidoFutbol.vue'
 import EditarEquipoFutbol from '../views/futbol/EditarEquipoFutbol.vue'
 import ListaEquiposFutbol from '../views/futbol/ListaEquiposFutbol.vue'
+import ResumenFutbol from '../views/futbol/ResumenFutbol.vue'
 import Vumetro from '../views/vumetro/Vumetro.vue'
 import Settings from '../views/Settings.vue'
 
@@ -55,6 +56,11 @@ const router = createRouter({
       path: '/futbol/estfutbol/:id',
       name: 'estfutbol',
       component: EstFutbol
+    },
+    {
+      path: '/futbol/resumenfutbol/:id',
+      name: 'resumenfitbol',
+      component: ResumenFutbol
     },
     {
       path: '/futbol/addequipofutbol',

@@ -1061,22 +1061,14 @@ export const usegFutbolStore = defineStore('futbol', {
       this.partido_cargado = id
     },
     buscarPartido(id) {
-      // console.log(this.partidos)
-      // if(this.partidos.length == 0) {
-      //   this.cargarEquipos()
-      //   this.cargarPartidos()
-      // }
       return this.partidos.find(partido => {
-        console.log(partido.id_partido == id)
         return partido.id_partido == id
       })
     },
     
     async addPartido(partido) {
       const docRef = await addDoc(collection(db, 'partidos_futbol'), partido)
-      partido.id_partido = docRef.id      
-      // console.log(partido)
-      // this.partidos.push(partido)
+      partido.id_partido = docRef.id  
     },
 
     async editarPartido(partido) {
@@ -1093,7 +1085,6 @@ export const usegFutbolStore = defineStore('futbol', {
       nuevoPartido.fecha = partido.fecha
       nuevoPartido.hora = partido.hora
 
-      // console.log(partido.id_partido)
 
       const docRef = doc(db, "partidos_futbol", partido.id_partido)
       await updateDoc(docRef, nuevoPartido)
@@ -1110,10 +1101,8 @@ export const usegFutbolStore = defineStore('futbol', {
             if (change.type === "added") {
               let partido = change.doc.data()
               partido.id_partido = change.doc.id
-              // console.log(change.doc.id)
               this.partidos.push(partido)
             } else if (change.type === "modified") {
-              console.log("modified")
               let nuevo_partido = change.doc.data()
               nuevo_partido.id_partido = change.doc.id
               this.actualizarPartido(nuevo_partido)
@@ -1129,7 +1118,6 @@ export const usegFutbolStore = defineStore('futbol', {
       }
     },
     actualizarPartido(partido) {
-      console.log('actualizando store')
       let part = this.partidos.find(p => {
         return p.id_partido === partido.id_partido
       })
@@ -1138,38 +1126,28 @@ export const usegFutbolStore = defineStore('futbol', {
     },
 
     async updateEstPartido(id_partido, jugador) {
-      // console.log("updateEstPartido")
-      // console.log(jugador.estadistica.goles)
-      console.log("STORE", jugador)
 
       const docRef = doc(db, "partidos_futbol", id_partido)
-      // console.log(docRef)
+      
       const partido = this.partidos.find(part => {
         return part.id_partido === id_partido
       })
-      // console.log(partido)
+      
       let buscaJugador
       buscaJugador = partido.equipo_local.jugadores.find(jug => {
         return jug.id_jugador === jugador.id_jugador
       })
-      // console.log(buscaJugador)
+      
       if (!buscaJugador) {
         buscaJugador = partido.equipo_visitante.jugadores.find(jug => {
           return jug.id_jugador === jugador.id_jugador
         })
       }
-      // console.log(partido.equipo_local.jugadores[0].estadistica.goles)
-      // console.log(this.partidos[1].equipo_local.jugadores[0].estadistica.goles)
-
       buscaJugador.estadistica = jugador.estadistica
       await updateDoc(docRef, {
         equipo_local: partido.equipo_local,
         equipo_visitante: partido.equipo_visitante
       })
-      // console.log(partido)
-      
-      
-
     },
     /* async cargarPartidos() {
       this.loading_state = true
@@ -1203,6 +1181,10 @@ export const usegFutbolStore = defineStore('futbol', {
     setTiempoPrimera(tiempo) {
       // console.log(tiempo)
       this.partidos[0].tiempo.primeraParte = tiempo
+    },
+
+    updateMarcadorDB(id_partido) {
+      console.log("UPSATE MARCADOR")
     },
 
 

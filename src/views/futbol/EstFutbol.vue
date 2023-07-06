@@ -13,7 +13,7 @@
     <!-- {{ partido }} -->
       <v-row>
         <v-col cols="12">
-          <MarcadorFutbol :marcador = "partido.marcador" :tiempo="partido.tiempo"/>
+          <MarcadorFutbol :marcador = "partido.marcador" :tiempo="partido.tiempo" @updateDB="updateDB"/>
         </v-col>
       </v-row>
        <v-row>
@@ -53,8 +53,7 @@
                   <JugadorFutbolInd :jugador="listadoLocal[0]" :fondo="'local'" class="ml-4" @test="test"/>
                 </v-col>
                 <v-col v-else v-for="jugador in equipo_local.jugadores" :key="jugador.id_jugador" cols="12" class="clearMargin">
-                  <p>{{ jugador.estadistica.goles }}</p>
-                  <JugadorFutbolInd :jugador = "jugador" :id_jugador = "jugador.id_jugador" :fondo="'local'" class="ml-4" @test="test"/>
+                  <JugadorFutbolInd :jugador = "jugador" :id_jugador = "jugador.id_jugador" :fondo="'local'" class="ml-4"/>
                 </v-col>
             </v-row>
           </v-row>
@@ -98,16 +97,6 @@
             </v-row>
           </v-row>
         </v-col>
-        <!-- <v-col cols="6">
-          <v-row>
-            <v-col cols="12" class="text-center">
-              <p class="text-center" width="100%">{{ equipo_visitante.nombre_equipo}}</p>
-            </v-col>
-            <v-col cols="6" v-for="jugador in equipo_visitante.jugadores" :key="jugador.id_jugador">
-              <JugadorFutbolInd  :jugador="jugador" :fondo="'visitante'"/>
-            </v-col>
-          </v-row>
-        </v-col> -->
       </v-row>
   
   </div>
@@ -141,44 +130,8 @@ if(!partido_cargado.value) {
   futbolStore.setPartidoEnJuego(id)
 }
 
-console.log(partido_cargado.value)
-// const { cargando_equipos, cargando_partidos } = storeToRefs(futbolStore)
-
-// console.log(partidos.value)
-
-
-// let partido
-
-// onBeforeMount(async () => {
-//   partido = await futbolStore.buscarPartido(id) 
-//   console.log(partido)
-// })
-
-
-
-/* let partido
-
-onBeforeMount( async () => {
-    inventory.value = await apiGetInventory()
-})
-onBeforeMount(() => {
-  console.log('Onbeforemount')
-  partido = futbolStore.buscarPartido(id)
-  console.log(partido)
-
-// }) */
-// let partido = ref(null)
-// partido.value = futbolStore.buscarPartido(id)
-// console.log(partido.value)
-// let partido = ref(null)
-// partido.value = futbolStore.buscarPartido(id)
-// console.log(partido)
-
-
-
 const partido = computed(() => {
   return partidos.value.find( el => {
-    // console.log(el)
     return el.id_partido == id
   })
 })
@@ -188,25 +141,6 @@ const partido = computed(() => {
 let equipo_local = computed(() => partido.value.equipo_local)
 let equipo_visitante = computed(() => partido.value.equipo_visitante)
 
-const test = (jugador) => {
-  // console.log(partidos.value[1].equipo_local.jugadores[0].estadistica.goles)
-  // console.log(equipo_local.value.jugadores[0].estadistica.goles)
-  const nuevaEst = equipo_local.value.jugadores.find(jug => {
-    return jug.id_jugador === jugador.id_jugador
-  })
-  nuevaEst.estadistica = jugador.estadistica
-  // console.log(partidos.value[1].equipo_local.jugadores[0].estadistica.goles)
-  // console.log(partidos.value)
-  // console.log('Componente => ' + partido.value.equipo_local.nombre_equipo)
-  // console.log('Store => ' + partidos.value[1].equipo_local.nombre_equipo)
-  // partido.value.equipo_local.nombre_equipo = "TEST3"
-  // console.log('Componente => ' + partido.value.equipo_local.nombre_equipo)
-  // console.log('Store => ' + partidos.value[1].equipo_local.nombre_equipo)
-}
-// let equipo_local = ref(partido.equipo_local)
-// let equipo_visitante = ref(partido.equipo_visitante)
-
-// console.log(equipo_local.value)
 
 // AÑADIR JUGADORES
 /*
@@ -266,8 +200,6 @@ const listadoLocal = computed(() => {
     return equipo_local.value.jugadores.filter(jugador => {
       return jugador.numero == dorsalLocal.value
     })
-    // console.log(jug)
-    // return jug
   } else {
     return equipo_local.value
   }
@@ -284,8 +216,6 @@ const listadoVisitante = computed(() => {
     return equipo_visitante.value.jugadores.filter(jugador => {
       return jugador.numero == dorsalVisitante.value
     })
-    // console.log(jug)
-    // return jug
   } else {
     return equipo_visitante.value
   }
@@ -321,6 +251,27 @@ const disparosTotales = (jugadores, estadistica1, estadistica2) => {
 
 const disparosLocalTotal = computed(() => disparosTotales(equipo_local.value.jugadores, 'disparos', 'disparos_al_arco'));
 const disparosVisitantelTotal = computed(() => disparosTotales(equipo_visitante.value.jugadores, 'disparos', 'disparos_al_arco'));
+
+
+const dispLocalTotal = computed (() =>estadisticasTotales(equipo_local.value.jugadores, 'disparos'))
+const dispAlArcoLocalTotal = computed (() =>estadisticasTotales(equipo_local.value.jugadores, 'disparos_al_arco'))
+
+const dispVisitanteTotal = computed (() =>estadisticasTotales(equipo_visitante.value.jugadores, 'disparos'))
+const dispVisitanteAlArcoTotal = computed (() =>estadisticasTotales(equipo_visitante.value.jugadores, 'disparos_al_arco'))
+
+
+const updateDB = (est) => {
+  console.log(est)
+  const estadistica_local = {
+    corners: 0,
+    disparos: dispLocalTotal.value,
+    disparos_al_arco: dispLocalTotal.dispAlArcoLocalTotal,
+    fueras_de_juego: 0,
+    posesión: est.posesion_local,
+    saques_de_esquina: 0,
+  }
+  console.log(estadistica_local)
+}
 
 
 /* const golesLocalTotales = computed(() => {
@@ -406,11 +357,11 @@ const disparosVisitantelTotal = computed(() => {
 }) */
 
 
-watch(() => partido, val => {
+/* watch(() => partido, val => {
   console.log(val.value)
 },{
   deep: true
-})
+}) */
 
 </script> 
 <style scoped>

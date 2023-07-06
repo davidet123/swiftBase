@@ -101,7 +101,7 @@
                 <v-row>
 
                   <v-col cols="6" class="text-center">
-                    <p>DISPARO</p>
+                    <p>DISPARO ({{ jugador.estadistica.disparos }})</p>
                     <v-row>
                       <v-col cols="2" offset="2">
                         <v-btn size="x-small" color="success" @click="disparo(1)">+</v-btn>
@@ -113,7 +113,7 @@
                     
                   </v-col>
                   <v-col cols="6" class="text-center">
-                    <p>A PUERTA</p>
+                    <p>A PUERTA ({{ jugador.estadistica.disparos_al_arco }})</p>
                     <v-row>
                       <v-col cols="2" offset="2">
                         <v-btn size="x-small" color="success" @click="disparoAPuerta(1)">+</v-btn>
@@ -139,10 +139,7 @@
 import { useRoute } from 'vue-router';
 
 import { usegFutbolStore } from "../../store/futbol"
-import { toRef, toRefs } from 'vue';
-import { watch } from 'vue';
-import { ref } from 'vue';
-import { storeToRefs } from 'pinia';
+import { toRefs } from 'vue';;
 
 
 const route = useRoute()
@@ -154,10 +151,10 @@ const futbolStore = usegFutbolStore()
 
 const props = defineProps(["jugador", "id_jugador", "fondo"])
 
-const {jugador} = toRefs(props)
+const { jugador } = toRefs(props)
 
 
-const emit = defineEmits(["borrarJugador", "test"])
+const emit = defineEmits(["borrarJugador"])
 
 
 const gol = val => {
@@ -192,13 +189,6 @@ const disparoAPuerta = val => {
 const updateDB = (jugador) => {
   futbolStore.updateEstPartido(id_partido, jugador)
 }
-
-// watch(() => partidos, val => {
-//   console.log("Jugador individual")
-//   console.log(val)
-//   jugador = ref(buscarJugador())
-// },
-// {deep: true})
 
 
 </script>

@@ -109,19 +109,25 @@
   import { useSwiftConnectionStore } from "../../store/swiftConnection"
 
   import BotonSimple from '@/components/simple/botonSimple.vue' 
+  import { toRefs } from "vue"
 
   
 
   const futbolStore = usegFutbolStore()
   const swiftConnectionStore = useSwiftConnectionStore()
-  // swiftConnectionStore.startConnection()
-  // console.log(swiftConnectionStore)
+  
+  // swiftConnectionStore.OpenConnection()
+  console.log(swiftConnectionStore)
   // const { marcador } = storeToRefs(futbolStore)
 
   // const marcador = futbolStore.marcador
   const props = defineProps(["marcador", "tiempo"])
   // const tiempoTotal = futbolStore.tiempo
-  const tiempoTotal = props.tiempo
+  const { marcador, tiempo } = toRefs( props )
+
+  const emit = defineEmits(["updateDB"])
+
+  const tiempoTotal = tiempo.value
 
   let temporizador
   let tiempoInicio
@@ -143,14 +149,14 @@
 
 
   const añadido = ref(2) // tiempo en minutos
-  const tiempoJuego = ref(5) // tiempo en minutos
+  const tiempoJuego = ref(1) // tiempo en minutos
 
   const tiempoMarcador = ref('00:00')
   const añadidoMarcador = ref('00:00')
 
   const gol = (equipo, valor) => {
-    props.marcador[equipo] += valor
-    swiftConnectionStore.rtRemote.updateFields("MARCADOR::" + equipo.toUpperCase() + "TEXT","String", props.marcador[equipo])
+    marcador.value[equipo] += valor
+    swiftConnectionStore.rtRemote.updateFields("MARCADOR::" + equipo.toUpperCase() + "TEXT","String", marcador.value[equipo])
   }
 
   const iniciarTiempo = () => {
@@ -167,21 +173,22 @@
     temporizador = setInterval(() => {
       const ahora = Date.now()
       let dif = ahora - inicio
-      if(dif > parseInt(tiempoJuego.value) * 1000 + 5  && !añadidoIniciado) {
+      if(dif > parseInt(tiempoJuego.value) * 1000 * 60 + 5  && !añadidoIniciado) {
         inicio = Date.now()
         props.tiempo.añadidoPrimera = inicio
         añadidoIniciado = true
         dif = 2000
-        swiftConnectionStore.rtRemote.playMethod("MARCADOR::suplOn")
+        // swiftConnectionStore.rtRemote.playMethod("MARCADOR::suplOn")
       }
       if(!añadidoIniciado) {
         tiempoMarcador.value = (millisToMinutesAndSeconds(dif))
-        swiftConnectionStore.rtRemote.updateFields("MARCADOR::TIEMPOTEXT","String", tiempoMarcador.value)
+        // swiftConnectionStore.rtRemote.updateFields("MARCADOR::TIEMPOTEXT","String", tiempoMarcador.value)
       } else {
         añadidoMarcador.value = (millisToMinutesAndSeconds(dif))
-        swiftConnectionStore.rtRemote.updateFields("MARCADOR::SUPLTEXT","String", añadido.value)
+        // swiftConnectionStore.rtRemote.updateFields("MARCADOR::SUPLTEXT","String", añadido.value)
         
       }
+      // emit("updateDB", estTotales.value)
       // calcularPosesion(dif)
 
     }, 1000)
@@ -254,6 +261,7 @@
       porcentajeVisitante.value = Math.round(posesionVisitanteTotal.value / (finPosesion - tiempoInicio) * 100)
   
       // console.log(porcentajeLocal.toFixed(2), porcentajeVisitante.toFixed(2))
+      emit("updateDB", estTotales.value)
 
     }
 
@@ -262,6 +270,13 @@
   document.addEventListener('keyup', e => {
     shortcut(e.key.toUpperCase())
     console.log(e.key.toUpperCase())
+  })
+
+  const estTotales = computed(() => {
+    return {
+      posesion_local: porcentajeLocal.value,
+      posesion_visitante: porcentajeVisitante.value
+    }
   })
 
 
@@ -297,6 +312,8 @@
         break
     }
   }
+
+  
 
 </script>
 

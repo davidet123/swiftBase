@@ -12,7 +12,7 @@
     </v-card-item>
     <v-card-text>
       <v-row>
-        <v-col cols="8">
+        <v-col cols="6">
           {{ partido.fecha }} | {{ partido.hora }} | {{ partido.lugar }}
         </v-col>
         <v-col cols="2">
@@ -20,6 +20,9 @@
         </v-col>
         <v-col cols="2">
           <v-btn color="success" @click="editarPartido(partido.id_partido)">editar</v-btn>
+        </v-col>
+        <v-col cols="2">
+          <v-btn color="success" @click="resumenFutbol(partido.id_partido)">RESUMEN</v-btn>
         </v-col>
       </v-row>
     </v-card-text>
@@ -54,6 +57,10 @@ const irPartido = id => {
 
 const editarPartido = id => {
   router.push(`/futbol/editarpartidofutbol/${id}`)
+}
+
+const resumenFutbol = id => {
+  router.push(`/futbol/resumenfutbol/${id}`)
 }
 
 // console.log(props.partido)
