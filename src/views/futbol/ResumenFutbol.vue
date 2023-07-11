@@ -1,12 +1,13 @@
 <template>
-  <div v-if="!partido" class="text-center" style="margin-top:200px;">
+  {{ cargando_partidos }}
+  <div v-if="cargando_partidos" class="text-center" style="margin-top:200px;">
     <v-progress-circular
       indeterminate
       color="primary"
       size="50"
     ></v-progress-circular>
   </div>
-  <div v-if="partido" class="mb-4 pb-4">
+  <div v-if="!cargando_partidos" class="mb-4 pb-4">
     <v-row>
       <v-col cols="12" class="text-center">
         <h2>RESUMEN PARTIT</h2>
@@ -44,10 +45,7 @@
                 <div v-for="jugador in maxGoleadorLocal" :key="jugador.id_jugador">
                   <v-row>
                     <v-col  cols="9" class="text-left">
-                      <p>{{ jugador.apodo }}</p>
-                    </v-col>
-                    <v-col cols="3" class="text-left">
-                      <p>{{ jugador.estadistica.goles }}</p>
+                      <p>{{ jugador.numero }} -  {{ jugador.apodo }} ({{ jugador.estadistica.goles }})</p>
                     </v-col>
                   </v-row>
                 </div>
@@ -56,10 +54,7 @@
                 <div v-for="jugador in maxGoleadorVisitante" :key="jugador.id_jugador">
                   <v-row>
                     <v-col  cols="9" class="text-left">
-                      <p>{{ jugador.apodo }}</p>
-                    </v-col>
-                    <v-col cols="3" class="text-center">
-                      <p>{{ jugador.estadistica.goles }}</p>
+                      <p>{{ jugador.numero }} -  {{ jugador.apodo }} ({{ jugador.estadistica.goles }})</p>
                     </v-col>
                   </v-row>
                 </div>
@@ -81,6 +76,27 @@
               <td>{{ taVisitanteTotales }}</td>
             </tr>
             <tr>
+              <td></td>
+              <td>
+                <div v-for="jugador in tarAmarillaLocal" :key="jugador.id_jugador">
+                  <v-row>
+                    <v-col  cols="9" class="text-left">
+                      <p>{{ jugador.numero }} -  {{ jugador.apodo }} ({{ jugador.estadistica.tarjetas_amarillas }})</p>
+                    </v-col>
+                  </v-row>
+                </div>
+              </td>
+              <td>
+                <div v-for="jugador in tarAmarillaVisitante" :key="jugador.id_jugador">
+                  <v-row>
+                    <v-col  cols="9" class="text-left">
+                      <p>{{ jugador.numero }} -  {{ jugador.apodo }} ({{ jugador.estadistica.tarjetas_amarillas }})</p>
+                    </v-col>
+                  </v-row>
+                </div>
+              </td>
+            </tr>
+            <tr>
               <td>TARGETES ROJES</td>
               <td>{{ trLocalTotales }}</td>
               <td>{{ trVisitanteTotales }}</td>
@@ -99,18 +115,6 @@
         </v-table>
       </v-col>
     </v-row>
-    <div v-for="jugador in maxGoleadorLocal" :key="jugador.id_jugador">
-    <v-row>
-      <v-col class="text-center">
-
-        {{ jugador.estadistica.goles }}
-      </v-col>
-        <!-- {{ maxGoleadorLocal }} -->
-      </v-row>
-    </div>
-
-
-    
   </div>
 </template>
 
@@ -125,17 +129,21 @@
   const id = route.params.id
 
   const futbolStore = usegFutbolStore()
-  const { partidos } = storeToRefs(futbolStore)
+  const { partidos, cargando_partidos } = storeToRefs(futbolStore)
+  
 
 
   const partido = computed(() => {
-  return partidos.value.find( el => {
-    return el.id_partido == id
+    if(!partidos.value) return false
+    return partidos.value.find( el => {
+      return el.id_partido == id
     })
   })
 
-  let equipo_local = computed(() => partido.value.equipo_local)
-  let equipo_visitante = computed(() => partido.value.equipo_visitante)
+  const equipo_local = computed(() => {
+    if(!partido) return false
+    return partido.value.equipo_local})
+  const equipo_visitante = computed(() => partido.value.equipo_visitante)
 
   const estadisticasTotales = (jugadores, estadistica) => {
     return jugadores.reduce((total, jugador) => total + jugador.estadistica[estadistica], 0);
@@ -161,27 +169,36 @@
   const disparosVisitanteTotal = computed(() => disparosTotales(equipo_visitante.value.jugadores, 'disparos', 'disparos_al_arco'));
 
   
-
+  const jugadoresLocal = [...equipo_local.value.jugadores]
+  const jugadoresVisitante = [...equipo_visitante.value.jugadores]
 
   const maxGoleadorLocal = computed(() => {
-    const listado = [...equipo_local.value.jugadores]
-    return maxGoleador(listado)
+    return consulta(jugadoresLocal, "goles")
   })
   const maxGoleadorVisitante = computed(() => {
-    const listado = [...equipo_visitante.value.jugadores]
-    return maxGoleador(listado)
+    return consulta(jugadoresVisitante, "goles")
+  })
+
+  const tarAmarillaLocal = computed(() => {
+    return consulta(jugadoresLocal, "tarjetas_amarillas")
+  })
+  const tarAmarillaVisitante = computed(() => {
+    return consulta(jugadoresVisitante, "tarjetas_amarillas")
+  })
+  const tarRojaLocal = computed(() => {
+    return consulta(jugadoresLocal, "tarjetas_amarillas")
   })
 
 
-  const maxGoleador = equipo => {
+  const consulta = (equipo, est) => {
     const filtrado = equipo.filter(jug => {
-      console.log(jug.estadistica.goles > 0)
-      return jug.estadistica.goles > 0
+      return jug.estadistica[est] > 0
     })
     filtrado.sort((a,b) => b.estadistica.goles - a.estadistica.goles); // b - a for reverse sort
-
     return filtrado
   }
+
+
 
 
 </script>

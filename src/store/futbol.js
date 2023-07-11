@@ -9,6 +9,7 @@ export const usegFutbolStore = defineStore('futbol', {
   state: () => ({
     cargando_partidos: false,
     cargando_equipos: false,
+    cargando_marcadores: false,
 
     loading_state: false,
     posiciones: [
@@ -57,6 +58,7 @@ export const usegFutbolStore = defineStore('futbol', {
     local: [],
     visitante: [],
     partidos: [],
+    marcadores: [],
     partido_cargado: null,
     /* partidos: [{
       id_partido: "001",
@@ -1041,7 +1043,10 @@ export const usegFutbolStore = defineStore('futbol', {
     getJugadores: state => state.jugadores,
     cargandoPartidos: state => state.cargando_partidos,
     cargandoEquipos: state => state.cargando_equipos,
-    loading: state => state.loading_state
+    loading: state => state.loading_state,
+    // getEquipoById: state => {
+    //   return id => state.partidos.find(partido => id === partido.id)
+    // }
 
   },
   actions: {
@@ -1066,9 +1071,13 @@ export const usegFutbolStore = defineStore('futbol', {
       })
     },
     
-    async addPartido(partido) {
+    async addPartido(partido, marcador) {
+      const listaJugadores = [...partido.equipo_local.jugadores, ...partido.equipo_visitante.jugadores]
+
       const docRef = await addDoc(collection(db, 'partidos_futbol'), partido)
-      partido.id_partido = docRef.id  
+      partido.id_partido = docRef.id 
+      marcador.id_partido = docRef.id
+      this.addMarcadorDB(marcador) 
     },
 
     async editarPartido(partido) {
@@ -1114,7 +1123,6 @@ export const usegFutbolStore = defineStore('futbol', {
         console.log(err)
       } finally {
         this.cargando_partidos = false
-
       }
     },
     actualizarPartido(partido) {
@@ -1149,6 +1157,10 @@ export const usegFutbolStore = defineStore('futbol', {
         equipo_visitante: partido.equipo_visitante
       })
     },
+    async updataJugadorTodosPartidos(jugador) {
+
+
+    },
     /* async cargarPartidos() {
       this.loading_state = true
       console.log("CARGANDO PARTIDOS...")
@@ -1182,9 +1194,62 @@ export const usegFutbolStore = defineStore('futbol', {
       // console.log(tiempo)
       this.partidos[0].tiempo.primeraParte = tiempo
     },
+    actualizarMarcador(marcador) {
+      const m = this.marcadores.find(el => {
+        return el.id_marcador = marcador.id_marcador
+      })
 
-    updateMarcadorDB(id_partido) {
-      console.log("UPSATE MARCADOR")
+      m.goles = marcador.goles
+    },
+
+    updateMarcadorDB(id_partido, marcador) {
+
+      console.log(marcador)
+    },
+
+    async addMarcadorDB(marcador) {
+      const docRef = await addDoc(collection(db, 'marcadores_futbol'), marcador)
+      marcador.id_marcador = docRef.id 
+
+    },
+
+    async cargarMarcadores() {
+      this.cargando_marcadores = true
+      console.log("CARGANDO MARCADORES...")
+      this.partidos = []
+      try {
+        const docSnap = onSnapshot(collection(db, "marcadores_futbol"), (doc) => {
+          doc.docChanges().forEach((change) => {
+            if (change.type === "added") {
+              let marcador = change.doc.data()
+              marcador.id_marcador = change.doc.id
+              this.marcadores.push(marcador)
+            } else if (change.type === "modified") {
+              let nuevo_marcador = change.doc.data()
+              nuevo_marcador.id_marcador = change.doc.id
+              this.actualizarMarcador(nuevo_marcador)
+            }
+          })
+        })
+        
+      } catch (err) {
+        console.log(err)
+      } finally {
+        this.cargando_marcadores = false
+      }
+    },
+
+    async updateMarcadorDB(id, payload) {
+      const docRef = doc(db, "marcadores_futbol", id)
+      await updateDoc(docRef, {
+        goles: payload.goles,
+        temporizador: payload.temporizador
+      })
+    },
+    getMarcador(id) {
+      return this.marcadores.find(marcador => {
+        return marcador.id_partido == id
+      })
     },
 
 
@@ -1248,13 +1313,13 @@ export const usegFutbolStore = defineStore('futbol', {
     // JUGADORES -----------------------------------------------------
 
 
-    cargarJugadores() {
+    async cargarJugadores() {
       this.loading_state = true
       const docSnap = onSnapshot(collection(db, "jugadores_futbol"), (doc) => {
         doc.docChanges().forEach((change) => {
           if (change.type === "added") {
             let jugador = change.doc.data()
-            jugador.id_jugador = change.doc.id
+            jugador.id_db = change.doc.id
             // console.log(change.doc.id)
             this.jugadores.push(jugador)
           }
@@ -1282,6 +1347,20 @@ export const usegFutbolStore = defineStore('futbol', {
       jugador.id_jugador_db = docRef.id
       
       // this.jugadores.push(jugadores)
+    },
+    async updateJugador(jugador) {
+      const docRef = doc(db, "jugadores_futbol", jugador.id_db) 
+
+      await updateDoc(docRef, {
+          nombre_jugador: jugador.nombre_jugador,
+          apodo: jugador.apodo,
+          numero: jugador.numero,
+          posicion: jugador.posicion,
+          nacionalidad: jugador.nacionalidad,
+          fecha_nacimiento: jugador.fecha_nacimiento,
+          altura: jugador.altura
+      })
+
     },
 
     

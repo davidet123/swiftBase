@@ -20,7 +20,7 @@
     <v-row>
       <v-col cols="12" class="text-center"><h2>Listado partidos</h2></v-col>
       <v-col cols="8" offset="2" v-for="partido in partidos" :id="partido.id_partido">
-        <PartidoIndividual :partido="partido" /> 
+        <PartidoIndividual :partido="partido"/> 
         <!-- <JugadorFutbolnd :jugador="jugador" @borrarJugador="id => borrarJugador(id)"/> -->
       </v-col>
     </v-row>
@@ -64,6 +64,7 @@ const futbolStore = usegFutbolStore()
 
 
 const { partidos } = storeToRefs(futbolStore)
+
 // const jugadores = computed(() => equipos.value[0].jugadores)
 
 // const borrarJugador = (id) => {

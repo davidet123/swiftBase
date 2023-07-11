@@ -13,7 +13,7 @@
     <!-- {{ partido }} -->
       <v-row>
         <v-col cols="12">
-          <MarcadorFutbol :marcador = "partido.marcador" :tiempo="partido.tiempo" @updateDB="updateDB"/>
+          <MarcadorFutbol :marcador = "marcador" :tiempo="partido.tiempo" @updateDB="updateDB"/>
         </v-col>
       </v-row>
        <v-row>
@@ -109,9 +109,11 @@
 
 import { useRoute } from 'vue-router';
 
+import { defineAsyncComponent } from 'vue';
+
 
 import Visor from '@/components/visor/Visor.vue'
-import MarcadorFutbol from '@/components/futbol/MarcadorFutbol'
+// import MarcadorFutbol from '@/components/futbol/MarcadorFutbol'
 import JugadorFutbolInd from '@/components/futbol/JugadorFutbolInd'
 
 import { usegFutbolStore } from "../../store/futbol"
@@ -119,12 +121,14 @@ import { computed, ref,  onBeforeMount, onMounted } from 'vue';
 import { storeToRefs } from "pinia";
 import { watch } from 'vue';
 
+const MarcadorFutbol = defineAsyncComponent(() => import('@/components/futbol/MarcadorFutbol'))
+
 const futbolStore = usegFutbolStore()
 const route = useRoute()
 
 const id = route.params.id
 
-const { partidos, partido_cargado } = storeToRefs(futbolStore)
+const { partidos, partido_cargado, marcadores } = storeToRefs(futbolStore)
 
 if(!partido_cargado.value) {
   futbolStore.setPartidoEnJuego(id)
@@ -132,6 +136,11 @@ if(!partido_cargado.value) {
 
 const partido = computed(() => {
   return partidos.value.find( el => {
+    return el.id_partido == id
+  })
+})
+const marcador = computed(() => {
+  return marcadores.value.find( el => {
     return el.id_partido == id
   })
 })

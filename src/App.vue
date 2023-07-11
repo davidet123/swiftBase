@@ -17,9 +17,11 @@
 
   onBeforeMount(async () => {
     console.log("onbeforemount")
+    await futbolStore.cargarJugadores()
     await futbolStore.cargarEquipos()
   
     await futbolStore.cargarPartidos()
+    await futbolStore.cargarMarcadores()
 
   })
 

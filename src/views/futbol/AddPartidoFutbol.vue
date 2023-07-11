@@ -98,6 +98,37 @@ const partido = ref({
   }
 })
 
+const marcador = {
+  goles: {
+    local: 0,
+    visitante: 0
+  },
+  temporizador: {
+    inicio_tiempo: false,
+    inicio_prorroga: false,
+    parte_en_juego: 1,
+    añadido: {
+      primera: 0,
+      segunda: 0
+    },
+    tiempo: {
+      primera: null,
+      segunda: null,
+      segunda_prorroga: null,
+      primera_prorroga: null
+    },
+    prorroga: {
+      primera: 0,
+      segunda: 0
+    },
+    posesion: {
+      local: '0%',
+      visitante: '0%',
+      equipo_en_posesion: "local"
+    }
+  }
+}
+
 const equipos = futbolStore.getEquipos
 
 
@@ -118,7 +149,10 @@ const crearPartido = () => {
           goles: 0,
           faltas: 0,
           disparos: 0,
-          disparos_al_arco: 0
+          disparos_al_arco: 0,
+          goles: 0,
+          posesion: '0%',
+          fueras_de_juego: 0
         }
     })
     listaEquipoVisitante.value.forEach(jug => {
@@ -128,9 +162,13 @@ const crearPartido = () => {
           goles: 0,
           faltas: 0,
           disparos: 0,
-          disparos_al_arco: 0
+          disparos_al_arco: 0,
+          goles: 0,
+          posesion: '0%',
+          fueras_de_juego: 0
         }
     })
+    
     
     partido.value.equipo_local = equipoLocal
     partido.value.equipo_visitante = equipoVisitante
@@ -144,7 +182,7 @@ const crearPartido = () => {
   
   
 
-futbolStore.addPartido(partido.value)
+futbolStore.addPartido(partido.value, marcador)
 
 }
 
