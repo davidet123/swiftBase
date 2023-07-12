@@ -1072,8 +1072,6 @@ export const usegFutbolStore = defineStore('futbol', {
     },
     
     async addPartido(partido, marcador) {
-      const listaJugadores = [...partido.equipo_local.jugadores, ...partido.equipo_visitante.jugadores]
-
       const docRef = await addDoc(collection(db, 'partidos_futbol'), partido)
       partido.id_partido = docRef.id 
       marcador.id_partido = docRef.id
@@ -1167,6 +1165,7 @@ export const usegFutbolStore = defineStore('futbol', {
     async eliminarPartido (id) {
       await deleteDoc(doc(db, 'partidos_futbol', id))
       this.partidos = this.partidos.filter(el => el.id_partido !== id)
+      this.eliminarMarcador(id)
     },
     /* async cargarPartidos() {
       this.loading_state = true
@@ -1258,6 +1257,18 @@ export const usegFutbolStore = defineStore('futbol', {
         return marcador.id_partido == id
       })
     },
+    async eliminarMarcador(id) {
+      console.log(this.marcadores)
+      const marcador = this.marcadores.find(m => {
+        return m.id_partido === id
+      })
+      console.log(marcador.id_marcador)
+
+      await deleteDoc(doc(db, 'marcadores_futbol', marcador.id_marcador))
+
+      this.marcadores= this.marcadores.filter(el => el.id_marcador !== marcador.id_marcador)
+
+    },
 
 
 
@@ -1265,8 +1276,8 @@ export const usegFutbolStore = defineStore('futbol', {
 
     async addEquipo(equipo) {
       const docRef = await addDoc(collection(db, 'equipos_futbol'), equipo)
-      equipo.id_equipo = docRef.id      
-      this.equipos.push(equipo)
+      // equipo.id_equipo = docRef.id      
+      // this.equipos.push(equipo)
     },
 
     buscarEquipo(id) {

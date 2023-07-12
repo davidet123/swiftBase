@@ -152,6 +152,11 @@
       </v-col>
     </v-row>
     <v-row>
+      <v-col>
+        <ListaRotulos />
+      </v-col>
+    </v-row>
+    <v-row>
       <v-col class="text-center">
         <v-btn color="success" @click="volver">TORNAR</v-btn>
       </v-col>
@@ -165,6 +170,11 @@
   import { usegFutbolStore } from "../../store/futbol"
   import { computed, ref, watch } from 'vue'
   import { storeToRefs } from 'pinia'
+
+  import { defineAsyncComponent } from 'vue';
+
+  const ListaRotulos = defineAsyncComponent(() => import('@/components/rotulos/ListaRotulos'))
+
 
   const route = useRoute()
   const router = useRouter()
@@ -255,18 +265,6 @@
     equipo_visitante.value = partido.visitante
     jugadoresLocal.value = [...partido.equipo_local.jugadores]
     jugadoresVisitante.value = [...partido.equipo_visitante.jugadores]
-    console.log(equipo_local.value.nombre_equipo)
-    // nombre_equipo.value = equipo.nombre_equipo
-
-    // localidad.value = equipo.localidad
-    // display_name.value = equipo.display_name
-    // let temp_jugadores = []
-    // equipo.jugadores.forEach(j => {
-    //   const jugadorIndividual = jugadores.value.find((el) => el.id_jugador === j)
-    //   temp_jugadores.push(jugadorIndividual)
-    // })
-    // listaJugadores.value = [...temp_jugadores]
-    // cuerpo_tecnico.value = equipo.cuerpo_tecnico
   }
 
   const volver = () => router.push('/futbol')

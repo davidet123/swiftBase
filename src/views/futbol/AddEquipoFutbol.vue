@@ -202,6 +202,7 @@ const enviar = () => {
 
   futbolStore.addJugadores(jugadores.value)
   futbolStore.addEquipo(nuevo_equipo)
+  volver()
 }
 const volver = () => router.push('/futbol')
 

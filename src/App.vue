@@ -9,9 +9,11 @@
 <script setup>
   import {  RouterView } from 'vue-router'
   import { usegFutbolStore } from "./store/futbol"
+  import { useRotulosStore } from "./store/rotulos"
   import { onMounted, onBeforeMount } from 'vue'
 
   const futbolStore = usegFutbolStore()
+  const rotulosStore = useRotulosStore()
 
   // Cargar desde firebase
 
@@ -22,6 +24,7 @@
   
     await futbolStore.cargarPartidos()
     await futbolStore.cargarMarcadores()
+    await rotulosStore.cargarRotulos()
 
   })
 

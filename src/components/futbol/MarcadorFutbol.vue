@@ -10,12 +10,12 @@
 
     <v-row>
       <v-col cols="7">
-        <v-row>
+        <v-row class="px-2">
           <v-row class="text-center pa-0 mb-3" justify="center" align="center">
             <v-col cols="3" offset="0" class="contenedor-video ma-0">
               <BotonLive nombre="MARCADOR" @activar="activarGrafico"/>
             </v-col>
-            <v-col cols="9" class=" mt-5 pt-5">
+            <v-col cols="9" class=" mt-5 pt-5 recuadro_gris mb-1">
               <v-row justify="center" align="center">
                 <v-col cols="2">
                   <v-row>
@@ -61,38 +61,57 @@
             </v-col>
           </v-row>
         </v-row>
-        <v-row>
-          <v-col cols="4">
+        <v-row class="mx-2">
+          <v-col cols="4" class="recuadro_gris">
+            <v-row class="py-2">
+              <v-col cols="12" class="text-center ma-0 pa-0">
+                <h3>Tiempo de juego</h3>
+              </v-col>
+            </v-row>
             <v-row>
               <v-col cols="12" class="text-center">
-                <p class="text-h1">{{ tiempoMarcador }}</p>
+                <p class="text-h2">{{ tiempoMarcador }}</p>
               </v-col>
-              <v-col cols="12" class="text-center"><v-btn size="x-small" color="success" @click="iniciarTiempo()" :disabled="inicio_tiempo">START</v-btn>
-              <v-btn size="x-small" color="success" :disabled="!inicio_tiempo" @click="pararTiempo()">STOP</v-btn>
-              <v-btn size="x-small" color="success" :disabled="inicio_tiempo" @click="resetTiempo()">RESET</v-btn>
+            </v-row>
+            <v-row>
+              <v-col cols="12" class="text-center">
+                <v-btn size="x-small" color="success" @click="iniciarTiempo()" :disabled="inicio_tiempo">START</v-btn>
+                <v-btn size="x-small" color="success" :disabled="!inicio_tiempo" @click="pararTiempo()">STOP</v-btn>
+                <v-btn size="x-small" color="success" :disabled="inicio_tiempo" @click="resetTiempo()">RESET</v-btn>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" class=text-center>
+                <v-btn size="x-small" color="success" :disabled="!inicio_tiempo" @click="addTiempo(1)">+</v-btn>
+                <v-btn size="x-small" color="success" :disabled="!inicio_tiempo" @click="addTiempo(-1)">-</v-btn>
+
               </v-col>
             </v-row>
           </v-col>
-          <v-col cols="4" class="contenedor-video">
-            <v-row>
-              <v-col cols="12" class="text-center">
+          <v-col cols="4" class="recuadro_gris">
+            <v-row class="py-2">
+              <v-col cols="12" class="text-center ma-0 pa-0">
                 <h3>Tiempo añadido</h3>
               </v-col>
-              <v-col cols="6" class="text-center mx-auto">
-                <v-text-field @focus="setFocus(true)" @blur="setFocus(false)" class="text-center" v-model="añadido" label="tiempo añadido"></v-text-field>
-              </v-col>
-              <v-col cols="6" class="text-center">
+            </v-row>
+            <v-row>
+              <v-col cols="12" class="text-center">
                 <p class="text-h2">{{ añadidoMarcador }}</p>
               </v-col>
             </v-row>
+            <v-row>
+              <v-col cols="6" offset="3" class="text-center mx-auto ma-0 pa-0">
+                <v-text-field @focus="setFocus(true)" @blur="setFocus(false)" class="text-center" v-model="añadido" label="tiempo añadido"></v-text-field>
+              </v-col>
+            </v-row>
           </v-col>
           <v-col cols="4">
-            <v-row>
+            <v-row class="recuadro_gris mb-1">
               <v-col cols="12" class="text-center">
                 <h3>Parte en juego</h3>
               </v-col>
               <v-col cols="6" class="mx-auto">
-                <v-text-field @focus="setFocus(true)" @blur="setFocus(false)" class="centered-input" v-model="parte_en_juego" label="parte"></v-text-field>
+                <v-text-field @focus="setFocus(true)" @blur="setFocus(false)" class="centered-input" v-model="parte_en_juego" label="parte"  :disabled="inicio_tiempo"></v-text-field>
               </v-col>
             </v-row>
             <v-row>
@@ -104,7 +123,7 @@
         </v-row>
   
       </v-col>
-      <v-col cols="5" class="contenedor-video">
+      <v-col cols="5" class="recuadro_gris">
         <v-row>
           <v-col class="text-center">
             <!-- <video id="myVideoId" width="620" height="349" autoplay muted playsinline/> -->
@@ -142,7 +161,7 @@
 
   const id = route.params.id
 
-  
+
 
   // const marcador = computed(() => marcadores.value.find(marcador => {
   //   return marcador.id_partido === id
@@ -201,6 +220,11 @@
     return strings[val-1]
   }
   const duracion_partes = [90, 90, 15, 15]
+  const duracion = computed(() => (duracion_partes[parte_en_juego.value - 1]) * 1000 * 60)
+  // const duracion = computed(() => (duracion_partes[parte_en_juego.value - 1]))
+
+  // const tiempodeinicio = computed(() => marcador.value.temporizador[parte(parte_en_juego.value)])
+  
 
 
   
@@ -214,6 +238,10 @@
     actualizarMarcador()
   }
 
+  const addTiempo = val => {
+    tiempo_de_inicio.value[parte(parte_en_juego.value)] -= (val*1000)
+  }
+
   const iniciarTiempo = () => {
     if(!tiempo_de_inicio.value[parte(parte_en_juego.value)]) {
       tiempo_de_inicio.value[parte(parte_en_juego.value)] = Date.now()
@@ -225,14 +253,15 @@
     inicio_tiempo.value = true
     // console.log(marcador.value.temporizador.inicio_tiempo)
 
-    let inicio = tiempo_de_inicio.value[parte(parte_en_juego.value)]
+    // let inicio = tiempo_de_inicio.value[parte(parte_en_juego.value)]
     
     temporizador = setInterval(() => {
       const ahora = Date.now()
-      let dif = ahora - inicio
-      if(dif > parseInt(tiempoJuego.value) * 1000 * 60 + 5  && !añadidoIniciado) {
-        inicio = Date.now()
-        props.tiempo.añadidoPrimera = inicio
+      let dif = ahora - tiempo_de_inicio.value[parte(parte_en_juego.value)]
+      console.log(dif, duracion.value)
+      if(dif > duracion.value  && !añadidoIniciado) {
+        tiempo_de_inicio.value[parte(parte_en_juego.value)] = Date.now()
+        props.tiempo.añadidoPrimera = tiempo_de_inicio.value[parte(parte_en_juego.value)]
         añadidoIniciado = true
         dif = 2000
         // swiftConnectionStore.rtRemote.playMethod("MARCADOR::suplOn")
@@ -247,8 +276,9 @@
       }
       // emit("updateDB", estTotales.value)
       // calcularPosesion(dif)
+      
 
-    }, duracion_partes[parte_en_juego.value -1])
+    }, 1000)
     marcador.value.temporizador.inicio_tiempo = inicio_tiempo.value
     // console.log(marcador.value)
     actualizarMarcador()
@@ -450,8 +480,14 @@
   .underline {
     border-bottom: 2px solid white;
   }
+  .recuadro_gris {
+    background-color: #303030;
+    border-radius: 5px;
+    border: 1px solid white;
+  }
   .contenedor-video {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     /* border: 2px solid white; */
