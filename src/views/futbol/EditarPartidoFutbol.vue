@@ -1,7 +1,7 @@
 <template>
   <!-- {{ !cargando_equipos  && !cargando_partidos }} -->
 
-  <div v-if="cargando_equipos || cargando_partidos" class="text-center" style="margin-top:200px;">
+  <div v-if="!partido" class="text-center" style="margin-top:200px;">
     <v-progress-circular
       indeterminate
       color="primary"
@@ -9,9 +9,7 @@
     ></v-progress-circular>
   </div>
 
-  <div v-if="!cargando_equipos && !cargando_partidos">
-    <!-- {{ partido.id_partido }} -->
-
+  <div v-if="partido">
     <v-row>
       <v-col cols="12" class="text-center">
         <h3>EDITAR PARTIDO {{ partido.equipo_local.nombre_equipo }} vs {{ partido.equipo_visitante.nombre_equipo }}</h3>
@@ -64,10 +62,41 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col>
+      <v-col cols="2" offset="3" class="text-center">
         <v-btn color="success" @click="editarPartido()">ACEPTAR</v-btn>
       </v-col>
+      <v-col cols="2" class="text-center">
+        <v-btn color="error" @click="dialog = true">ELIMINAR</v-btn>
+      </v-col>
+      <v-col cols="2" class="text-center">
+        <v-btn color="success" @click="volver">TORNAR</v-btn>
+      </v-col>
     </v-row>
+    <div class="text-center">
+      <v-dialog
+        v-model="dialog"
+        width="auto"
+      >
+        <!-- <template v-slot:activator="{ props }">
+          <v-btn
+            color="primary"
+            v-bind="props"
+          >
+            Open Dialog
+          </v-btn>
+        </template> -->
+
+        <v-card class="pa-4">
+          <v-card-text>
+            <p class="font-weight-black">SEGUR QUE VOLS ELIMINAR EL PARTIT?</p>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn color="success" block @click="eliminarPartido()">ELIMINAR</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </div>
+
   </div>
   <!-- <v-row>
     <v-col cols="12" class="text-center">
@@ -114,15 +143,17 @@
 
   import { ref } from 'vue';
 
-  import { useRoute } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
   import { usegFutbolStore } from "../../store/futbol"
 
   import { storeToRefs } from "pinia";
   import { computed } from 'vue';
+  import { watch } from 'vue';
 
   
   const futbolStore = usegFutbolStore()
   const route = useRoute()
+  const router = useRouter()
   
   // const cargandoPartidos = futbolStore.cargandoPartidos
   // const loading = futbolStore.loading
@@ -134,6 +165,9 @@
   // futbolStore.cargarEquipos()
   // futbolStore.cargarPartidos()
 
+  const dialog = ref(false)
+
+  const partido = computed(() => futbolStore.buscarPartido(id))
   
   let nuevoPartido = ref({
     equipo_local: null,
@@ -146,16 +180,14 @@
     estadio: null,
     })
   
-  const partido = computed(() => {
-    const refPartido =  partidos.value.find(partido=> {
-    return partido.id_partido == id
-    })
-
-    console.log(refPartido)
+  // const partido = computed(() => {
+  //   const refPartido =  partidos.value.find(partido=> {
+  //   return partido.id_partido == id
+  //   })
    
-    nuevoPartido.value = {...refPartido}
-    return refPartido
-  })
+  //   nuevoPartido.value = {...refPartido}
+  //   return refPartido
+  // })
 
 
  /*  const refPartido = computed(() => {
@@ -169,11 +201,33 @@
   const editarPartido = () => {
     // console.log(nuevoPartido.value)
     futbolStore.editarPartido(nuevoPartido.value)
+    router.push('/futbol')
+  }
+
+  const cargaPartido = (partido) => {
+    console.log(partido)
+    nuevoPartido.value = {...partido}
   }
 /* 
   const equipo_local = futbolStore.buscarEquipo(partido.id_equipo_local)
   const equipo_visitante = futbolStore.buscarEquipo(partido.id_equipo_visitante)  
 
   const posiciones = futbolStore.getPosiciones */
+
+
+  const eliminarPartido = () => {
+    futbolStore.eliminarPartido(id)
+    dialog.value = true
+    router.push('/futbol')
+  }
+  if(partido) cargaPartido(partido.value)
+
+  const volver = () => router.push('/futbol')
+
+  watch(() => partido.value, partido => {
+    cargaPartido(partido)
+  })
+
+  
 
 </script>

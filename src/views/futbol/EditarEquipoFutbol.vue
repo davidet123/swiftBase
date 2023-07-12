@@ -19,13 +19,13 @@
         v-model="nombre_equipo"
         ></v-text-field>
       </v-col>
-      <v-col cols="2">
+      <v-col cols="2" offset="1">
         <v-text-field
         label="Display name"
         v-model="display_name"
         ></v-text-field>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="3" offset="1">
         <v-text-field
         label="Localidad"
         v-model="localidad"
@@ -33,7 +33,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12" class="text-center">
+      <v-col cols="12" class="text-left">
         <h3>Jugadores</h3>
       </v-col>
     </v-row>
@@ -74,29 +74,35 @@
         <v-col cols="12" class="text-center">
           <v-btn color="success" @click="nuevoJugador()">+</v-btn>
         </v-col>
-        <v-col cols="12">
-          <h3>Cuerpo técnico</h3>
-        </v-col>
-        <v-row v-for="persona in cuerpo_tecnico" :key="persona.id_cuerpo_tecnico">
-          <v-col cols="12">
-            <p>{{ persona.titulo }}</p>
-          </v-col>
-          <v-col cols="6" class="ma-0 pa-0">
-            <v-text-field density="compact" v-model="persona.nombre" label="Nombre"></v-text-field>
-          </v-col>
-          <v-col cols="3" class="ma-0 pa-0">
-            <v-text-field density="compact" v-model="persona.nacionalidad" label="Nacionalidad"></v-text-field>
-          </v-col>
-          <v-col cols="3" class="ma-0 pa-0">
-            <v-text-field density="compact" v-model="persona.fecha_nacimiento" label="Fecha nacimiento"></v-text-field>
-          </v-col>
-        </v-row>
         <v-row>
-          <v-col>
-            <v-btn color="success" @click="enviar()">ACEPTAR</v-btn>
+          <v-col cols="12">
+            <h3>Cuerpo técnico</h3>
           </v-col>
         </v-row>
-  
+        <v-row v-for="persona in cuerpo_tecnico" :key="persona.id_cuerpo_tecnico">
+            <v-col cols="12" class="text-left">
+              <p>{{ persona.titulo }}</p>
+            </v-col>
+          <v-row class="px-4">
+            <v-col cols="5" >
+              <v-text-field density="compact" v-model="persona.nombre" label="Nombre"></v-text-field>
+            </v-col>
+            <v-col cols="2" offset="1">
+              <v-text-field density="compact" v-model="persona.nacionalidad" label="Nacionalidad"></v-text-field>
+            </v-col>
+            <v-col cols="2"  offset="2">
+              <v-text-field density="compact" v-model="persona.fecha_nacimiento" label="Fecha nacimiento"></v-text-field>
+            </v-col>
+          </v-row>
+        </v-row>  
+      </v-col>
+    </v-row>
+    <v-row class="mb-4">
+      <v-col cols="2" offset="4" class="text-center">
+        <v-btn color="success" @click="enviar()">ACEPTAR</v-btn>
+      </v-col>
+      <v-col cols="2" class="text-center">
+        <v-btn color="success" @click="volver">TORNAR</v-btn>
       </v-col>
     </v-row>
     <!-- {{ equipo }} -->
@@ -108,7 +114,7 @@
 
 <script setup>
 import { storeToRefs } from 'pinia'
-import {  useRoute } from 'vue-router'
+import {  useRoute, useRouter } from 'vue-router'
 import { usegFutbolStore } from "../../store/futbol"
 import { ref, computed } from 'vue'
 import { watch } from 'vue'
@@ -116,6 +122,8 @@ import { watch } from 'vue'
 const futbolStore = usegFutbolStore()
 // const { equipos } = storeToRefs(futbolStore)
 const route = useRoute()
+const router = useRouter()
+
 const id = route.params.id
 // const { getEquipoById } = storeToRefs(futbolStore)
 
@@ -168,6 +176,17 @@ const posiciones = futbolStore.getPosiciones
   if(equipo.value) {
     cargaEquipo(equipo.value)
   }  
+
+  // FUNCION DE PRUEBA PARA ACTUALIZAR BASE DE DATOS CON CAMBIOS
+  // const actualizar = () => {
+  //   console.log(listaJugadores.value)
+  //   listaJugadores.value.forEach(jugador => {
+  //     jugador.partidos = []
+  //     futbolStore.updateJugador(jugador)
+  //   })
+  // }
+
+  const volver = () => router.push('/futbol')
 
 watch(() => equipo.value, equipo => {
   cargaEquipo(equipo)

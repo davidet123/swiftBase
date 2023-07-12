@@ -84,11 +84,13 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col>
+        <v-col cols="2" offset="4" class="text-center">
           <v-btn color="success" @click="enviar()">ACEPTAR</v-btn>
         </v-col>
+        <v-col cols="2" class="text-center">
+          <v-btn color="success" @click="volver">TORNAR</v-btn>
+        </v-col>
       </v-row>
-
     </v-col>
   </v-row>
   
@@ -99,6 +101,9 @@
 import { ref } from 'vue';
 import { usegFutbolStore } from "../../store/futbol"
 import { computed } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
   
 const futbolStore = usegFutbolStore()
 
@@ -143,7 +148,8 @@ const nuevo_jugador = {
   nacionalidad: null,
   fecha_nacimiento: null,
   altura:null,
-  equipo: null
+  equipo: null,
+  partidos: []
  /*  estadistica: {
     tarjetas_amarillas: 0,
     tarjeta_roja: 0,
@@ -197,6 +203,7 @@ const enviar = () => {
   futbolStore.addJugadores(jugadores.value)
   futbolStore.addEquipo(nuevo_equipo)
 }
+const volver = () => router.push('/futbol')
 
 </script>
 

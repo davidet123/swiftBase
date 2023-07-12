@@ -1,51 +1,53 @@
 <template>
-  {{ cargando_partidos }}
-  <div v-if="cargando_partidos" class="text-center" style="margin-top:200px;">
+  <div v-if="!partido" class="text-center" style="margin-top:200px;">
     <v-progress-circular
       indeterminate
       color="primary"
       size="50"
     ></v-progress-circular>
   </div>
-  <div v-if="!cargando_partidos" class="mb-4 pb-4">
-    <v-row>
-      <v-col cols="12" class="text-center">
+  <div v-if="partido" class="mb-4 pb-4">
+     <v-row>
+      <v-col cols="12" class="text-center my-4">
         <h2>RESUMEN PARTIT</h2>
       </v-col>
-      <v-col cols="12" class="text-center">
+      <!-- <v-col cols="12" class="text-center">
         <h3>{{ partido.equipo_local.nombre_equipo }} vs {{ partido.equipo_visitante.nombre_equipo }}</h3>  
-      </v-col>
+      </v-col> -->
     </v-row>
 
     <v-row>
       <v-col class="contenedor_tabla">
         <v-table
-        density="compact"
         class="tabla">
           <thead>
             <tr>
               <th class="primera"></th>
-              <th>
-                <p>{{ partido.equipo_local.nombre_equipo }}</p>
+              <th class="text-center text-h5 py-4">
+                <p class="text-uppercase font-weight-black">{{ partido.equipo_local.nombre_equipo }}</p>
               </th>
-              <th>
-                <p>{{ partido.equipo_visitante.nombre_equipo }}</p>
+              <th class="text-center text-h5">
+                <p class="text-uppercase font-weight-black">{{ partido.equipo_visitante.nombre_equipo }}</p>
               </th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>GOLS</td>
-              <td class="text-center"><h3>{{ golesLocalTotales }}</h3></td>
-              <td class="text-center"><h3>{{ golesVisitanteTotales }}</h3></td>
+              <td>
+                <p class="font-weight-black">GOLS</p>
+              </td>
+              <td class="text-center text-h5">{{ golesLocalTotales }}</td>
+              <td class="text-center text-h5">{{ golesVisitanteTotales }}</td>
             </tr>
             <tr>
-              <td>GOLEJADORS</td>
+              <td>
+                <p class="font-weight-black">GOLEJADORS</p>
+              </td>
               <td class="text-center celda">
                 <div v-for="jugador in maxGoleadorLocal" :key="jugador.id_jugador">
                   <v-row>
-                    <v-col  cols="9" class="text-left">
-                      <p>{{ jugador.numero }} -  {{ jugador.apodo }} ({{ jugador.estadistica.goles }})</p>
+                    <v-col cols="12" class="text-center">
+                      <p class="text-h6">{{ jugador.numero }} -  {{ jugador.apodo }} ({{ jugador.estadistica.goles }})</p>
                     </v-col>
                   </v-row>
                 </div>
@@ -53,35 +55,41 @@
               <td class="text-center celda">
                 <div v-for="jugador in maxGoleadorVisitante" :key="jugador.id_jugador">
                   <v-row>
-                    <v-col  cols="9" class="text-left">
-                      <p>{{ jugador.numero }} -  {{ jugador.apodo }} ({{ jugador.estadistica.goles }})</p>
+                    <v-col cols="12" class="text-center">
+                      <p class="text-h6">{{ jugador.numero }} -  {{ jugador.apodo }} ({{ jugador.estadistica.goles }})</p>
                     </v-col>
                   </v-row>
                 </div>
               </td>
             </tr>
             <tr>
-              <td>POSESSIÓ</td>
-              <td>{{ equipo_local.estadistica_equipo.posesión }}</td>
-              <td>{{ equipo_visitante.estadistica_equipo.posesión }}</td>
+              <td>
+                <p class="font-weight-black">POSESSIÓ</p>
+              </td>
+              <td class="text-center text-h5">{{ partido.equipo_local.estadistica_equipo.posesión }}</td>
+              <td class="text-center text-h5">{{ partido.equipo_visitante.estadistica_equipo.posesión }}</td>
             </tr>
             <tr>
-              <td>DISPAROS</td>
-              <td>{{ disparosLocalTotal }}</td>
-              <td>{{ disparosVisitanteTotal }}</td>
+              <td>
+                <p class="font-weight-black">DISPAROS</p>
+              </td>
+              <td class="text-center text-h5">{{ disparosLocalTotal }}</td>
+              <td class="text-center text-h5">{{ disparosVisitanteTotal }}</td>
             </tr>
             <tr>
-              <td>TARGETES GROGUES</td>
-              <td>{{ taLocalTotales }}</td>
-              <td>{{ taVisitanteTotales }}</td>
+              <td>
+                <p class="font-weight-black">TARGETES GROGUES</p>
+              </td>
+              <td class="text-center text-h5">{{ taLocalTotales }}</td>
+              <td class="text-center text-h5">{{ taVisitanteTotales }}</td>
             </tr>
-            <tr>
+            <tr v-if="taVisitanteTotales > 0 || taLocalTotales > 0">
               <td></td>
               <td>
                 <div v-for="jugador in tarAmarillaLocal" :key="jugador.id_jugador">
                   <v-row>
-                    <v-col  cols="9" class="text-left">
-                      <p>{{ jugador.numero }} -  {{ jugador.apodo }} ({{ jugador.estadistica.tarjetas_amarillas }})</p>
+                    <v-col  cols="12" class="text-center">
+                      <p class="text-h6">{{ jugador.numero }} -  {{ jugador.apodo }} ({{ jugador.estadistica.tarjetas_amarillas }})</p>
                     </v-col>
                   </v-row>
                 </div>
@@ -89,30 +97,63 @@
               <td>
                 <div v-for="jugador in tarAmarillaVisitante" :key="jugador.id_jugador">
                   <v-row>
-                    <v-col  cols="9" class="text-left">
-                      <p>{{ jugador.numero }} -  {{ jugador.apodo }} ({{ jugador.estadistica.tarjetas_amarillas }})</p>
+                    <v-col  cols="12" class="text-center">
+                      <p class="text-h6">{{ jugador.numero }} -  {{ jugador.apodo }} ({{ jugador.estadistica.tarjetas_amarillas }})</p>
                     </v-col>
                   </v-row>
                 </div>
               </td>
             </tr>
             <tr>
-              <td>TARGETES ROJES</td>
-              <td>{{ trLocalTotales }}</td>
-              <td>{{ trVisitanteTotales }}</td>
+              <td>
+                <p class="font-weight-black">TARGETES ROJES</p>
+              </td>
+              <td class="text-center text-h5">{{ trLocalTotales }}</td>
+              <td class="text-center text-h5">{{ trVisitanteTotales }}</td>
+            </tr>
+            <tr v-if="trVisitanteTotales > 0 || trLocalTotales > 0">
+              <td></td>
+              <td>
+                <div v-for="jugador in tarRojaLocal" :key="jugador.id_jugador">
+                  <v-row>
+                    <v-col  cols="12" class="text-center">
+                      <p class="text-h6">{{ jugador.numero }} -  {{ jugador.apodo }} ({{ jugador.estadistica.tarjeta_roja }})</p>
+                    </v-col>
+                  </v-row>
+                </div>
+              </td>
+              <td>
+                <div v-for="jugador in tarRojaVisitante" :key="jugador.id_jugador">
+                  <v-row>
+                    <v-col  cols="12" class="text-center">
+                      <p class="text-h6">{{ jugador.numero }} -  {{ jugador.apodo }} ({{ jugador.estadistica.tarjeta_roja }})</p>
+                    </v-col>
+                  </v-row>
+                </div>
+              </td>
+              
             </tr>
             <tr>
-              <td>FALTES</td>
-              <td>{{ faltasLocalTotales }}</td>
-              <td>{{ disparosVisitanteTotal }}</td>
+              <td>
+                <p class="font-weight-black">FALTES</p>
+              </td>
+              <td class="text-center text-h5">{{ faltasLocalTotales }}</td>
+              <td class="text-center text-h5">{{ faltasVisitanteTotales }}</td>
             </tr>
             <tr>
-              <td>FORES DE JOC</td>
-              <td>--</td>
-              <td>--</td>
+              <td>
+                <p class="font-weight-black">FORES DE JOC</p>
+              </td>
+              <td class="text-center text-h5">--</td>
+              <td class="text-center text-h5">--</td>
             </tr>
           </tbody>
         </v-table>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col class="text-center">
+        <v-btn color="success" @click="volver">TORNAR</v-btn>
       </v-col>
     </v-row>
   </div>
@@ -120,12 +161,13 @@
 
 <script setup>
 
-  import { useRoute } from 'vue-router'
+  import { useRoute, useRouter } from 'vue-router'
   import { usegFutbolStore } from "../../store/futbol"
-  import { computed } from 'vue'
+  import { computed, ref, watch } from 'vue'
   import { storeToRefs } from 'pinia'
 
   const route = useRoute()
+  const router = useRouter()
   const id = route.params.id
 
   const futbolStore = usegFutbolStore()
@@ -133,31 +175,38 @@
   
 
 
-  const partido = computed(() => {
-    if(!partidos.value) return false
-    return partidos.value.find( el => {
-      return el.id_partido == id
-    })
-  })
+  // const partido = computed(() => {
+  //   return partidos.value.find( el => {
+  //     return el.id_partido == id
+  //   })
+  // })
 
-  const equipo_local = computed(() => {
-    if(!partido) return false
-    return partido.value.equipo_local})
-  const equipo_visitante = computed(() => partido.value.equipo_visitante)
+  const partido = computed(() => futbolStore.buscarPartido(id))
+
+  
+
+  const equipo_local = ref(null)
+  const equipo_visitante = ref(null)
+  const jugadoresLocal = ref(null)
+  const jugadoresVisitante = ref(null)
+  // const equipo_local = computed(() => {
+  //   if(!partido) return false
+  //   return partido.value.equipo_local})
+  // const equipo_visitante = computed(() => partido.value.equipo_visitante)
 
   const estadisticasTotales = (jugadores, estadistica) => {
     return jugadores.reduce((total, jugador) => total + jugador.estadistica[estadistica], 0);
   };
 
-  const golesLocalTotales = computed(() => estadisticasTotales(equipo_local.value.jugadores, 'goles'))
-  const taLocalTotales = computed(() => estadisticasTotales(equipo_local.value.jugadores, 'tarjetas_amarillas'))
-  const trLocalTotales = computed(() => estadisticasTotales(equipo_local.value.jugadores, 'tarjeta_roja'))
-  const faltasLocalTotales = computed(() => estadisticasTotales(equipo_local.value.jugadores, 'faltas'))
+  const golesLocalTotales = computed(() => estadisticasTotales(partido.value.equipo_local.jugadores, 'goles'))
+  const taLocalTotales = computed(() => estadisticasTotales(partido.value.equipo_local.jugadores, 'tarjetas_amarillas'))
+  const trLocalTotales = computed(() => estadisticasTotales(partido.value.equipo_local.jugadores, 'tarjeta_roja'))
+  const faltasLocalTotales = computed(() => estadisticasTotales(partido.value.equipo_local.jugadores, 'faltas'))
 
-  const golesVisitanteTotales = computed(() => estadisticasTotales(equipo_visitante.value.jugadores, 'goles'));
-  const taVisitanteTotales = computed(() => estadisticasTotales(equipo_visitante.value.jugadores, 'tarjetas_amarillas'));
-  const trVisitanteTotales = computed(() => estadisticasTotales(equipo_visitante.value.jugadores, 'tarjeta_roja'));
-  const faltasVisitanteTotales = computed(() => estadisticasTotales(equipo_visitante.value.jugadores, 'faltas'));
+  const golesVisitanteTotales = computed(() => estadisticasTotales(partido.value.equipo_visitante.jugadores, 'goles'));
+  const taVisitanteTotales = computed(() => estadisticasTotales(partido.value.equipo_visitante.jugadores, 'tarjetas_amarillas'));
+  const trVisitanteTotales = computed(() => estadisticasTotales(partido.value.equipo_visitante.jugadores, 'tarjeta_roja'));
+  const faltasVisitanteTotales = computed(() => estadisticasTotales(partido.value.equipo_visitante.jugadores, 'faltas'));
 
   const disparosTotales = (jugadores, estadistica1, estadistica2) => {
     const total = estadisticasTotales(jugadores, estadistica1);
@@ -165,28 +214,31 @@
     return `${totalAPuerta} / ${total}`;
   };
 
-  const disparosLocalTotal = computed(() => disparosTotales(equipo_local.value.jugadores, 'disparos', 'disparos_al_arco'));
-  const disparosVisitanteTotal = computed(() => disparosTotales(equipo_visitante.value.jugadores, 'disparos', 'disparos_al_arco'));
+  const disparosLocalTotal = computed(() => disparosTotales(partido.value.equipo_local.jugadores, 'disparos', 'disparos_al_arco'));
+  const disparosVisitanteTotal = computed(() => disparosTotales(partido.value.equipo_visitante.jugadores, 'disparos', 'disparos_al_arco'));
 
   
-  const jugadoresLocal = [...equipo_local.value.jugadores]
-  const jugadoresVisitante = [...equipo_visitante.value.jugadores]
+  // const jugadoresLocal = [...equipo_local.value.jugadores]
+  // const jugadoresVisitante = [...equipo_visitante.value.jugadores]
 
   const maxGoleadorLocal = computed(() => {
-    return consulta(jugadoresLocal, "goles")
+    return consulta(partido.value.equipo_local.jugadores, "goles")
   })
   const maxGoleadorVisitante = computed(() => {
-    return consulta(jugadoresVisitante, "goles")
+    return consulta(partido.value.equipo_visitante.jugadores, "goles")
   })
 
   const tarAmarillaLocal = computed(() => {
-    return consulta(jugadoresLocal, "tarjetas_amarillas")
+    return consulta(partido.value.equipo_local.jugadores, "tarjetas_amarillas")
   })
   const tarAmarillaVisitante = computed(() => {
-    return consulta(jugadoresVisitante, "tarjetas_amarillas")
+    return consulta(partido.value.equipo_visitante.jugadores, "tarjetas_amarillas")
   })
   const tarRojaLocal = computed(() => {
-    return consulta(jugadoresLocal, "tarjetas_amarillas")
+    return consulta(partido.value.equipo_local.jugadores, "tarjeta_roja")
+  })
+  const tarRojaVisitante = computed(() => {
+    return consulta(partido.value.equipo_visitante.jugadores, "tarjeta_roja")
   })
 
 
@@ -198,6 +250,34 @@
     return filtrado
   }
 
+  const cargaPartido = (partido) => {
+    equipo_local.value = partido.equipo_local
+    equipo_visitante.value = partido.visitante
+    jugadoresLocal.value = [...partido.equipo_local.jugadores]
+    jugadoresVisitante.value = [...partido.equipo_visitante.jugadores]
+    console.log(equipo_local.value.nombre_equipo)
+    // nombre_equipo.value = equipo.nombre_equipo
+
+    // localidad.value = equipo.localidad
+    // display_name.value = equipo.display_name
+    // let temp_jugadores = []
+    // equipo.jugadores.forEach(j => {
+    //   const jugadorIndividual = jugadores.value.find((el) => el.id_jugador === j)
+    //   temp_jugadores.push(jugadorIndividual)
+    // })
+    // listaJugadores.value = [...temp_jugadores]
+    // cuerpo_tecnico.value = equipo.cuerpo_tecnico
+  }
+
+  const volver = () => router.push('/futbol')
+
+  if(partido.value) {
+    cargaPartido(partido.value)
+  }
+
+  watch(() => partido.value, partido => {
+    cargaPartido(partido)
+  })
 
 
 
@@ -209,11 +289,16 @@
     display: flex;
     justify-content: center;
   }
+  .fila {
+    padding: 10px, 0 !important;
+  }
   .tabla {
     width: 80%;
     margin: 0, auto !important;
   }
-
+  .celda {
+    margin: 10px 0;
+  }
 
   .primera {
     width: 30%;

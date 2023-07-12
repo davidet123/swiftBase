@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-import { collection, onSnapshot, addDoc, query, where, getDocs, doc, updateDoc } from "firebase/firestore"
+import { collection, onSnapshot, addDoc, query, where, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore"
 // the firestore instance
 import db from '../firebase/init.js'
 
@@ -1078,9 +1078,11 @@ export const usegFutbolStore = defineStore('futbol', {
       partido.id_partido = docRef.id 
       marcador.id_partido = docRef.id
       this.addMarcadorDB(marcador) 
+      this.addIdPartidoAJugador(partido)
     },
 
     async editarPartido(partido) {
+      console.log(partido)
 
       let nuevoPartido = this.buscarPartido(partido.id_partido)
 
@@ -1115,6 +1117,7 @@ export const usegFutbolStore = defineStore('futbol', {
               let nuevo_partido = change.doc.data()
               nuevo_partido.id_partido = change.doc.id
               this.actualizarPartido(nuevo_partido)
+              console.log("ACTIALIADNDO PARTIDO")
             }
           })
         })
@@ -1131,6 +1134,10 @@ export const usegFutbolStore = defineStore('futbol', {
       })
       part.equipo_local = partido.equipo_local
       part.equipo_visitante = partido.equipo_visitante
+      part.estadio = partido.estadio
+      part.fecha = partido.fecha
+      part.hora = partido.hora
+      part.lugar = partido.lugar
     },
 
     async updateEstPartido(id_partido, jugador) {
@@ -1157,9 +1164,9 @@ export const usegFutbolStore = defineStore('futbol', {
         equipo_visitante: partido.equipo_visitante
       })
     },
-    async updataJugadorTodosPartidos(jugador) {
-
-
+    async eliminarPartido (id) {
+      await deleteDoc(doc(db, 'partidos_futbol', id))
+      this.partidos = this.partidos.filter(el => el.id_partido !== id)
     },
     /* async cargarPartidos() {
       this.loading_state = true
@@ -1358,7 +1365,16 @@ export const usegFutbolStore = defineStore('futbol', {
           posicion: jugador.posicion,
           nacionalidad: jugador.nacionalidad,
           fecha_nacimiento: jugador.fecha_nacimiento,
-          altura: jugador.altura
+          altura: jugador.altura,
+          partidos: jugador.partidos
+      })
+
+    },
+    addIdPartidoAJugador (partido) {
+      const listadoJugadores = [...partido.equipo_local.jugadores, ...partido.equipo_visitante.jugadores]
+      listadoJugadores.forEach(jugador => {
+        jugador.partidos.push(partido.id_partido)
+        this.updateJugador(jugador)
       })
 
     },
@@ -1396,8 +1412,12 @@ export const usegFutbolStore = defineStore('futbol', {
       const querySnapshot = getDocs(q)
       .then(res => {
         res.forEach(doc => {
+          let jugador = doc.data()
+          jugador.id_db = doc.id
+            // console.log(change.doc.id)
+          tempEquipo.push(jugador)
           // console.log(doc.data())
-          tempEquipo.push(doc.data())
+          // tempEquipo.push(doc.data())
         })
       })
       return tempEquipo

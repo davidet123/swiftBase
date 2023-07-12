@@ -72,7 +72,6 @@ const { partido } = toRefs(props)
 // const marcadores = futbolStore.marcadores
 const marcador = computed(() => {
   return marcadores.value.find( el => {
-    console.log(el.id_partido)
     return el.id_partido == partido.value.id_partido
   })
 })

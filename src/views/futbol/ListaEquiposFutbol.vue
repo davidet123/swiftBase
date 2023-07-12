@@ -10,6 +10,11 @@
       <EquipoFutbolIndividual :equipo="equipo"/>
     </v-col>
   </v-row>
+  <v-row>
+    <v-col class="text-center">
+      <v-btn color="success" @click="volver">TORNAR</v-btn>
+    </v-col>
+  </v-row>
   <!-- <v-row>
     <v-col cols="12" class="text-center">
       <h2>Editar Partido</h2>
@@ -52,13 +57,17 @@
 </template>
 
 <script setup>
-
+import { useRouter } from "vue-router"
 import EquipoFutbolIndividual from "../../components/futbol/EquipoFutbolIndividual.vue"
 import { usegFutbolStore } from "../../store/futbol"
 
 const futbolStore = usegFutbolStore()
 
 const equipos = futbolStore.getEquipos
+
+const router = useRouter()
+
+const volver = () => router.push('/futbol')
 
 
 

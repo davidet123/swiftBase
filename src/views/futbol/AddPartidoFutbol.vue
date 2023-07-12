@@ -51,8 +51,11 @@
     </v-col>
   </v-row>
   <v-row>
-    <v-col>
+    <v-col cols="2" offset="4" class="text-center">
       <v-btn color="success" :disabled="!activarBoton" @click="crearPartido()">ACEPTAR</v-btn>
+    </v-col>
+    <v-col cols="2" class="text-center">
+      <v-btn color="success" @click="volver">TORNAR</v-btn>
     </v-col>
   </v-row>
 </template>
@@ -61,6 +64,9 @@
 import { ref, watch } from 'vue';
 import { usegFutbolStore } from "../../store/futbol"
 import { computed } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
 
 const futbolStore = usegFutbolStore()
 
@@ -136,7 +142,6 @@ const crearPartido = () => {
 
   if(idLocal.value && idVisitante.value) {
 
-    console.log(listaEquipoVisitante.value)
 
     let equipoLocal = futbolStore.getEquipoById(idLocal.value)
     let equipoVisitante = futbolStore.getEquipoById(idVisitante.value)   
@@ -183,8 +188,11 @@ const crearPartido = () => {
   
 
 futbolStore.addPartido(partido.value, marcador)
+router.push('/futbol')
 
 }
+
+const volver = () => router.push('/futbol')
 
 watch(() => idLocal.value, (val) => {
   try {

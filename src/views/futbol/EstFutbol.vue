@@ -98,6 +98,11 @@
           </v-row>
         </v-col>
       </v-row>
+      <v-row>
+        <v-col class="text-center">
+          <v-btn color="success" @click="volver">TORNAR</v-btn>
+        </v-col>
+      </v-row>
   
   </div>
   
@@ -107,7 +112,7 @@
 
 <script setup>
 
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 import { defineAsyncComponent } from 'vue';
 
@@ -124,7 +129,9 @@ import { watch } from 'vue';
 const MarcadorFutbol = defineAsyncComponent(() => import('@/components/futbol/MarcadorFutbol'))
 
 const futbolStore = usegFutbolStore()
+
 const route = useRoute()
+const router = useRouter()
 
 const id = route.params.id
 
@@ -371,6 +378,8 @@ const disparosVisitantelTotal = computed(() => {
 },{
   deep: true
 }) */
+
+const volver = () => router.push('/futbol')
 
 </script> 
 <style scoped>
