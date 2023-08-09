@@ -126,7 +126,7 @@
       <v-col cols="5" class="recuadro_gris">
         <v-row>
           <v-col class="text-center">
-            <!-- <video id="myVideoId" width="620" height="349" autoplay muted playsinline/> -->
+            <video id="myVideoId" width="620" height="349" autoplay muted playsinline/>
           </v-col>
         </v-row>
       </v-col>
@@ -161,6 +161,14 @@
 
   const id = route.params.id
 
+  swiftConnectionStore.startConnection()
+  swiftConnectionStore.startVideo()
+
+  console.log(marcador.value.temporizador.inicio_tiempo)
+
+  
+
+ 
 
 
   // const marcador = computed(() => marcadores.value.find(marcador => {
@@ -258,7 +266,7 @@
     temporizador = setInterval(() => {
       const ahora = Date.now()
       let dif = ahora - tiempo_de_inicio.value[parte(parte_en_juego.value)]
-      console.log(dif, duracion.value)
+      // console.log(dif, duracion.value)
       if(dif > duracion.value  && !añadidoIniciado) {
         tiempo_de_inicio.value[parte(parte_en_juego.value)] = Date.now()
         props.tiempo.añadidoPrimera = tiempo_de_inicio.value[parte(parte_en_juego.value)]
@@ -323,7 +331,9 @@
   const pararTiempo = () => {
     clearInterval(temporizador)
     inicio_tiempo.value = false
+    marcador.value.temporizador.inicio_tiempo = false
     tiempoIniciado.value = false
+    actualizarMarcador()
   }
 
   const resetTiempo = () => {
@@ -464,10 +474,16 @@
   const actualizarMarcador = () => {
     futbolStore.updateMarcadorDB(marcador.value.id_marcador, marcador.value)
   }
+
+  if (marcador.value.temporizador.inicio_tiempo) iniciarTiempo()
   
   watch(() => parte_en_juego.value, val => {
     tiempoMarcador.value = "00:00"
   })
+
+  // watch(() => marcador.value, marcador => {
+  //   console.log(marcador)
+  // })
 
 </script>
 

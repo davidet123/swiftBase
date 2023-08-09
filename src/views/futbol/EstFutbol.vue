@@ -9,7 +9,7 @@
     ></v-progress-circular>
   </div>
   <!-- <div v-if="!cargando_equipos && !cargando_partidos"> -->
-  <div v-if="partido" class="mb-4 pb-4">
+  <div v-if="partido && marcador" class="mb-4 pb-4">
     <!-- {{ partido }} -->
       <v-row>
         <v-col cols="12">
@@ -50,10 +50,10 @@
             </v-col>
             <v-row>
                 <v-col v-if="dorsalLocal !== null" cols="12">
-                  <JugadorFutbolInd :jugador="listadoLocal[0]" :fondo="'local'" class="ml-4" @test="test"/>
+                  <JugadorFutbolInd :jugador="listadoLocal[0]" :fondo="'local'" :temporizador="marcador.temporizador" class="ml-4" @test="test"/>
                 </v-col>
                 <v-col v-else v-for="jugador in equipo_local.jugadores" :key="jugador.id_jugador" cols="12" class="clearMargin">
-                  <JugadorFutbolInd :jugador = "jugador" :id_jugador = "jugador.id_jugador" :fondo="'local'" class="ml-4"/>
+                  <JugadorFutbolInd :jugador = "jugador" :id_jugador = "jugador.id_jugador" :fondo="'local'" :temporizador="marcador.temporizador" class="ml-4"/>
                 </v-col>
             </v-row>
           </v-row>
@@ -89,10 +89,10 @@
             </v-col>
             <v-row class="clearMargin">
                 <v-col v-if="dorsalVisitante !== null" cols="12" class="mr-2">
-                  <JugadorFutbolInd :jugador="listadoVisitante[0]" :fondo="'visitante'"/>
+                  <JugadorFutbolInd :jugador="listadoVisitante[0]" :fondo="'visitante'" :temporizador="marcador.temporizador"/>
                 </v-col>
                 <v-col v-else v-for="jugador in equipo_visitante.jugadores" :key="jugador.id_jugador" cols="12" class="clearMargin">
-                  <JugadorFutbolInd  :jugador = "jugador" :id_jugador = "jugador.id_jugador" :fondo="'visitante'" class="mr-2"/>
+                  <JugadorFutbolInd  :jugador = "jugador" :id_jugador = "jugador.id_jugador" :fondo="'visitante'" :temporizador="marcador.temporizador" class="mr-2"/>
                 </v-col>
             </v-row>
           </v-row>
@@ -100,7 +100,8 @@
       </v-row>
       <v-row>
         <v-col class="text-center">
-          <v-btn color="success" @click="volver">TORNAR</v-btn>
+          <v-btn color="success" @click="volver">INICI</v-btn>
+          <v-btn color="success" @click="resumen">RESUM</v-btn>
         </v-col>
       </v-row>
   
@@ -119,7 +120,7 @@ import { defineAsyncComponent } from 'vue';
 
 import Visor from '@/components/visor/Visor.vue'
 // import MarcadorFutbol from '@/components/futbol/MarcadorFutbol'
-import JugadorFutbolInd from '@/components/futbol/JugadorFutbolInd'
+// import JugadorFutbolInd from '@/components/futbol/JugadorFutbolInd'
 
 import { usegFutbolStore } from "../../store/futbol"
 import { computed, ref,  onBeforeMount, onMounted } from 'vue';
@@ -127,6 +128,7 @@ import { storeToRefs } from "pinia";
 import { watch } from 'vue';
 
 const MarcadorFutbol = defineAsyncComponent(() => import('@/components/futbol/MarcadorFutbol'))
+const JugadorFutbolInd = defineAsyncComponent(() => import('@/components/futbol/JugadorFutbolInd'))
 
 const futbolStore = usegFutbolStore()
 
@@ -248,13 +250,16 @@ const limpiarDorsal = (equipo) => {
 const estadisticasTotales = (jugadores, estadistica) => {
   return jugadores.reduce((total, jugador) => total + jugador.estadistica[estadistica], 0);
 };
+const golesTotales = jugadores => {
+  return  jugadores.reduce((total, jugador) => total += jugador.estadistica.goles.length, 0)
+}
 
-const golesLocalTotales = computed(() => estadisticasTotales(equipo_local.value.jugadores, 'goles'))
+const golesLocalTotales = computed(() => golesTotales(equipo_local.value.jugadores))
 const taLocalTotales = computed(() => estadisticasTotales(equipo_local.value.jugadores, 'tarjetas_amarillas'))
 const trLocalTotales = computed(() => estadisticasTotales(equipo_local.value.jugadores, 'tarjeta_roja'))
 const faltasLocalTotales = computed(() => estadisticasTotales(equipo_local.value.jugadores, 'faltas'))
 
-const golesVisitanteTotales = computed(() => estadisticasTotales(equipo_visitante.value.jugadores, 'goles'));
+const golesVisitanteTotales = computed(() => golesTotales(equipo_visitante.value.jugadores))
 const taVisitanteTotales = computed(() => estadisticasTotales(equipo_visitante.value.jugadores, 'tarjetas_amarillas'));
 const trVisitanteTotales = computed(() => estadisticasTotales(equipo_visitante.value.jugadores, 'tarjeta_roja'));
 const faltasVisitanteTotales = computed(() => estadisticasTotales(equipo_visitante.value.jugadores, 'faltas'));
@@ -379,7 +384,13 @@ const disparosVisitantelTotal = computed(() => {
   deep: true
 }) */
 
+const mostrarEstadistica = (estadistica)=> {
+  console.log(estadistica)
+}
+
 const volver = () => router.push('/futbol')
+
+const resumen = () => router.push('/futbol/resumenfutbol/'+id)
 
 </script> 
 <style scoped>

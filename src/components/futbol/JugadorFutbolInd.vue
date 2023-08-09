@@ -22,7 +22,7 @@
                 <v-col cols="6">
                   <v-row class="caja_jugador">
                     <v-col cols="12" class="text-center">
-                      <p>GOLES ({{ jugador.estadistica.goles }})</p>
+                      <p>GOLES ({{ totalGoles }})</p>
                     </v-col>
                     <v-row class="pb-3">
                       <v-col cols="2" offset="2">
@@ -139,7 +139,12 @@
 import { useRoute } from 'vue-router';
 
 import { usegFutbolStore } from "../../store/futbol"
-import { toRefs } from 'vue';;
+import { useSwiftConnectionStore } from "../../store/swiftConnection"
+
+import { toRefs } from 'vue';
+import { computed } from 'vue';
+
+const swiftConnectionStore = useSwiftConnectionStore()
 
 
 const route = useRoute()
@@ -149,21 +154,29 @@ const id_partido = route.params.id
 const futbolStore = usegFutbolStore()
 
 
-const props = defineProps(["jugador", "id_jugador", "fondo"])
+const props = defineProps(["jugador", "id_jugador", "fondo", "temporizador"])
 
-const { jugador } = toRefs(props)
+const { jugador, temporizador } = toRefs(props)
 
 
 const emit = defineEmits(["borrarJugador"])
 
 
 const gol = val => {
-  jugador.value.estadistica.goles += val
+  console.log(temporizador.value)
+  if(val >= 0) {    
+    jugador.value.estadistica.goles.push(Date.now() - temporizador.value.tiempo.primera) 
+  } else {
+    jugador.value.estadistica.goles.pop()
+  }
   updateDB(jugador.value)
 }
 
+const totalGoles = computed(() => jugador.value.estadistica.goles.length)
+
 const tarjetaAmarilla = val => {
   jugador.value.estadistica.tarjetas_amarillas += val
+  mostrarEstadistica(jugador.value.estadistica)
   updateDB(jugador.value)
 }
 const tarjetaRoja = val => {
@@ -173,11 +186,15 @@ const tarjetaRoja = val => {
 
 const falta = val => {
   jugador.value.estadistica.faltas += val
+  const tipo = "Faltes"
+  mostrarEstadistica(jugador.value.apodo, jugador.value.dorsal, tipo, jugador.value.estadistica.faltas)
   updateDB(jugador.value)
 }
 
 const disparo = val => {
   jugador.value.estadistica.disparos += val
+  const tipo = "Disparos"
+  mostrarEstadistica(jugador.value.apodo, jugador.value.dorsal, tipo, jugador.value.estadistica.disparos)
   updateDB(jugador.value)
 }
 const disparoAPuerta = val => {
@@ -188,6 +205,15 @@ const disparoAPuerta = val => {
 
 const updateDB = (jugador) => {
   futbolStore.updateEstPartido(id_partido, jugador)
+}
+
+const mostrarEstadistica = (nombre, dorsal, tipo, valor)=> {
+  swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::NOMBRETEXT","String", nombre)
+  swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::NUMEROTEXT","String", dorsal)
+  swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::TIPO_ESTADISTICATEXT","String", tipo)
+  swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::VALOR_ESTADISTICATEXT","String", valor)
+
+  console.log(nombre, dorsal, tipo, valor)
 }
 
 

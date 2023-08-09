@@ -39,7 +39,7 @@
               <td class="text-center text-h5">{{ golesLocalTotales }}</td>
               <td class="text-center text-h5">{{ golesVisitanteTotales }}</td>
             </tr>
-            <tr>
+            <tr v-if="golesLocalTotales > 0 || golesVisitanteTotales > 0">
               <td>
                 <p class="font-weight-black">GOLEJADORS</p>
               </td>
@@ -47,7 +47,9 @@
                 <div v-for="jugador in maxGoleadorLocal" :key="jugador.id_jugador">
                   <v-row>
                     <v-col cols="12" class="text-center">
-                      <p class="text-h6">{{ jugador.numero }} -  {{ jugador.apodo }} ({{ jugador.estadistica.goles }})</p>
+                      <span v-for="gol in jugador.estadistica.goles">
+                        <p class="text-h6">{{ jugador.numero }} -  {{ jugador.apodo }} ({{ millisToMinutes(gol) }})</p>
+                      </span>
                     </v-col>
                   </v-row>
                 </div>
@@ -56,7 +58,9 @@
                 <div v-for="jugador in maxGoleadorVisitante" :key="jugador.id_jugador">
                   <v-row>
                     <v-col cols="12" class="text-center">
-                      <p class="text-h6">{{ jugador.numero }} -  {{ jugador.apodo }} ({{ jugador.estadistica.goles }})</p>
+                      <span v-for="gol in jugador.estadistica.goles">
+                        <p class="text-h6">{{ jugador.numero }} -  {{ jugador.apodo }} ({{ millisToMinutes(gol) }})</p>
+                      </span>
                     </v-col>
                   </v-row>
                 </div>
@@ -158,7 +162,8 @@
     </v-row>
     <v-row>
       <v-col class="text-center">
-        <v-btn color="success" @click="volver">TORNAR</v-btn>
+        <v-btn color="success" @click="volver">INICI</v-btn>
+        <v-btn color="success" @click="irEstadistica">ESTADISTICA</v-btn>
       </v-col>
     </v-row>
   </div>
@@ -192,6 +197,13 @@
   // })
 
   const partido = computed(() => futbolStore.buscarPartido(id))
+  // const marcador = futbolStore.buscarMarcador(id)
+  // const inicio = () => {
+  //   console.log(m.temporizador.tiempo.primera)
+  //   return m.temporizador.tiempo.primera
+  // }
+
+  // const inicio = marcador.temporizador.tiempo.primera
 
   
 
@@ -199,6 +211,7 @@
   const equipo_visitante = ref(null)
   const jugadoresLocal = ref(null)
   const jugadoresVisitante = ref(null)
+  // const inicio = ref(null)
   // const equipo_local = computed(() => {
   //   if(!partido) return false
   //   return partido.value.equipo_local})
@@ -208,12 +221,16 @@
     return jugadores.reduce((total, jugador) => total + jugador.estadistica[estadistica], 0);
   };
 
-  const golesLocalTotales = computed(() => estadisticasTotales(partido.value.equipo_local.jugadores, 'goles'))
+  const golesTotales = jugadores => {
+  return  jugadores.reduce((total, jugador) => total += jugador.estadistica.goles.length, 0)
+}
+
+  const golesLocalTotales = computed(() => golesTotales(partido.value.equipo_local.jugadores))
   const taLocalTotales = computed(() => estadisticasTotales(partido.value.equipo_local.jugadores, 'tarjetas_amarillas'))
   const trLocalTotales = computed(() => estadisticasTotales(partido.value.equipo_local.jugadores, 'tarjeta_roja'))
   const faltasLocalTotales = computed(() => estadisticasTotales(partido.value.equipo_local.jugadores, 'faltas'))
 
-  const golesVisitanteTotales = computed(() => estadisticasTotales(partido.value.equipo_visitante.jugadores, 'goles'));
+  const golesVisitanteTotales = computed(() => golesTotales(partido.value.equipo_visitante.jugadores))
   const taVisitanteTotales = computed(() => estadisticasTotales(partido.value.equipo_visitante.jugadores, 'tarjetas_amarillas'));
   const trVisitanteTotales = computed(() => estadisticasTotales(partido.value.equipo_visitante.jugadores, 'tarjeta_roja'));
   const faltasVisitanteTotales = computed(() => estadisticasTotales(partido.value.equipo_visitante.jugadores, 'faltas'));
@@ -232,10 +249,10 @@
   // const jugadoresVisitante = [...equipo_visitante.value.jugadores]
 
   const maxGoleadorLocal = computed(() => {
-    return consulta(partido.value.equipo_local.jugadores, "goles")
+    return consultaGoles(partido.value.equipo_local.jugadores)
   })
   const maxGoleadorVisitante = computed(() => {
-    return consulta(partido.value.equipo_visitante.jugadores, "goles")
+    return consultaGoles(partido.value.equipo_visitante.jugadores, "goles")
   })
 
   const tarAmarillaLocal = computed(() => {
@@ -260,14 +277,42 @@
     return filtrado
   }
 
+  const consultaGoles = equipo => {
+    const filtrado = equipo.filter(jug => {
+      return jug.estadistica.goles.length > 0
+    })
+    filtrado.sort((a,b) => b.estadistica.goles - a.estadistica.goles); // b - a for reverse sort
+    return filtrado
+
+  }
+  
+
   const cargaPartido = (partido) => {
     equipo_local.value = partido.equipo_local
     equipo_visitante.value = partido.visitante
     jugadoresLocal.value = [...partido.equipo_local.jugadores]
     jugadoresVisitante.value = [...partido.equipo_visitante.jugadores]
+    // inicio = marcador.temporizador.tiempo.primera
+  }
+
+
+
+
+  // calcular tiempo de los goles
+  const millisToMinutes = (millis) => {
+    // const inicio = futbolStore.buscarMarcador(id).temporizador.tiempo.primera
+    
+    var minutes = Math.floor(millis / 60000).toLocaleString('en-US', {
+      minimumIntegerDigits: 2,
+      useGrouping: false
+    });
+    
+    return minutes + "'"
   }
 
   const volver = () => router.push('/futbol')
+
+  const irEstadistica = () => router.push('/futbol/estfutbol/' + id)
 
   if(partido.value) {
     cargaPartido(partido.value)
@@ -276,6 +321,7 @@
   watch(() => partido.value, partido => {
     cargaPartido(partido)
   })
+  
 
 
 

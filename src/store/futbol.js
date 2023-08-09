@@ -1207,6 +1207,12 @@ export const usegFutbolStore = defineStore('futbol', {
 
       m.goles = marcador.goles
     },
+    buscarMarcador(id) {
+      return this.marcadores.find(marcador => {
+        return marcador.id_partido == id
+      })
+
+    },
 
     updateMarcadorDB(id_partido, marcador) {
 
@@ -1247,6 +1253,7 @@ export const usegFutbolStore = defineStore('futbol', {
 
     async updateMarcadorDB(id, payload) {
       const docRef = doc(db, "marcadores_futbol", id)
+      console.log(payload.temporizador)
       await updateDoc(docRef, {
         goles: payload.goles,
         temporizador: payload.temporizador

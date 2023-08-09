@@ -155,7 +155,7 @@ const crearPartido = () => {
           faltas: 0,
           disparos: 0,
           disparos_al_arco: 0,
-          goles: 0,
+          goles: [],
           posesion: '0%',
           fueras_de_juego: 0
         }
@@ -168,7 +168,7 @@ const crearPartido = () => {
           faltas: 0,
           disparos: 0,
           disparos_al_arco: 0,
-          goles: 0,
+          goles: [],
           posesion: '0%',
           fueras_de_juego: 0
         }

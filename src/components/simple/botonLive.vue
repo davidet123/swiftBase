@@ -20,10 +20,10 @@ const live = ref(false)
 
 
 const insertarGrafico = val => {
-const payload = {
-  live: live.value,
-  nombre: val
-  }
+  const payload = {
+    live: live.value,
+    nombre: val
+    }
   live.value = !live.value  
   emit("activar", payload)
 }
