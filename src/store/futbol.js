@@ -1157,6 +1157,8 @@ export const usegFutbolStore = defineStore('futbol', {
         })
       }
       buscaJugador.estadistica = jugador.estadistica
+
+      console.log(buscaJugador)
       await updateDoc(docRef, {
         equipo_local: partido.equipo_local,
         equipo_visitante: partido.equipo_visitante
@@ -1206,6 +1208,7 @@ export const usegFutbolStore = defineStore('futbol', {
       })
 
       m.goles = marcador.goles
+      m.temporizador = marcador.temporizador
     },
     buscarMarcador(id) {
       return this.marcadores.find(marcador => {

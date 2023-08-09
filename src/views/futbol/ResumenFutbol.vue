@@ -1,12 +1,12 @@
 <template>
-  <div v-if="!partido" class="text-center" style="margin-top:200px;">
+  <div v-if="!partido && !marcador" class="text-center" style="margin-top:200px;">
     <v-progress-circular
       indeterminate
       color="primary"
       size="50"
     ></v-progress-circular>
   </div>
-  <div v-if="partido" class="mb-4 pb-4">
+  <div v-if="partido && marcador" class="mb-4 pb-4">
      <v-row>
       <v-col cols="12" class="text-center my-4">
         <h2>RESUMEN PARTIT</h2>
@@ -70,8 +70,8 @@
               <td>
                 <p class="font-weight-black">POSESSIÓ</p>
               </td>
-              <td class="text-center text-h5">{{ partido.equipo_local.estadistica_equipo.posesión }}</td>
-              <td class="text-center text-h5">{{ partido.equipo_visitante.estadistica_equipo.posesión }}</td>
+              <td class="text-center text-h5">{{ posesion_local }}</td>
+              <td class="text-center text-h5">{{ posesion_visitante }}</td>
             </tr>
             <tr>
               <td>
@@ -197,7 +197,7 @@
   // })
 
   const partido = computed(() => futbolStore.buscarPartido(id))
-  // const marcador = futbolStore.buscarMarcador(id)
+  const marcador = computed(() => futbolStore.buscarMarcador(id))
   // const inicio = () => {
   //   console.log(m.temporizador.tiempo.primera)
   //   return m.temporizador.tiempo.primera
@@ -211,6 +211,16 @@
   const equipo_visitante = ref(null)
   const jugadoresLocal = ref(null)
   const jugadoresVisitante = ref(null)
+  const posesion = ref(null)
+
+  const posesion_local = computed(() => {
+    const posesionTotal = marcador.value.temporizador.posesion.local + marcador.value.temporizador.posesion.visitante
+    return Math.round(marcador.value.temporizador.posesion.local / posesionTotal * 100) + " %"
+  })
+  const posesion_visitante = computed(() => {
+    const posesionTotal = marcador.value.temporizador.posesion.local + marcador.value.temporizador.posesion.visitante
+    return Math.round(marcador.value.temporizador.posesion.visitante / posesionTotal * 100) + " %"
+  })
   // const inicio = ref(null)
   // const equipo_local = computed(() => {
   //   if(!partido) return false
@@ -295,6 +305,13 @@
     // inicio = marcador.temporizador.tiempo.primera
   }
 
+  const cargaMarcador = marcador => {
+    posesion.value = {
+      local: marcador.temporizador.posesion.local,
+      visitante: marcador.temporizador.posesion.visitante,
+    }
+  }
+
 
 
 
@@ -320,6 +337,11 @@
 
   watch(() => partido.value, partido => {
     cargaPartido(partido)
+  })
+
+  watch(() => marcador.value, marcador => {
+    cargaMarcador(marcador)
+    console.log(marcador)
   })
   
 

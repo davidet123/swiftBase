@@ -133,7 +133,7 @@
         </v-row>
   
       </v-col>
-      <v-col cols="5" class="recuadro_gris">
+      <v-col cols="5" class="recuadro_gris" v-if="swiftConnectionStore.videoStream">
         <v-row>
           <v-col class="text-center">
             <video id="myVideoId" width="620" height="349" autoplay muted playsinline/>
@@ -170,11 +170,11 @@
   const route = useRoute()
 
   const id = route.params.id
-
+  
   swiftConnectionStore.startConnection()
   swiftConnectionStore.startVideo()
 
-  console.log(marcador.value.temporizador.inicio_tiempo)
+  // console.log(marcador.value.temporizador.inicio_tiempo)
 
   
 
@@ -224,8 +224,17 @@
   let inicio_tiempo = ref(marcador.value.temporizador.inicio_tiempo)
   let inicio_posesion = null
   const equipo_en_posesion = ref(marcador.value.temporizador.posesion.equipo_en_posesion)
-  const posesion_local = ref(marcador.value.temporizador.posesion.local)
-  const posesion_visitante = ref(marcador.value.temporizador.posesion.visitante)
+  // const posesion_local = ref(marcador.value.temporizador.posesion.local)
+  // const posesion_visitante = ref(marcador.value.temporizador.posesion.visitante)
+
+  const posesion_local = computed(() => {
+    const posesionTotal = marcador.value.temporizador.posesion.local + marcador.value.temporizador.posesion.visitante
+    return Math.round(marcador.value.temporizador.posesion.local / posesionTotal * 100) + " %"
+  })
+  const posesion_visitante = computed(() => {
+    const posesionTotal = marcador.value.temporizador.posesion.local + marcador.value.temporizador.posesion.visitante
+    return Math.round(marcador.value.temporizador.posesion.visitante / posesionTotal * 100) + " %"
+  })
 
   const tiempo_primera = ref(marcador.value.temporizador.tiempo.primera)
   const tiempo_segunda = ref(marcador.value.temporizador.tiempo.segunda)
@@ -304,6 +313,10 @@
       }
       
         tiempoMarcador.value = (millisToMinutesAndSeconds(dif))
+        marcador.value.temporizador.posesion[equipo_en_posesion.value] += 1
+        // console.log(marcador.value.temporizador.posesion)
+        
+        
         // swiftConnectionStore.rtRemote.updateFields("MARCADOR::TIEMPOTEXT","String", tiempoMarcador.value)
       
       // emit("updateDB", estTotales.value)
@@ -315,42 +328,7 @@
     // console.log(marcador.value)
     actualizarMarcador()
   }
-  /* const iniciarTiempo = () => {
-    console.log(tiempo_de_inicio.value)
-    console.log(tiempo_de_inicio.value[parte(parte_en_juego.value)])
-    inicio_tiempo.value = true
-    if(!tiempoInicio) {
-      tiempoInicio = Date.now()
-    }
-    props.tiempo.primeraParte = tiempoInicio
-    inicioPosesion = tiempoInicio
-
-    tiempoIniciado.value = true
-    let inicio = tiempoTotal.primeraParte
-    
-    temporizador = setInterval(() => {
-      const ahora = Date.now()
-      let dif = ahora - inicio
-      if(dif > parseInt(tiempoJuego.value) * 1000 * 60 + 5  && !añadidoIniciado) {
-        inicio = Date.now()
-        props.tiempo.añadidoPrimera = inicio
-        añadidoIniciado = true
-        dif = 2000
-        // swiftConnectionStore.rtRemote.playMethod("MARCADOR::suplOn")
-      }
-      if(!añadidoIniciado) {
-        tiempoMarcador.value = (millisToMinutesAndSeconds(dif))
-        // swiftConnectionStore.rtRemote.updateFields("MARCADOR::TIEMPOTEXT","String", tiempoMarcador.value)
-      } else {
-        añadidoMarcador.value = (millisToMinutesAndSeconds(dif))
-        // swiftConnectionStore.rtRemote.updateFields("MARCADOR::SUPLTEXT","String", añadido.value)
-        
-      }
-      // emit("updateDB", estTotales.value)
-      // calcularPosesion(dif)
-
-    }, 1000)
-  } */
+  
 
   const pararTiempo = () => {
     clearInterval(temporizador)
@@ -368,8 +346,8 @@
     // console.log(tiempo_de_inicio.value[parte(parte_en_juego.value)])
     tiempo_de_inicio.value[parte(parte_en_juego.value)] = null
     marcador.value.temporizador.posesion.equipo_en_posesion = 'local'
-    marcador.value.temporizador.posesion.local = '0%'
-    marcador.value.temporizador.posesion.visitante = '0%'
+    // marcador.value.temporizador.posesion.local = 0
+    // marcador.value.temporizador.posesion.visitante = 0
     // props.tiempo.primeraParte = null
     // props.tiempo.añadidoPrimera = null
     tiempoInicio = null
@@ -424,32 +402,51 @@
 
 
   const cambioDePosesion = () => {
-    if(inicio_tiempo.value) {
-        const finPosesion = Date.now()
+
+    if(equipo_en_posesion.value == 'local') {
+      
+      equipo_en_posesion.value = 'visitante'
+    } else if (equipo_en_posesion.value == 'visitante') {
+      
+      equipo_en_posesion.value = 'local'
+    }
+
+    marcador.value.temporizador.posesion.equipo_en_posesion = equipo_en_posesion.value
+    // marcador.value.temporizador.posesion.local = posesion_local.value
+    // marcador.value.temporizador.posesion.visitante = posesion_visitante.value
+
+
+
+    actualizarMarcador()
+
+
+
+    // if(inicio_tiempo.value) {
+    //     const finPosesion = Date.now()
         
-        const duracionPosesion = finPosesion - inicio_posesion
-        inicio_posesion = finPosesion
-        if(equipo_en_posesion.value == 'local') {
-          posesionLocalTotal.value += duracionPosesion
-          equipo_en_posesion.value = 'visitante'
-        } else if (equipo_en_posesion.value == 'visitante') {
-          posesionVisitanteTotal.value += duracionPosesion
-          equipo_en_posesion.value = 'local'
-        }
-        // console.log(millisToMinutesAndSeconds(posesionLocalTotal.value), millisToMinutesAndSeconds(posesionVisitanteTotal.value))
-        posesion_local.value = Math.round(posesionLocalTotal.value / (finPosesion - tiempo_de_inicio.value[parte(parte_en_juego.value)]) * 100) + "%"
-        posesion_visitante.value = Math.round(posesionVisitanteTotal.value / (finPosesion - tiempo_de_inicio.value[parte(parte_en_juego.value)]) * 100) + "%"
+    //     const duracionPosesion = finPosesion - inicio_posesion
+    //     inicio_posesion = finPosesion
+    //     if(equipo_en_posesion.value == 'local') {
+    //       posesionLocalTotal.value += duracionPosesion
+    //       equipo_en_posesion.value = 'visitante'
+    //     } else if (equipo_en_posesion.value == 'visitante') {
+    //       posesionVisitanteTotal.value += duracionPosesion
+    //       equipo_en_posesion.value = 'local'
+    //     }
+    //     // console.log(millisToMinutesAndSeconds(posesionLocalTotal.value), millisToMinutesAndSeconds(posesionVisitanteTotal.value))
+    //     posesion_local.value = Math.round(posesionLocalTotal.value / (finPosesion - tiempo_de_inicio.value[parte(parte_en_juego.value)]) * 100) + "%"
+    //     posesion_visitante.value = Math.round(posesionVisitanteTotal.value / (finPosesion - tiempo_de_inicio.value[parte(parte_en_juego.value)]) * 100) + "%"
   
-        // emit("updateDB", estTotales.value)
-        marcador.value.temporizador.posesion.equipo_en_posesion = equipo_en_posesion.value
-        marcador.value.temporizador.posesion.local = posesion_local.value
-        marcador.value.temporizador.posesion.visitante = posesion_visitante.value
-        // console.log(marcador.value)
-        actualizarMarcador()
+    //     // emit("updateDB", estTotales.value)
+    //     marcador.value.temporizador.posesion.equipo_en_posesion = equipo_en_posesion.value
+    //     marcador.value.temporizador.posesion.local = posesion_local.value
+    //     marcador.value.temporizador.posesion.visitante = posesion_visitante.value
+    //     // console.log(marcador.value)
+    //     actualizarMarcador()
 
      
 
-    }
+    // }
 
 
   }
@@ -544,6 +541,13 @@
     tiempoMarcador.value = (millisToMinutesAndSeconds(tiempo))
     marcador.value.temporizador.parte_en_juego = parseInt(val)
     console.log(marcador.value)
+    actualizarMarcador()
+  })
+
+  watch(() => posesion_local.value, val => {
+    actualizarMarcador()
+  })
+  watch(() => posesion_visitante.value, val => {
     actualizarMarcador()
   })
 

@@ -176,7 +176,7 @@ const totalGoles = computed(() => jugador.value.estadistica.goles.length)
 
 const tarjetaAmarilla = val => {
   jugador.value.estadistica.tarjetas_amarillas += val
-  mostrarEstadistica(jugador.value.estadistica)
+  // mostrarEstadistica(jugador.value.estadistica)
   updateDB(jugador.value)
 }
 const tarjetaRoja = val => {
@@ -187,14 +187,15 @@ const tarjetaRoja = val => {
 const falta = val => {
   jugador.value.estadistica.faltas += val
   const tipo = "Faltes"
-  mostrarEstadistica(jugador.value.apodo, jugador.value.dorsal, tipo, jugador.value.estadistica.faltas)
+  console.log(jugador.value)
+  mostrarEstadistica(jugador.value.apodo, jugador.value.numero, tipo, jugador.value.estadistica.faltas)
   updateDB(jugador.value)
 }
 
 const disparo = val => {
   jugador.value.estadistica.disparos += val
   const tipo = "Disparos"
-  mostrarEstadistica(jugador.value.apodo, jugador.value.dorsal, tipo, jugador.value.estadistica.disparos)
+  mostrarEstadistica(jugador.value.apodo, jugador.value.numero, tipo, jugador.value.estadistica.disparos)
   updateDB(jugador.value)
 }
 const disparoAPuerta = val => {
@@ -208,12 +209,15 @@ const updateDB = (jugador) => {
 }
 
 const mostrarEstadistica = (nombre, dorsal, tipo, valor)=> {
-  swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::NOMBRETEXT","String", nombre)
-  swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::NUMEROTEXT","String", dorsal)
-  swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::TIPO_ESTADISTICATEXT","String", tipo)
-  swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::VALOR_ESTADISTICATEXT","String", valor)
+  if(swiftConnectionStore.rtRemote) {
+    swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::NOMBRE_JUGADORTEXT","String", nombre)
+    swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::NUMEROTEXT","String", dorsal)
+    swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::TIPO_ESTADISTICATEXT","String", tipo)
+    swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::VALOR_ESTADISTICATEXT","String", valor)
+  
+    console.log(nombre, dorsal, tipo, valor)
 
-  console.log(nombre, dorsal, tipo, valor)
+  }
 }
 
 
