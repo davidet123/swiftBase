@@ -88,32 +88,42 @@
               </v-col>
             </v-row>
           </v-col>
+          
           <v-col cols="4" class="recuadro_gris">
             <v-row class="py-2">
               <v-col cols="12" class="text-center ma-0 pa-0">
                 <h3>Tiempo añadido</h3>
               </v-col>
             </v-row>
-            <v-row>
+            <!-- <v-row>
               <v-col cols="12" class="text-center">
                 <p class="text-h2">{{ añadidoMarcador }}</p>
               </v-col>
-            </v-row>
+            </v-row> -->
             <v-row>
               <v-col cols="6" offset="3" class="text-center mx-auto ma-0 pa-0">
                 <v-text-field @focus="setFocus(true)" @blur="setFocus(false)" class="text-center" v-model="añadido" label="tiempo añadido"></v-text-field>
               </v-col>
             </v-row>
-          </v-col>
-          <v-col cols="4">
-            <v-row class="recuadro_gris mb-1">
-              <v-col cols="12" class="text-center">
+            <v-row class="ma-0 pa-0">
+              <v-col cols="12" class="text-center ma-0 pa-0">
                 <h3>Parte en juego</h3>
               </v-col>
               <v-col cols="6" class="mx-auto">
                 <v-text-field @focus="setFocus(true)" @blur="setFocus(false)" class="centered-input" v-model="parte_en_juego" label="parte"  :disabled="inicio_tiempo"></v-text-field>
               </v-col>
             </v-row>
+            
+          </v-col>
+          <v-col cols="4">
+            <!-- <v-row class="recuadro_gris mb-1">
+              <v-col cols="12" class="text-center">
+                <h3>Parte en juego</h3>
+              </v-col>
+              <v-col cols="6" class="mx-auto">
+                <v-text-field @focus="setFocus(true)" @blur="setFocus(false)" class="centered-input" v-model="parte_en_juego" label="parte"  :disabled="inicio_tiempo"></v-text-field>
+              </v-col>
+            </v-row> -->
             <v-row>
               <v-col class="text-center recuadro">
                 <v-btn color="success" @click="cambioDePosesion()">CAMBIO POSESION</v-btn>
@@ -227,7 +237,7 @@
     const strings = ['primera', 'segunda', 'primera_prorroga', 'segunda_prorroga']
     return strings[val-1]
   }
-  const duracion_partes = [90, 90, 15, 15]
+  const duracion_partes = [45, 45, 15, 15]
   const duracion = computed(() => (duracion_partes[parte_en_juego.value - 1]) * 1000 * 60)
   // const duracion = computed(() => (duracion_partes[parte_en_juego.value - 1]))
 
@@ -239,6 +249,14 @@
 
   const tiempoMarcador = ref('00:00')
   const añadidoMarcador = ref('00:00')
+
+  if(marcador.value.temporizador.parte_en_juego == 2) {
+    tiempoMarcador.value = '45:00'
+  } else if(marcador.value.temporizador.parte_en_juego == 3) {
+    tiempoMarcador.value = '90:00'
+  } else if(marcador.value.temporizador.parte_en_juego == 4) {
+    tiempoMarcador.value = '105:00'
+  }
 
   const gol = (equipo, valor) => {
     marcador.value.goles[equipo] += valor
@@ -264,24 +282,30 @@
     // let inicio = tiempo_de_inicio.value[parte(parte_en_juego.value)]
     
     temporizador = setInterval(() => {
-      const ahora = Date.now()
+      let tiempoParte = 0
+      if(parte_en_juego.value == 2) {
+        tiempoParte = 45*60*1000
+      } else if(parte_en_juego.value == 3 ) {
+        tiempoParte = 90*60*1000
+      } else if(parte_en_juego.value == 4 ) {
+        tiempoParte = 105*60*1000
+      }
+
+      const ahora = Date.now() + tiempoParte
       let dif = ahora - tiempo_de_inicio.value[parte(parte_en_juego.value)]
-      // console.log(dif, duracion.value)
+      
       if(dif > duracion.value  && !añadidoIniciado) {
-        tiempo_de_inicio.value[parte(parte_en_juego.value)] = Date.now()
-        props.tiempo.añadidoPrimera = tiempo_de_inicio.value[parte(parte_en_juego.value)]
+        // tiempo_de_inicio.value[parte(parte_en_juego.value)] = Date.now()
+        // props.tiempo.añadidoPrimera = tiempo_de_inicio.value[parte(parte_en_juego.value)]
         añadidoIniciado = true
-        dif = 2000
+        // dif = 2000
+        console.log("AÑADIDO")
         // swiftConnectionStore.rtRemote.playMethod("MARCADOR::suplOn")
       }
-      if(!añadidoIniciado) {
+      
         tiempoMarcador.value = (millisToMinutesAndSeconds(dif))
         // swiftConnectionStore.rtRemote.updateFields("MARCADOR::TIEMPOTEXT","String", tiempoMarcador.value)
-      } else {
-        añadidoMarcador.value = (millisToMinutesAndSeconds(dif))
-        // swiftConnectionStore.rtRemote.updateFields("MARCADOR::SUPLTEXT","String", añadido.value)
-        
-      }
+      
       // emit("updateDB", estTotales.value)
       // calcularPosesion(dif)
       
@@ -341,11 +365,8 @@
     // inicio_tiempo.value = false
     marcador.value.temporizador.inicio_tiempo = false
     
-    for (let i = 1; i <=4 ; i ++) {
-      console.log(parte(i))
-      tiempo_de_inicio.value[parte(i)] = null
-
-    }
+    // console.log(tiempo_de_inicio.value[parte(parte_en_juego.value)])
+    tiempo_de_inicio.value[parte(parte_en_juego.value)] = null
     marcador.value.temporizador.posesion.equipo_en_posesion = 'local'
     marcador.value.temporizador.posesion.local = '0%'
     marcador.value.temporizador.posesion.visitante = '0%'
@@ -355,11 +376,20 @@
     tiempoIniciado.value = false
     añadidoIniciado = false
     inicioPosesion = null
-    tiempoMarcador.value = (millisToMinutesAndSeconds(0))
-    añadidoMarcador.value = (millisToMinutesAndSeconds(0))
+    if(marcador.value.temporizador.parte_en_juego == 1) {
+      tiempoMarcador.value = '00:00'
+    } else if(marcador.value.temporizador.parte_en_juego == 2) {
+      tiempoMarcador.value = '45:00'
+    } else if(marcador.value.temporizador.parte_en_juego == 3) {
+      tiempoMarcador.value = '90:00'
+    } else if(marcador.value.temporizador.parte_en_juego == 4) {
+      tiempoMarcador.value = '105:00'
+    }
+    // tiempoMarcador.value = (millisToMinutesAndSeconds(0))
+    // añadidoMarcador.value = (millisToMinutesAndSeconds(0))
     // swiftConnectionStore.rtRemote.updateFields("MARCADOR::TIEMPOTEXT","String", tiempoMarcador.value)
     // swiftConnectionStore.rtRemote.updateFields("MARCADOR::SUPLTEXT","String", añadidoMarcador.value)
-    console.log(marcador.value)
+    // console.log(marcador.value)
     actualizarMarcador()
 
   }
@@ -478,7 +508,43 @@
   if (marcador.value.temporizador.inicio_tiempo) iniciarTiempo()
   
   watch(() => parte_en_juego.value, val => {
-    tiempoMarcador.value = "00:00"
+
+
+    // tiempo_de_inicio.value[parte(parte_en_juego.value)]
+    let tiempo = 0
+
+
+    if(parseInt(val) == 1) {
+      if(tiempo_de_inicio.value[parte(1)]) {
+        tiempo = Date.now() - tiempo_de_inicio.value[parte(1)]
+      } else {
+        tiempo = 0
+      }
+      // tiempoMarcador.value = "00:00"
+    } else if (parseInt(val) == 2) {
+      if(tiempo_de_inicio.value[parte(2)]) {
+        tiempo = Date.now() - tiempo_de_inicio.value[parte(2)] + 45 * 60 * 1000
+      } else {
+        tiempo = 45 * 60 * 1000
+      }
+    } else if (parseInt(val) == 3) {
+      if(tiempo_de_inicio.value[parte(3)]) {
+        tiempo = Date.now() - tiempo_de_inicio.value[parte(3)] + 90 * 60 * 1000
+      } else {
+        tiempo = 90 * 60 * 1000
+      }
+    } else if (parseInt(val) == 4) {
+      if(tiempo_de_inicio.value[parte(4)]) {
+        tiempo = Date.now() - tiempo_de_inicio.value[parte(4)] + 105 * 60 * 1000
+      } else {
+        tiempo = 105 * 60 * 1000
+      }
+    }
+
+    tiempoMarcador.value = (millisToMinutesAndSeconds(tiempo))
+    marcador.value.temporizador.parte_en_juego = parseInt(val)
+    console.log(marcador.value)
+    actualizarMarcador()
   })
 
   // watch(() => marcador.value, marcador => {
