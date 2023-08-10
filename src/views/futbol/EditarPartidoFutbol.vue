@@ -16,6 +16,18 @@
       </v-col>
     </v-row>
     <v-row>
+      <v-col cols="6" offset="3">
+        <v-select
+          v-model="nuevoPartido.competicion"
+          :items="competiciones"
+          item-title="nombre"
+          item-value="nombre"
+          density="compact"
+          label="Competició"
+        ></v-select> 
+      </v-col>
+    </v-row>
+    <v-row>
       <v-col cols="6">
         <v-select
           v-model="nuevoPartido.equipo_local.nombre_equipo"
@@ -58,6 +70,30 @@
         <v-text-field
           v-model="nuevoPartido.hora"
           label="Hora"
+        ></v-text-field>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12"><h3>Equipo arbitral</h3></v-col>
+      <v-col cols="3">
+        <v-text-field
+          v-model="partido.equipo_arbitral.primer_arbitro"
+          label="Primer árbitro"
+        ></v-text-field>
+      </v-col><v-col cols="3">
+        <v-text-field
+          v-model="partido.equipo_arbitral.segundo_arbitro"
+          label="Segundo árbitro"
+        ></v-text-field>
+      </v-col><v-col cols="3">
+        <v-text-field
+          v-model="partido.equipo_arbitral.tercer_arbitro"
+          label="Tercer árbitro"
+        ></v-text-field>
+      </v-col><v-col cols="3">
+        <v-text-field
+          v-model="partido.equipo_arbitral.cuarto_arbitro"
+          label="Cuarto árbitro"
         ></v-text-field>
       </v-col>
     </v-row>
@@ -168,17 +204,9 @@
   const dialog = ref(false)
 
   const partido = computed(() => futbolStore.buscarPartido(id))
+  const competiciones = computed(() => futbolStore.getCompeticiones)
   
-  let nuevoPartido = ref({
-    equipo_local: null,
-    id_equipo_local: null,
-    equipo_visitante: null,
-    id_equipo_visitante: null,
-    fecha: null,
-    hora: null,
-    lugar: null,
-    estadio: null,
-    })
+  let nuevoPartido = ref(null)
   
   // const partido = computed(() => {
   //   const refPartido =  partidos.value.find(partido=> {

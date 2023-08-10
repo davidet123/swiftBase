@@ -18,13 +18,18 @@
   // Cargar desde firebase
 
   onBeforeMount(async () => {
-    console.log("onbeforemount")
-    await futbolStore.cargarJugadores()
-    await futbolStore.cargarEquipos()
-  
-    await futbolStore.cargarPartidos()
-    await futbolStore.cargarMarcadores()
-    await rotulosStore.cargarRotulos()
+    // console.log(futbolStore.getPartidos)
+    if(futbolStore.getPartidos.length == 0) {
+
+      console.log("onbeforemount")
+      await futbolStore.cargarJugadores()
+      await futbolStore.cargarEquipos()
+      await futbolStore.cargarCompeticiones()
+    
+      await futbolStore.cargarPartidos()
+      await futbolStore.cargarMarcadores()
+      await rotulosStore.cargarRotulos()
+    }
 
   })
 

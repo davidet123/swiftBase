@@ -31,6 +31,19 @@
         v-model="localidad"
         ></v-text-field>
       </v-col>
+      <v-col cols="9">
+        <v-file-input 
+        show-size
+        accept="image/*"
+        v-model="imagen"
+        @change="Preview_image"
+        label="Escut"
+        ></v-file-input>
+      </v-col>
+      <v-col cols="2" class="text-center">
+        <v-img class="escudo" :src="image_url"></v-img>
+    
+      </v-col>
     </v-row>
     <v-row>
       <v-col cols="12" class="text-left">

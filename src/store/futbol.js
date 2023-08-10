@@ -59,6 +59,7 @@ export const usegFutbolStore = defineStore('futbol', {
     visitante: [],
     partidos: [],
     marcadores: [],
+    competiciones: [],
     partido_cargado: null,
     /* partidos: [{
       id_partido: "001",
@@ -1044,6 +1045,8 @@ export const usegFutbolStore = defineStore('futbol', {
     cargandoPartidos: state => state.cargando_partidos,
     cargandoEquipos: state => state.cargando_equipos,
     loading: state => state.loading_state,
+    getPartidos: state => state.partidos,
+    getCompeticiones: state => state.competiciones
     // getEquipoById: state => {
     //   return id => state.partidos.find(partido => id === partido.id)
     // }
@@ -1204,7 +1207,7 @@ export const usegFutbolStore = defineStore('futbol', {
     },
     actualizarMarcador(marcador) {
       const m = this.marcadores.find(el => {
-        return el.id_marcador = marcador.id_marcador
+        return el.id_marcador === marcador.id_marcador
       })
 
       m.goles = marcador.goles
@@ -1243,6 +1246,7 @@ export const usegFutbolStore = defineStore('futbol', {
               let nuevo_marcador = change.doc.data()
               nuevo_marcador.id_marcador = change.doc.id
               this.actualizarMarcador(nuevo_marcador)
+              console.log("Marcador actualizado")
             }
           })
         })
@@ -1442,17 +1446,6 @@ export const usegFutbolStore = defineStore('futbol', {
         })
       })
       return tempEquipo
-      /* // return querySnapshot
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        tempEquipo.push(doc.data())
-        // console.log(doc.data())
-        // console.log(doc.id, " => ", doc.data());
-      }); 
-      return tempEquipo */
-
-
-
     },
 
 
@@ -1466,9 +1459,53 @@ export const usegFutbolStore = defineStore('futbol', {
       console.log( this.equipos[0].jugadores)
     },
 
-    
-    
 
+    // COMPETICIONES -----------------------------------------------------------
+    async cargarCompeticiones() {
+      const docSnap = onSnapshot(collection(db, "competiciones"), (doc) => {
+        doc.docChanges().forEach((change) => {
+          if (change.type === "added") {
+            let competicion = change.doc.data()
+            competicion.id_competicion = change.doc.id
+            // console.log(change.doc.id)
+            this.competiciones.push(competicion)
+          } else if (change.type === "modified") {
+            let nueva_competicion = change.doc.data()
+            nueva_competicion.id_competicion = change.doc.id
+            this.actualizarCompeticion(nueva_competicion)
+            console.log("Competicion actualizada")
+          } else if (change.type === "removed") {
+            let nueva_competicion = change.doc.data()
+            nueva_competicion.id_competicion = change.doc.id
+            this.competiciones = this.competiciones.filter(el => el.id_competicion !== nueva_competicion.id_competicion)
+          }
+        })
+      })
+
+    },
+    async addCompeticion(comp) {
+      console.log(comp)
+      const docRef = await addDoc(collection(db, 'competiciones'), comp)      
+    },
+
+    async eliminarCompeticion(comp) {
+      await deleteDoc(doc(db, 'competiciones', comp.id_competicion))
+      // this.competiciones = this.competiciones.filter(el => el.id_competicion !== comp.id_competicion)
+      // console.log(this.competiciones)
+    },
+    async updateCompeticionDB(comp) {
+      console.log(comp)
+      const docRef = doc(db, "competiciones", comp.id_competicion)
+      await updateDoc(docRef, {
+        nombre: comp.nombre
+      })
+    },
+    actualizarCompeticion(comp) {
+      const c = this.competiciones.find(el => {
+        return el.id_competicion === comp.id_competicion
+      })
+      c.nombre = comp.nombre
+    }
   }
 
 })

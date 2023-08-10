@@ -540,7 +540,7 @@
 
     tiempoMarcador.value = (millisToMinutesAndSeconds(tiempo))
     marcador.value.temporizador.parte_en_juego = parseInt(val)
-    console.log(marcador.value)
+    // console.log(marcador.value)
     actualizarMarcador()
   })
 
@@ -551,9 +551,14 @@
     actualizarMarcador()
   })
 
-  // watch(() => marcador.value, marcador => {
-  //   console.log(marcador)
-  // })
+  watch(() => marcador.value.temporizador.inicio_tiempo, val => {
+    if(inicio_tiempo.value) {
+    }
+    console.log(val)
+  },
+  {
+    deep: true
+  })
 
 </script>
 

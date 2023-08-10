@@ -15,7 +15,7 @@
       </v-row>
       <v-row>
         <v-col class="text-center">
-          <v-btn to="/futbolinicio">FUTBOL</v-btn>
+          <v-btn @click="cargarFutbol" class="botonFutbol">FUTBOL</v-btn>
           <v-btn to="/vumetro">VUMETRO</v-btn>
           <v-btn to="/simple">GRAFISME SIMPLE</v-btn>
         </v-col>
@@ -76,9 +76,34 @@
   import { ref } from "vue"
   import { usegSheetStore } from "../store/gSheet"
   import { useDatabaseStore } from "../store/db"
+  import { usegFutbolStore } from "../store/futbol"
+  import { useRotulosStore } from "../store/rotulos"
+
+  import { useRouter } from 'vue-router';
+
+  const router = useRouter()
 
   const gStore = usegSheetStore()
   const dbStore = useDatabaseStore()
+  const futbolStore = usegFutbolStore()
+  const rotulosStore = useRotulosStore()
+
+  const cargarFutbol = () => {
+    if(futbolStore.getPartidos.length == 0) {
+
+      futbolStore.cargarJugadores()
+      futbolStore.cargarEquipos()
+      futbolStore.cargarCompeticiones()
+    
+      futbolStore.cargarPartidos()
+      futbolStore.cargarMarcadores()
+      rotulosStore.cargarRotulos()
+    }
+
+    router.push("/futbolinicio")
+
+
+  }
 
   // dbStore.cargarDb()
 
@@ -110,5 +135,8 @@
   }
   .logo {
     width: 10%
+  }
+  .botonFutbol {
+    color: black !important;
   }
 </style>

@@ -6,9 +6,10 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="2" offset="3" class="text-center"><v-btn color="success"  @click="router.push(`/futbol/addpartidofutbol`)">NUEVO PARTIDO</v-btn></v-col>
+      <v-col cols="2" offset="2" class="text-center"><v-btn color="success"  @click="router.push(`/futbol/addpartidofutbol`)">NUEVO PARTIDO</v-btn></v-col>
       <v-col cols="2" class="text-center"><v-btn color="success"  @click="router.push(`/futbol/addequipofutbol`)">NUEVO EQUIPO</v-btn></v-col>
-      <v-col cols="2" class="text-center"><v-btn color="success" @click="router.push(`/futbol/listaequiposfutbol`)">EDITAR EQUIPO</v-btn></v-col>
+      <v-col cols="2" class="text-center"><v-btn color="success" @click="router.push(`/futbol/listaequiposfutbol`)">EDITAR EQUIPO</v-btn></v-col> 
+      <v-col cols="2" class="text-center"><v-btn color="success" @click="router.push(`/futbol/addcompeticionfutbol`)">COMPETICIONS</v-btn></v-col> 
       <!-- <v-col cols="12" class="text-center"><v-btn color="success" @click="crono">CRONO</v-btn></v-col> -->
     </v-row>
     <!-- <v-row>

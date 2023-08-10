@@ -24,6 +24,19 @@
       v-model="localidad"
       ></v-text-field>
     </v-col>
+    <v-col cols="9">
+      <v-file-input 
+      show-size
+      accept="image/*"
+      v-model="imagen"
+      @change="Preview_image"
+      label="Escut"
+      ></v-file-input>
+    </v-col>
+    <v-col cols="2" class="text-center">
+      <v-img class="escudo" :src="image_url"></v-img>
+  
+    </v-col>
   </v-row>
   <v-row>
     <v-col cols="12" class="text-center">
@@ -85,7 +98,7 @@
       </v-row>
       <v-row>
         <v-col cols="2" offset="4" class="text-center">
-          <v-btn color="success" @click="enviar()">ACEPTAR</v-btn>
+          <v-btn color="success" @click="enviar">ACEPTAR</v-btn>
         </v-col>
         <v-col cols="2" class="text-center">
           <v-btn color="success" @click="volver">TORNAR</v-btn>
@@ -112,6 +125,12 @@ const nombre_equipo = ref(null)
 const display_name = ref(null)
 const localidad = ref(null)
 const posiciones = futbolStore.getPosiciones
+
+const imagen = ref([])
+const image_url = ref(null)
+const Preview_image = () => {
+      image_url.value= URL.createObjectURL(imagen.value[0])
+    }
 
 const jugadores = ref([])
 const cuerpo_tecnico = ref([
@@ -174,6 +193,7 @@ const enviar = () => {
   })
   const nuevo_equipo = {
         // id_equipo: Date.now(),
+        imagen: imagen.value[0],
         nombre_equipo: nombre_equipo.value,
         display_name: display_name.value,
         localidad: localidad.value,
@@ -189,7 +209,7 @@ const enviar = () => {
         jugadores: listadoJugadores,
         cuerpo_tecnico: cuerpo_tecnico.value
       }
-  console.log(nuevo_equipo)
+  // console.log(nuevo_equipo)
 
 
     /* 
@@ -200,15 +220,19 @@ const enviar = () => {
     */
 
 
-  futbolStore.addJugadores(jugadores.value)
-  futbolStore.addEquipo(nuevo_equipo)
-  volver()
+  // futbolStore.addJugadores(jugadores.value)
+  // futbolStore.addEquipo(nuevo_equipo)
+  // volver()
+  console.log(imagen.value[0])
 }
 const volver = () => router.push('/futbol')
 
 </script>
 
 <style scoped>
+.escudo {
+  max-width: 50px;
+}
 
 
 </style>
