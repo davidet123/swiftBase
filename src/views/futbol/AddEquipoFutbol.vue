@@ -222,8 +222,9 @@ const enviar = () => {
 
   // futbolStore.addJugadores(jugadores.value)
   // futbolStore.addEquipo(nuevo_equipo)
+  futbolStore.uploadImage(imagen.value[0], `escudo_${display_name.value}`)
   // volver()
-  console.log(imagen.value[0])
+  // console.log(`escudo_${display_name.value}`)
 }
 const volver = () => router.push('/futbol')
 

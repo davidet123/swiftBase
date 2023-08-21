@@ -1,7 +1,7 @@
 <template>
-  <v-main v-if="jugador" class="my-1">
+  <span v-if="jugador" >
     <v-row >
-      <v-col class="tarjeta">
+      <v-col class="tarjeta my-0 pt-1" >
         <v-expansion-panels>
           <v-expansion-panel>
             <v-expansion-panel-title class="nombre_jugador">
@@ -32,7 +32,7 @@
                         <v-btn size="x-small" color="error" @click="gol(-1)">-</v-btn>
                       </v-col>
                       <v-col cols="2" offset="1">
-                        <v-btn size="x-small" color="success">LIVE</v-btn>
+                        <v-btn size="x-small" :color="!liveBtn.goles ? 'success' : 'error'" @click="live('goles', jugador.apodo, jugador.numero, 'Goles', totalGoles)">LIVE</v-btn>
                       </v-col>
                     </v-row>
                   </v-row>
@@ -48,7 +48,7 @@
                         <v-btn size="x-small" color="error" @click="falta(-1)">-</v-btn>
                       </v-col>
                       <v-col cols="2" offset="1">
-                        <v-btn size="x-small" color="success">LIVE</v-btn>
+                        <v-btn size="x-small" :color="!liveBtn.faltas ? 'success' : 'error'" @click="live('faltas', jugador.apodo, jugador.numero, 'Faltes', jugador.estadistica.faltas)">LIVE</v-btn>
                       </v-col>
                     </v-row>
                   </v-row>
@@ -71,7 +71,7 @@
                         <v-btn size="x-small" color="error" @click="tarjetaAmarilla(-1)">-</v-btn>
                       </v-col>
                       <v-col cols="2" offset="1">
-                        <v-btn size="x-small" color="success">LIVE</v-btn>
+                        <v-btn size="x-small" :color="!liveBtn.tarjetas_amarillas ? 'success' : 'error'" @click="live('tarjetas_amarillas', jugador.apodo, jugador.numero, 'Targetes grogues', jugador.estadistica.tarjetas_amarillas)">LIVE</v-btn>
                       </v-col>
                     </v-row>
                   </v-row>
@@ -87,7 +87,7 @@
                         <v-btn size="x-small" color="error"  @click="tarjetaRoja(-1)">-</v-btn>
                       </v-col>
                       <v-col cols="2" offset="1">
-                        <v-btn size="x-small" color="success">LIVE</v-btn>
+                        <v-btn size="x-small" :color="!liveBtn.tarjeta_roja ? 'success' : 'error'" @click="live('tarjeta_roja', jugador.apodo, jugador.numero, 'Targetes rojes', jugador.estadistica.tarjeta_roja)">LIVE</v-btn>
                       </v-col>
                     </v-row>
                   </v-row>
@@ -96,7 +96,7 @@
               <v-row class="ma-1 pa-2 caja_jugador">
                 <v-col cols="12" class="text-center pa-0">
                   <p>DISPAROS A PUERTA ({{ jugador.estadistica.disparos_al_arco }} /{{ jugador.estadistica.disparos }})</p>
-                  <v-btn size="x-small" color="success">LIVE</v-btn>
+                  <v-btn size="x-small" :color="!liveBtn.disparos_al_arco ? 'success' : 'error'" @click="live('disparos_al_arco', jugador.apodo, jugador.numero, 'Disparos', jugador.estadistica.disparos)">LIVE</v-btn>
                 </v-col>
                 <v-row>
 
@@ -131,7 +131,7 @@
         </v-expansion-panels>
       </v-col>
     </v-row>
-  </v-main>
+  </span>
 </template>
 
 <script setup>
@@ -141,7 +141,7 @@ import { useRoute } from 'vue-router';
 import { usegFutbolStore } from "../../store/futbol"
 import { useSwiftConnectionStore } from "../../store/swiftConnection"
 
-import { toRefs } from 'vue';
+import { toRefs, ref } from 'vue';
 import { computed } from 'vue';
 
 const swiftConnectionStore = useSwiftConnectionStore()
@@ -152,6 +152,15 @@ const route = useRoute()
 const id_partido = route.params.id
 
 const futbolStore = usegFutbolStore()
+
+const liveBtn = ref({
+  goles: false,
+  faltas: false,
+  tarjetas_amarillas: false,
+  tarjeta_roja: false,
+  disparos_al_arco: false
+
+})
 
 
 const props = defineProps(["jugador", "id_jugador", "fondo", "temporizador"])
@@ -208,16 +217,41 @@ const updateDB = (jugador) => {
   futbolStore.updateEstPartido(id_partido, jugador)
 }
 
-const mostrarEstadistica = (nombre, dorsal, tipo, valor)=> {
-  if(swiftConnectionStore.rtRemote) {
-    swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::NOMBRE_JUGADORTEXT","String", nombre)
-    swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::NUMEROTEXT","String", dorsal)
-    swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::TIPO_ESTADISTICATEXT","String", tipo)
-    swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::VALOR_ESTADISTICATEXT","String", valor)
-  
-    console.log(nombre, dorsal, tipo, valor)
 
+// 'disparos_al_arco', jugador.apodo, jugador,numero, 'Disparos', jugador.estadistica.disparos
+
+const live = (tipo, nombre, dorsal, tipoStr, valor) => {
+  if(liveBtn.value[tipo] == false) {
+    swiftConnectionStore.cueGraphic("EST_INDIVIDUAL")
+    mostrarEstadistica(nombre, dorsal, tipoStr, valor)
+    swiftConnectionStore.bringOn("EST_INDIVIDUAL")
+    // bringOn()
+  } else if(liveBtn.value[tipo] == true) {
+    swiftConnectionStore.takeOff("EST_INDIVIDUAL")
+    // takeOff()
   }
+  liveBtn.value[tipo] = !liveBtn.value[tipo]
+}
+
+const bringOn = () => {
+    swiftConnectionStore.rtRemote.playGraphic("EST_INDIVIDUAL")
+    swiftConnectionStore.rtRemote.playMethod("EST_INDIVIDUAL::bringOn")
+  }
+const takeOff = () => {
+  swiftConnectionStore.rtRemote.playGraphic("EST_INDIVIDUAL")
+  swiftConnectionStore.rtRemote.playMethod("EST_INDIVIDUAL::takeOff")
+}
+
+const mostrarEstadistica = (nombre, dorsal, tipo, valor)=> {
+  swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::NOMBRE_JUGADORTEXT","String", nombre)
+  swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::NUMEROTEXT","String", dorsal)
+  swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::TIPO_ESTADISTICATEXT","String", tipo)
+  swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::VALOR_ESTADISTICATEXT","String", valor)
+  // if(swiftConnectionStore.rtRemote) {
+  
+  //   console.log(nombre, dorsal, tipo, valor)
+
+  // }
 }
 
 

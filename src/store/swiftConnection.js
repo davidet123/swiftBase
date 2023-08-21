@@ -56,7 +56,7 @@ actions: {
       trace("Connection Closed, try again…");
       // If the connection closes, attempt to reopen it.
       this.swiftConnectionStatus = 0
-      startConnection();
+      self.startConnection();
       }
   },
   OpenConnection()
@@ -86,7 +86,28 @@ actions: {
     const ruta = 'C:\\Users\\deimo\\Downloads\\' + this.fileName
     console.log(ruta)
     this.rtRemote.updateFields(grafico + "::" + node + "SHDR", "TextureImage", ruta)
-  }
+  },
+  cueGraphic (metodo) {
+    this.rtRemote.playMethod(metodo + "::cueGraphic")
+  },
+  bringOn (metodo) {
+    console.log(metodo)
+    this.rtRemote.playMethod(metodo + "::bringOn")
+  },
+  takeOff (metodo) {
+      this.rtRemote.playMethod(metodo + "::takeOff")
+  },
+
+
+  // const bringOn = (metodo) => {
+  //   swiftConnectionStore.rtRemote.playGraphic(metodo)
+  //   swiftConnectionStore.rtRemote.playMethod(metodo + "::bringOn")
+  // }
+  // const takeOff = (metodo) => {
+  //   swiftConnectionStore.rtRemote.playGraphic(metodo)
+  //   swiftConnectionStore.rtRemote.playMethod(metodo + "::takeOff")
+  // }
+
 
 }
 

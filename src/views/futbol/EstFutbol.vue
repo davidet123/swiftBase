@@ -17,32 +17,47 @@
         </v-col>
       </v-row>
        <v-row>
-        <v-col cols="4" offset="1">
+        <v-col cols="5" class="izquierda">
           <v-row>
             <v-col cols="12" class="text-center">
               <h4 >{{ partido.equipo_local.nombre_equipo}}</h4>
             </v-col>
-            <v-col cols="2" class="text-center">
-              <p>GOLES: {{ golesLocalTotales }}</p>
+            <v-col cols="3" class="text-center recuadro">
+              <p>GOLES:</p>
+              <p>{{ golesLocalTotales }}</p>
             </v-col>
-            <v-col cols="2" class="text-center">
-              <p>DISPAROS A PUERTA: {{ disparosLocalTotal }}</p>
+            <v-col cols="3" class="text-center recuadro">
+              <p>DISPAROS A PUERTA:</p>
+              <p>{{ disparosLocalTotal }}</p>
             </v-col>
-            <v-col cols="2" class="text-center">
-              <p>TARJETAS AMARILLAS: {{ taLocalTotales }}</p>
+            <v-col cols="3" class="text-center recuadro">
+              <p>TARJETAS AMARILLAS:</p>
+              <p>{{ taLocalTotales }}</p>
             </v-col>
-            <v-col cols="2" class="text-center">
-              <p>TARJETAS ROJAS: {{ trLocalTotales }}</p>
+            <v-col cols="3" class="text-center recuadro">
+              <p>TARJETAS ROJAS:</p>
+              <p>{{ trLocalTotales }}</p>
             </v-col>
-            <v-col cols="2" class="text-center">
-              <p>FALTAS: {{ faltasLocalTotales }}</p>
+            <v-col cols="3" class="text-center recuadro">
+              <p>FALTAS:</p>
+              <p>{{ faltasLocalTotales }}</p>
             </v-col>
-            <v-col cols="2" class="text-center">
-              <p>FUERAS DE JUEGO: 0</p>
+            <v-col cols="6" class="text-center recuadro">
+              <v-row>
+                <v-col cols="6">
+                  <p>FUERAS DE JUEGO</p>
+                  <p>{{ fueraJuegoLocal}}</p>
+                </v-col>
+                <v-col cols="6">
+                  <v-btn size="x-small" color="success" @click="fueraDeJuego('local',1)">+</v-btn>
+                  <v-btn size="x-small" color="error" @click="fueraDeJuego('local',-1)">-</v-btn>
+                </v-col>
+              </v-row>
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="6"  align="center">
+              <p>Buscar dorsal</p>
               <v-select label="Dorsal" :items="listadoDorsalesLocal" v-model="dorsalLocal" density="compact"></v-select>
             </v-col>
             <v-col cols="6">
@@ -56,32 +71,64 @@
                   <JugadorFutbolInd :jugador = "jugador" :id_jugador = "jugador.id_jugador" :fondo="'local'" :temporizador="marcador.temporizador" class="ml-4"/>
                 </v-col>
             </v-row>
+            <v-row class="pt-2">
+              <v-col cols="12">
+                <h4>Cos tècnic</h4>
+              </v-col>
+              <v-col cols="12" class="py-2" v-for="tecnico in equipo_local.cuerpo_tecnico" :id="tecnico.id_cuerpo_tecnico">
+                <div v-if="tecnico.nombre">
+                  <CuerpoTecnicoIndividual :tecnico="tecnico" />
+                </div>
+              </v-col>
+            </v-row>
           </v-row>
         </v-col>
-        <v-col cols="4" class="px-2" offset="2">
+        <v-col cols="2" class="text-center">
+          <!-- <v-btn color="success" @click="estFinales">TEST</v-btn> -->
+          <p>Estadístiques finals</p>
+          <BotonLive nombre="EST_FINAL" @activar="estFinales"/>
+        </v-col>
+        <v-col cols="5" class="derecha">
           <v-row>
             <v-col cols="12" class="text-center">
-              <h4>{{ equipo_visitante.nombre_equipo}}</h4>          
+              <h4 >{{ equipo_visitante.nombre_equipo }}</h4>
             </v-col>
-            <v-col cols="2" class="text-center">
-              <p>GOLES: {{ golesVisitanteTotales }}</p>
+            <v-col cols="3" class="text-center recuadro">
+              <p>GOLES:</p>
+              <p>{{ golesVisitanteTotales }}</p>
             </v-col>
-            <v-col cols="2" class="text-center">
-              <p>TARJETAS AMARILLAS: {{ taVisitanteTotales }}</p>
+            <v-col cols="3" class="text-center recuadro">
+              <p>DISPAROS A PUERTA:</p>
+              <p>{{ disparosVisitantelTotal }}</p>
             </v-col>
-            <v-col cols="2" class="text-center">
-              <p>TARJETAS ROJAS: {{ trVisitanteTotales }}</p>
+            <v-col cols="3" class="text-center recuadro">
+              <p>TARJETAS AMARILLAS:</p>
+              <p>{{ taVisitanteTotales }}</p>
             </v-col>
-            <v-col cols="2" class="text-center">
-              <p>DISPAROS A PUERTA: {{ disparosVisitantelTotal }}</p>
+            <v-col cols="3" class="text-center recuadro">
+              <p>TARJETAS ROJAS:</p>
+              <p>{{ trVisitanteTotales }}</p>
             </v-col>
-            <v-col cols="2" class="text-center">
-              <p>FALTAS: {{ faltasVisitanteTotales }}</p>
+            <v-col cols="3" class="text-center recuadro">
+              <p>FALTAS:</p>
+              <p>{{ faltasVisitanteTotales }}</p>
             </v-col>
-            <v-col cols="2" class="text-center">
-              <p>FUERAS DE JUEGO: 0</p>
+            <v-col cols="6" class="text-center recuadro">
+              <v-row>
+                <v-col cols="6">
+                  <p>FUERAS DE JUEGO</p>
+                  <p>{{ fueraJuegoVisitante}}</p>
+                </v-col>
+                <v-col cols="6">
+                  <v-btn size="x-small" color="success" @click="fueraDeJuego('visitante',1)">+</v-btn>
+                  <v-btn size="x-small" color="error" @click="fueraDeJuego('visitante',-1)">-</v-btn>
+                </v-col>
+              </v-row>
             </v-col>
-            <v-col cols="6" align="center">
+          </v-row>
+          <v-row>
+            <v-col cols="6"  align="center">
+              <p>Buscar dorsal</p>
               <v-select label="Dorsal" :items="listadoDorsalesVisitante" v-model="dorsalVisitante" density="compact"></v-select>
             </v-col>
             <v-col cols="6">
@@ -95,13 +142,23 @@
                   <JugadorFutbolInd  :jugador = "jugador" :id_jugador = "jugador.id_jugador" :fondo="'visitante'" :temporizador="marcador.temporizador" class="mr-2"/>
                 </v-col>
             </v-row>
+            <v-row>
+              <v-col cols="12">
+                <h4>Cos tècnic</h4>
+              </v-col>
+              <v-col cols="12" v-for="tecnico in equipo_visitante.cuerpo_tecnico" :id="tecnico.id_cuerpo_tecnico">
+                <div v-if="tecnico.nombre">
+                  <CuerpoTecnicoIndividual :tecnico="tecnico" />
+                </div>
+              </v-col>
+            </v-row>
           </v-row>
         </v-col>
       </v-row>
       <v-row>
         <v-col class="text-center">
           <v-btn color="success" @click="volver">INICI</v-btn>
-          <v-btn color="success" @click="resumen">RESUM</v-btn>
+          <v-btn color="success" @click="resumen">RESUM</v-btn>          
         </v-col>
       </v-row>
   
@@ -122,14 +179,20 @@ import Visor from '@/components/visor/Visor.vue'
 // import MarcadorFutbol from '@/components/futbol/MarcadorFutbol'
 // import JugadorFutbolInd from '@/components/futbol/JugadorFutbolInd'
 
+import { useSwiftConnectionStore } from "../../store/swiftConnection"
+
 import { usegFutbolStore } from "../../store/futbol"
 import { computed, ref,  onBeforeMount, onMounted } from 'vue';
 import { storeToRefs } from "pinia";
 import { watch } from 'vue';
 
+import BotonLive from '@/components/simple/botonLive.vue' 
+
 const MarcadorFutbol = defineAsyncComponent(() => import('@/components/futbol/MarcadorFutbol'))
 const JugadorFutbolInd = defineAsyncComponent(() => import('@/components/futbol/JugadorFutbolInd'))
+const CuerpoTecnicoIndividual = defineAsyncComponent(() => import('@/components/futbol/CuerpoTecnicoIndividual'))
 
+const swiftConnectionStore = useSwiftConnectionStore()
 const futbolStore = usegFutbolStore()
 
 const route = useRoute()
@@ -254,6 +317,16 @@ const golesTotales = jugadores => {
   return  jugadores.reduce((total, jugador) => total += jugador.estadistica.goles.length, 0)
 }
 
+const fueraDeJuego = (equipo, val) => {
+  // console.log(equipo_local.value)
+  if (equipo === 'local') equipo_local.value.estadistica_equipo.fueras_de_juego += val
+  if (equipo === 'visitante') equipo_visitante.value.estadistica_equipo.fueras_de_juego += val
+  updateDB()
+}
+
+const fueraJuegoLocal = computed(() => equipo_local.value.estadistica_equipo.fueras_de_juego)
+const fueraJuegoVisitante = computed(() => equipo_visitante.value.estadistica_equipo.fueras_de_juego)
+
 const golesLocalTotales = computed(() => golesTotales(equipo_local.value.jugadores))
 const taLocalTotales = computed(() => estadisticasTotales(equipo_local.value.jugadores, 'tarjetas_amarillas'))
 const trLocalTotales = computed(() => estadisticasTotales(equipo_local.value.jugadores, 'tarjeta_roja'))
@@ -281,19 +354,38 @@ const dispVisitanteTotal = computed (() =>estadisticasTotales(equipo_visitante.v
 const dispVisitanteAlArcoTotal = computed (() =>estadisticasTotales(equipo_visitante.value.jugadores, 'disparos_al_arco'))
 
 
-const updateDB = (est) => {
-  console.log(est)
-  const estadistica_local = {
-    corners: 0,
-    disparos: dispLocalTotal.value,
-    disparos_al_arco: dispLocalTotal.dispAlArcoLocalTotal,
-    fueras_de_juego: 0,
-    posesión: est.posesion_local,
-    saques_de_esquina: 0,
-  }
-  console.log(estadistica_local)
+const updateDB = () => {
+  console.log(partido.value)
+  partido.value.id_partido = id
+  futbolStore.editarPartido(partido.value)
 }
 
+const estFinales = (metodo) => {
+  // console.log(metodo)
+  const valoresLocal = `0%~${dispLocalTotal.value}~${dispAlArcoLocalTotal.value}~${faltasLocalTotales.value}~${taLocalTotales.value}~${trLocalTotales.value}~0`
+  const valoresVisitante = `0%~${dispVisitanteTotal.value}~${dispVisitanteAlArcoTotal.value}~${faltasVisitanteTotales.value}~${taVisitanteTotales.value}~${trVisitanteTotales.value}~0`
+  // console.log(valoresVisitante)
+  if(metodo.live) {
+    // swiftConnectionStore.rtRemote.startTransaction ()
+    swiftConnectionStore.cueGraphic(metodo.nombre)
+    // swiftConnectionStore.rtRemote.playMethod("EST_FINAL::cueGraphic")
+    swiftConnectionStore.rtRemote.updateFields("NOMBRE_LOCAL::NOMBRE_LOCALTEXT", "String", equipo_local.value.nombre_equipo)
+    swiftConnectionStore.rtRemote.updateFields("NOMBRE_VISITANTE::NOMBRE_VISITANTETEXT", "String", equipo_visitante.value.nombre_equipo)
+    swiftConnectionStore.rtRemote.updateFields("GOLES_LOCAL::GOLES_LOCALTEXT", "String", golesLocalTotales.value)
+    swiftConnectionStore.rtRemote.updateFields("GOLES_VISITANTE::GOLES_VISITANTETEXT", "String", golesVisitanteTotales.value)
+    swiftConnectionStore.rtRemote.updateFields("EST_LOCAL::EST_LOCALTEXT", "String", valoresLocal)
+    swiftConnectionStore.rtRemote.updateFields("EST_VISITANTE::EST_VISITANTETEXT", "String", valoresVisitante)
+    // swiftConnectionStore.rtRemote.playMethod("EST_FINAL::bringOn")
+    // swiftConnectionStore.rtRemote.endTransaction ()
+    
+    swiftConnectionStore.bringOn(metodo.nombre)
+
+  } else {
+    swiftConnectionStore.takeOff(metodo.nombre)
+  }
+
+
+}
 
 /* const golesLocalTotales = computed(() => {
   let goles = 0
@@ -401,6 +493,16 @@ const resumen = () => router.push('/futbol/resumenfutbol/'+id)
 }
 p {
   font-size: 11px;
+}
+
+.izquierda {
+  padding-left: 80px;
+}
+.derecha {
+  padding-right: 80px;
+}
+.recuadro {
+  border: 1px solid white;
 }
 
   

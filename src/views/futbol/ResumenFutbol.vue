@@ -148,8 +148,8 @@
               <td>
                 <p class="font-weight-black">FORES DE JOC</p>
               </td>
-              <td class="text-center text-h5">--</td>
-              <td class="text-center text-h5">--</td>
+              <td class="text-center text-h5">{{ fueraJuegoLocal }}</td>
+              <td class="text-center text-h5">{{ fueraJuegoVisitante }}</td>
             </tr>
           </tbody>
         </v-table>
@@ -233,7 +233,9 @@
 
   const golesTotales = jugadores => {
   return  jugadores.reduce((total, jugador) => total += jugador.estadistica.goles.length, 0)
-}
+  } 
+
+  
 
   const golesLocalTotales = computed(() => golesTotales(partido.value.equipo_local.jugadores))
   const taLocalTotales = computed(() => estadisticasTotales(partido.value.equipo_local.jugadores, 'tarjetas_amarillas'))
@@ -277,6 +279,9 @@
   const tarRojaVisitante = computed(() => {
     return consulta(partido.value.equipo_visitante.jugadores, "tarjeta_roja")
   })
+
+  const fueraJuegoLocal = computed(() => partido.value.equipo_local.estadistica_equipo.fueras_de_juego)
+  const fueraJuegoVisitante = computed(() => partido.value.equipo_visitante.estadistica_equipo.fueras_de_juego)
 
 
   const consulta = (equipo, est) => {

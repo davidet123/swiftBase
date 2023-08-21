@@ -229,10 +229,12 @@
 
   const posesion_local = computed(() => {
     const posesionTotal = marcador.value.temporizador.posesion.local + marcador.value.temporizador.posesion.visitante
+    if (posesionTotal == 0) return "0%"
     return Math.round(marcador.value.temporizador.posesion.local / posesionTotal * 100) + " %"
   })
   const posesion_visitante = computed(() => {
     const posesionTotal = marcador.value.temporizador.posesion.local + marcador.value.temporizador.posesion.visitante
+    if (posesionTotal == 0) return "0%"
     return Math.round(marcador.value.temporizador.posesion.visitante / posesionTotal * 100) + " %"
   })
 
@@ -269,7 +271,7 @@
 
   const gol = (equipo, valor) => {
     marcador.value.goles[equipo] += valor
-    // swiftConnectionStore.rtRemote.updateFields("MARCADOR::" + equipo.toUpperCase() + "TEXT","String", marcador.value[equipo])
+    swiftConnectionStore.rtRemote.updateFields("MARCADOR::" + equipo.toUpperCase() + "TEXT","String", marcador.value.goles[equipo])
     actualizarMarcador()
   }
 
@@ -317,7 +319,7 @@
         // console.log(marcador.value.temporizador.posesion)
         
         
-        // swiftConnectionStore.rtRemote.updateFields("MARCADOR::TIEMPOTEXT","String", tiempoMarcador.value)
+        swiftConnectionStore.rtRemote.updateFields("MARCADOR::TIEMPOTEXT","String", tiempoMarcador.value)
       
       // emit("updateDB", estTotales.value)
       // calcularPosesion(dif)
@@ -384,6 +386,7 @@
     return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
   }
   const activarGrafico = payload => {
+    console.log(payload)
     if (!live.value) {
       bringOn(payload.nombre)
     } else {
@@ -394,10 +397,10 @@
     swiftConnectionStore.rtRemote.playGraphic(metodo)
     swiftConnectionStore.rtRemote.playMethod(metodo + "::bringOn")
   }
-    const takeOff = (metodo) => {
-      swiftConnectionStore.rtRemote.playGraphic(metodo)
-      swiftConnectionStore.rtRemote.playMethod(metodo + "::takeOff")
-    }
+  const takeOff = (metodo) => {
+    swiftConnectionStore.rtRemote.playGraphic(metodo)
+    swiftConnectionStore.rtRemote.playMethod(metodo + "::takeOff")
+  }
 
 
 

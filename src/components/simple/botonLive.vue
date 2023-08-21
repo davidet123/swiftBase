@@ -10,7 +10,7 @@
 
 <script setup>
 
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 
 const props = defineProps(["nombre"])
 const emit = defineEmits(["activar"])
@@ -20,12 +20,12 @@ const live = ref(false)
 
 
 const insertarGrafico = val => {
+  live.value = !live.value  
   const payload = {
     live: live.value,
     nombre: val
     }
-  live.value = !live.value  
-  emit("activar", payload)
+    emit("activar", payload)
 }
 </script>
 

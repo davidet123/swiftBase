@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 
 import { collection, onSnapshot, addDoc, query, where, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore"
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 // the firestore instance
 import db from '../firebase/init.js'
 
@@ -1130,15 +1131,24 @@ export const usegFutbolStore = defineStore('futbol', {
       }
     },
     actualizarPartido(partido) {
+      console.log(partido)
       let part = this.partidos.find(p => {
         return p.id_partido === partido.id_partido
       })
+      console.log(part)
       part.equipo_local = partido.equipo_local
       part.equipo_visitante = partido.equipo_visitante
       part.estadio = partido.estadio
       part.fecha = partido.fecha
       part.hora = partido.hora
       part.lugar = partido.lugar
+    },
+
+    async updateEstGeneralPartido(partido) {
+      let part = this.partidos.find(p => {
+        return p.id_partido === partido.id_partido
+      })
+
     },
 
     async updateEstPartido(id_partido, jugador) {
@@ -1335,6 +1345,16 @@ export const usegFutbolStore = defineStore('futbol', {
         })
         this.cargando_equipos = false
       })
+    },
+
+    uploadImage(file, nombre) {
+      const storage = getStorage();
+      const storageRef = ref(storage, nombre);
+
+      // 'file' comes from the Blob or File API
+      uploadBytes(storageRef, file).then((snapshot) => {
+        console.log('Uploaded a blob or file!');
+      });
     },
 
    
