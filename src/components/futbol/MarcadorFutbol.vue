@@ -386,11 +386,10 @@
     return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
   }
   const activarGrafico = payload => {
-    console.log(payload)
-    if (!live.value) {
-      bringOn(payload.nombre)
+    if (payload.live) {
+      swiftConnectionStore.bringOn(payload.nombre)
     } else {
-      takeOff(payload.nombre)
+      swiftConnectionStore.takeOff(payload.nombre)
     }
   }
   const bringOn = (metodo) => {

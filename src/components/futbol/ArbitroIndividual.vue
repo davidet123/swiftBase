@@ -1,12 +1,15 @@
 <template>
   <v-card class="card" >
+    <v-card-title>
+      <p>{{ arbitro }}</p>
+    </v-card-title>
     <v-card-subtitle class="ma-0">
       <v-row class="my-0 py-0">
-        <v-col cols="7" >
-          <h5>{{ titulo }}</h5><p>{{ nombre }}</p>
+        <v-col cols="6" >
+          <p>{{ nombre }}</p>
         </v-col>
-        <v-col cols="5">
-          <BotonLive nombre="DSK_INDIVIDUAL" @activar="activarGrafico"/>
+        <v-col cols="6">
+          <BotonLive nombre="DSK_ARBITROS" @activar="activarGrafico"/>
         </v-col>
       </v-row>
     </v-card-subtitle>
@@ -25,9 +28,11 @@ import { useSwiftConnectionStore } from "../../store/swiftConnection"
 const swiftConnectionStore = useSwiftConnectionStore()
 
 
-const props = defineProps(["titulo", "nombre"])
+const props = defineProps(["arbitro", "nombre"])
 
-const { titulo, nombre } = toRefs(props)
+const { arbitro, nombre } = toRefs(props)
+
+console.log(props)
 
 
 const activarGrafico = payload => {
@@ -42,8 +47,8 @@ const activarGrafico = payload => {
 }
 const bringOn = (metodo) => {
   swiftConnectionStore.rtRemote.playGraphic(metodo)
-  swiftConnectionStore.rtRemote.updateFields("DSK_INDIVIDUAL::SUPERIORTEXT","String", titulo.value)
-  swiftConnectionStore.rtRemote.updateFields("DSK_INDIVIDUAL::INFERIORTEXT","String", nombre.value)
+  swiftConnectionStore.rtRemote.updateFields("DSK_INDIVIDUAL::SUPERIORTEXT","String", tecnico.value.titulo)
+  swiftConnectionStore.rtRemote.updateFields("DSK_INDIVIDUAL::INFERIORTEXT","String", tecnico.value.nombre)
   swiftConnectionStore.rtRemote.playMethod(metodo + "::bringOn")
 }
 const takeOff = (metodo) => {

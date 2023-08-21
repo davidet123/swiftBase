@@ -29,24 +29,29 @@
             <v-col cols="3" class="text-center recuadro">
               <p>DISPAROS A PUERTA:</p>
               <p>{{ disparosLocalTotal }}</p>
+              <BotonLive nombre="DISPAROS" @activar="activarGrafico"/>
             </v-col>
             <v-col cols="3" class="text-center recuadro">
               <p>TARJETAS AMARILLAS:</p>
               <p>{{ taLocalTotales }}</p>
+              <BotonLive nombre="TAR. AMARILLAS" @activar="activarGrafico"/>
             </v-col>
             <v-col cols="3" class="text-center recuadro">
               <p>TARJETAS ROJAS:</p>
               <p>{{ trLocalTotales }}</p>
+              <BotonLive nombre="TAR. ROJAS" @activar="activarGrafico"/>
             </v-col>
             <v-col cols="3" class="text-center recuadro">
               <p>FALTAS:</p>
               <p>{{ faltasLocalTotales }}</p>
+              <BotonLive nombre="FALTAS" @activar="activarGrafico"/>
             </v-col>
             <v-col cols="6" class="text-center recuadro">
               <v-row>
                 <v-col cols="6">
                   <p>FUERAS DE JUEGO</p>
                   <p>{{ fueraJuegoLocal}}</p>
+                  <BotonLive nombre="FUERA JUEGO" @activar="activarGrafico"/>
                 </v-col>
                 <v-col cols="6">
                   <v-btn size="x-small" color="success" @click="fueraDeJuego('local',1)">+</v-btn>
@@ -77,7 +82,7 @@
               </v-col>
               <v-col cols="12" class="py-2" v-for="tecnico in equipo_local.cuerpo_tecnico" :id="tecnico.id_cuerpo_tecnico">
                 <div v-if="tecnico.nombre">
-                  <CuerpoTecnicoIndividual :tecnico="tecnico" />
+                  <CuerpoTecnicoIndividual :titulo="tecnico.titulo" :nombre="tecnico.nombre" />
                 </div>
               </v-col>
             </v-row>
@@ -100,24 +105,29 @@
             <v-col cols="3" class="text-center recuadro">
               <p>DISPAROS A PUERTA:</p>
               <p>{{ disparosVisitantelTotal }}</p>
+              <BotonLive nombre="DISPAROS" @activar="activarGrafico"/>
             </v-col>
             <v-col cols="3" class="text-center recuadro">
               <p>TARJETAS AMARILLAS:</p>
               <p>{{ taVisitanteTotales }}</p>
+              <BotonLive nombre="TAR. AMARILLAS" @activar="activarGrafico"/>
             </v-col>
             <v-col cols="3" class="text-center recuadro">
               <p>TARJETAS ROJAS:</p>
               <p>{{ trVisitanteTotales }}</p>
+              <BotonLive nombre="TAR. ROJAS" @activar="activarGrafico"/>
             </v-col>
             <v-col cols="3" class="text-center recuadro">
               <p>FALTAS:</p>
               <p>{{ faltasVisitanteTotales }}</p>
+              <BotonLive nombre="FALTAS" @activar="activarGrafico"/>
             </v-col>
             <v-col cols="6" class="text-center recuadro">
               <v-row>
                 <v-col cols="6">
                   <p>FUERAS DE JUEGO</p>
                   <p>{{ fueraJuegoVisitante}}</p>
+                  <BotonLive nombre="FUERA JUEGO" @activar="activarGrafico"/>
                 </v-col>
                 <v-col cols="6">
                   <v-btn size="x-small" color="success" @click="fueraDeJuego('visitante',1)">+</v-btn>
@@ -148,11 +158,29 @@
               </v-col>
               <v-col cols="12" v-for="tecnico in equipo_visitante.cuerpo_tecnico" :id="tecnico.id_cuerpo_tecnico">
                 <div v-if="tecnico.nombre">
-                  <CuerpoTecnicoIndividual :tecnico="tecnico" />
+                  <CuerpoTecnicoIndividual :titulo="tecnico.titulo" :nombre="tecnico.nombre"/>
                 </div>
               </v-col>
             </v-row>
           </v-row>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12" class="text-center">
+          <h3>Àrbitres</h3>
+          <BotonLive nombre="DSK_ARBITROS" @activar="dskArbitros"/>
+        </v-col>
+        <v-col cols="3">
+          <CuerpoTecnicoIndividual :nombre="partido.equipo_arbitral.primer_arbitro" :titulo="'Primer àrbitre'" />
+        </v-col>
+        <v-col cols="3">
+          <CuerpoTecnicoIndividual :nombre="partido.equipo_arbitral.segundo_arbitro" :titulo="'Segon àrbitre'"/>
+        </v-col>
+        <v-col cols="3">
+          <CuerpoTecnicoIndividual :nombre="partido.equipo_arbitral.tercer_arbitro" :titulo="'Tercer àrbitre'"/>
+        </v-col>
+        <v-col cols="3">
+          <CuerpoTecnicoIndividual :nombre="partido.equipo_arbitral.cuarto_arbitro" :titulo="'Quart àrbitre'"/>
         </v-col>
       </v-row>
       <v-row>
@@ -191,6 +219,7 @@ import BotonLive from '@/components/simple/botonLive.vue'
 const MarcadorFutbol = defineAsyncComponent(() => import('@/components/futbol/MarcadorFutbol'))
 const JugadorFutbolInd = defineAsyncComponent(() => import('@/components/futbol/JugadorFutbolInd'))
 const CuerpoTecnicoIndividual = defineAsyncComponent(() => import('@/components/futbol/CuerpoTecnicoIndividual'))
+const ArbitroIndividual = defineAsyncComponent(() => import('@/components/futbol/ArbitroIndividual'))
 
 const swiftConnectionStore = useSwiftConnectionStore()
 const futbolStore = usegFutbolStore()
@@ -386,6 +415,94 @@ const estFinales = (metodo) => {
 
 
 }
+
+const dskArbitros = (metodo) => {
+  console.log(metodo)
+  const arbitros = partido.value.equipo_arbitral
+
+  if(metodo.live) {
+    
+    swiftConnectionStore.cueGraphic(metodo.nombre)
+    
+    swiftConnectionStore.rtRemote.updateFields("DSK_ARBITROS::PRIMER_ARBITROTEXT", "String", arbitros.primer_arbitro)
+    swiftConnectionStore.rtRemote.updateFields("DSK_ARBITROS::SEGUNDO_ARBITROTEXT", "String", arbitros.segundo_arbitro)
+    swiftConnectionStore.rtRemote.updateFields("DSK_ARBITROS::TERCER_ARBITROTEXT", "String", arbitros.tercer_arbitro)
+    swiftConnectionStore.rtRemote.updateFields("DSK_ARBITROS::CUARTO_ARBITROTEXT", "String", arbitros.cuarto_arbitro)
+    swiftConnectionStore.rtRemote.updateFields("DSK_ARBITROS::COMPETICIONTEXT", "String", partido.value.competicion)
+    
+    swiftConnectionStore.bringOn(metodo.nombre)
+
+  } else {
+    swiftConnectionStore.takeOff(metodo.nombre)
+  }
+
+}
+
+const activarGrafico = payload => {
+    console.log(payload)
+    let tipo
+    const local = equipo_local.value.estadistica_equipo
+    let valor_local
+    const visitante = equipo_visitante.value.estadistica_equipo
+    let valor_visitante
+
+    switch (payload.nombre) {
+      case "DISPAROS": 
+        tipo = "Disparos"
+        valor_local = `${local.disparos} / ${local.disparos_al_arco}`
+        valor_visitante = `${visitante.disparos} / ${visitante.disparos_al_arco}`
+        break
+
+        case "TAR. AMARILLAS":
+          tipo = "Targetes grogues"
+          valor_local = taLocalTotales.value
+          valor_visitante = taVisitanteTotales.value
+          break
+        
+        case "TAR. ROJAS":
+          tipo = "Targetes rojes"
+          valor_local = trLocalTotales.value
+          valor_visitante = trVisitanteTotales.value
+          break
+
+        case "FALTAS":
+          tipo = "Faltes"
+          valor_local = faltasLocalTotales.value
+          valor_visitante = faltasVisitanteTotales.value
+          break
+
+        case "FUERA JUEGO":
+          tipo = "Disparos"
+          valor_local = local.fueras_de_juego
+          valor_visitante = visitante.fueras_de_juego
+          break
+
+        default:
+          tipo = "-"
+          valor_local = "-"
+          valor_visitante = "-"
+          break
+
+
+
+
+
+
+
+    }
+    if (payload.live) {
+      swiftConnectionStore.cueGraphic('EST_EQUIPOS')
+      swiftConnectionStore.rtRemote.updateFields("EST_EQUIPOS::EQUIPO_LOCALTEXT", "String", equipo_local.value.nombre_equipo)
+      swiftConnectionStore.rtRemote.updateFields("EST_EQUIPOS::EQUIPO_VISITANTETEXT", "String", equipo_visitante.value.nombre_equipo)
+      swiftConnectionStore.rtRemote.updateFields("EST_EQUIPOS::TIPO_ESTTEXT", "String", tipo)
+      swiftConnectionStore.rtRemote.updateFields("EST_EQUIPOS::VALOR_LOCALTEXT", "String", valor_local)
+      swiftConnectionStore.rtRemote.updateFields("EST_EQUIPOS::VALOR_VISITANTETEXT", "String", valor_visitante)
+
+      swiftConnectionStore.bringOn('EST_EQUIPOS')
+    } else {
+      swiftConnectionStore.takeOff('EST_EQUIPOS')
+    }
+  }
 
 /* const golesLocalTotales = computed(() => {
   let goles = 0
