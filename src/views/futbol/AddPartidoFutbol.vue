@@ -202,9 +202,7 @@ const crearPartido = () => {
           faltas: 0,
           disparos: 0,
           disparos_al_arco: 0,
-          goles: [],
-          posesion: '0%',
-          fueras_de_juego: 0
+          goles: []
         }
     })
     listaEquipoVisitante.value.forEach(jug => {
@@ -215,9 +213,7 @@ const crearPartido = () => {
           faltas: 0,
           disparos: 0,
           disparos_al_arco: 0,
-          goles: [],
-          posesion: '0%',
-          fueras_de_juego: 0
+          goles: []
         }
     })
     
@@ -226,6 +222,36 @@ const crearPartido = () => {
     partido.value.equipo_visitante = equipoVisitante
     partido.value.id_equipo_local = idLocal.value
     partido.value.id_equipo_visitante = idVisitante.value
+    partido.value.equipo_local.titulares =[]
+    partido.value.equipo_visitante.titulares =[]
+    partido.value.equipo_local.formacion =[
+      {dorsal: null, apodo: null, pos: null},
+      {dorsal: null, apodo: null, pos: null},
+      {dorsal: null, apodo: null, pos: null},
+      {dorsal: null, apodo: null, pos: null},
+      {dorsal: null, apodo: null, pos: null},
+      {dorsal: null, apodo: null, pos: null},
+      {dorsal: null, apodo: null, pos: null},
+      {dorsal: null, apodo: null, pos: null},
+      {dorsal: null, apodo: null, pos: null},
+      {dorsal: null, apodo: null, pos: null},
+      {dorsal: null, apodo: null, pos: null},
+    ]
+    partido.value.equipo_visitante.formacion =[
+      {dorsal: null, apodo: null, pos: null},
+      {dorsal: null, apodo: null, pos: null},
+      {dorsal: null, apodo: null, pos: null},
+      {dorsal: null, apodo: null, pos: null},
+      {dorsal: null, apodo: null, pos: null},
+      {dorsal: null, apodo: null, pos: null},
+      {dorsal: null, apodo: null, pos: null},
+      {dorsal: null, apodo: null, pos: null},
+      {dorsal: null, apodo: null, pos: null},
+      {dorsal: null, apodo: null, pos: null},
+      {dorsal: null, apodo: null, pos: null},
+    ]
+    partido.value.equipo_local.tipoFormacion = null
+    partido.value.equipo_visitante.tipoFormacion = null
         
     partido.value.equipo_local.jugadores = listaEquipoLocal.value
     partido.value.equipo_visitante.jugadores = listaEquipoVisitante.value

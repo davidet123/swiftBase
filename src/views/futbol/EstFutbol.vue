@@ -16,12 +16,24 @@
           <MarcadorFutbol :marcador = "marcador" :tiempo="partido.tiempo" @updateDB="updateDB"/>
         </v-col>
       </v-row>
-       <v-row>
+       <v-row class="mt-5">
         <v-col cols="5" class="izquierda">
           <v-row>
-            <v-col cols="12" class="text-center">
-              <h4 >{{ partido.equipo_local.nombre_equipo}}</h4>
+            <v-col>
+              <v-col cols="12" class="text-center">
+                <h4 >{{ partido.equipo_local.nombre_equipo}}</h4>
+              </v-col>
             </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="6" class="text-center">
+              <v-btn color="success" @click="abrirAlineacion('local')">ALINEACIÓ LOCAL</v-btn>
+            </v-col>
+            <v-col cols="6" class="mb-3 text-center">
+              <v-btn color="success">FORMACIÓ LOCAL</v-btn>
+            </v-col>
+          </v-row>
+          <v-row>
             <v-col cols="3" class="text-center recuadro">
               <p>GOLES:</p>
               <p>{{ golesLocalTotales }}</p>
@@ -63,7 +75,7 @@
           <v-row>
             <v-col cols="6"  align="center">
               <p>Buscar dorsal</p>
-              <v-select label="Dorsal" :items="listadoDorsalesLocal" v-model="dorsalLocal" density="compact"></v-select>
+              <v-select label="Dorsal" :items="titularesLocal" item-title = "numero" item-value="numero" v-model="dorsalLocal" density="compact"></v-select>
             </v-col>
             <v-col cols="6">
               <v-btn color="error" size="x-small" @click="limpiarDorsal('local')">X</v-btn>
@@ -72,7 +84,9 @@
                 <v-col v-if="dorsalLocal !== null" cols="12">
                   <JugadorFutbolInd :jugador="listadoLocal[0]" :fondo="'local'" :temporizador="marcador.temporizador" class="ml-4" @test="test"/>
                 </v-col>
-                <v-col v-else v-for="jugador in equipo_local.jugadores" :key="jugador.id_jugador" cols="12" class="clearMargin">
+                
+                <!-- <v-col v-else v-for="jugador in equipo_local.jugadores" :key="jugador.id_jugador" cols="12" class="clearMargin"> -->
+                <v-col v-else v-for="jugador in titularesLocal" :key="jugador.id_jugador" cols="12" class="clearMargin">
                   <JugadorFutbolInd :jugador = "jugador" :id_jugador = "jugador.id_jugador" :fondo="'local'" :temporizador="marcador.temporizador" class="ml-4"/>
                 </v-col>
             </v-row>
@@ -88,16 +102,50 @@
             </v-row>
           </v-row>
         </v-col>
-        <v-col cols="2" class="text-center">
-          <!-- <v-btn color="success" @click="estFinales">TEST</v-btn> -->
-          <p>Estadístiques finals</p>
-          <BotonLive nombre="EST_FINAL" @activar="estFinales"/>
+
+        <!-- COLUMNA CENTRAL -->
+        
+        <v-col cols="1" class="text-center">
+          <v-row>
+            <v-col>
+              <p>Estadístiques finals</p>
+              <BotonLive nombre="EST_FINAL" @activar="estFinales"/>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <p>Alineacions</p>
+              <BotonLive class="mb-2" nombre="TITULARS LOCAL" @activar="alineacion"/>
+              <BotonLive class="mb-2" nombre="SUPLENTES LOCAL" @activar="suplentes"/>
+              <BotonLive nombre="TITULARS VISITANT" @activar="alineacion"/>
+              <BotonLive nombre="SUPLENTES VISITANT" @activar="suplentes"/>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <p>Formacions</p>
+              <BotonLive class="mb-2" nombre="FORMACIÓ LOCAL" @activar="formacion"/>
+              <BotonLive nombre="FORMACIÓ VISITANT" @activar="formacion"/>
+            </v-col>
+          </v-row>
         </v-col>
+
+        <!-- COLUMNA DERECHA -->
         <v-col cols="5" class="derecha">
           <v-row>
             <v-col cols="12" class="text-center">
               <h4 >{{ equipo_visitante.nombre_equipo }}</h4>
             </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="6" class="text-center">
+              <v-btn color="success" @click="abrirAlineacion('visitante')">ALINEACIÓ VISITANT</v-btn>
+            </v-col>
+            <v-col cols="6" class="mb-3 text-center">
+              <v-btn color="success">FORMACIÓ VISITANT</v-btn>
+            </v-col>
+          </v-row>
+          <v-row>
             <v-col cols="3" class="text-center recuadro">
               <p>GOLES:</p>
               <p>{{ golesVisitanteTotales }}</p>
@@ -135,11 +183,11 @@
                 </v-col>
               </v-row>
             </v-col>
-          </v-row>
+          </v-row>              
           <v-row>
             <v-col cols="6"  align="center">
               <p>Buscar dorsal</p>
-              <v-select label="Dorsal" :items="listadoDorsalesVisitante" v-model="dorsalVisitante" density="compact"></v-select>
+              <v-select label="Dorsal" :items="titularesVisitante" item-title = "numero" item-value = "numero" v-model="dorsalVisitante" density="compact"></v-select>
             </v-col>
             <v-col cols="6">
               <v-btn color="error" size="x-small" @click="limpiarDorsal('visitante')">X</v-btn>
@@ -148,7 +196,7 @@
                 <v-col v-if="dorsalVisitante !== null" cols="12" class="mr-2">
                   <JugadorFutbolInd :jugador="listadoVisitante[0]" :fondo="'visitante'" :temporizador="marcador.temporizador"/>
                 </v-col>
-                <v-col v-else v-for="jugador in equipo_visitante.jugadores" :key="jugador.id_jugador" cols="12" class="clearMargin">
+                <v-col v-else v-for="jugador in titularesVisitante" :key="jugador.id_jugador" cols="12" class="clearMargin">
                   <JugadorFutbolInd  :jugador = "jugador" :id_jugador = "jugador.id_jugador" :fondo="'visitante'" :temporizador="marcador.temporizador" class="mr-2"/>
                 </v-col>
             </v-row>
@@ -189,6 +237,22 @@
           <v-btn color="success" @click="resumen">RESUM</v-btn>          
         </v-col>
       </v-row>
+
+
+      <!-- VENTANAS ALINEACIONES Y FORMACIONES -->
+
+      <v-row>
+        <v-dialog
+          v-model="ventanaAlineacion.abierta"
+          fullscreen
+          :scrim="false"
+          transition="dialog-bottom-transition"
+          >
+          
+          <AlineacionesFutbol :equipo = "equipoAlineacion" :local="ventanaAlineacion.equipo === 'local' ? true : false" @cerrarVentana = "ventanaAlineacion.abierta = false" @actualizar = "actualizarAlineacion"/>
+
+        </v-dialog>
+      </v-row>
   
   </div>
   
@@ -219,7 +283,7 @@ import BotonLive from '@/components/simple/botonLive.vue'
 const MarcadorFutbol = defineAsyncComponent(() => import('@/components/futbol/MarcadorFutbol'))
 const JugadorFutbolInd = defineAsyncComponent(() => import('@/components/futbol/JugadorFutbolInd'))
 const CuerpoTecnicoIndividual = defineAsyncComponent(() => import('@/components/futbol/CuerpoTecnicoIndividual'))
-const ArbitroIndividual = defineAsyncComponent(() => import('@/components/futbol/ArbitroIndividual'))
+const AlineacionesFutbol = defineAsyncComponent(() => import('@/components/futbol/AlineacionesFutbol'))
 
 const swiftConnectionStore = useSwiftConnectionStore()
 const futbolStore = usegFutbolStore()
@@ -230,6 +294,65 @@ const router = useRouter()
 const id = route.params.id
 
 const { partidos, partido_cargado, marcadores } = storeToRefs(futbolStore)
+
+
+// VENTANAS ALINEACION Y FORMACION
+
+const ventanaAlineacion = ref({abierta: false, equipo: null})
+const ventanaFormacion = ref({abierta: false, equipo: null})
+
+
+const equipoAlineacion = computed(() => { 
+  if(ventanaAlineacion.value.equipo === "local") {
+    return equipo_local.value
+  } else if(ventanaAlineacion.value.equipo === "visitante") {
+    return equipo_visitante.value
+  }
+ 
+  // ventanaAlineacion.value.equipo === "local" ? equipo_local.value.jugadores : equipo_visitante.value.jugadores
+})
+
+const abrirAlineacion = equipo => {
+  ventanaAlineacion.value.equipo = equipo
+  ventanaAlineacion.value.abierta = true
+}
+
+const actualizarAlineacion = payload => {
+  console.log(payload)
+  if(payload.local) {
+    partido.value.equipo_local.titulares = payload.equipo.titulares
+  } else {
+    partido.value.equipo_visitante.titulares = payload.equipo.titulares
+  }
+  futbolStore.updateAlineacionDB(partido.value)
+}
+
+
+
+// JUGADORES
+
+const titularesLocal = computed(() => {
+  let lista = []
+  equipo_local.value.titulares.forEach(j => {
+    lista.push(buscarTitular(equipo_local.value.jugadores, j))
+  })
+  return lista
+})
+
+const titularesVisitante = computed(() => {
+  let lista = []
+  equipo_visitante.value.titulares.forEach(j => {
+    lista.push(buscarTitular(equipo_visitante.value.jugadores, j))
+  })
+  return lista
+})
+
+const buscarTitular = (equipo, dorsal) => {
+  const jugador = equipo.find(e => e.numero === dorsal)
+  // console.log(jugador)
+  return jugador
+}
+
 
 if(!partido_cargado.value) {
   futbolStore.setPartidoEnJuego(id)
@@ -248,49 +371,14 @@ const marcador = computed(() => {
 
 // BUSCAR EQUIPOS
 
-let equipo_local = computed(() => partido.value.equipo_local)
-let equipo_visitante = computed(() => partido.value.equipo_visitante)
-
-
-// AÑADIR JUGADORES
-/*
-let jugadoresLocal = []
-let jugadoresVisitante = []
-
- equipo_local.jugadores.forEach(jug => {
-  // console.log(jug)
-  let nuevoJugador = futbolStore.buscarJugador(jug)
-  // console.log(nuevoJugador)
-  nuevoJugador.estadistica = {
-      tarjetas_amarillas: 0,
-      tarjeta_roja: 0,
-      goles: 0,
-      faltas: 0,
-      disparos: 0,
-      disparos_al_arco: 0
-    }
-  jugadoresLocal.push(nuevoJugador)
+const equipo_local = computed(() => {
+  // const local = partido.value.equipo_local
+  // console.log(local)
+  // return local.sort((a,b) => b.jugadores.numero - a.jugadores.numero); // b - a for reverse sort  
+  return partido.value.equipo_local
 })
+const equipo_visitante = computed(() => partido.value.equipo_visitante)
 
-equipo_visitante.jugadores.forEach(jug => {
-  let nuevoJugador = futbolStore.buscarJugador(jug)
-  nuevoJugador.estadistica = {
-      tarjetas_amarillas: 0,
-      tarjeta_roja: 0,
-      goles: 0,
-      faltas: 0,
-      disparos: 0,
-      disparos_al_arco: 0
-    }
-  jugadoresVisitante.push(nuevoJugador)
-})
-
-// REEMPLAZAR JUGADORES
-
-equipo_local.jugadores = jugadoresLocal
-equipo_visitante.jugadores = jugadoresVisitante
-
-console.log(equipo_local) */
 
 
 
@@ -481,13 +569,6 @@ const activarGrafico = payload => {
           tipo = "-"
           valor_local = "-"
           valor_visitante = "-"
-          break
-
-
-
-
-
-
 
     }
     if (payload.live) {
@@ -502,6 +583,166 @@ const activarGrafico = payload => {
     } else {
       swiftConnectionStore.takeOff('EST_EQUIPOS')
     }
+  }
+
+  const buscaJugador = (dorsal, equipo) => {
+    const jugador = equipo.find(jug => jug.numero === dorsal)
+    let nombre = jugador.nombre_jugador
+    if (jugador.posicion === "Portero") nombre += " G"
+    return {dorsal: jugador.numero, nombre}
+  }
+
+  const alineacion = (payload) => {
+    const equipo = payload.nombre.split(" ")[1]
+    console.log(equipo)
+    let listaJugadores
+    let titulares 
+    let entrenador
+
+    if(equipo === 'LOCAL') {
+      titulares = partido.value.equipo_local.titulares
+      listaJugadores = partido.value.equipo_local.jugadores
+      entrenador = partido.value.equipo_local.cuerpo_tecnico[0].nombre
+
+    } else if (equipo === 'VISITANT') {
+      titulares = partido.value.equipo_visitante.titulares
+      listaJugadores = partido.value.equipo_visitante.jugadores
+      entrenador = partido.value.equipo_visitante.cuerpo_tecnico[0].nombre
+    } 
+
+    let jugadores = []
+
+    titulares.forEach(dorsal => {
+      jugadores.push(buscaJugador(dorsal, listaJugadores))
+    })
+   
+
+    if (payload.live) {
+      swiftConnectionStore.cueGraphic('ALINEACION')
+      swiftConnectionStore.rtRemote.updateFields(`ALINEACION::NOMBRE_ENTRENADORTEXT`, "String", entrenador)
+      let i = 1
+      console.log(jugadores)
+      jugadores.forEach(jug => {
+        let nombre = jug.nombre
+        // if(jug.posicion === "Portero") nombre += " G"
+        swiftConnectionStore.rtRemote.updateFields(`ALINEACION::DORSAL_${i}TEXT`, "String", jug.dorsal)
+        swiftConnectionStore.rtRemote.updateFields(`ALINEACION::NOMBRE_${i}TEXT`, "String", nombre)
+        i ++
+      })
+      // for (let i = 1; i <= 11; i++) {
+        
+      //   let nombre
+      //   let dorsal
+
+      //   if (i <= jugadores.length) {
+      //     nombre = jugadores[i-1].nombre
+      //     dorsal = jugadores[i-1].numero
+      //   } else {
+      //     nombre = " "
+      //     dorsal = " "
+      //   }
+        
+      //   swiftConnectionStore.rtRemote.updateFields(`ALINEACION::DORSAL_${i}TEXT`, "String", dorsal)
+      //   swiftConnectionStore.rtRemote.updateFields(`ALINEACION::NOMBRE_${i}TEXT`, "String", nombre)
+      // }
+      swiftConnectionStore.rtRemote.updateFields(`ALINEACION::DORSAL_12TEXT`, "String", " ")
+      swiftConnectionStore.rtRemote.updateFields(`ALINEACION::NOMBRE_12TEXT`, "String", " ")
+      swiftConnectionStore.bringOn('ALINEACION')
+    } else {
+      swiftConnectionStore.takeOff('ALINEACION')
+    }
+  }
+
+  const suplentes = (payload) => {
+
+    const equipo = payload.nombre.split(" ")[1]
+    console.log(equipo)
+    let listaJugadores
+    let titulares 
+
+    if(equipo === 'LOCAL') {
+      titulares = partido.value.equipo_local.titulares
+      listaJugadores = partido.value.equipo_local.jugadores
+
+    } else if (equipo === 'VISITANT') {
+      titulares = partido.value.equipo_visitante.titulares
+      listaJugadores = partido.value.equipo_visitante.jugadores
+    } 
+
+  
+
+    const listaSuplentes = listaJugadores.filter(jug => !titulares.includes(jug.numero))
+
+    if (payload.live) {
+      swiftConnectionStore.cueGraphic('ALINEACION')
+      // swiftConnectionStore.rtRemote.updateFields(`ALINEACION::NOMBRE_ENTRENADORTEXT`, "String", entrenador)
+      let i = 1
+
+      listaSuplentes.forEach(jug => {
+        let nombre = jug.nombre_jugador
+        if(jug.posicion === "Portero") nombre += " G"
+        swiftConnectionStore.rtRemote.updateFields(`ALINEACION::DORSAL_${i}TEXT`, "String", jug.numero)
+        swiftConnectionStore.rtRemote.updateFields(`ALINEACION::NOMBRE_${i}TEXT`, "String", nombre)
+        i ++
+      })
+      swiftConnectionStore.rtRemote.updateFields(`ALINEACION::NOMBRE_ENTRENADORTEXT`, "String", " ")
+      // for (let i = 1; i <= 11; i++) {
+        
+      //   let nombre
+      //   let dorsal
+
+      //   if (i <= jugadores.length) {
+      //     nombre = jugadores[i-1].nombre
+      //     dorsal = jugadores[i-1].numero
+      //   } else {
+      //     nombre = " "
+      //     dorsal = " "
+      //   }
+      //   swiftConnectionStore.rtRemote.updateFields(`ALINEACION::DORSAL_${i}TEXT`, "String", dorsal)
+      //   swiftConnectionStore.rtRemote.updateFields(`ALINEACION::NOMBRE_${i}TEXT`, "String", nombre)
+      // }
+      // swiftConnectionStore.rtRemote.updateFields(`ALINEACION::DORSAL_12TEXT`, "String", " ")
+      // swiftConnectionStore.rtRemote.updateFields(`ALINEACION::NOMBRE_12TEXT`, "String", " ")
+      swiftConnectionStore.bringOn('ALINEACION')
+    } else {
+      swiftConnectionStore.takeOff('ALINEACION')
+    }
+
+    
+
+
+  }
+
+
+
+  const formacion = (payload) => {
+    const equipo = payload.nombre.split(" ")[1]
+    let form
+    let tipoForm
+    if(equipo === 'LOCAL') {
+       form = partido.value.equipo_local.formacion
+       tipoForm = partido.value.equipo_local.tipoFormacion
+    } else if (equipo === 'VISITANT') {
+      form = partido.value.equipo_visitante.formacion
+      tipoForm = partido.value.equipo_visitante.tipoFormacion
+    }
+    if(payload.live) {
+      swiftConnectionStore.cueGraphic('FORMACION')
+      for (let i = 0; i <= form.length -1 ; i++) {
+        // console.log(form[i])
+        swiftConnectionStore.rtRemote.updateFields(`FORMACION::TIPO_FORMACIONTEXT`, "String", tipoForm)
+        swiftConnectionStore.rtRemote.updateFields(`FORMACION::POS_${i + 1}`, "Translate", `${form[i].pos.x},${form[i].pos.y}`)
+        swiftConnectionStore.rtRemote.updateFields(`FORMACION::DORSAL_${i + 1}TEXT`, "String", form[i].dorsal)
+        swiftConnectionStore.rtRemote.updateFields(`FORMACION::APODO_${i + 1}TEXT`, "String", form[i].apodo)
+      }
+      swiftConnectionStore.bringOn('FORMACION')
+    } else {
+      swiftConnectionStore.takeOff('FORMACION')
+    }
+   
+
+
+    console.log(form)
   }
 
 /* const golesLocalTotales = computed(() => {

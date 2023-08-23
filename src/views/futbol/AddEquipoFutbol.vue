@@ -193,7 +193,7 @@ const enviar = () => {
   })
   const nuevo_equipo = {
         // id_equipo: Date.now(),
-        imagen: imagen.value[0],
+        // imagen: imagen.value[0],
         nombre_equipo: nombre_equipo.value,
         display_name: display_name.value,
         localidad: localidad.value,
@@ -220,9 +220,9 @@ const enviar = () => {
     */
 
 
-  // futbolStore.addJugadores(jugadores.value)
-  // futbolStore.addEquipo(nuevo_equipo)
-  futbolStore.uploadImage(imagen.value[0], `escudo_${display_name.value}`)
+  futbolStore.addJugadores(jugadores.value)
+  futbolStore.addEquipo(nuevo_equipo)
+  // futbolStore.uploadImage(imagen.value[0], `escudo_${display_name.value}`)
   // volver()
   // console.log(`escudo_${display_name.value}`)
 }

@@ -1084,7 +1084,6 @@ export const usegFutbolStore = defineStore('futbol', {
     },
 
     async editarPartido(partido) {
-      console.log(partido)
 
       let nuevoPartido = this.buscarPartido(partido.id_partido)
 
@@ -1098,6 +1097,18 @@ export const usegFutbolStore = defineStore('futbol', {
       nuevoPartido.fecha = partido.fecha
       nuevoPartido.hora = partido.hora
 
+
+      const docRef = doc(db, "partidos_futbol", partido.id_partido)
+      await updateDoc(docRef, nuevoPartido)
+
+    },
+    async updateAlineacionDB(partido) {
+      let nuevoPartido = this.buscarPartido(partido.id_partido)
+
+      nuevoPartido.equipo_local = partido.equipo_local
+      nuevoPartido.id_equipo_local = partido.id_equipo_local
+      nuevoPartido.equipo_visitante = partido.equipo_visitante
+      nuevoPartido.id_equipo_visitante = partido.equipo_visitante
 
       const docRef = doc(db, "partidos_futbol", partido.id_partido)
       await updateDoc(docRef, nuevoPartido)
@@ -1142,6 +1153,8 @@ export const usegFutbolStore = defineStore('futbol', {
       part.fecha = partido.fecha
       part.hora = partido.hora
       part.lugar = partido.lugar
+      // part.titulares = partido.titulares
+      
     },
 
     async updateEstGeneralPartido(partido) {
