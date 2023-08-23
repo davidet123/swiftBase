@@ -13,7 +13,7 @@
     <!-- {{ partido }} -->
       <v-row>
         <v-col cols="12">
-          <MarcadorFutbol :marcador = "marcador" :tiempo="partido.tiempo" @updateDB="updateDB"/>
+          <MarcadorFutbol :marcador = "marcador" :tiempo="partido.tiempo" :equipos="nombreEquipos" @updateDB="updateDB"/>
         </v-col>
       </v-row>
        <v-row class="mt-5">
@@ -295,6 +295,10 @@ const id = route.params.id
 
 const { partidos, partido_cargado, marcadores } = storeToRefs(futbolStore)
 
+
+const nombreEquipos = computed(() => {
+  return {local: partido.value.equipo_local.display_name, visitante: partido.value.equipo_visitante.display_name}
+}) 
 
 // VENTANAS ALINEACION Y FORMACION
 

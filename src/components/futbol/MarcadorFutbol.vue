@@ -163,9 +163,9 @@
   const futbolStore = usegFutbolStore()
   const swiftConnectionStore = useSwiftConnectionStore()
   
-  const props = defineProps(["marcador", "tiempo"])
+  const props = defineProps(["marcador", "tiempo", "equipos"])
   
-  const { marcador, tiempo } = toRefs( props )
+  const { marcador, tiempo, equipos } = toRefs( props )
 
   const route = useRoute()
 
@@ -386,19 +386,32 @@
     return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
   }
   const activarGrafico = payload => {
-    if (payload.live) {
-      swiftConnectionStore.bringOn(payload.nombre)
+  //   if (payload.live) {
+  //     swiftConnectionStore.bringOn(payload.nombre)
+  //   } else {
+  //     swiftConnectionStore.takeOff(payload.nombre)
+  //   }
+  // }
+  // const bringOn = (metodo) => {
+  //   swiftConnectionStore.rtRemote.playGraphic(metodo)
+  //   swiftConnectionStore.rtRemote.playMethod(metodo + "::bringOn")
+  // }
+  // const takeOff = (metodo) => {
+  //   swiftConnectionStore.rtRemote.playGraphic(metodo)
+  //   swiftConnectionStore.rtRemote.playMethod(metodo + "::takeOff")
+  // }
+
+  if (payload.live) {
+      swiftConnectionStore.cueGraphic('MARCADOR')
+      console.log(equipos.value)
+      swiftConnectionStore.rtRemote.updateFields(`MARCADOR::EQUIPO_LOCALTEXT`, "String", equipos.value.local)
+      swiftConnectionStore.rtRemote.updateFields(`MARCADOR::EQUIPO_VISITANTETEXT`, "String", equipos.value.visitante)
+       
+      
+      swiftConnectionStore.bringOn('MARCADOR')
     } else {
-      swiftConnectionStore.takeOff(payload.nombre)
+      swiftConnectionStore.takeOff('MARCADOR')
     }
-  }
-  const bringOn = (metodo) => {
-    swiftConnectionStore.rtRemote.playGraphic(metodo)
-    swiftConnectionStore.rtRemote.playMethod(metodo + "::bringOn")
-  }
-  const takeOff = (metodo) => {
-    swiftConnectionStore.rtRemote.playGraphic(metodo)
-    swiftConnectionStore.rtRemote.playMethod(metodo + "::takeOff")
   }
 
 
