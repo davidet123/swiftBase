@@ -163,9 +163,9 @@ const liveBtn = ref({
 })
 
 
-const props = defineProps(["jugador", "id_jugador", "fondo", "temporizador"])
+const props = defineProps(["jugador", "id_jugador", "fondo", "temporizador", "equipo"])
 
-const { jugador, temporizador } = toRefs(props)
+const { jugador, temporizador, equipo } = toRefs(props)
 
 
 const emit = defineEmits(["borrarJugador"])
@@ -214,7 +214,8 @@ const disparoAPuerta = val => {
 }
 
 const updateDB = (jugador) => {
-  futbolStore.updateEstPartido(id_partido, jugador)
+  // console.log(equipo)
+  futbolStore.updateEstPartido(id_partido, jugador, equipo.value)
 }
 
 

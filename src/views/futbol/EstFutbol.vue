@@ -26,11 +26,9 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="6" class="text-center">
+            <v-col cols="12" class="text-center">
               <v-btn color="success" @click="abrirAlineacion('local')">ALINEACIÓ LOCAL</v-btn>
-            </v-col>
-            <v-col cols="6" class="mb-3 text-center">
-              <v-btn color="success">FORMACIÓ LOCAL</v-btn>
+              <v-btn color="success" @click="abrirSustituciones('local')">SUSTITUCION</v-btn>
             </v-col>
           </v-row>
           <v-row>
@@ -82,12 +80,12 @@
             </v-col>
             <v-row>
                 <v-col v-if="dorsalLocal !== null" cols="12">
-                  <JugadorFutbolInd :jugador="listadoLocal[0]" :fondo="'local'" :temporizador="marcador.temporizador" class="ml-4" @test="test"/>
+                  <JugadorFutbolInd :jugador="listadoLocal[0]" :fondo="'local'" :temporizador="marcador.temporizador" :equipo="'local'" class="ml-4" @test="test"/>
                 </v-col>
                 
                 <!-- <v-col v-else v-for="jugador in equipo_local.jugadores" :key="jugador.id_jugador" cols="12" class="clearMargin"> -->
                 <v-col v-else v-for="jugador in titularesLocal" :key="jugador.id_jugador" cols="12" class="clearMargin">
-                  <JugadorFutbolInd :jugador = "jugador" :id_jugador = "jugador.id_jugador" :fondo="'local'" :temporizador="marcador.temporizador" class="ml-4"/>
+                  <JugadorFutbolInd :jugador = "jugador" :id_jugador = "jugador.id_jugador" :fondo="'local'" :temporizador="marcador.temporizador" :equipo="'local'" class="ml-4"/>
                 </v-col>
             </v-row>
             <v-row class="pt-2">
@@ -138,11 +136,9 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="6" class="text-center">
+            <v-col cols="12" class="text-center">
               <v-btn color="success" @click="abrirAlineacion('visitante')">ALINEACIÓ VISITANT</v-btn>
-            </v-col>
-            <v-col cols="6" class="mb-3 text-center">
-              <v-btn color="success">FORMACIÓ VISITANT</v-btn>
+              <v-btn color="success" @click="abrirSustituciones('visitante')">SUSTITUCION</v-btn>
             </v-col>
           </v-row>
           <v-row>
@@ -194,10 +190,10 @@
             </v-col>
             <v-row class="clearMargin">
                 <v-col v-if="dorsalVisitante !== null" cols="12" class="mr-2">
-                  <JugadorFutbolInd :jugador="listadoVisitante[0]" :fondo="'visitante'" :temporizador="marcador.temporizador"/>
+                  <JugadorFutbolInd :jugador="titularesVisitante[0]" :fondo="'visitante'" :equipo="'visitante'" :temporizador="marcador.temporizador"/>
                 </v-col>
                 <v-col v-else v-for="jugador in titularesVisitante" :key="jugador.id_jugador" cols="12" class="clearMargin">
-                  <JugadorFutbolInd  :jugador = "jugador" :id_jugador = "jugador.id_jugador" :fondo="'visitante'" :temporizador="marcador.temporizador" class="mr-2"/>
+                  <JugadorFutbolInd  :jugador = "jugador" :id_jugador = "jugador.id_jugador" :fondo="'visitante'" :equipo="'visitante'" :temporizador="marcador.temporizador" class="mr-2"/>
                 </v-col>
             </v-row>
             <v-row>
@@ -247,12 +243,23 @@
           fullscreen
           :scrim="false"
           transition="dialog-bottom-transition"
-          >
-          
+          >          
           <AlineacionesFutbol :equipo = "equipoAlineacion" :local="ventanaAlineacion.equipo === 'local' ? true : false" @cerrarVentana = "ventanaAlineacion.abierta = false" @actualizar = "actualizarAlineacion"/>
 
         </v-dialog>
       </v-row>
+      <div>
+        <v-dialog
+          v-model="ventanaSustituciones.abierta"
+          fullscreen
+          :scrim="false"
+          transition="dialog-bottom-transition"
+        >
+        <SustitucionesFutbol :equipo="equipoSustitucion" :local="ventanaSustituciones.equipo === 'local' ? true : false" @cerrarVentana = "ventanaSustituciones.abierta = false" @actualizar = "actualizarSustituciones" @rotularSustitucion="rotularSustitucion"/>
+
+
+        </v-dialog>
+      </div>
   
   </div>
   
@@ -284,6 +291,7 @@ const MarcadorFutbol = defineAsyncComponent(() => import('@/components/futbol/Ma
 const JugadorFutbolInd = defineAsyncComponent(() => import('@/components/futbol/JugadorFutbolInd'))
 const CuerpoTecnicoIndividual = defineAsyncComponent(() => import('@/components/futbol/CuerpoTecnicoIndividual'))
 const AlineacionesFutbol = defineAsyncComponent(() => import('@/components/futbol/AlineacionesFutbol'))
+const SustitucionesFutbol = defineAsyncComponent(() => import('@/components/futbol/SustitucionesFutbol'))
 
 const swiftConnectionStore = useSwiftConnectionStore()
 const futbolStore = usegFutbolStore()
@@ -303,7 +311,6 @@ const nombreEquipos = computed(() => {
 // VENTANAS ALINEACION Y FORMACION
 
 const ventanaAlineacion = ref({abierta: false, equipo: null})
-const ventanaFormacion = ref({abierta: false, equipo: null})
 
 
 const equipoAlineacion = computed(() => { 
@@ -331,6 +338,48 @@ const actualizarAlineacion = payload => {
   futbolStore.updateAlineacionDB(partido.value)
 }
 
+// SUSTITUCIONES
+
+const ventanaSustituciones = ref({abierta: false, equipo: null})
+
+const abrirSustituciones = equipo => {
+  ventanaSustituciones.value.equipo = equipo
+  ventanaSustituciones.value.abierta = true
+}
+
+const equipoSustitucion = computed(() => { 
+  if(ventanaSustituciones.value.equipo === "local") {
+    return equipo_local.value
+  } else if(ventanaSustituciones.value.equipo === "visitante") {
+    return equipo_visitante.value
+  }
+ 
+  // ventanaAlineacion.value.equipo === "local" ? equipo_local.value.jugadores : equipo_visitante.value.jugadores
+})
+
+
+const actualizarSustituciones = (payload) => {
+  console.log(payload)
+  futbolStore.updateAlineacionDB(partido.value)
+  ventanaSustituciones.value.abierta = false
+
+}
+
+
+const rotularSustitucion = payload => {
+
+  const { metodo, equipo, sale, entra } = payload
+  // console.log(metodo, equipo, sale, entra)
+  swiftConnectionStore.cueGraphic(metodo)
+
+  swiftConnectionStore.rtRemote.updateFields("SUSTITUCION::TEXTO_EQUIPOTEXT", "String", equipo)
+  swiftConnectionStore.rtRemote.updateFields("SUSTITUCION::TEXTO_SALETEXT", "String", sale)
+  swiftConnectionStore.rtRemote.updateFields("SUSTITUCION::TEXTO_ENTRATEXT", "String", entra)
+
+  
+  swiftConnectionStore.bringOn(metodo)
+
+}
 
 
 // JUGADORES
@@ -564,7 +613,7 @@ const activarGrafico = payload => {
           break
 
         case "FUERA JUEGO":
-          tipo = "Disparos"
+          tipo = "Fores de joc"
           valor_local = local.fueras_de_juego
           valor_visitante = visitante.fueras_de_juego
           break

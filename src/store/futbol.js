@@ -1164,24 +1164,27 @@ export const usegFutbolStore = defineStore('futbol', {
 
     },
 
-    async updateEstPartido(id_partido, jugador) {
+    async updateEstPartido(id_partido, jugador, equipo) {
 
       const docRef = doc(db, "partidos_futbol", id_partido)
       
       const partido = this.partidos.find(part => {
         return part.id_partido === id_partido
       })
+      console.log(equipo)
       
       let buscaJugador
-      buscaJugador = partido.equipo_local.jugadores.find(jug => {
-        return jug.id_jugador === jugador.id_jugador
-      })
-      
-      if (!buscaJugador) {
-        buscaJugador = partido.equipo_visitante.jugadores.find(jug => {
+
+      if (equipo === 'local') {
+        buscaJugador = partido.equipo_local.jugadores.find(jug => {
           return jug.id_jugador === jugador.id_jugador
         })
+      } else if (equipo === 'visitante') {
+        buscaJugador = partido.equipo_visitante.jugadores.find(jug => {
+          return jug.id_jugador === jugador.id_jugador
+        })        
       }
+      
       buscaJugador.estadistica = jugador.estadistica
 
       console.log(buscaJugador)

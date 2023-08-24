@@ -304,7 +304,7 @@
 
   const cargaPartido = (partido) => {
     equipo_local.value = partido.equipo_local
-    equipo_visitante.value = partido.visitante
+    equipo_visitante.value = partido.equipo_visitante
     jugadoresLocal.value = [...partido.equipo_local.jugadores]
     jugadoresVisitante.value = [...partido.equipo_visitante.jugadores]
     // inicio = marcador.temporizador.tiempo.primera

@@ -37,7 +37,7 @@ actions: {
       trace("Connection Closed, try again…");
       // If the connection closes, attempt to reopen it.
       this.swiftConnectionStatus = 0
-      startVideo();
+      self.startVideo();
       }
 
   },
@@ -76,7 +76,7 @@ actions: {
       trace("Connection Closed, try again…");
       // If the connection closes, attempt to reopen it.
       this.swiftConnectionStatus = 0
-      OpenConnection();
+      self.OpenConnection();
       }
   },
   cambiarImagen() {

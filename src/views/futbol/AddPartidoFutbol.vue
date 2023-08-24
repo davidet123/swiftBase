@@ -252,6 +252,8 @@ const crearPartido = () => {
     ]
     partido.value.equipo_local.tipoFormacion = null
     partido.value.equipo_visitante.tipoFormacion = null
+    partido.value.equipo_local.sustituciones = []
+    partido.value.equipo_visitante.sustituciones = []
         
     partido.value.equipo_local.jugadores = listaEquipoLocal.value
     partido.value.equipo_visitante.jugadores = listaEquipoVisitante.value
