@@ -148,7 +148,7 @@
             </v-col>
             <v-col cols="3" class="text-center recuadro">
               <p>DISPAROS A PUERTA:</p>
-              <p>{{ disparosVisitantelTotal }}</p>
+              <p>{{ disparosVisitanteTotal }}</p>
               <BotonLive nombre="DISPAROS" @activar="activarGrafico"/>
             </v-col>
             <v-col cols="3" class="text-center recuadro">
@@ -228,6 +228,17 @@
         </v-col>
       </v-row>
       <v-row>
+        <v-col>
+          <ListaRotulos />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12" class="text-center">
+          <BotonLive nombre="COPY" @activar="activarCopy"/>
+
+        </v-col>
+      </v-row>
+      <v-row>
         <v-col class="text-center">
           <v-btn color="success" @click="volver">INICI</v-btn>
           <v-btn color="success" @click="resumen">RESUM</v-btn>          
@@ -255,7 +266,7 @@
           :scrim="false"
           transition="dialog-bottom-transition"
         >
-        <SustitucionesFutbol :equipo="equipoSustitucion" :local="ventanaSustituciones.equipo === 'local' ? true : false" @cerrarVentana = "ventanaSustituciones.abierta = false" @actualizar = "actualizarSustituciones" @rotularSustitucion="rotularSustitucion"/>
+        <SustitucionesFutbol :equipo="equipoSustitucion" :local="ventanaSustituciones.equipo === 'local' ? true : false" @cerrarVentana = "ventanaSustituciones.abierta = false" @actualizar = "actualizarSustituciones"/>
 
 
         </v-dialog>
@@ -292,6 +303,7 @@ const JugadorFutbolInd = defineAsyncComponent(() => import('@/components/futbol/
 const CuerpoTecnicoIndividual = defineAsyncComponent(() => import('@/components/futbol/CuerpoTecnicoIndividual'))
 const AlineacionesFutbol = defineAsyncComponent(() => import('@/components/futbol/AlineacionesFutbol'))
 const SustitucionesFutbol = defineAsyncComponent(() => import('@/components/futbol/SustitucionesFutbol'))
+const ListaRotulos = defineAsyncComponent(() => import('@/components/rotulos/ListaRotulos'))
 
 const swiftConnectionStore = useSwiftConnectionStore()
 const futbolStore = usegFutbolStore()
@@ -370,14 +382,14 @@ const rotularSustitucion = payload => {
 
   const { metodo, equipo, sale, entra } = payload
   // console.log(metodo, equipo, sale, entra)
-  swiftConnectionStore.cueGraphic(metodo)
+  swiftConnectionStore.cueGraphic("SUSTITUCION_1")
 
-  swiftConnectionStore.rtRemote.updateFields("SUSTITUCION::TEXTO_EQUIPOTEXT", "String", equipo)
-  swiftConnectionStore.rtRemote.updateFields("SUSTITUCION::TEXTO_SALETEXT", "String", sale)
-  swiftConnectionStore.rtRemote.updateFields("SUSTITUCION::TEXTO_ENTRATEXT", "String", entra)
+  swiftConnectionStore.rtRemote.updateFields("SUSTITUCION1::TEXTO_EQUIPOTEXT", "String", equipo)
+  swiftConnectionStore.rtRemote.updateFields("SUSTITUCION1::TEXTO_SALETEXT", "String", sale)
+  swiftConnectionStore.rtRemote.updateFields("SUSTITUCION1::TEXTO_ENTRATEXT", "String", entra)
 
   
-  swiftConnectionStore.bringOn(metodo)
+  swiftConnectionStore.bringOn("SUSTITUCION_1")
 
 }
 
@@ -514,7 +526,7 @@ const disparosTotales = (jugadores, estadistica1, estadistica2) => {
 };
 
 const disparosLocalTotal = computed(() => disparosTotales(equipo_local.value.jugadores, 'disparos', 'disparos_al_arco'));
-const disparosVisitantelTotal = computed(() => disparosTotales(equipo_visitante.value.jugadores, 'disparos', 'disparos_al_arco'));
+const disparosVisitanteTotal = computed(() => disparosTotales(equipo_visitante.value.jugadores, 'disparos', 'disparos_al_arco'));
 
 
 const dispLocalTotal = computed (() =>estadisticasTotales(equipo_local.value.jugadores, 'disparos'))
@@ -549,6 +561,7 @@ const estFinales = (metodo) => {
     // swiftConnectionStore.rtRemote.endTransaction ()
     
     swiftConnectionStore.bringOn(metodo.nombre)
+    // swiftConnectionStore.bringOn("SUSTITUCION")
 
   } else {
     swiftConnectionStore.takeOff(metodo.nombre)
@@ -578,20 +591,28 @@ const dskArbitros = (metodo) => {
   }
 
 }
+const activarCopy = metodo => {
+  if(metodo.live) {
+    swiftConnectionStore.bringOn(metodo.nombre)
+
+  } else {
+    swiftConnectionStore.takeOff(metodo.nombre)
+  }
+}
 
 const activarGrafico = payload => {
     console.log(payload)
     let tipo
-    const local = equipo_local.value.estadistica_equipo
+    const local = partido.value.equipo_local.estadistica_equipo
     let valor_local
-    const visitante = equipo_visitante.value.estadistica_equipo
+    const visitante = partido.value.equipo_visitante.estadistica_equipo
     let valor_visitante
 
     switch (payload.nombre) {
       case "DISPAROS": 
         tipo = "Disparos"
-        valor_local = `${local.disparos} / ${local.disparos_al_arco}`
-        valor_visitante = `${visitante.disparos} / ${visitante.disparos_al_arco}`
+        valor_local = disparosLocalTotal.value
+        valor_visitante = disparosVisitanteTotal.value
         break
 
         case "TAR. AMARILLAS":
@@ -624,6 +645,9 @@ const activarGrafico = payload => {
           valor_visitante = "-"
 
     }
+
+    console.log(valor_local)
+    console.log(valor_visitante)
     if (payload.live) {
       swiftConnectionStore.cueGraphic('EST_EQUIPOS')
       swiftConnectionStore.rtRemote.updateFields("EST_EQUIPOS::EQUIPO_LOCALTEXT", "String", equipo_local.value.nombre_equipo)
@@ -868,7 +892,7 @@ const faltasVisitanteTotales = computed(() => {
   })
   return disparosAPuerta + " / " +  disparos
 })
-const disparosVisitantelTotal = computed(() => {
+const disparosVisitanteTotal = computed(() => {
   let disparos = 0
   equipo_visitante.jugadores.forEach(jug => {
     disparos += jug.estadistica.disparos

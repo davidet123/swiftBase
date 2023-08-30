@@ -277,12 +277,19 @@
 
   const addTiempo = val => {
     tiempo_de_inicio.value[parte(parte_en_juego.value)] -= (val*1000)
+    swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","OffsetMilisec", val*1000) 
+
   }
 
   const iniciarTiempo = () => {
     if(!tiempo_de_inicio.value[parte(parte_en_juego.value)]) {
       tiempo_de_inicio.value[parte(parte_en_juego.value)] = Date.now()
     }
+
+
+    // swiftConnectionStore.playGraphic('MARCADOR')
+    
+    swiftConnectionStore.startClock('MARCADOR')
     
     inicio_posesion = tiempo_de_inicio.value[parte(parte_en_juego.value)]
     // console.log(marcador.value.temporizador.inicio_tiempo)
@@ -315,11 +322,12 @@
       }
       
         tiempoMarcador.value = (millisToMinutesAndSeconds(dif))
+        // console.log(tiempoMarcador.value)
         marcador.value.temporizador.posesion[equipo_en_posesion.value] += 1
         // console.log(marcador.value.temporizador.posesion)
         
         
-        swiftConnectionStore.rtRemote.updateFields("MARCADOR::TIEMPOTEXT","String", tiempoMarcador.value)
+        // swiftConnectionStore.rtRemote.updateFields("MARCADOR::TIEMPOTEXT","String", tiempoMarcador.value)
       
       // emit("updateDB", estTotales.value)
       // calcularPosesion(dif)
@@ -337,6 +345,8 @@
     inicio_tiempo.value = false
     marcador.value.temporizador.inicio_tiempo = false
     tiempoIniciado.value = false
+
+    swiftConnectionStore.stopClock('MARCADOR')
     actualizarMarcador()
   }
 
@@ -356,13 +366,25 @@
     tiempoIniciado.value = false
     añadidoIniciado = false
     inicioPosesion = null
-    if(marcador.value.temporizador.parte_en_juego == 1) {
+    if(marcador.value.temporizador.parte_en_juego == 1) { 
+      swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Minute", 0)     
+      swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Second", 0) 
+      console.log("00")    
       tiempoMarcador.value = '00:00'
     } else if(marcador.value.temporizador.parte_en_juego == 2) {
+      swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Minute", 45)     
+      swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Second", 0) 
+      console.log("45")    
       tiempoMarcador.value = '45:00'
     } else if(marcador.value.temporizador.parte_en_juego == 3) {
+      swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Minute", 90)     
+      swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Second", 0) 
+      console.log("90")    
       tiempoMarcador.value = '90:00'
     } else if(marcador.value.temporizador.parte_en_juego == 4) {
+      swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Minute", 105)     
+      swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Second", 0) 
+      console.log("105")    
       tiempoMarcador.value = '105:00'
     }
     // tiempoMarcador.value = (millisToMinutesAndSeconds(0))
@@ -370,6 +392,13 @@
     // swiftConnectionStore.rtRemote.updateFields("MARCADOR::TIEMPOTEXT","String", tiempoMarcador.value)
     // swiftConnectionStore.rtRemote.updateFields("MARCADOR::SUPLTEXT","String", añadidoMarcador.value)
     // console.log(marcador.value)
+    // swiftConnectionStore.rtRemote.updateFields("MARCADOR::ClockTextTEXT","String", tiempoMarcador.value)
+    const minutos = tiempoMarcador.value.split(":")[0]
+    // console.log(parseInt(minutos))
+    // swiftConnectionStore.rtRemote.updateFields("MARCADOR::ClockTextTEXT","String", parseInt(tiempoMarcador.value))
+    swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Minute", parseInt(minutos))
+    // swiftConnectionStore.rtRemote.updateFields("MARCADOR::QTime::setHMS","String", "00:35:00:00.000")
+    swiftConnectionStore.resetClock('MARCADOR')
     actualizarMarcador()
 
   }
@@ -403,9 +432,13 @@
 
   if (payload.live) {
       swiftConnectionStore.cueGraphic('MARCADOR')
-      console.log(equipos.value)
+      // console.log(equipos.value)
       swiftConnectionStore.rtRemote.updateFields(`MARCADOR::EQUIPO_LOCALTEXT`, "String", equipos.value.local)
       swiftConnectionStore.rtRemote.updateFields(`MARCADOR::EQUIPO_VISITANTETEXT`, "String", equipos.value.visitante)
+
+      // const minutos = tiempoMarcador.value.split(":")[0]
+      // console.log(parseInt(minutos))
+      // swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Minute", minutos)
        
       
       swiftConnectionStore.bringOn('MARCADOR')
@@ -485,10 +518,10 @@
       switch(key) {
         case "A":
           if(!marcadorIn) {
-            console.log(key)
+            // console.log(key)
             bringOn("MARCADOR")
             marcadorIn = !marcadorIn
-            console.log(marcadorIn)
+            // console.log(marcadorIn)
           } else if (marcadorIn) {
             takeOff("MARCADOR")
             marcadorIn = !marcadorIn
@@ -517,7 +550,7 @@
     futbolStore.updateMarcadorDB(marcador.value.id_marcador, marcador.value)
   }
 
-  if (marcador.value.temporizador.inicio_tiempo) iniciarTiempo()
+  // if (marcador.value.temporizador.inicio_tiempo) iniciarTiempo()
   
   watch(() => parte_en_juego.value, val => {
 
@@ -532,6 +565,7 @@
       } else {
         tiempo = 0
       }
+      // swiftConnectionStore.rtRemote.updateFields("MARCADOR::ClockTextTEXT","String", "00:00")
       // tiempoMarcador.value = "00:00"
     } else if (parseInt(val) == 2) {
       if(tiempo_de_inicio.value[parte(2)]) {
@@ -539,23 +573,31 @@
       } else {
         tiempo = 45 * 60 * 1000
       }
+      // swiftConnectionStore.rtRemote.updateFields("MARCADOR::ClockTextTEXT","String", "45:00")
     } else if (parseInt(val) == 3) {
       if(tiempo_de_inicio.value[parte(3)]) {
         tiempo = Date.now() - tiempo_de_inicio.value[parte(3)] + 90 * 60 * 1000
       } else {
         tiempo = 90 * 60 * 1000
       }
+      // swiftConnectionStore.rtRemote.updateFields("MARCADOR::ClockTextTEXT","String", "90:00")
     } else if (parseInt(val) == 4) {
       if(tiempo_de_inicio.value[parte(4)]) {
         tiempo = Date.now() - tiempo_de_inicio.value[parte(4)] + 105 * 60 * 1000
       } else {
         tiempo = 105 * 60 * 1000
       }
+      // swiftConnectionStore.rtRemote.updateFields("MARCADOR::ClockTextTEXT","String", "105:00")
     }
 
     tiempoMarcador.value = (millisToMinutesAndSeconds(tiempo))
     marcador.value.temporizador.parte_en_juego = parseInt(val)
     // console.log(marcador.value)
+    // const minutos = tiempoMarcador.value.split(":")[0]
+    // console.log(parseInt(minutos))
+    // swiftConnectionStore.rtRemote.updateFields("MARCADOR::ClockTextTEXT","String", tiempoMarcador.value)
+    // swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Minute", parseInt(minutos))
+    // swiftConnectionStore.rtRemote.updateFields("MARCADOR::setHMS","String", "00:35:00:00.000")
     actualizarMarcador()
   })
 

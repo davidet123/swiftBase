@@ -77,6 +77,10 @@ import { useRoute } from "vue-router";
 import RotuloSimple from "./RotuloSimple"
 import { ref } from "vue";
 
+import { useSwiftConnectionStore } from "../../store/swiftConnection"
+
+const swiftConnectionStore = useSwiftConnectionStore()
+
 const route = useRoute()
 const id = route.params.id 
 const rotulosStore = useRotulosStore()
@@ -111,8 +115,15 @@ const afegirRotul = () => {
 
 const mostrar = payload => {
   if(payload.live) {
+    swiftConnectionStore.cueGraphic("DSK_INDIVIDUAL")
+    swiftConnectionStore.rtRemote.updateFields("DSK_INDIVIDUAL::SUPERIORTEXT","String", payload.contenido.titulo)
+    swiftConnectionStore.rtRemote.updateFields("DSK_INDIVIDUAL::INFERIORTEXT","String", payload.contenido.subtitulo)
+    swiftConnectionStore.bringOn("DSK_INDIVIDUAL")
     payload.rotulo.mostrado = true
+  } else {
+    swiftConnectionStore.takeOff("DSK_INDIVIDUAL")
   }
+
   rotulosStore.actualizarRotulosDB(payload.rotulo)
 
   // console.log(payload)

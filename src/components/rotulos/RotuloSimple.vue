@@ -108,6 +108,7 @@
   const live = (payload) => {
     console.log('ACTIVAR')
     payload.rotulo = rotulo.value
+    payload.contenido = {titulo: rotulo.value.titulo, subtitulo: rotulo.value.subtitulo}
     emit("mostrar", payload)
   }
 

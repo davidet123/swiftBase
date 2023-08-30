@@ -88,6 +88,7 @@ actions: {
     this.rtRemote.updateFields(grafico + "::" + node + "SHDR", "TextureImage", ruta)
   },
   cueGraphic (metodo) {
+    console.log(metodo)
     this.rtRemote.playMethod(metodo + "::cueGraphic")
   },
   bringOn (metodo) {
@@ -98,6 +99,16 @@ actions: {
     console.log(metodo + "::takeOff")
       this.rtRemote.playMethod(metodo + "::takeOff")
   },
+  startClock (metodo) {
+    console.log(metodo)
+      this.rtRemote.playMethod(metodo + "::startClock")
+  },
+  stopClock (metodo) {
+      this.rtRemote.playMethod(metodo + "::stopClock")
+  },
+  resetClock (metodo) {
+      this.rtRemote.playMethod(metodo + "::resetClock")
+  }
 
 
   // const bringOn = (metodo) => {

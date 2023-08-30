@@ -5,12 +5,6 @@
     </v-card-title>
     <v-card-text>
       <v-row>
-          <v-col class="text-center">
-            <video id="myVideoId" width="620" height="349" autoplay muted playsinline/>
-          </v-col>
-        </v-row>
-
-      <v-row>
         <v-col cols="3" offset="2" class="text-center">
           <h4>Jugador que sale</h4>
           <v-select
@@ -92,11 +86,15 @@
 
 import { computed } from 'vue'
 import { ref, toRefs } from 'vue'
-import { useSwiftConnectionStore } from "../../store/swiftConnection"
+
 import BotonLive from '@/components/simple/botonLive.vue' 
 
+import { useSwiftConnectionStore } from "../../store/swiftConnection"
 
-// const swiftConnectionStore = useSwiftConnectionStore()
+const swiftConnectionStore = useSwiftConnectionStore()
+
+
+
 
 
 
@@ -157,24 +155,26 @@ const sustitucionesSinRotular = computed(() => equipo.value.sustituciones.filter
 const aceptar = () => emit('actualizar', {local: local.value, equipo: equipo.value})
 
 const rotularSustitucion = (cambio, metodo) => {
-  // console.log(listadoTitular.value.length)
-  const jugadorSale = listadoCompleto.value.find(jug => jug.dorsal === cambio.sale)
-  const jugadorEntra = listadoCompleto.value.find(jug => jug.dorsal === cambio.entra)
   // console.log(jugadorSale)
-
+  console.log(metodo)
+  
   
   if(metodo.live) {
-    emit("rotularSustitucion", {metodo: metodo.nombre, equipo: equipo.value.nombre_equipo, sale: jugadorSale.etiqueta, entra: jugadorEntra.etiqueta})
-    // swiftConnectionStore.cueGraphic(metodo.nombre)
+    // console.log(listadoTitular.value.length)
+    const jugadorSale = listadoCompleto.value.find(jug => jug.dorsal === cambio.sale)
+    const jugadorEntra = listadoCompleto.value.find(jug => jug.dorsal === cambio.entra)
+    // emit("rotularSustitucion", {metodo: metodo.nombre, equipo: equipo.value.nombre_equipo, sale: jugadorSale.etiqueta, entra: jugadorEntra.etiqueta})
+    swiftConnectionStore.cueGraphic(metodo.nombre)
 
-    // swiftConnectionStore.rtRemote.updateFields("SUSTITUCION::TEXTO_SALETEXT", "String", jugadorSale.etiqueta)
-    // swiftConnectionStore.rtRemote.updateFields("SUSTITUCION::TEXTO_ENTRATEXT", "String", jugadorEntra.etiqueta)
+    swiftConnectionStore.rtRemote.updateFields("SUSTITUCION::TEXTO_EQUIPOTEXT", "String", equipo.value.nombre_equipo)
+    swiftConnectionStore.rtRemote.updateFields("SUSTITUCION::TEXTO_SALETEXT", "String", jugadorSale.etiqueta)
+    swiftConnectionStore.rtRemote.updateFields("SUSTITUCION::TEXTO_ENTRATEXT", "String", jugadorEntra.etiqueta)
 
     
-    // swiftConnectionStore.bringOn(metodo.nombre)
+    swiftConnectionStore.bringOn(metodo.nombre)
 
   } else {
-    // swiftConnectionStore.takeOff(metodo.nombre)
+    swiftConnectionStore.takeOff(metodo.nombre)
     cambio.rotulo = true
   }
 }
