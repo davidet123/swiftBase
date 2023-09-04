@@ -233,7 +233,7 @@
   }
 
   const cargaPartido = (partido) => {
-    console.log(partido)
+    // console.log(partido)
     nuevoPartido.value = {...partido}
   }
 /* 

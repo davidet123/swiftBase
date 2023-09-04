@@ -106,7 +106,7 @@
   const periodista = ref(rotulo.value.periodista)
 
   const live = (payload) => {
-    console.log('ACTIVAR')
+    // console.log('ACTIVAR')
     payload.rotulo = rotulo.value
     payload.contenido = {titulo: rotulo.value.titulo, subtitulo: rotulo.value.subtitulo}
     emit("mostrar", payload)
@@ -118,13 +118,13 @@
     clickCount += 1;
     if (clickCount === 1) {
       var singleClick = setTimeout(() => {
-        console.log("we are in singleClick");
+        // console.log("we are in singleClick");
         // this.currentPickerDate();
         clickCount = 0;
       }, 500);
     }
     if (clickCount === 2) {
-      console.log("we are in double Click");
+      // console.log("we are in double Click");
       clearTimeout(singleClick);
       editing.value = true
       // this.showEvent();

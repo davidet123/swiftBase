@@ -54,7 +54,7 @@
       <v-col cols="8">
         <v-row>
           <v-col class="text-center">
-            <video id="myVideoId" width="620" height="480" autoplay muted playsinline/>
+            <video id="myVideoId"  autoplay muted playsinline/>
 
           </v-col>
         </v-row>

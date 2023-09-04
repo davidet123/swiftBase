@@ -21,6 +21,7 @@
       <v-card-actions >
         <v-btn variant="flat" :color="!live ? 'success' : 'error'" @click="insertarGrafico(nombre)" :disabled="desactivar" >LIVE</v-btn>
         <v-btn @click="reveal = true">SETTINGS</v-btn>
+        <v-btn color="error" @click="emit('eliminar', nombre)">X</v-btn>
       </v-card-actions>
       <v-expand-transition>
         <v-card 
@@ -51,7 +52,7 @@
 import { ref, computed } from 'vue'
 
 const props = defineProps(["nombre"])
-const emit = defineEmits(["activar"])
+const emit = defineEmits(["activar", "eliminar"])
 
 const live = ref(false)
 const reveal = ref(false)
@@ -90,7 +91,7 @@ const insertarGrafico = val => {
     // Si hay tiempo poner en marcha el temporizador
     if(tiempo.value !== 0) {
       timer = setTimeout(function cuentaAtras() {
-          console.log(cuenta.value)
+          // console.log(cuenta.value)
           if(cuenta.value <= 0) {
             stopCuenta()
           } else {

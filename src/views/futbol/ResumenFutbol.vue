@@ -346,7 +346,7 @@
 
   watch(() => marcador.value, marcador => {
     cargaMarcador(marcador)
-    console.log(marcador)
+    // console.log(marcador)
   })
   
 

@@ -119,5 +119,6 @@
 <style>
   #grafica {
     background-color: white;
+    width: 100%;
   }
 </style>

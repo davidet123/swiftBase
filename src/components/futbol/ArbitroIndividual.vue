@@ -32,17 +32,17 @@ const props = defineProps(["arbitro", "nombre"])
 
 const { arbitro, nombre } = toRefs(props)
 
-console.log(props)
+// console.log(props)
 
 
 const activarGrafico = payload => {
-  console.log(payload)
+  // console.log(payload)
   if (payload.live) {
-    console.log("bringon")
+    // console.log("bringon")
     bringOn(payload.nombre)
   } else {
     takeOff(payload.nombre)
-    console.log("bringon")
+    // console.log("bringon")
   }
 }
 const bringOn = (metodo) => {

@@ -132,7 +132,7 @@ const listadoCompleto = computed(() => equipo.value.jugadores.map(jug => ({dorsa
 
 const efectuarSustitucion = () => {
   const indice = titulares.value.findIndex(el => el.numero === sale.value)
-  console.log(equipo.value.titulares[indice])
+  // console.log(equipo.value.titulares[indice])
   equipo.value.titulares[indice] = entra.value
 
 

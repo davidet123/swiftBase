@@ -202,7 +202,7 @@ const crearFormacion = () => {
     const jugador = buscaJugador(jug.dorsal)
     // console.log(jugador)
     jugador.pos = {x: x[valoresFormacion[posY]][posX], y: y[posY]}
-    console.log(jugador.pos)
+    // console.log(jugador.pos)
     posX ++  
     if( posX >= valoresFormacion[posY]) {
       posY ++

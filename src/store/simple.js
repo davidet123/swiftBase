@@ -7,6 +7,10 @@ export const useSimpleStore = defineStore('simpleStore', {
   actions: {
     addItem(item) {
       this.listado.push(item)
+    },
+    eliminarRotulo(nombre) {
+      const nuevo_listado = this.listado.filter(el => el !== nombre)
+      this.listado = nuevo_listado
     }
   }
 

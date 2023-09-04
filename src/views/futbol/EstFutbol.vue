@@ -103,7 +103,7 @@
 
         <!-- COLUMNA CENTRAL -->
         
-        <v-col cols="1" class="text-center">
+        <v-col cols="2" class="text-center">
           <v-row>
             <v-col>
               <p>Estadístiques finals</p>
@@ -171,7 +171,7 @@
                 <v-col cols="6">
                   <p>FUERAS DE JUEGO</p>
                   <p>{{ fueraJuegoVisitante}}</p>
-                  <BotonLive nombre="FUERA JUEGO" @activar="activarGrafico"/>
+                  <BotonLive nombre="FUERA JUEGO" @activar="activarGrafico" />
                 </v-col>
                 <v-col cols="6">
                   <v-btn size="x-small" color="success" @click="fueraDeJuego('visitante',1)">+</v-btn>
@@ -212,7 +212,8 @@
       <v-row>
         <v-col cols="12" class="text-center">
           <h3>Àrbitres</h3>
-          <BotonLive nombre="DSK_ARBITROS" @activar="dskArbitros"/>
+          <BotonLive nombre="DSK_ARBITROS" @activar="dskArbitros" :rotulo_cargado="rotulo_cargado_arbitros"/>
+          {{ rotulo_cargado_arbitros }}
         </v-col>
         <v-col cols="3">
           <CuerpoTecnicoIndividual :nombre="partido.equipo_arbitral.primer_arbitro" :titulo="'Primer àrbitre'" />
@@ -292,6 +293,9 @@ import Visor from '@/components/visor/Visor.vue'
 import { useSwiftConnectionStore } from "../../store/swiftConnection"
 
 import { usegFutbolStore } from "../../store/futbol"
+import { useRotulosStore } from "../../store/rotulos" 
+
+
 import { computed, ref,  onBeforeMount, onMounted } from 'vue';
 import { storeToRefs } from "pinia";
 import { watch } from 'vue';
@@ -307,6 +311,7 @@ const ListaRotulos = defineAsyncComponent(() => import('@/components/rotulos/Lis
 
 const swiftConnectionStore = useSwiftConnectionStore()
 const futbolStore = usegFutbolStore()
+const rotulosStore = useRotulosStore()
 
 const route = useRoute()
 const router = useRouter()
@@ -314,6 +319,11 @@ const router = useRouter()
 const id = route.params.id
 
 const { partidos, partido_cargado, marcadores } = storeToRefs(futbolStore)
+
+
+// ROTULOS
+const { rotulo_cargado } = storeToRefs(rotulosStore)
+const rotulo_cargado_arbitros = computed(() => rotulo_cargado.value.find(rotulo => rotulo.tipo === "DSK_ARBITROS"))
 
 
 const nombreEquipos = computed(() => {
@@ -537,7 +547,7 @@ const dispVisitanteAlArcoTotal = computed (() =>estadisticasTotales(equipo_visit
 
 
 const updateDB = () => {
-  console.log(partido.value)
+  // console.log(partido.value)
   partido.value.id_partido = id
   futbolStore.editarPartido(partido.value)
 }
@@ -571,7 +581,7 @@ const estFinales = (metodo) => {
 }
 
 const dskArbitros = (metodo) => {
-  console.log(metodo)
+  // console.log(metodo)
   const arbitros = partido.value.equipo_arbitral
 
   if(metodo.live) {
@@ -589,6 +599,9 @@ const dskArbitros = (metodo) => {
   } else {
     swiftConnectionStore.takeOff(metodo.nombre)
   }
+    const rotulo_cargado = {tipo: "DSK_ARBITROS", contenido: null, live: metodo.live}
+    rotulosStore.actualizarRotuloCargadoDB(rotulo_cargado)
+
 
 }
 const activarCopy = metodo => {
@@ -601,7 +614,7 @@ const activarCopy = metodo => {
 }
 
 const activarGrafico = payload => {
-    console.log(payload)
+    // console.log(payload)
     let tipo
     const local = partido.value.equipo_local.estadistica_equipo
     let valor_local
@@ -646,8 +659,8 @@ const activarGrafico = payload => {
 
     }
 
-    console.log(valor_local)
-    console.log(valor_visitante)
+    // console.log(valor_local)
+    // console.log(valor_visitante)
     if (payload.live) {
       swiftConnectionStore.cueGraphic('EST_EQUIPOS')
       swiftConnectionStore.rtRemote.updateFields("EST_EQUIPOS::EQUIPO_LOCALTEXT", "String", equipo_local.value.nombre_equipo)
@@ -671,7 +684,7 @@ const activarGrafico = payload => {
 
   const alineacion = (payload) => {
     const equipo = payload.nombre.split(" ")[1]
-    console.log(equipo)
+    // console.log(equipo)
     let listaJugadores
     let titulares 
     let entrenador
@@ -698,7 +711,7 @@ const activarGrafico = payload => {
       swiftConnectionStore.cueGraphic('ALINEACION')
       swiftConnectionStore.rtRemote.updateFields(`ALINEACION::NOMBRE_ENTRENADORTEXT`, "String", entrenador)
       let i = 1
-      console.log(jugadores)
+      // console.log(jugadores)
       jugadores.forEach(jug => {
         let nombre = jug.nombre
         // if(jug.posicion === "Portero") nombre += " G"
@@ -733,7 +746,7 @@ const activarGrafico = payload => {
   const suplentes = (payload) => {
 
     const equipo = payload.nombre.split(" ")[1]
-    console.log(equipo)
+    // console.log(equipo)
     let listaJugadores
     let titulares 
 
@@ -819,7 +832,7 @@ const activarGrafico = payload => {
    
 
 
-    console.log(form)
+    // console.log(form)
   }
 
 /* const golesLocalTotales = computed(() => {
@@ -912,7 +925,7 @@ const disparosVisitanteTotal = computed(() => {
 }) */
 
 const mostrarEstadistica = (estadistica)=> {
-  console.log(estadistica)
+  // console.log(estadistica)
 }
 
 const volver = () => router.push('/futbol')

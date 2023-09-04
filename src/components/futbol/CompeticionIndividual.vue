@@ -45,7 +45,7 @@ const actualizar = () => {
 }
 
 const eliminar = () => {
-  console.log(competicion.value)
+  // console.log(competicion.value)
   futbolStore.eliminarCompeticion(competicion.value)
 }
 

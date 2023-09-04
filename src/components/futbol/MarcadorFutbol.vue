@@ -13,7 +13,7 @@
         <v-row class="px-2">
           <v-row class="text-center pa-0 mb-3" justify="center" align="center">
             <v-col cols="3" offset="0" class="contenedor-video ma-0">
-              <BotonLive nombre="MARCADOR" @activar="activarGrafico"/>
+              <BotonLive nombre="MARCADOR" @activar="activarGrafico" :rotulo_cargado="rotulo_cargado_individual"/>
             </v-col>
             <v-col cols="9" class=" mt-5 pt-5 recuadro_gris mb-1">
               <v-row justify="center" align="center">
@@ -158,14 +158,21 @@
   import { storeToRefs } from 'pinia';
   import { watch } from 'vue';
 
+  import { useRotulosStore } from "../../store/rotulos" 
   
 
   const futbolStore = usegFutbolStore()
   const swiftConnectionStore = useSwiftConnectionStore()
+  const rotulosStore = useRotulosStore()
   
   const props = defineProps(["marcador", "tiempo", "equipos"])
   
   const { marcador, tiempo, equipos } = toRefs( props )
+
+  const {rotulo_cargado} = storeToRefs(rotulosStore)
+  
+  const rotulo_cargado_individual = computed(() => rotulo_cargado.value.find(rotulo => rotulo.tipo === "MARCADOR"))
+  // console.log(rotulo_cargado_individual.value)
 
   const route = useRoute()
 
@@ -173,17 +180,6 @@
   
   swiftConnectionStore.startConnection()
   swiftConnectionStore.startVideo()
-
-  // console.log(marcador.value.temporizador.inicio_tiempo)
-
-  
-
- 
-
-
-  // const marcador = computed(() => marcadores.value.find(marcador => {
-  //   return marcador.id_partido === id
-  // }))
 
   const emit = defineEmits(["updateDB"])
 
@@ -317,7 +313,7 @@
         // props.tiempo.añadidoPrimera = tiempo_de_inicio.value[parte(parte_en_juego.value)]
         añadidoIniciado = true
         // dif = 2000
-        console.log("AÑADIDO")
+        // console.log("AÑADIDO")
         // swiftConnectionStore.rtRemote.playMethod("MARCADOR::suplOn")
       }
       
@@ -369,22 +365,22 @@
     if(marcador.value.temporizador.parte_en_juego == 1) { 
       swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Minute", 0)     
       swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Second", 0) 
-      console.log("00")    
+      // console.log("00")    
       tiempoMarcador.value = '00:00'
     } else if(marcador.value.temporizador.parte_en_juego == 2) {
       swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Minute", 45)     
       swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Second", 0) 
-      console.log("45")    
+      // console.log("45")    
       tiempoMarcador.value = '45:00'
     } else if(marcador.value.temporizador.parte_en_juego == 3) {
       swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Minute", 90)     
       swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Second", 0) 
-      console.log("90")    
+      // console.log("90")    
       tiempoMarcador.value = '90:00'
     } else if(marcador.value.temporizador.parte_en_juego == 4) {
       swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Minute", 105)     
       swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Second", 0) 
-      console.log("105")    
+      // console.log("105")    
       tiempoMarcador.value = '105:00'
     }
     // tiempoMarcador.value = (millisToMinutesAndSeconds(0))
@@ -415,23 +411,9 @@
     return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
   }
   const activarGrafico = payload => {
-  //   if (payload.live) {
-  //     swiftConnectionStore.bringOn(payload.nombre)
-  //   } else {
-  //     swiftConnectionStore.takeOff(payload.nombre)
-  //   }
-  // }
-  // const bringOn = (metodo) => {
-  //   swiftConnectionStore.rtRemote.playGraphic(metodo)
-  //   swiftConnectionStore.rtRemote.playMethod(metodo + "::bringOn")
-  // }
-  // const takeOff = (metodo) => {
-  //   swiftConnectionStore.rtRemote.playGraphic(metodo)
-  //   swiftConnectionStore.rtRemote.playMethod(metodo + "::takeOff")
-  // }
 
   if (payload.live) {
-      swiftConnectionStore.cueGraphic('MARCADOR')
+      // swiftConnectionStore.cueGraphic('MARCADOR')
       // console.log(equipos.value)
       swiftConnectionStore.rtRemote.updateFields(`MARCADOR::EQUIPO_LOCALTEXT`, "String", equipos.value.local)
       swiftConnectionStore.rtRemote.updateFields(`MARCADOR::EQUIPO_VISITANTETEXT`, "String", equipos.value.visitante)
@@ -444,7 +426,13 @@
       swiftConnectionStore.bringOn('MARCADOR')
     } else {
       swiftConnectionStore.takeOff('MARCADOR')
+
+
     }
+    const rotulo_cargado = {tipo: payload.nombre, contenido: null, live: payload.live}
+    rotulosStore.actualizarRotuloCargadoDB(rotulo_cargado)
+
+
   }
 
 
@@ -611,7 +599,7 @@
   watch(() => marcador.value.temporizador.inicio_tiempo, val => {
     if(inicio_tiempo.value) {
     }
-    console.log(val)
+    // console.log(val)
   },
   {
     deep: true

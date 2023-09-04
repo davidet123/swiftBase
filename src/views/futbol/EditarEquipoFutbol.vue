@@ -182,7 +182,7 @@ const posiciones = futbolStore.getPosiciones
   
   const cambio = id => {
     if(!listaCambios.includes(id)) listaCambios.push(id)
-    console.log(listaCambios)
+    // console.log(listaCambios)
   }
   
   // Cargar los datos

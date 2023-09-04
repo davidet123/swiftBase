@@ -80,27 +80,28 @@ actions: {
       }
   },
   cambiarImagen() {
-    console.log(this.rtRemote)
+    // console.log(this.rtRemote)
     const grafico = 'Estadistica'
     const node = 'grafica'
     const ruta = 'C:\\Users\\deimo\\Downloads\\' + this.fileName
-    console.log(ruta)
+    // console.log(ruta)
     this.rtRemote.updateFields(grafico + "::" + node + "SHDR", "TextureImage", ruta)
   },
   cueGraphic (metodo) {
-    console.log(metodo)
+    // console.log(metodo)
     this.rtRemote.playMethod(metodo + "::cueGraphic")
   },
   bringOn (metodo) {
-    console.log(metodo + "::bringOn")
+    // console.log(metodo + "::bringOn")
+    this.rtRemote.playGraphic(metodo)
     this.rtRemote.playMethod(metodo + "::bringOn")
   },
   takeOff (metodo) {
-    console.log(metodo + "::takeOff")
+    // console.log(metodo + "::takeOff")
       this.rtRemote.playMethod(metodo + "::takeOff")
   },
   startClock (metodo) {
-    console.log(metodo)
+    // console.log(metodo)
       this.rtRemote.playMethod(metodo + "::startClock")
   },
   stopClock (metodo) {

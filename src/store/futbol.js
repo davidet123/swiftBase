@@ -30,7 +30,7 @@ export const usegFutbolStore = defineStore('futbol', {
       descripcion: "Medio Centro",
       abreviatura: "MC"},
       {id: 6,
-      descripcion: "Innterior Derecho",
+      descripcion: "Interior Derecho",
       abreviatura: "ID"},
       {id: 7,
       descripcion: "Interior Izquierdo",
@@ -44,17 +44,6 @@ export const usegFutbolStore = defineStore('futbol', {
       {id: 10,
       descripcion: "Delantero Centro",
       abreviatura: "DC"},
-
-
-
-      /* 
-      "Defensa central",
-      "Lateral izquierdo",
-      "Lateral derecho",
-      "Medio centro",
-      "Interior derecho",
-      "Interior izquierdo",
-      "Delantero Centro" */
     ],
     local: [],
     visitante: [],
@@ -62,980 +51,8 @@ export const usegFutbolStore = defineStore('futbol', {
     marcadores: [],
     competiciones: [],
     partido_cargado: null,
-    /* partidos: [{
-      id_partido: "001",
-      equipo_local: "Gandia",
-      id_equipo_local: "1234",
-      equipo_visitante: "Oliva",
-      id_equipo_visitante: "4567",
-      fecha: "23/12/2022",
-      hora: "!7:00",
-      lugar: "Gandia",
-      estadio: "Guillermo Olagüe",
-      marcador: {local: 0, visitante: 0},
-      tiempo: {
-        primeraParte: null,
-        segundaParte: null,
-        añadidoPrimera: null,
-        añadidoSegunda: null
-      }
-
-    },
-    {
-      id_partido: "002",
-      equipo_local: "Beniopa",
-      id_equipo_local: "2345",
-      equipo_visitante: "Bellreguard",
-      id_equipo_visitante: "3456",
-      fecha: "23/12/2022",
-      hora: "!7:00",
-      lugar: "Beniopa",
-      estadio: "Pepito Martínez",
-      marcador: {local: 0, visitante: 0},
-      tiempo: {
-        primeraParte: null,
-        segundaParte: null,
-        añadidoPrimera: null,
-        añadidoSegunda: null
-      }
-
-    }
-    ], */
     equipos: [],
-    /*equipos: [
-      {
-        // id_equipo: "1234",
-        nombre_equipo: "Gandia CF",
-        display_name: "GCF",
-        localidad: "Gandia",
-        estadistica_equipo: {
-          fueras_de_juego: 0,
-          corners: 0,
-          tiros_a_puerta: 0,
-          posesión: "0%",
-          disparos: 0,
-          disparos_al_arco: 0,
-          saques_de_esquina: 0
-        }, 
-        jugadores: ['GCF1', 'GCF2', 'GCF3'],
-        cuerpo_tecnico: [
-          {
-            id_cuerpo_tecnico: 'GCFENT',
-            titulo: "Entrenador",
-            nombre: null,
-            fecha_nacimiento: null,
-            nacionalidad: null
-          },
-          {
-            id_cuerpo_tecnico: 'GCFSENT',
-            titulo: "Segundo entrenador",
-            nombre: null,
-            fecha_nacimiento: null,
-            nacionalidad: null
-          },
-          {
-            id_cuerpo_tecnico: 'GCFDEL',
-            titulo: "Delegado",
-            nombre: null,
-            fecha_nacimiento: null,
-            nacionalidad: null
-          }
-        ]
-         jugadores: [
-          {
-            id_jugador: 'GCF1',
-            nombre_jugador: "Vicent Company Gregori",
-            apodo: "Company",
-            numero: 1,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'GCF2',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 2,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'GCF3',
-            nombre_jugador: "Ayoze Espinar González",
-            apodo: "Ayoze",
-            numero: 3,
-            posicion: "Lateral derecho",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'GCF4',
-            nombre_jugador: "Álvaro Escobar García",
-            apodo: "Escobar",
-            numero: 4,
-            posicion: "Lateral derecho",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'GCF5',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 5,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'GCF6',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 6,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'GCF7',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 7,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'GCF8',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 8,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'GCF9',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 9,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'GCF10',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 10,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'GCF11',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 11,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'GCF12',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 12,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'GCF13',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 13,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'GCF14',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 14,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'GCF15',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 15,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'GCF16',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 16,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'GCF17',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 17,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'GCF18',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 18,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'GCF19',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 19,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-        ] 
-      },
-      {
-        // id_equipo: "4567",
-        nombre_equipo: "Oliva CF",
-        display_name: "OLI",
-        localidad: "Oliva",
-        estadistica_equipo: {
-          fueras_de_juego: 0,
-          corners: 0,
-          tiros_a_puerta: 0,
-          posesión: "0%",
-          disparos: 0,
-          disparos_al_arco: 0,
-          saques_de_esquina: 0
-        }, 
-        jugadores: ['OLI1', 'OLI2', 'OLI3', 'OLI4'],
-        cuerpo_tecnico: [
-          {
-            id_cuerpo_tecnico: 'OLIENT',
-            titulo: "Entrenador",
-            nombre: null,
-            fecha_nacimiento: null,
-            nacionalidad: null
-          },
-          {
-            id_cuerpo_tecnico: 'OLISENT',
-            titulo: "Segundo entrenador",
-            nombre: null,
-            fecha_nacimiento: null,
-            nacionalidad: null
-          },
-          {
-            id_cuerpo_tecnico: 'OLIDEL',
-            titulo: "Delegado",
-            nombre: null,
-            fecha_nacimiento: null,
-            nacionalidad: null
-          }
-        ]
-         jugadores: [
-          {
-            id_jugador: "OLI1",
-            nombre_jugador: "Pepet garcia gomez",
-            apodo: "Pepet",
-            numero: 22,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: "OLI2",
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 2,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'OLI3',
-            nombre_jugador: "Ayoze Espinar González",
-            apodo: "Ayoze",
-            numero: 3,
-            posicion: "Lateral derecho",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'OLI4',
-            nombre_jugador: "Álvaro Escobar García",
-            apodo: "Escobar",
-            numero: 4,
-            posicion: "Lateral derecho",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'OLI5',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 5,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'OLI6',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 6,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'OLI7',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 7,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'OLI8',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 8,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'OLI9',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 9,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'OLI10',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 10,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'OLI11',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 11,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'OLI12',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 12,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'OLI13',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 13,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'OLI14',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 14,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'OLI15',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 15,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'OLI16',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 16,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'OLI17',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 17,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'OLI18',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 18,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-          {
-            id_jugador: 'OLI19',
-            nombre_jugador: "Vicent Puig Sendra",
-            apodo: "Vicent Puig",
-            numero: 19,
-            posicion: "Portero",
-            nacionalidad: "española",
-            fecha_nacimiento: "12/13/2000",
-            altura: "1,83 m",
-            estadistica: {
-              tarjetas_amarillas: 0,
-              tarjeta_roja: 0,
-              goles: 0,
-              faltas: 0,
-              disparos: 0,
-              disparos_al_arco: 0
-            }
-          },
-        ] 
-      },
-    ],*/
     jugadores: [],
-    /* jugadores: [
-      {
-        id_jugador: 'GCF1',
-        nombre_jugador: "Vicent Company Gregori",
-        apodo: "Company",
-        numero: 1,
-        posicion: "Portero",
-        nacionalidad: "española",
-        fecha_nacimiento: "12/13/2000",
-        altura: "1,83 m",
-        estadistica: {
-          tarjetas_amarillas: 0,
-          tarjeta_roja: 0,
-          goles: 0,
-          faltas: 0,
-          disparos: 0,
-          disparos_al_arco: 0
-        }
-      },
-      {
-        id_jugador: 'GCF2',
-        nombre_jugador: "Vicent Puig Sendra",
-        apodo: "Vicent Puig",
-        numero: 2,
-        posicion: "Portero",
-        nacionalidad: "española",
-        fecha_nacimiento: "12/13/2000",
-        altura: "1,83 m",
-        estadistica: {
-          tarjetas_amarillas: 0,
-          tarjeta_roja: 0,
-          goles: 0,
-          faltas: 0,
-          disparos: 0,
-          disparos_al_arco: 0
-        }
-      },
-      {
-        id_jugador: 'GCF3',
-        nombre_jugador: "Ayoze Espinar González",
-        apodo: "Ayoze",
-        numero: 3,
-        posicion: "Lateral derecho",
-        nacionalidad: "española",
-        fecha_nacimiento: "12/13/2000",
-        altura: "1,83 m",
-        estadistica: {
-          tarjetas_amarillas: 0,
-          tarjeta_roja: 0,
-          goles: 0,
-          faltas: 0,
-          disparos: 0,
-          disparos_al_arco: 0
-        }
-      },
-      {
-        id_jugador: "OLI1",
-        nombre_jugador: "Pepet garcia gomez",
-        apodo: "Pepet",
-        numero: 22,
-        posicion: "Portero",
-        nacionalidad: "española",
-        fecha_nacimiento: "12/13/2000",
-        altura: "1,83 m",
-        estadistica: {
-          tarjetas_amarillas: 0,
-          tarjeta_roja: 0,
-          goles: 0,
-          faltas: 0,
-          disparos: 0,
-          disparos_al_arco: 0
-        }
-      },
-      {
-        id_jugador: "OLI2",
-        nombre_jugador: "Vicent Puig Sendra",
-        apodo: "Vicent Puig",
-        numero: 2,
-        posicion: "Portero",
-        nacionalidad: "española",
-        fecha_nacimiento: "12/13/2000",
-        altura: "1,83 m",
-        estadistica: {
-          tarjetas_amarillas: 0,
-          tarjeta_roja: 0,
-          goles: 0,
-          faltas: 0,
-          disparos: 0,
-          disparos_al_arco: 0
-        }
-      },
-      {
-        id_jugador: 'OLI3',
-        nombre_jugador: "Ayoze Espinar González",
-        apodo: "Ayoze",
-        numero: 3,
-        posicion: "Lateral derecho",
-        nacionalidad: "española",
-        fecha_nacimiento: "12/13/2000",
-        altura: "1,83 m",
-        estadistica: {
-          tarjetas_amarillas: 0,
-          tarjeta_roja: 0,
-          goles: 0,
-          faltas: 0,
-          disparos: 0,
-          disparos_al_arco: 0
-        }
-      },
-      {
-        id_jugador: 'OLI4',
-        nombre_jugador: "Álvaro Escobar García",
-        apodo: "Escobar",
-        numero: 4,
-        posicion: "Lateral derecho",
-        nacionalidad: "española",
-        fecha_nacimiento: "12/13/2000",
-        altura: "1,83 m",
-        estadistica: {
-          tarjetas_amarillas: 0,
-          tarjeta_roja: 0,
-          goles: 0,
-          faltas: 0,
-          disparos: 0,
-          disparos_al_arco: 0
-        }
-      },
-      {
-        id_jugador: 'OLI5',
-        nombre_jugador: "Vicent Puig Sendra",
-        apodo: "Vicent Puig",
-        numero: 5,
-        posicion: "Portero",
-        nacionalidad: "española",
-        fecha_nacimiento: "12/13/2000",
-        altura: "1,83 m",
-        estadistica: {
-          tarjetas_amarillas: 0,
-          tarjeta_roja: 0,
-          goles: 0,
-          faltas: 0,
-          disparos: 0,
-          disparos_al_arco: 0
-        }
-      },
-      {
-        id_jugador: 'OLI6',
-        nombre_jugador: "Vicent Puig Sendra",
-        apodo: "Vicent Puig",
-        numero: 6,
-        posicion: "Portero",
-        nacionalidad: "española",
-        fecha_nacimiento: "12/13/2000",
-        altura: "1,83 m",
-        estadistica: {
-          tarjetas_amarillas: 0,
-          tarjeta_roja: 0,
-          goles: 0,
-          faltas: 0,
-          disparos: 0,
-          disparos_al_arco: 0
-        }
-      },
-    ] */
-
   }),
   getters: {
     marcador: state => state.partidos[0].marcador,
@@ -1142,11 +159,11 @@ export const usegFutbolStore = defineStore('futbol', {
       }
     },
     actualizarPartido(partido) {
-      console.log(partido)
+      // console.log(partido)
       let part = this.partidos.find(p => {
         return p.id_partido === partido.id_partido
       })
-      console.log(part)
+      // console.log(part)
       part.equipo_local = partido.equipo_local
       part.equipo_visitante = partido.equipo_visitante
       part.estadio = partido.estadio
@@ -1186,8 +203,7 @@ export const usegFutbolStore = defineStore('futbol', {
       }
       
       buscaJugador.estadistica = jugador.estadistica
-
-      console.log(buscaJugador)
+      
       await updateDoc(docRef, {
         equipo_local: partido.equipo_local,
         equipo_visitante: partido.equipo_visitante
@@ -1248,7 +264,7 @@ export const usegFutbolStore = defineStore('futbol', {
 
     updateMarcadorDB(id_partido, marcador) {
 
-      console.log(marcador)
+      // console.log(marcador)
     },
 
     async addMarcadorDB(marcador) {
@@ -1272,7 +288,7 @@ export const usegFutbolStore = defineStore('futbol', {
               let nuevo_marcador = change.doc.data()
               nuevo_marcador.id_marcador = change.doc.id
               this.actualizarMarcador(nuevo_marcador)
-              console.log("Marcador actualizado")
+              // console.log("Marcador actualizado")
             }
           })
         })
@@ -1286,7 +302,7 @@ export const usegFutbolStore = defineStore('futbol', {
 
     async updateMarcadorDB(id, payload) {
       const docRef = doc(db, "marcadores_futbol", id)
-      console.log(payload.temporizador)
+      // console.log(payload.temporizador)
       await updateDoc(docRef, {
         goles: payload.goles,
         temporizador: payload.temporizador
@@ -1298,11 +314,11 @@ export const usegFutbolStore = defineStore('futbol', {
       })
     },
     async eliminarMarcador(id) {
-      console.log(this.marcadores)
+      // console.log(this.marcadores)
       const marcador = this.marcadores.find(m => {
         return m.id_partido === id
       })
-      console.log(marcador.id_marcador)
+      // console.log(marcador.id_marcador)
 
       await deleteDoc(doc(db, 'marcadores_futbol', marcador.id_marcador))
 
@@ -1457,7 +473,7 @@ export const usegFutbolStore = defineStore('futbol', {
           return jug.id_jugador === id_jugador
         })
       }
-      console.log(buscaJugador)
+      // console.log(buscaJugador)
 
       return buscaJugador
     },
@@ -1488,11 +504,10 @@ export const usegFutbolStore = defineStore('futbol', {
     eliminarJugador(id) {
       // console.log( this.equipos[0].jugadores)
       const nuevaLista = this.equipos[0].jugadores.filter(jug => {
-        console.log(jug.id_jugador !== id)
         return jug.id_jugador !== id
       })
       this.equipos[0].jugadores = nuevaLista
-      console.log( this.equipos[0].jugadores)
+      
     },
 
 
@@ -1509,7 +524,7 @@ export const usegFutbolStore = defineStore('futbol', {
             let nueva_competicion = change.doc.data()
             nueva_competicion.id_competicion = change.doc.id
             this.actualizarCompeticion(nueva_competicion)
-            console.log("Competicion actualizada")
+            // console.log("Competicion actualizada")
           } else if (change.type === "removed") {
             let nueva_competicion = change.doc.data()
             nueva_competicion.id_competicion = change.doc.id
@@ -1520,7 +535,7 @@ export const usegFutbolStore = defineStore('futbol', {
 
     },
     async addCompeticion(comp) {
-      console.log(comp)
+      // console.log(comp)
       const docRef = await addDoc(collection(db, 'competiciones'), comp)      
     },
 
@@ -1530,7 +545,7 @@ export const usegFutbolStore = defineStore('futbol', {
       // console.log(this.competiciones)
     },
     async updateCompeticionDB(comp) {
-      console.log(comp)
+      // console.log(comp)
       const docRef = doc(db, "competiciones", comp.id_competicion)
       await updateDoc(docRef, {
         nombre: comp.nombre

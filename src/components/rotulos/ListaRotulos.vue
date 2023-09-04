@@ -97,8 +97,8 @@ const subtitulo = ref(null)
 const periodista = ref(false)
 
 const afegirRotul = () => {
-  console.log(titulo.value)
-  console.log(subtitulo.value)
+  // console.log(titulo.value)
+  // console.log(subtitulo.value)
   const payload = {
     titulo: titulo.value,
     subtitulo: subtitulo.value,

@@ -163,6 +163,7 @@ const liveBtn = ref({
 })
 
 
+
 const props = defineProps(["jugador", "id_jugador", "fondo", "temporizador", "equipo"])
 
 const { jugador, temporizador, equipo } = toRefs(props)
@@ -172,7 +173,7 @@ const emit = defineEmits(["borrarJugador"])
 
 
 const gol = val => {
-  console.log(temporizador.value)
+  // console.log(temporizador.value)
   if(val >= 0) {    
     jugador.value.estadistica.goles.push(Date.now() - temporizador.value.tiempo.primera) 
   } else {
@@ -196,7 +197,7 @@ const tarjetaRoja = val => {
 const falta = val => {
   jugador.value.estadistica.faltas += val
   const tipo = "Faltes"
-  console.log(jugador.value)
+  // console.log(jugador.value)
   mostrarEstadistica(jugador.value.apodo, jugador.value.numero, tipo, jugador.value.estadistica.faltas)
   updateDB(jugador.value)
 }

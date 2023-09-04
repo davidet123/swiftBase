@@ -18,7 +18,7 @@
     </v-row>
     <v-row>
       <v-col v-for="nombre, index in listado" :key="index" cols="2">
-        <BotonSimple :nombre="nombre" @activar="activarGrafico"/>
+        <BotonSimple :nombre="nombre" @activar="activarGrafico" @eliminar="eliminarRotulo"/>
       </v-col>
     </v-row>
 
@@ -88,6 +88,11 @@
       newItem.value = null
 
     }
+  }
+
+  const eliminarRotulo = payload => {
+    simpleStore.eliminarRotulo(payload)
+    console.log(payload)
   }
 
   const numColumns = computed(() => {
