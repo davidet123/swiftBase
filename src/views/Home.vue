@@ -18,6 +18,7 @@
           <v-btn @click="cargarFutbol" class="botonFutbol">FUTBOL</v-btn>
           <v-btn to="/vumetro">VUMETRO</v-btn>
           <v-btn to="/simple">GRAFISME SIMPLE</v-btn>
+          <v-btn to="/test">TEST</v-btn>
         </v-col>
       </v-row>
       <v-row>
