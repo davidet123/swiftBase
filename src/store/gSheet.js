@@ -26,21 +26,24 @@ export const usegSheetStore = defineStore('gSheet', {
       this.gSheetLoading = true
       const apiKey = import.meta.env.VITE_APP_APIKEY
       const idSheets =  import.meta.env.VITE_APP_IDSHEETS
-      const values = 'A1:D100'
+      const values = 'RSS!A1:D100'
       fetch("https://content-sheets.googleapis.com/v4/spreadsheets/" +   idSheets + "/values/" + values + "?access_token="+ apiKey +"&key="+  apiKey)
       .then((lista)=>{
         return lista.json()
       }).then((valores)=>{
         // console.log(valores)
-        let tempValores = []
-        valores.values.slice(1,-1).forEach(el => {
-          if(el.length > 1){
-            tempValores.push({
-              id: el.shift(),
-              nombre: el
-            })
-          }
-        })
+        let tempValores = valores.values.slice() // TODOS LOS VALORES
+        // valores.values.slice(1,-1).forEach(el => {
+        //   // console.log(el)
+        //   // if(el.length > 1){
+        //   //   console.log(el)
+        //   //   tempValores.push({
+        //   //     id: el.shift(),
+        //   //     nombre: el
+        //   //   })
+        //   // }
+        //   tempValores.push(el)
+        // })
         this.valoresHoja = tempValores
         this.gSheetLoading = false
       }).catch(err=>{
@@ -48,7 +51,8 @@ export const usegSheetStore = defineStore('gSheet', {
         this.gSheetLoading = false
       })
       
-    } // fin funcion getLista()
+    }, // fin funcion getLista()
+
 
   }
 })

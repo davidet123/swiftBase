@@ -29,15 +29,31 @@
       </v-select>
     </v-col>
   </v-row>
+  <v-row v-if="hoja">
+    <v-col>
+      <BotonLive nombre="TICKER" @activar="activarGrafico"/>
+    </v-col>
+    <v-col cols="12" v-for="titular in titulares" :key="titular">
+      {{ titular }}
+    </v-col>
+    
+  </v-row>
 </template>
 
 <script setup>
 
   import {  ref } from 'vue';
   import { useSwiftConnectionStore } from "../store/swiftConnection"
+  import { usegSheetStore } from "../store/gSheet"
   import BotonLive from '@/components/simple/botonLive.vue' 
+  import { computed } from 'vue';
+import { watch } from 'vue';
 
   const swiftConnectionStore = useSwiftConnectionStore()
+  const gSheetStore = usegSheetStore()
+  gSheetStore.getLista()
+  const hoja = computed(() => gSheetStore.getValoresHoja)
+  // console.log(hoja.value)
 
   swiftConnectionStore.startConnection()
   swiftConnectionStore.startVideo()
@@ -95,7 +111,7 @@
     clasFinal.value = nuevaClas.slice()
     nuevaClas = temp.slice()
 
-    console.log(clasFinal.value, nuevaClas)
+    // console.log(clasFinal.value, nuevaClas)
     
     
   }
@@ -122,12 +138,43 @@
 
   }
   const activarGrafico = payload => {
-    if (payload.live) {        
-        swiftConnectionStore.bringOn(payload.nombre)
-      } else {
-        swiftConnectionStore.takeOff(payload.nombre)
+    // console.log(payload)
+    if (payload.live) {   
+      let texto = ""
+      // texto.concat(...titulares.value)
+      // console.log(texto)     
+      for (let i = 0; i <= 2; i++) {
+        texto += titulares.value[i] + " "
       }
+      // console.log(texto)
+
+      swiftConnectionStore.rtRemote.updateFields('TICKER::slugTextTEXT', "String",  titulares.value[1].replace(/\r\n|\n\r|\n|\r/g, ' '))
+      swiftConnectionStore.cueGraphic(payload.nombre)
+      // swiftConnectionStore.rtRemote.updateFields('TICKER::Ticker', "Contents", titulares.value[1])
+      console.log(titulares.value[1])
+      // swiftConnectionStore.rtRemote.updateFields('TICKER::TITULARTEXT', "String", titulares.value[8])
+      swiftConnectionStore.bringOn(payload.nombre)
+    } else {
+      swiftConnectionStore.takeOff(payload.nombre)
+    }
   }
+
+  const titulares = computed(() => hoja.value.map((el) => {
+    const tit = el[0] + ". " + el[3]
+    // console.log(el)
+    return tit
+    // el[0].replace(/\\/g, '')
+  }))
+    
+
+  watch(() => hoja, val => {
+      // console.log(val.value.length)
+      // console.log(titulares.value[1])
+    },{
+      deep: true
+    })
+
+
 
 </script>
 

@@ -92,12 +92,12 @@ actions: {
     this.rtRemote.playMethod(metodo + "::cueGraphic")
   },
   bringOn (metodo) {
-    // console.log(metodo + "::bringOn")
+    console.log(metodo + "::bringOn")
     this.rtRemote.playGraphic(metodo)
     this.rtRemote.playMethod(metodo + "::bringOn")
   },
   takeOff (metodo) {
-    // console.log(metodo + "::takeOff")
+    console.log(metodo + "::takeOff")
       this.rtRemote.playMethod(metodo + "::takeOff")
   },
   startClock (metodo) {
