@@ -143,6 +143,7 @@ import { useSwiftConnectionStore } from "../../store/swiftConnection"
 
 import { toRefs, ref } from 'vue';
 import { computed } from 'vue';
+import { storeToRefs } from 'pinia';
 
 const swiftConnectionStore = useSwiftConnectionStore()
 
@@ -168,14 +169,16 @@ const props = defineProps(["jugador", "id_jugador", "fondo", "temporizador", "eq
 
 const { jugador, temporizador, equipo } = toRefs(props)
 
+const { minutosPartido } = storeToRefs(futbolStore)
+
 
 const emit = defineEmits(["borrarJugador"])
 
 
 const gol = val => {
-  // console.log(temporizador.value)
+  console.log(minutosPartido.value)
   if(val >= 0) {    
-    jugador.value.estadistica.goles.push(Date.now() - temporizador.value.tiempo.primera) 
+    jugador.value.estadistica.goles.push(minutosPartido.value) 
   } else {
     jugador.value.estadistica.goles.pop()
   }

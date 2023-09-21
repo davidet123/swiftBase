@@ -48,7 +48,7 @@
                   <v-row>
                     <v-col cols="12" class="text-center">
                       <span v-for="gol in jugador.estadistica.goles">
-                        <p class="text-h6">{{ jugador.numero }} -  {{ jugador.apodo }} ({{ millisToMinutes(gol) }})</p>
+                        <p class="text-h6">{{ jugador.numero }} -  {{ jugador.apodo }} ({{ gol }})</p>
                       </span>
                     </v-col>
                   </v-row>
@@ -59,7 +59,7 @@
                   <v-row>
                     <v-col cols="12" class="text-center">
                       <span v-for="gol in jugador.estadistica.goles">
-                        <p class="text-h6">{{ jugador.numero }} -  {{ jugador.apodo }} ({{ millisToMinutes(gol) }})</p>
+                        <p class="text-h6">{{ jugador.numero }} -  {{ jugador.apodo }} ({{ gol }})</p>
                       </span>
                     </v-col>
                   </v-row>
@@ -315,21 +315,6 @@
       local: marcador.temporizador.posesion.local,
       visitante: marcador.temporizador.posesion.visitante,
     }
-  }
-
-
-
-
-  // calcular tiempo de los goles
-  const millisToMinutes = (millis) => {
-    // const inicio = futbolStore.buscarMarcador(id).temporizador.tiempo.primera
-    
-    var minutes = Math.floor(millis / 60000).toLocaleString('en-US', {
-      minimumIntegerDigits: 2,
-      useGrouping: false
-    });
-    
-    return minutes + "'"
   }
 
   const volver = () => router.push('/futbol')

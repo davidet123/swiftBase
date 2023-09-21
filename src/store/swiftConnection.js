@@ -79,6 +79,12 @@ actions: {
       self.OpenConnection();
       }
   },
+  getStatus(type, filter) {
+    console.log(type, filter)
+    const status = this.rtRemote.getStatus(type, filter)
+    console.log(status)
+
+  },
   cambiarImagen() {
     // console.log(this.rtRemote)
     const grafico = 'Estadistica'
@@ -101,15 +107,21 @@ actions: {
       this.rtRemote.playMethod(metodo + "::takeOff")
   },
   startClock (metodo) {
-    // console.log(metodo)
-      this.rtRemote.playMethod(metodo + "::startClock")
+      if(this.rtRemote) this.rtRemote.playMethod(metodo + "::startClock")
   },
   stopClock (metodo) {
-      this.rtRemote.playMethod(metodo + "::stopClock")
+    if(this.rtRemote) this.rtRemote.playMethod(metodo + "::stopClock")
   },
   resetClock (metodo) {
-      this.rtRemote.playMethod(metodo + "::resetClock")
-  }
+    if(this.rtRemote) this.rtRemote.playMethod(metodo + "::resetClock")
+  },
+  oratgeOn () {
+    this.rtRemote.playMethod("TICKER::oratgeOn")
+  },
+  oratgeOff () {
+    this.rtRemote.playMethod("TICKER::oratgeOff")
+  },
+  
 
 
   // const bringOn = (metodo) => {

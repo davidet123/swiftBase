@@ -5,7 +5,24 @@
     </v-col>
   </v-row>
   <v-row>
-    <v-col class="text-center">
+    <v-col cols="12" class="text-center">
+      <BotonLive nombre="REDES_SOCIALES" @activar="activarGrafico"/>
+      <BotonLive nombre="COPY" @activar="activarGrafico"/>
+      <BotonLive nombre="PIP" @activar="activarGrafico"/>
+      <BotonLive nombre="ORATGE" @activar="activarOratge"/>
+      <v-btn color="success" @click="canviOratge" variant="flat" size="small">CANVI ORATGE</v-btn>
+      
+    </v-col>
+    <v-col cols="4" offset="4">
+      <v-text-field
+      v-model="ciudad"
+      label="Ciutat"
+      >
+
+      </v-text-field>
+
+    </v-col>
+    <v-col  cols=12 class="text-center">
       <BotonLive nombre="CLASIFICACIONES" @activar="activarGrafico"/>
       <v-btn theme="dark" @click="reordenar">Cambio</v-btn>
     </v-col>
@@ -33,8 +50,9 @@
     <v-col>
       <BotonLive nombre="TICKER" @activar="activarGrafico"/>
     </v-col>
-    <v-col cols="12" v-for="titular in titulares" :key="titular">
-      {{ titular }}
+    <v-col cols="12" v-for="(titular, index) in titulares" :key="titular">
+      <div>{{ titular }} <v-btn :color="colorLive !== index ? 'success' : 'error'" @click="rotular(titular, index)">ENVIAR</v-btn></div>
+      
     </v-col>
     
   </v-row>
@@ -137,9 +155,19 @@ import { watch } from 'vue';
     }, 5)
 
   }
-  const activarGrafico = payload => {
-    // console.log(payload)
-    if (payload.live) {   
+
+  
+  const colorLive = ref(null)
+
+  const live = ref(false)
+
+  let tickerLive = false
+
+  const rotular = (titular, index) => {
+    swiftConnectionStore.getStatus("method", "Current")
+    // console.log(titular)
+    if (!live.value) {   
+      colorLive.value = index
       let texto = ""
       // texto.concat(...titulares.value)
       // console.log(texto)     
@@ -148,7 +176,193 @@ import { watch } from 'vue';
       }
       // console.log(texto)
 
-      swiftConnectionStore.rtRemote.updateFields('TICKER::slugTextTEXT', "String",  titulares.value[1].replace(/\r\n|\n\r|\n|\r/g, ' '))
+      swiftConnectionStore.cueGraphic("TICKER")
+      swiftConnectionStore.rtRemote.updateFields('TICKER::slugTextTEXT', "String",  titular.replace(/\r\n|\n\r|\n|\r/g, ' '))
+      // swiftConnectionStore.rtRemote.updateFields('TICKER::slugTextTEXT', "String",  titular.replace(/[\r\n]/g, ' '))
+      swiftConnectionStore.rtRemote.updateFields('TICKER::ticker', "NumberCycles",  10)
+      // swiftConnectionStore.rtRemote.updateFields('TICKER::Ticker', "Contents", titulares.value[1])
+      // console.log(titulares.value[1])
+      // swiftConnectionStore.rtRemote.updateFields('TICKER::TITULARTEXT', "String", titulares.value[8])
+      swiftConnectionStore.bringOn("TICKER")
+      tickerLive = true
+    } else {
+      if(oratgeLive) {
+        swiftConnectionStore.oratgeOff()
+        setTimeout(() => {
+          colorLive.value = null
+          swiftConnectionStore.takeOff("TICKER")
+          tickerLive = false
+        }, 500)
+        oratgeLive = false
+      } else {
+        colorLive.value = null
+        swiftConnectionStore.takeOff("TICKER")
+        tickerLive = false
+      }
+    }
+    live.value = !live.value
+    
+  }
+  
+  const ciudad = ref("Gandia")
+  let datosOratge = false
+  let oratgeLive = false
+  
+  let valoresOratge = null
+
+  // MOSTRAR ORATGE Y LA PRIMERA VEZ CARGAR LOS DATOS
+  const activarOratge = (payload) => {
+    if (tickerLive) {
+
+    if(payload.live && ciudad.value !== null) {
+      getOratge()
+      .then(response => response.json())
+      .then(data => {
+        // console.log(data)
+        valoresOratge = {
+          temperature: `${Math.floor(data.main.temp)}º C`,
+          condition: data.weather[0].description,
+          location: data.name,
+          windDirection: degToCompass(data.wind.deg),
+          windDeg: data.wind.deg,
+          windSpeed: (data.wind.speed * 3.6).toFixed(1),
+          icon: `${data.weather[0].icon}_2x`
+        }
+        canviOratge()
+        // console.log(weatherData)
+        datosOratge = true
+        oratgeLive = true
+      })
+
+        swiftConnectionStore.oratgeOn()
+        
+      } else if(!payload.live) {
+        swiftConnectionStore.oratgeOff()
+        datosOratge = false
+        oratgeLive = false
+      } else {
+        console.log("No hay ciudad")
+      }
+    } 
+
+  }
+
+  const getOratge = () => {
+    return new Promise((resolve, reject) => {
+      const apiKey = "a217a2ed8d0d1f1af10ffc3fef312c39"
+      // const cityName = "Gandia"
+      const cityName = ciudad.value
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&lang=ca&appid=${apiKey}&units=metric`
+  
+      const data = fetch(url)
+      resolve(data)
+
+    })
+    // .then(response => response.json())
+    // .then(data => {
+    //   // console.log(data)
+    //   const weatherData = {
+    //     temperature: `${data.main.temp}º`,
+    //     condition: data.weather[0].description,
+    //     location: data.name,
+    //     windDirection: degToCompass(data.wind.deg),
+    //     windDeg: data.wind.deg,
+    //     windSpeed: (data.wind.speed * 3.6).toFixed(1),
+    //     icon: `${data.weather[0].icon}_2x`
+    //   }
+    //   console.log(weatherData)
+    //   return weatherData
+      
+    // })
+    // .catch (err => {
+    //   console.log(err)
+    // })
+
+
+
+  }
+
+  const canviOratge = () => {
+    console.log(datosOratge)
+    if(datosOratge) {
+      getOratge()
+      .then(response => response.json())
+      .then(resData => {
+        // console.log(data)
+        const weatherData = {
+          temperature: `${Math.floor(resData.main.temp)}º C`,
+          condition: resData.weather[0].description,
+          location: resData.name,
+          windDirection: degToCompass(resData.wind.deg),
+          windDeg: resData.wind.deg,
+          windSpeed: (resData.wind.speed * 3.6).toFixed(1),
+          icon: `${resData.weather[0].icon}_2x`
+        }
+        console.log(weatherData)
+        valoresOratge = weatherData
+        cambiarValoresSwift(weatherData)
+      }) 
+    } else {
+      cambiarValoresSwift(valoresOratge)
+    }
+  } 
+
+  const cambiarValoresSwift = data => {
+    swiftConnectionStore.rtRemote.updateFields('ORATGE::CIUTATTEXT', "String", data.location)
+      swiftConnectionStore.rtRemote.updateFields('ORATGE::TEMPTEXT', "String", data.temperature)
+      swiftConnectionStore.rtRemote.updateFields('TICKER::FLECHA', "RotateZ", parseFloat(data.windDeg))
+      swiftConnectionStore.rtRemote.updateFields('ORATGE::VIENTOTEXT', "String", data.windSpeed)
+      swiftConnectionStore.rtRemote.updateFields('ORATGE::CONDITIONTEXT', "String", data.condition.charAt(0).toUpperCase() + data.condition.slice(1))
+      swiftConnectionStore.rtRemote.updateFields('ORATGE::ICONSHDR', "Shader", data.icon)
+  } 
+
+  const  latLngToScreenCoordinates = (latitude, longitude) => {
+    const screenWidth = 1920;
+    const screenHeight = 1080;
+
+    // Ajusta el rango de latitud y longitud según tus necesidades
+    const minLat = 0; // Latitud mínima
+    const maxLat = 180; // Latitud máxima
+    const minLng = -180; // Longitud mínima
+    const maxLng = 180; // Longitud máxima
+
+    // Calcula las coordenadas en pantalla
+    const x = (longitude - minLng) / (maxLng - minLng) * screenWidth;
+    const y = screenHeight - (latitude - minLat) / (maxLat - minLat) * screenHeight;
+
+    return { x, y };
+}
+  const degToCompass = grados => {
+              
+    // const direcciones = [
+    // "N", "NNE", "NE", "ENE",
+    // "E", "ESE", "SE", "SSE",
+    // "S", "SSO", "SO", "OSO",
+    // "O", "ONO", "NO", "NNO"
+    // ];
+
+    // // Aseguramos que los grados estén en el rango de 0 a 360
+    // grados = (grados + 360) % 360;
+    // console.log(grados)
+
+    // // Calculamos el índice en el arreglo de direcciones
+    // const index = Math.floor((grados + 11.25) / 22.5);
+
+    // // Devolvemos la dirección del viento correspondiente
+    // return direcciones[index];
+      const val = Math.floor((grados/22.5) + 0.5)
+      const arr = ["N","NNE","NE","ENE","E","ESE", "SE", "SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"]
+      return arr[(val % 16)]
+  }
+    
+
+
+
+  const activarGrafico = payload => {
+    // console.log(payload)
+    if (payload.live) {   
+
+      
       swiftConnectionStore.cueGraphic(payload.nombre)
       // swiftConnectionStore.rtRemote.updateFields('TICKER::Ticker', "Contents", titulares.value[1])
       console.log(titulares.value[1])

@@ -53,6 +53,7 @@ export const usegFutbolStore = defineStore('futbol', {
     partido_cargado: null,
     equipos: [],
     jugadores: [],
+    minutosPartido: null
   }),
   getters: {
     marcador: state => state.partidos[0].marcador,
@@ -64,13 +65,18 @@ export const usegFutbolStore = defineStore('futbol', {
     cargandoEquipos: state => state.cargando_equipos,
     loading: state => state.loading_state,
     getPartidos: state => state.partidos,
-    getCompeticiones: state => state.competiciones
+    getCompeticiones: state => state.competiciones,
+    getMinutosPartido: state => state.minutosPartido
     // getEquipoById: state => {
     //   return id => state.partidos.find(partido => id === partido.id)
     // }
 
   },
   actions: {
+
+    setMinutosPartido(tiempo) {
+      this.minutosPartido = tiempo
+    },
 
     
     getIdEquipo(equipo) {

@@ -22,7 +22,7 @@ const live = ref(false)
 
 if(rotulo_cargado.value) {
   live.value = rotulo_cargado.value.live
-  console.log(rotulo_cargado.value)
+  // console.log(rotulo_cargado.value)
 }
 
 // console.log(rotulo_cargado
@@ -40,7 +40,7 @@ const insertarGrafico = val => {
 
 
 watch(() => rotulo_cargado.value, val => {
-  console.log(val.value)
+  // console.log(val.value)
 },{
   deep: true
 })

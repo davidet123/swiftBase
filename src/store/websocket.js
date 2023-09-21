@@ -20,7 +20,7 @@ export const useWebsocketStore = defineStore('websocket', {
     dataValue: null,
     arrayValues: [],
     factorVolumen: 0.7,
-    URLWebsocket: 'ws://localhost:8080',
+    URLWebsocket: 'ws://localhost:8081',
   }),
   getters: {
     nivelVumetro (state) {

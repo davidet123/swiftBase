@@ -105,6 +105,13 @@
         
         <v-col cols="2" class="text-center">
           <v-row>
+            <v-col cols="12">
+              <BotonLive nombre="INICIO" @activar="cartelaInicio" />
+              <BotonLive nombre="DESCANSO" @activar="cartelaDescanso" />
+
+            </v-col>
+          </v-row>
+          <v-row>
             <v-col>
               <p>Estadístiques finals</p>
               <BotonLive nombre="EST_FINAL" @activar="estFinales"/>
@@ -319,6 +326,107 @@ const router = useRouter()
 const id = route.params.id
 
 const { partidos, partido_cargado, marcadores } = storeToRefs(futbolStore)
+
+
+// Cartela inicio
+
+const cartelaInicio = payload => {
+  
+  if(payload.live) {
+    swiftConnectionStore.cueGraphic(payload.nombre)
+  
+    swiftConnectionStore.rtRemote.updateFields("TITULO::FECHATEXT", "String", partido.value.fecha)
+    swiftConnectionStore.rtRemote.updateFields("TITULO::HORATEXT", "String", partido.value.hora)
+    swiftConnectionStore.rtRemote.updateFields("TITULO::ESTADIOTEXT", "String", partido.value.estadio)
+    
+    swiftConnectionStore.rtRemote.updateFields("PARTIDO::LOCALTEXT", "String", partido.value.equipo_local.nombre_equipo)
+    swiftConnectionStore.rtRemote.updateFields("PARTIDO::VISITANTETEXT", "String", partido.value.equipo_visitante.nombre_equipo)
+
+    const escudoLocal = `ESCUDO_${partido.value.equipo_local.nombre_equipo.replace(/ /g,"_").toUpperCase()}`
+    const escudoVisitante = `ESCUDO_${partido.value.equipo_visitante.nombre_equipo.replace(/ /g,"_").toUpperCase()}`
+    console.log(escudoVisitante)
+    
+    swiftConnectionStore.rtRemote.updateFields("PARTIDO::ESCUDO_LOCALSHDR", "Shader", escudoLocal)
+    swiftConnectionStore.rtRemote.updateFields("PARTIDO::ESCUDO_VISITANTESHDR", "Shader", escudoVisitante)
+
+
+
+    swiftConnectionStore.bringOn(payload.nombre)
+
+  } else {
+    swiftConnectionStore.takeOff(payload.nombre)
+  }
+
+  
+}
+
+// CARTELA DECANSO
+
+// const goleadores = () => {
+//   return consultaGoles(equipo, "goles")
+// }
+// const maxGoleadorVisitante = () => {
+//   return consultaGoles(partido.value.equipo_visitante.jugadores, "goles")
+// }
+
+const consultaGoles = equipo => {
+    const filtrado = equipo.filter(jug => {
+      return jug.estadistica.goles.length > 0
+    })
+    filtrado.sort((a,b) => b.estadistica.goles - a.estadistica.goles); // b - a for reverse sort
+    return filtrado
+
+  }
+
+const cartelaDescanso = payload => {
+  if(payload.live) {
+    const marc = marcador.value.goles
+    
+    const goleadoresLocal = consultaGoles(partido.value.equipo_local.jugadores)
+    const goleadoresVisitante = consultaGoles(partido.value.equipo_visitante.jugadores)
+    
+    // const valoresLocal = `0%~${dispLocalTotal.value}~${dispAlArcoLocalTotal.value}~${faltasLocalTotales.value}~${taLocalTotales.value}~${trLocalTotales.value}~0`
+    const goleadoresTXT = equipo => {
+      let temp = ""
+      equipo.forEach(jug => {
+        jug.estadistica.goles.forEach(gol => {
+          temp += `${jug.apodo} ${gol}~`
+        })
+        // console.log(jug.estadistica.goles)
+      })
+      return temp.slice(0, -1)
+    }
+    const txtLocal = goleadoresTXT(goleadoresLocal)
+    const txtVisitante = goleadoresTXT(goleadoresVisitante)
+    console.log(goleadoresLocal.length)
+    swiftConnectionStore.cueGraphic(payload.nombre)
+    swiftConnectionStore.rtRemote.updateFields("DESCANSO::DUPL_LOCAL", "NumDuplicates", goleadoresLocal.length)
+    swiftConnectionStore.rtRemote.updateFields("DESCANSO::DUPL_VISITANTE", "NumDuplicates", goleadoresVisitante.length)
+    swiftConnectionStore.rtRemote.updateFields("DESCANSO::NOMBRE_GOLES_LOCALTEXT", "String", txtLocal)
+    swiftConnectionStore.rtRemote.updateFields("DESCANSO::NOMBRE_GOLES_VISITANTETEXT", "String", txtVisitante)
+    
+    
+    swiftConnectionStore.rtRemote.updateFields("DESCANSO::LOCALTEXT", "String", partido.value.equipo_local.nombre_equipo)
+    swiftConnectionStore.rtRemote.updateFields("DESCANSO::VISITANTETEXT", "String", partido.value.equipo_visitante.nombre_equipo)
+    swiftConnectionStore.rtRemote.updateFields("DESCANSO::MARCADOR_LOCALTEXT", "String", marc.local)
+    swiftConnectionStore.rtRemote.updateFields("DESCANSO::MARCADOR_VISITANTETEXT", "String", marc.visitante)
+    // swiftConnectionStore.rtRemote.updateFields("DESCANSO::VISITANTETEXT", "String", partido.value.equipo_visitante.nombre_equipo)
+
+    const escudoLocal = `ESCUDO_${partido.value.equipo_local.nombre_equipo.replace(/ /g,"_").toUpperCase()}`
+    const escudoVisitante = `ESCUDO_${partido.value.equipo_visitante.nombre_equipo.replace(/ /g,"_").toUpperCase()}`
+    console.log(escudoVisitante)
+    
+    swiftConnectionStore.rtRemote.updateFields("DESCANSO::ESCUDO_LOCALSHDR", "Shader", escudoLocal)
+    swiftConnectionStore.rtRemote.updateFields("DESCANSO::ESCUDO_VISITANTESHDR", "Shader", escudoVisitante)
+
+
+
+    swiftConnectionStore.bringOn(payload.nombre)
+
+  } else {
+    swiftConnectionStore.takeOff(payload.nombre)
+  }
+}
 
 
 // ROTULOS
