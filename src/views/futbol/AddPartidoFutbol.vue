@@ -165,10 +165,10 @@ const marcador = {
       segunda: 0
     },
     tiempo: {
-      primera: null,
-      segunda: null,
-      segunda_prorroga: null,
-      primera_prorroga: null
+      primera: 0,
+      segunda: 2700,
+      segunda_prorroga: 5400,
+      primera_prorroga: 6300
     },
     prorroga: {
       primera: 0,

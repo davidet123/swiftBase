@@ -9,9 +9,12 @@
                 <v-col cols="1">
                   <h4>{{ jugador.numero }}</h4>
                 </v-col>
-                <v-col cols="7">
+                <v-col cols="4">
                   <p>&nbsp&nbsp|&nbsp&nbsp {{ jugador.apodo }}</p>
                 </v-col>
+                <v-col cols="1"><p>{{ jugador.estadistica.goles.length }}</p></v-col>
+                <v-col cols="1"><p>{{ jugador.estadistica.faltas }}</p></v-col>
+                <v-col cols="1"><p>{{ jugador.estadistica.disparos_al_arco }} / {{ jugador.estadistica.disparos }}</p></v-col>
                 <v-col cols="1" class="contenedor_tarjeta"><div :class="jugador.estadistica.tarjetas_amarillas >= 1 ? 'amarilla' : ''"></div></v-col>
                 <v-col cols="1" class="contenedor_tarjeta"><div :class="jugador.estadistica.tarjetas_amarillas == 2 ? 'amarilla' : ''"></div></v-col>
                 <v-col cols="1" class="contenedor_tarjeta"><div :class="jugador.estadistica.tarjeta_roja == 1 ? 'roja' : ''"></div></v-col>

@@ -19,10 +19,8 @@
        <v-row class="mt-5">
         <v-col cols="5" class="izquierda">
           <v-row>
-            <v-col>
-              <v-col cols="12" class="text-center">
-                <h4 >{{ partido.equipo_local.nombre_equipo}}</h4>
-              </v-col>
+            <v-col cols="12" class="text-center">
+              <h4 >{{ partido.equipo_local.nombre_equipo}}</h4>
             </v-col>
           </v-row>
           <v-row>
@@ -78,7 +76,15 @@
             <v-col cols="6">
               <v-btn color="error" size="x-small" @click="limpiarDorsal('local')">X</v-btn>
             </v-col>
-            <v-row>
+            <v-row class="clearMargin">
+              <v-row class="ml-5 mr-15">
+                <v-col cols="1"><p>Dorsal</p></v-col>
+                <v-col cols="4"><p>Jugador</p></v-col>
+                <v-col cols="1"><p>Goles</p></v-col>
+                <v-col cols="1"><p>Faltas</p></v-col>
+                <v-col cols="1"><p>Disparos</p></v-col>
+                <v-col cols="4"><p>Tarjetas</p></v-col>
+              </v-row>
                 <v-col v-if="dorsalLocal !== null" cols="12">
                   <JugadorFutbolInd :jugador="listadoLocal[0]" :fondo="'local'" :temporizador="marcador.temporizador" :equipo="'local'" class="ml-4" @test="test"/>
                 </v-col>
@@ -106,31 +112,36 @@
         <v-col cols="2" class="text-center">
           <v-row>
             <v-col cols="12">
-              <BotonLive nombre="INICIO" @activar="cartelaInicio" />
+              <h5>Inicio</h5>
+              <BotonLive nombre="INICIO" @activar="cartelaInicio" /><br/>
               <BotonLive nombre="DESCANSO" @activar="cartelaDescanso" />
 
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
-              <p>Estadístiques finals</p>
-              <BotonLive nombre="EST_FINAL" @activar="estFinales"/>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <p>Alineacions</p>
-              <BotonLive class="mb-2" nombre="TITULARS LOCAL" @activar="alineacion"/>
-              <BotonLive class="mb-2" nombre="SUPLENTES LOCAL" @activar="suplentes"/>
-              <BotonLive nombre="TITULARS VISITANT" @activar="alineacion"/>
+            <v-col cols=12>
+              <h5>Alineacions</h5>
+              <p>Local</p>
+              <BotonLive class="mb-2" nombre="TITULARS LOCAL" @activar="alineacion"/><br/>
+              <BotonLive class="mb-2" nombre="SUPLENTES LOCAL" @activar="suplentes"/><br/>
+              <p>Visitante</p>
+              <BotonLive nombre="TITULARS VISITANT" @activar="alineacion"/><br/>
               <BotonLive nombre="SUPLENTES VISITANT" @activar="suplentes"/>
             </v-col>
           </v-row>
           <v-row>
             <v-col>
-              <p>Formacions</p>
+              <h5>Formacions</h5>
+              <p>Local</p>
               <BotonLive class="mb-2" nombre="FORMACIÓ LOCAL" @activar="formacion"/>
+              <p>Visitant</p>
               <BotonLive nombre="FORMACIÓ VISITANT" @activar="formacion"/>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <h5>Estadístiques finals</h5>
+              <BotonLive nombre="EST_FINAL" @activar="estFinales"/>
             </v-col>
           </v-row>
         </v-col>
@@ -196,6 +207,14 @@
               <v-btn color="error" size="x-small" @click="limpiarDorsal('visitante')">X</v-btn>
             </v-col>
             <v-row class="clearMargin">
+              <v-row class="ml-5 mr-15 mb-3">
+                <v-col cols="1"><p>Dorsal</p></v-col>
+                <v-col cols="4"><p>Jugador</p></v-col>
+                <v-col cols="1"><p>Goles</p></v-col>
+                <v-col cols="1"><p>Faltas</p></v-col>
+                <v-col cols="1"><p>Disparos</p></v-col>
+                <v-col cols="4"><p>Tarjetas</p></v-col>
+              </v-row>
                 <v-col v-if="dorsalVisitante !== null" cols="12" class="mr-2">
                   <JugadorFutbolInd :jugador="titularesVisitante[0]" :fondo="'visitante'" :equipo="'visitante'" :temporizador="marcador.temporizador"/>
                 </v-col>
@@ -203,7 +222,7 @@
                   <JugadorFutbolInd  :jugador = "jugador" :id_jugador = "jugador.id_jugador" :fondo="'visitante'" :equipo="'visitante'" :temporizador="marcador.temporizador" class="mr-2"/>
                 </v-col>
             </v-row>
-            <v-row>
+            <v-row  class="pt-2">
               <v-col cols="12">
                 <h4>Cos tècnic</h4>
               </v-col>
@@ -220,7 +239,6 @@
         <v-col cols="12" class="text-center">
           <h3>Àrbitres</h3>
           <BotonLive nombre="DSK_ARBITROS" @activar="dskArbitros" :rotulo_cargado="rotulo_cargado_arbitros"/>
-          {{ rotulo_cargado_arbitros }}
         </v-col>
         <v-col cols="3">
           <CuerpoTecnicoIndividual :nombre="partido.equipo_arbitral.primer_arbitro" :titulo="'Primer àrbitre'" />
@@ -398,7 +416,7 @@ const cartelaDescanso = payload => {
     }
     const txtLocal = goleadoresTXT(goleadoresLocal)
     const txtVisitante = goleadoresTXT(goleadoresVisitante)
-    console.log(goleadoresLocal.length)
+    
     swiftConnectionStore.cueGraphic(payload.nombre)
     swiftConnectionStore.rtRemote.updateFields("DESCANSO::DUPL_LOCAL", "NumDuplicates", goleadoresLocal.length)
     swiftConnectionStore.rtRemote.updateFields("DESCANSO::DUPL_VISITANTE", "NumDuplicates", goleadoresVisitante.length)

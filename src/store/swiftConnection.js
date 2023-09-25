@@ -107,6 +107,7 @@ actions: {
       this.rtRemote.playMethod(metodo + "::takeOff")
   },
   startClock (metodo) {
+    console.log('Startclock')
       if(this.rtRemote) this.rtRemote.playMethod(metodo + "::startClock")
   },
   stopClock (metodo) {
@@ -120,6 +121,13 @@ actions: {
   },
   oratgeOff () {
     this.rtRemote.playMethod("TICKER::oratgeOff")
+  },
+  añadidoOn(tiempo) {
+    this.rtRemote.updateFields("MARCADOR::DESCUENTOTEXT", "String", `${tiempo}'`)
+    this.rtRemote.playMethod("MARCADOR::descuentoOn")
+  },
+  añadidoOff() {
+    this.rtRemote.playMethod("MARCADOR::descuentoOff")
   },
   
 
