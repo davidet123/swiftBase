@@ -165,7 +165,7 @@ const rotularSustitucion = (cambio, metodo) => {
     const jugadorEntra = listadoCompleto.value.find(jug => jug.dorsal === cambio.entra)
     // emit("rotularSustitucion", {metodo: metodo.nombre, equipo: equipo.value.nombre_equipo, sale: jugadorSale.etiqueta, entra: jugadorEntra.etiqueta})
     swiftConnectionStore.cueGraphic(metodo.nombre)
-
+    
     swiftConnectionStore.rtRemote.updateFields("SUSTITUCION::TEXTO_EQUIPOTEXT", "String", equipo.value.nombre_equipo)
     swiftConnectionStore.rtRemote.updateFields("SUSTITUCION::TEXTO_SALETEXT", "String", jugadorSale.etiqueta)
     swiftConnectionStore.rtRemote.updateFields("SUSTITUCION::TEXTO_ENTRATEXT", "String", jugadorEntra.etiqueta)

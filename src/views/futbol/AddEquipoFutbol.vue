@@ -24,7 +24,7 @@
       v-model="localidad"
       ></v-text-field>
     </v-col>
-    <v-col cols="9">
+    <!-- <v-col cols="9">
       <v-file-input 
       show-size
       accept="image/*"
@@ -32,7 +32,7 @@
       @change="Preview_image"
       label="Escut"
       ></v-file-input>
-    </v-col>
+    </v-col> -->
     <v-col cols="2" class="text-center">
       <v-img class="escudo" :src="image_url"></v-img>
   

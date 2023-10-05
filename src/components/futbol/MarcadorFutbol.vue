@@ -136,8 +136,9 @@
         </v-row>
       </v-col>
     </v-row>
-    <v-row>
-    </v-row>
+    <!-- <v-row>
+      {{ wsMarcador }}
+    </v-row> -->
   </div>
 </template>
 
@@ -147,6 +148,7 @@
 
   import { usegFutbolStore } from "../../store/futbol"
   import { useSwiftConnectionStore } from "../../store/swiftConnection"
+  import { useFutbolWebsocketStore } from "../../store/futbolWebsocket"
 
   import BotonLive from '@/components/simple/botonLive.vue' 
   import { toRefs } from "vue"
@@ -157,6 +159,7 @@
   
 
   const futbolStore = usegFutbolStore()
+  const futbolWebsocket = useFutbolWebsocketStore()
   const swiftConnectionStore = useSwiftConnectionStore()
   const rotulosStore = useRotulosStore()
   
@@ -166,6 +169,7 @@
 
   const { rotulo_cargado } = storeToRefs(rotulosStore)
   const { minutosPartido } = storeToRefs(futbolStore)
+  const { wsMarcador } = storeToRefs(futbolWebsocket)
   
   const rotulo_cargado_individual = computed(() => rotulo_cargado.value.find(rotulo => rotulo.tipo === "MARCADOR"))
   // console.log(rotulo_cargado_individual.value)
@@ -287,8 +291,14 @@
     swiftConnectionStore.startClock('MARCADOR')
   }
 
+  const tiempoIniciadoFlag = computed(() => marcador.value.temporizador.inicio_tiempo)
+  console.log(tiempoIniciadoFlag.value)
+
+  
+
   const iniciarTiempo = () => {
     console.log(tiempoActual.value)
+    
     
     tiempoIniciado.value = true
     
@@ -307,11 +317,13 @@
     
     temporizador = setInterval(() => {
       tiempoActual.value += 1
+      marcador.value.temporizador.posesion[equipo_en_posesion.value] += 1
       futbolStore.setMinutosPartido(`${tiempoMarcador.value.split(":")[0]}'`)
     }, 1000)
     marcador.value.temporizador.inicio_tiempo = inicio_tiempo.value
     actualizarMarcador()
   }
+  
   
 
   const pararTiempo = () => {
@@ -436,15 +448,22 @@
   const activarGrafico = payload => {
 
     if (payload.live) {
-      swiftConnectionStore.cueGraphic('MARCADOR')
+      // swiftConnectionStore.cueGraphic('MARCADOR')
 
       // SI EL TIEMPO NO ESTÁ INICIADO
       if(!tiempoIniciado.value) {
         setTiempoMarcador()
         swiftConnectionStore.resetClock('MARCADOR')
       }
-        swiftConnectionStore.rtRemote.updateFields(`MARCADOR::EQUIPO_LOCALTEXT`, "String", equipos.value.local)
-        swiftConnectionStore.rtRemote.updateFields(`MARCADOR::EQUIPO_VISITANTETEXT`, "String", equipos.value.visitante)
+      // const min = tiempoMarcador.value.split(":")[0]
+      // const seg = tiempoMarcador.value.split(":")[1]
+      // swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Minute", min)     
+      // swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Second", seg) 
+      swiftConnectionStore.rtRemote.updateFields(`MARCADOR::EQUIPO_LOCALTEXT`, "String", equipos.value.local)
+      swiftConnectionStore.rtRemote.updateFields(`MARCADOR::EQUIPO_VISITANTETEXT`, "String", equipos.value.visitante)
+      swiftConnectionStore.rtRemote.updateFields("MARCADOR::LOCALTEXT","String", marcador.value.goles.local)
+      swiftConnectionStore.rtRemote.updateFields("MARCADOR::VISITANTETEXT","String", marcador.value.goles.visitante)
+        
 
         // const minutos = tiempoMarcador.value.split(":")[0]
         // console.log(parseInt(minutos))
@@ -531,10 +550,10 @@
   }
 
 
-  document.addEventListener('keyup', e => {
-    shortcut(e.key.toUpperCase())
-    // console.log(e.key.toUpperCase())
-  })
+  // document.addEventListener('keyup', e => {
+  //   shortcut(e.key.toUpperCase())
+  //   // console.log(e.key.toUpperCase())
+  // })
 
   const estTotales = computed(() => {
     return {
@@ -580,10 +599,21 @@
     }
   }
   const actualizarMarcador = () => {
+    // localStorage.setItem('marcador', JSON.stringify(marcador.value))
+    // futbolWebsocket.enviarWS({marcador: marcador.value})
     futbolStore.updateMarcadorDB(marcador.value.id_marcador, marcador.value)
   }
 
   // if (marcador.value.temporizador.inicio_tiempo) iniciarTiempo()
+
+  // if(tiempoIniciadoFlag.value) {
+  //   // console.log()
+  //   tiempoActual.value = marcador.value.temporizador.tiempo[parte(parte_en_juego.value)]
+  //   iniciarTiempo()
+  //   console.log("Tiempo iniciado")
+  // } else {
+  //   console.log("Tiempo no iniciado")
+  // }
   
   watch(() => parte_en_juego.value, val => {
 
@@ -660,6 +690,7 @@
   watch(() => posesion_visitante.value, val => {
     actualizarMarcador()
   })
+  
 
   watch(() => marcador.value.temporizador.inicio_tiempo, val => {
     if(inicio_tiempo.value) {

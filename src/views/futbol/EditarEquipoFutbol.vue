@@ -31,7 +31,7 @@
         v-model="localidad"
         ></v-text-field>
       </v-col>
-      <v-col cols="9">
+      <!-- <v-col cols="9">
         <v-file-input 
         show-size
         accept="image/*"
@@ -39,9 +39,9 @@
         @change="Preview_image"
         label="Escut"
         ></v-file-input>
-      </v-col>
+      </v-col> -->
       <v-col cols="2" class="text-center">
-        <v-img class="escudo" :src="image_url"></v-img>
+        <!-- <v-img class="escudo" :src="image_url"></v-img> -->
     
       </v-col>
     </v-row>
@@ -153,6 +153,7 @@ const posiciones = futbolStore.getPosiciones
   const display_name = ref(null)
   const cuerpo_tecnico = ref(null)
   const listaJugadores = ref([])
+  const imagen = ref(null)
 
   let listaCambios = []
 
@@ -183,6 +184,10 @@ const posiciones = futbolStore.getPosiciones
   const cambio = id => {
     if(!listaCambios.includes(id)) listaCambios.push(id)
     // console.log(listaCambios)
+  }
+  const Preview_image = () => {
+
+    console.log('preview image')
   }
   
   // Cargar los datos

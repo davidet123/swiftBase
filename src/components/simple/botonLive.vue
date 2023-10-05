@@ -20,10 +20,10 @@ const { nombre, rotulo_cargado } = toRefs(props)
 
 const live = ref(false)
 
-if(rotulo_cargado.value) {
-  live.value = rotulo_cargado.value.live
-  // console.log(rotulo_cargado.value)
-}
+// if(rotulo_cargado.value) {
+//   live.value = rotulo_cargado.value.live
+//   // console.log(rotulo_cargado.value)
+// }
 
 // console.log(rotulo_cargado
 

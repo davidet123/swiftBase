@@ -162,7 +162,9 @@ const marcador = {
     parte_en_juego: 1,
     añadido: {
       primera: 0,
-      segunda: 0
+      segunda: 0,
+      segunda_prorroga: 0,
+      primera_prorroga: 0
     },
     tiempo: {
       primera: 0,

@@ -8,6 +8,7 @@
       size="50"
     ></v-progress-circular>
   </div>
+
   <!-- <div v-if="!cargando_equipos && !cargando_partidos"> -->
   <div v-if="partido && marcador" class="mb-4 pb-4">
     <!-- {{ partido }} -->
@@ -69,13 +70,18 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="6"  align="center">
+            <!-- <v-col cols="6"  align="center">
               <p>Buscar dorsal</p>
               <v-select label="Dorsal" :items="titularesLocal" item-title = "numero" item-value="numero" v-model="dorsalLocal" density="compact"></v-select>
             </v-col>
             <v-col cols="6">
               <v-btn color="error" size="x-small" @click="limpiarDorsal('local')">X</v-btn>
-            </v-col>
+            </v-col> -->
+            <v-row class="ma-5">
+              <v-col cols="12" class="text-center">
+                <h3>Jugadors</h3>
+              </v-col>
+            </v-row>
             <v-row class="clearMargin">
               <v-row class="ml-5 mr-15">
                 <v-col cols="1"><p>Dorsal</p></v-col>
@@ -85,13 +91,13 @@
                 <v-col cols="1"><p>Disparos</p></v-col>
                 <v-col cols="4"><p>Tarjetas</p></v-col>
               </v-row>
+              
                 <v-col v-if="dorsalLocal !== null" cols="12">
                   <JugadorFutbolInd :jugador="listadoLocal[0]" :fondo="'local'" :temporizador="marcador.temporizador" :equipo="'local'" class="ml-4" @test="test"/>
                 </v-col>
-                
-                <!-- <v-col v-else v-for="jugador in equipo_local.jugadores" :key="jugador.id_jugador" cols="12" class="clearMargin"> -->
+              
                 <v-col v-else v-for="jugador in titularesLocal" :key="jugador.id_jugador" cols="12" class="clearMargin">
-                  <JugadorFutbolInd :jugador = "jugador" :id_jugador = "jugador.id_jugador" :fondo="'local'" :temporizador="marcador.temporizador" :equipo="'local'" class="ml-4"/>
+                  <JugadorFutbolInd :jugador = "jugador" :id_jugador = "jugador.id_jugador" :fondo="'local'" :temporizador="marcador.temporizador" :equipo="'local'" :nombre_equipo="equipo_local.nombre_equipo" class="ml-4"/>
                 </v-col>
             </v-row>
             <v-row class="pt-2">
@@ -199,13 +205,18 @@
             </v-col>
           </v-row>              
           <v-row>
-            <v-col cols="6"  align="center">
+            <!-- <v-col cols="6"  align="center">
               <p>Buscar dorsal</p>
               <v-select label="Dorsal" :items="titularesVisitante" item-title = "numero" item-value = "numero" v-model="dorsalVisitante" density="compact"></v-select>
             </v-col>
             <v-col cols="6">
               <v-btn color="error" size="x-small" @click="limpiarDorsal('visitante')">X</v-btn>
-            </v-col>
+            </v-col> -->
+            <v-row class="ma-5">
+              <v-col cols="12" class="text-center">
+                <h3>Jugadors</h3>
+              </v-col>
+            </v-row>
             <v-row class="clearMargin">
               <v-row class="ml-5 mr-15 mb-3">
                 <v-col cols="1"><p>Dorsal</p></v-col>
@@ -219,7 +230,7 @@
                   <JugadorFutbolInd :jugador="titularesVisitante[0]" :fondo="'visitante'" :equipo="'visitante'" :temporizador="marcador.temporizador"/>
                 </v-col>
                 <v-col v-else v-for="jugador in titularesVisitante" :key="jugador.id_jugador" cols="12" class="clearMargin">
-                  <JugadorFutbolInd  :jugador = "jugador" :id_jugador = "jugador.id_jugador" :fondo="'visitante'" :equipo="'visitante'" :temporizador="marcador.temporizador" class="mr-2"/>
+                  <JugadorFutbolInd  :jugador = "jugador" :id_jugador = "jugador.id_jugador" :fondo="'visitante'" :equipo="'visitante'" :nombre_equipo="equipo_visitante.nombre_equipo" :temporizador="marcador.temporizador" class="mr-2"/>
                 </v-col>
             </v-row>
             <v-row  class="pt-2">
@@ -316,6 +327,7 @@ import Visor from '@/components/visor/Visor.vue'
 // import JugadorFutbolInd from '@/components/futbol/JugadorFutbolInd'
 
 import { useSwiftConnectionStore } from "../../store/swiftConnection"
+import { useFutbolWebsocketStore } from "../../store/futbolWebsocket"
 
 import { usegFutbolStore } from "../../store/futbol"
 import { useRotulosStore } from "../../store/rotulos" 
@@ -337,6 +349,7 @@ const ListaRotulos = defineAsyncComponent(() => import('@/components/rotulos/Lis
 const swiftConnectionStore = useSwiftConnectionStore()
 const futbolStore = usegFutbolStore()
 const rotulosStore = useRotulosStore()
+const futbolWebsocket = useFutbolWebsocketStore()
 
 const route = useRoute()
 const router = useRouter()
@@ -345,8 +358,44 @@ const id = route.params.id
 
 const { partidos, partido_cargado, marcadores } = storeToRefs(futbolStore)
 
+const { wsPartido, wsMarcador } = storeToRefs(futbolWebsocket)
+
+
+
+const partido = computed(() => {
+  if (id !== 'localStorage') {
+    return partidos.value.find( el => {
+      return el.id_partido == id
+    })
+  } else {
+    console.log(wsPartido.value)
+    return wsPartido.value
+  }
+})
+const marcador = computed(() => {
+  if( id !== 'localStorage') {
+    return marcadores.value.find( el => {
+      return el.id_partido == id
+    })
+  } else {
+    return wsMarcador.value
+  }
+})
+
+// iniciar websocket
+// futbolWebsocket.conectarWS()
+// socket.value.addEventListener('message', (event) => {
+//   const res = JSON.parse(event.data)
+//   if (res.hasOwnProperty('partido')) console.log(res.partido)
+//   // console.log(JSON.parse(event.data))
+//   // console.log()
+//   // localStorage.setItem('partido', JSON.stringify(this.wsData))
+//   // console.log(this.test)
+// });
 
 // Cartela inicio
+
+
 
 const cartelaInicio = payload => {
   
@@ -362,7 +411,6 @@ const cartelaInicio = payload => {
 
     const escudoLocal = `ESCUDO_${partido.value.equipo_local.nombre_equipo.replace(/ /g,"_").toUpperCase()}`
     const escudoVisitante = `ESCUDO_${partido.value.equipo_visitante.nombre_equipo.replace(/ /g,"_").toUpperCase()}`
-    console.log(escudoVisitante)
     
     swiftConnectionStore.rtRemote.updateFields("PARTIDO::ESCUDO_LOCALSHDR", "Shader", escudoLocal)
     swiftConnectionStore.rtRemote.updateFields("PARTIDO::ESCUDO_VISITANTESHDR", "Shader", escudoVisitante)
@@ -401,10 +449,12 @@ const cartelaDescanso = payload => {
     const marc = marcador.value.goles
     
     const goleadoresLocal = consultaGoles(partido.value.equipo_local.jugadores)
+    // console.log(goleadoresLocal)
     const goleadoresVisitante = consultaGoles(partido.value.equipo_visitante.jugadores)
     
     // const valoresLocal = `0%~${dispLocalTotal.value}~${dispAlArcoLocalTotal.value}~${faltasLocalTotales.value}~${taLocalTotales.value}~${trLocalTotales.value}~0`
     const goleadoresTXT = equipo => {
+      console.log(equipo)
       let temp = ""
       equipo.forEach(jug => {
         jug.estadistica.goles.forEach(gol => {
@@ -412,14 +462,25 @@ const cartelaDescanso = payload => {
         })
         // console.log(jug.estadistica.goles)
       })
-      return temp.slice(0, -1)
+      // console.log(temp.slice(0, -1))
+      // return temp.slice(0, -1)
+      return temp
     }
+
+
+    const numGoleadoresLocal = goleadoresLocal.reduce((total, jugador) => total += jugador.estadistica.goles.length, 0)
+    const numGoleadoresVisitante = goleadoresVisitante.reduce((total, jugador) => total += jugador.estadistica.goles.length, 0)
+
+
     const txtLocal = goleadoresTXT(goleadoresLocal)
     const txtVisitante = goleadoresTXT(goleadoresVisitante)
+    const escudoLocal = `ESCUDO_${partido.value.equipo_local.nombre_equipo.replace(/ /g,"_").toUpperCase()}`
+    const escudoVisitante = `ESCUDO_${partido.value.equipo_visitante.nombre_equipo.replace(/ /g,"_").toUpperCase()}`
+    
     
     swiftConnectionStore.cueGraphic(payload.nombre)
-    swiftConnectionStore.rtRemote.updateFields("DESCANSO::DUPL_LOCAL", "NumDuplicates", goleadoresLocal.length)
-    swiftConnectionStore.rtRemote.updateFields("DESCANSO::DUPL_VISITANTE", "NumDuplicates", goleadoresVisitante.length)
+    swiftConnectionStore.rtRemote.updateFields("DESCANSO::DUPL_LOCAL", "NumDuplicates", numGoleadoresLocal)
+    swiftConnectionStore.rtRemote.updateFields("DESCANSO::DUPL_VISITANTE", "NumDuplicates", numGoleadoresVisitante)
     swiftConnectionStore.rtRemote.updateFields("DESCANSO::NOMBRE_GOLES_LOCALTEXT", "String", txtLocal)
     swiftConnectionStore.rtRemote.updateFields("DESCANSO::NOMBRE_GOLES_VISITANTETEXT", "String", txtVisitante)
     
@@ -430,8 +491,7 @@ const cartelaDescanso = payload => {
     swiftConnectionStore.rtRemote.updateFields("DESCANSO::MARCADOR_VISITANTETEXT", "String", marc.visitante)
     // swiftConnectionStore.rtRemote.updateFields("DESCANSO::VISITANTETEXT", "String", partido.value.equipo_visitante.nombre_equipo)
 
-    const escudoLocal = `ESCUDO_${partido.value.equipo_local.nombre_equipo.replace(/ /g,"_").toUpperCase()}`
-    const escudoVisitante = `ESCUDO_${partido.value.equipo_visitante.nombre_equipo.replace(/ /g,"_").toUpperCase()}`
+    
     console.log(escudoVisitante)
     
     swiftConnectionStore.rtRemote.updateFields("DESCANSO::ESCUDO_LOCALSHDR", "Shader", escudoLocal)
@@ -555,20 +615,11 @@ const buscarTitular = (equipo, dorsal) => {
 }
 
 
-if(!partido_cargado.value) {
+if(!partido_cargado.value && id !== 'localStorage') {
   futbolStore.setPartidoEnJuego(id)
 }
 
-const partido = computed(() => {
-  return partidos.value.find( el => {
-    return el.id_partido == id
-  })
-})
-const marcador = computed(() => {
-  return marcadores.value.find( el => {
-    return el.id_partido == id
-  })
-})
+
 
 // BUSCAR EQUIPOS
 
@@ -632,6 +683,7 @@ const estadisticasTotales = (jugadores, estadistica) => {
   return jugadores.reduce((total, jugador) => total + jugador.estadistica[estadistica], 0);
 };
 const golesTotales = jugadores => {
+  console.log(jugadores)
   return  jugadores.reduce((total, jugador) => total += jugador.estadistica.goles.length, 0)
 }
 
@@ -673,7 +725,10 @@ const dispVisitanteAlArcoTotal = computed (() =>estadisticasTotales(equipo_visit
 
 
 const updateDB = () => {
-  // console.log(partido.value)
+  console.log('actualiar db')
+  // console.log(JSON.stringify(partido.value))
+  // futbolWebsocket.enviarWS({partido: partido.value})
+  // localStorage.setItem('partido', JSON.stringify(partido.value))
   partido.value.id_partido = id
   futbolStore.editarPartido(partido.value)
 }
@@ -784,11 +839,18 @@ const activarGrafico = payload => {
           valor_visitante = "-"
 
     }
+    const escudoLocal = `ESCUDO_${partido.value.equipo_local.nombre_equipo.replace(/ /g,"_").toUpperCase()}`
+    const escudoVisitante = `ESCUDO_${partido.value.equipo_visitante.nombre_equipo.replace(/ /g,"_").toUpperCase()}`
+    
+    
+    
 
     // console.log(valor_local)
     // console.log(valor_visitante)
     if (payload.live) {
       swiftConnectionStore.cueGraphic('EST_EQUIPOS')
+      swiftConnectionStore.rtRemote.updateFields("EST_EQUIPOS::ESCUDO_LOCALSHDR", "Shader", escudoLocal)
+      swiftConnectionStore.rtRemote.updateFields("EST_EQUIPOS::ESCUDO_VISITANTESHDR", "Shader", escudoVisitante)
       swiftConnectionStore.rtRemote.updateFields("EST_EQUIPOS::EQUIPO_LOCALTEXT", "String", equipo_local.value.nombre_equipo)
       swiftConnectionStore.rtRemote.updateFields("EST_EQUIPOS::EQUIPO_VISITANTETEXT", "String", equipo_visitante.value.nombre_equipo)
       swiftConnectionStore.rtRemote.updateFields("EST_EQUIPOS::TIPO_ESTTEXT", "String", tipo)

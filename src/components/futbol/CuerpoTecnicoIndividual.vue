@@ -1,6 +1,6 @@
 <template>
   <v-card class="card" >
-    <v-card-subtitle class="ma-0">
+    <v-card-text class="ma-0">
       <v-row class="my-0 py-0">
         <v-col cols="7" >
           <h5>{{ titulo }}</h5><p>{{ nombre }}</p>
@@ -9,7 +9,7 @@
           <BotonLive nombre="DSK_INDIVIDUAL" @activar="activarGrafico"/>
         </v-col>
       </v-row>
-    </v-card-subtitle>
+    </v-card-text>
   </v-card>
 
 

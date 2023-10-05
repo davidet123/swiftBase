@@ -156,6 +156,7 @@ const insertarGrafico = (metodo => {
 const bringOn = (metodo) => {
   console.log(swiftConnectionStore.rtRemote)
   swiftConnectionStore.rtRemote.playGraphic(metodo)
+  swiftConnectionStore.rtRemote.playMethod(metodo + "::cueGraphic")
   swiftConnectionStore.rtRemote.playMethod(metodo + "::bringOn")
   swiftConnectionStore.rtRemote.updateFields(metodo + "::n1_DUPL", "NumDuplicates", 0)
 }

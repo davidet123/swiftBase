@@ -25,6 +25,12 @@
         <!-- <JugadorFutbolnd :jugador="jugador" @borrarJugador="id => borrarJugador(id)"/> -->
       </v-col>
     </v-row>
+    <v-row v-if="wsPartido">
+      <v-col cols="12" class="text-center"><h2>Partido WS</h2></v-col>
+      <v-col cols="8" offset="2" >
+        <PartidoIndividualWS :partido="wsPartido" :marcador="wsMarcador"/> 
+      </v-col>
+    </v-row>
   </v-main>
 </template>
 
@@ -32,7 +38,9 @@
 import { ref, computed } from "vue"
 
 import { usegFutbolStore } from "../../store/futbol"
+import { useFutbolWebsocketStore } from "../../store/futbolWebsocket"
 import PartidoIndividual from "../../components/futbol/PartidoIndividual.vue"
+import PartidoIndividualWS from "../../components/futbol/PartidoIndividualWS.vue"
 import { storeToRefs } from "pinia";
 
 
@@ -49,6 +57,7 @@ const router = useRouter()
 
 
 const futbolStore = usegFutbolStore()
+const futbolWebsocket = useFutbolWebsocketStore()
 
 // futbolStore.cargarEquipos()
 
@@ -62,9 +71,12 @@ const futbolStore = usegFutbolStore()
 // CARGAR PARTIDOS 
 
 // futbolStore.addEquiposToDb()
+// futbolWebsocket.resetLocalStorage()
 
 
 const { partidos } = storeToRefs(futbolStore)
+const { wsPartido, wsMarcador } = storeToRefs(futbolWebsocket)
+console.log(wsPartido.value)
 
 // const jugadores = computed(() => equipos.value[0].jugadores)
 

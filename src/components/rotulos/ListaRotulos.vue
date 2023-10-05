@@ -119,8 +119,9 @@ const mostrar = payload => {
     swiftConnectionStore.rtRemote.updateFields("DSK_INDIVIDUAL::SUPERIORTEXT","String", payload.contenido.titulo)
     swiftConnectionStore.rtRemote.updateFields("DSK_INDIVIDUAL::INFERIORTEXT","String", payload.contenido.subtitulo)
     swiftConnectionStore.bringOn("DSK_INDIVIDUAL")
-    payload.rotulo.mostrado = true
+    
   } else {
+    payload.rotulo.mostrado = true
     swiftConnectionStore.takeOff("DSK_INDIVIDUAL")
   }
 

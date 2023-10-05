@@ -1,15 +1,18 @@
 <template>
   <!-- {{ !cargando_equipos  && !cargando_partidos }} -->
 
-  <div v-if="!partido" class="text-center" style="margin-top:200px;">
+  <!-- <div v-if="!partido" class="text-center" style="margin-top:200px;">
     <v-progress-circular
       indeterminate
       color="primary"
       size="50"
     ></v-progress-circular>
+  </div> -->
+  <div>
+    {{ wsPartido }}
   </div>
 
-  <div v-if="partido">
+  <!-- <div v-if="partido">
     <v-row>
       <v-col cols="12" class="text-center">
         <h3>EDITAR PARTIDO {{ partido.equipo_local.nombre_equipo }} vs {{ partido.equipo_visitante.nombre_equipo }}</h3>
@@ -27,7 +30,27 @@
         ></v-select> 
       </v-col>
     </v-row>
-    <v-row>      
+    <v-row>
+      <v-col cols="6">
+        <v-select
+          v-model="nuevoPartido.equipo_local.nombre_equipo"
+          :items="equipos"
+          item-title="nombre_equipo"
+          item-value="nombre_equipo"
+          density="compact"
+          label="Equipo Local"
+        ></v-select> 
+      </v-col>
+      <v-col cols="6">
+        <v-select
+          v-model="nuevoPartido.equipo_visitante.nombre_equipo"
+          :items="equipos"
+          item-title="nombre_equipo"
+          item-value="nombre_equipo"
+          density="compact"
+          label="Equipo Visitante"
+        ></v-select>
+      </v-col>
       <v-col cols="3">
         <v-text-field
           v-model="nuevoPartido.estadio"
@@ -52,90 +75,6 @@
           label="Hora"
         ></v-text-field>
       </v-col>
-    </v-row>
-    <v-row v-if="id !== 'localStorage'">
-      <v-col cols="6">
-        <v-select
-          v-model="nuevoPartido.equipo_local.nombre_equipo"
-          :items="equipos"
-          item-title="nombre_equipo"
-          item-value="nombre_equipo"
-          density="compact"
-          label="Equipo Local"
-        ></v-select> 
-      </v-col>
-      <v-col cols="6">
-        <v-select
-          v-model="nuevoPartido.equipo_visitante.nombre_equipo"
-          :items="equipos"
-          item-title="nombre_equipo"
-          item-value="nombre_equipo"
-          density="compact"
-          label="Equipo Visitante"
-        ></v-select>
-      </v-col>
-    </v-row>
-    <v-row v-else>
-      <v-row>
-
-        <v-col cols="6">
-          <v-text-field
-            v-model="nuevoPartido.equipo_local.nombre_equipo"
-            label="Equipo local"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="6">
-          <v-text-field
-          v-model="nuevoPartido.equipo_visitante.nombre_equipo"
-            label="Equipo visitante"
-          ></v-text-field>
-        </v-col >
-        <!-- Jugadores local -->
-        <v-col cols="6" v-for="equipoWS in equiposWS" :key="equipoWS.nombre_equipo"> 
-          <v-col cols="12" v-for="jugador in equipoWS" :key="jugador.id_jugador">
-            <v-row>
-
-              <v-col cols="1" class="ma-0 pa-0">
-                <v-text-field density="compact" v-model="jugador.numero" label="Numero"></v-text-field>
-              </v-col>
-              <v-col cols="3" class="ma-0 pa-0">
-                <v-text-field density="compact" v-model="jugador.nombre_jugador" label="Nombre"></v-text-field>
-              </v-col>
-              <v-col cols="2" class="ma-0 pa-0">
-                <v-text-field density="compact" v-model="jugador.apodo" label="Apodo"></v-text-field>
-              </v-col>
-              <v-col cols="2" class="ma-0 pa-0">
-                <v-text-field density="compact" v-model="jugador.nacionalidad" label="Nacionalidad"></v-text-field>
-              </v-col>
-              <v-col cols="1" class="ma-0 pa-0">
-                <v-text-field density="compact" v-model="jugador.fecha_nacimiento" label="Fecha nacimiento"></v-text-field>
-              </v-col>
-              <v-col cols="1" class="ma-0 pa-0">
-                <v-text-field density="compact" v-model="jugador.altura" label="Altura"></v-text-field>
-              </v-col>
-              <v-col cols="2" class="ma-0 pa-0">  
-                <v-select
-                  v-model="jugador.posicion"
-                  :items="posiciones"
-                  item-title="descripcion"
-                  item-value="descripcion"
-                  density="compact"
-                  label="Posicion"
-                ></v-select> 
-  
-              </v-col>                                
-            </v-row>
-
-          </v-col>
-          
-
-        </v-col>
-      </v-row>
-
-
-
-
-
     </v-row>
     <v-row>
       <v-col cols="12"><h3>Equipo arbitral</h3></v-col>
@@ -177,15 +116,6 @@
         v-model="dialog"
         width="auto"
       >
-        <!-- <template v-slot:activator="{ props }">
-          <v-btn
-            color="primary"
-            v-bind="props"
-          >
-            Open Dialog
-          </v-btn>
-        </template> -->
-
         <v-card class="pa-4">
           <v-card-text>
             <p class="font-weight-black">SEGUR QUE VOLS ELIMINAR EL PARTIT?</p>
@@ -197,7 +127,7 @@
       </v-dialog>
     </div>
 
-  </div>
+  </div> -->
   <!-- <v-row>
     <v-col cols="12" class="text-center">
       <h2>Editar Partido</h2>
@@ -244,13 +174,13 @@
   import { ref } from 'vue';
 
   import { useRoute, useRouter } from 'vue-router';
-  import { usegFutbolStore } from "../../store/futbol"
+  // import { usegFutbolStore } from "../../store/futbol"
   import { useFutbolWebsocketStore } from "../../store/futbolWebsocket"
-  
+
   import { storeToRefs } from "pinia";
   import { computed } from 'vue';
   import { watch } from 'vue';
-  
+
   
   const futbolStore = usegFutbolStore()
   const futbolWebsocket = useFutbolWebsocketStore()
@@ -261,69 +191,32 @@
   // const loading = futbolStore.loading
   
   const id = route.params.id
-
   
   const { cargando_equipos, cargando_partidos, equipos, partidos } = storeToRefs(futbolStore)
   const { wsPartido, wsMarcador } = storeToRefs(futbolWebsocket)
-
   
   // futbolStore.cargarEquipos()
   // futbolStore.cargarPartidos()
 
-  
-  // const equipo_localWS = ref(wsPartido.value.equipo_local.jugadores)
-  // const equipo_visitanteWS = ref(wsPartido.value.equipo_visitante.jugadores)
-
-  const posiciones = futbolStore.getPosiciones
-  
   const dialog = ref(false)
-  let partido 
-  if(id !== 'localStorage') {
-    partido = computed(() => futbolStore.buscarPartido(id))
-  } else {
-    partido = computed(() => wsPartido.value)
-    console.log("partido localStorage")
-  }
+
+  const partido = computed(() => wsPartido.value)
+  // const marcador = computed(() => wsMarcador.value)
   const competiciones = computed(() => futbolStore.getCompeticiones)
   
-  let nuevoPartido = ref(null)
-  const equiposWS = computed(() => [nuevoPartido.value.equipo_local.jugadores, nuevoPartido.value.equipo_visitante.jugadores])
-  
-  // const partido = computed(() => {
-  //   const refPartido =  partidos.value.find(partido=> {
-  //   return partido.id_partido == id
-  //   })
-   
-  //   nuevoPartido.value = {...refPartido}
-  //   return refPartido
-  // })
-
-
- /*  const refPartido = computed(() => {
-    return partidos.value.find(partido => {
-    console.log(partido)
-    return partido.id_partido == id
-    })
-  }) */
+  let nuevoPartido = ref({...partido.value})
  
 
   const editarPartido = () => {
     // console.log(nuevoPartido.value)
-    if(id !== 'localStorage') {
-      futbolStore.editarPartido(nuevoPartido.value)
-    } else {
-      console.log(nuevoPartido.value)
-      futbolWebsocket.editarPartido(nuevoPartido.value)
-    }
-
-    
+    futbolStore.editarPartido(nuevoPartido.value)
     router.push('/futbol')
   }
 
-  const cargaPartido = (partido) => {
-    // console.log(partido)
-    nuevoPartido.value = {...partido}
-  }
+  // const cargaPartido = (partido) => {
+  //   // console.log(partido)
+  //   nuevoPartido.value = {...partido}
+  // }
 /* 
   const equipo_local = futbolStore.buscarEquipo(partido.id_equipo_local)
   const equipo_visitante = futbolStore.buscarEquipo(partido.id_equipo_visitante)  
@@ -332,21 +225,17 @@
 
 
   const eliminarPartido = () => {
-    if(id !== 'localStorage') {
-      futbolStore.eliminarPartido(id)
-    } else {
-      futbolWebsocket.resetLocalStorage()
-    }
+    futbolStore.eliminarPartido(id)
     dialog.value = true
     router.push('/futbol')
   }
-  if(partido) cargaPartido(partido.value)
+  // if(partido) cargaPartido(partido.value)
 
   const volver = () => router.push('/futbol')
 
-  watch(() => partido.value, partido => {
-    cargaPartido(partido)
-  })
+  // watch(() => partido.value, partido => {
+  //   cargaPartido(partido)
+  // })
 
   
 

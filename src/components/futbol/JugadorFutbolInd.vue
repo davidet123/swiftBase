@@ -35,7 +35,7 @@
                         <v-btn size="x-small" color="error" @click="gol(-1)">-</v-btn>
                       </v-col>
                       <v-col cols="2" offset="1">
-                        <v-btn size="x-small" :color="!liveBtn.goles ? 'success' : 'error'" @click="live('goles', jugador.apodo, jugador.numero, 'Goles', totalGoles)">LIVE</v-btn>
+                        <v-btn size="x-small" :color="!liveBtn.goles ? 'success' : 'error'" @click="live('goles', jugador.apodo, jugador.numero, 'Gols', totalGoles)">LIVE</v-btn>
                       </v-col>
                     </v-row>
                   </v-row>
@@ -99,7 +99,7 @@
               <v-row class="ma-1 pa-2 caja_jugador">
                 <v-col cols="12" class="text-center pa-0">
                   <p>DISPAROS A PUERTA ({{ jugador.estadistica.disparos_al_arco }} /{{ jugador.estadistica.disparos }})</p>
-                  <v-btn size="x-small" :color="!liveBtn.disparos_al_arco ? 'success' : 'error'" @click="live('disparos_al_arco', jugador.apodo, jugador.numero, 'Disparos', jugador.estadistica.disparos)">LIVE</v-btn>
+                  <v-btn size="x-small" :color="!liveBtn.disparos_al_arco ? 'success' : 'error'" @click="live('disparos_al_arco', jugador.apodo, jugador.numero, 'Disparos', `${jugador.estadistica.disparos_al_arco}/${jugador.estadistica.disparos}`)">LIVE</v-btn>
                 </v-col>
                 <v-row>
 
@@ -168,9 +168,9 @@ const liveBtn = ref({
 
 
 
-const props = defineProps(["jugador", "id_jugador", "fondo", "temporizador", "equipo"])
+const props = defineProps(["jugador", "id_jugador", "fondo", "temporizador", "equipo", "nombre_equipo"])
 
-const { jugador, temporizador, equipo } = toRefs(props)
+const { jugador, temporizador, equipo, nombre_equipo } = toRefs(props)
 
 const { minutosPartido } = storeToRefs(futbolStore)
 
@@ -204,14 +204,14 @@ const falta = val => {
   jugador.value.estadistica.faltas += val
   const tipo = "Faltes"
   // console.log(jugador.value)
-  mostrarEstadistica(jugador.value.apodo, jugador.value.numero, tipo, jugador.value.estadistica.faltas)
+  // mostrarEstadistica(jugador.value.apodo, jugador.value.numero, tipo, jugador.value.estadistica.faltas)
   updateDB(jugador.value)
 }
 
 const disparo = val => {
   jugador.value.estadistica.disparos += val
   const tipo = "Disparos"
-  mostrarEstadistica(jugador.value.apodo, jugador.value.numero, tipo, jugador.value.estadistica.disparos)
+  // mostrarEstadistica(jugador.value.apodo, jugador.value.numero, tipo, total_disparos)
   updateDB(jugador.value)
 }
 const disparoAPuerta = val => {
@@ -224,6 +224,9 @@ const updateDB = (jugador) => {
   // console.log(equipo)
   futbolStore.updateEstPartido(id_partido, jugador, equipo.value)
 }
+const total_disparos = () => {
+  return `${jugador.value.estadistica.disparos_al_arco}/${jugador.value.estadistica.disparos}`
+}
 
 
 // 'disparos_al_arco', jugador.apodo, jugador,numero, 'Disparos', jugador.estadistica.disparos
@@ -231,7 +234,7 @@ const updateDB = (jugador) => {
 const live = (tipo, nombre, dorsal, tipoStr, valor) => {
   if(liveBtn.value[tipo] == false) {
     swiftConnectionStore.cueGraphic("EST_INDIVIDUAL")
-    mostrarEstadistica(nombre, dorsal, tipoStr, valor)
+    mostrarEstadistica(nombre, dorsal, tipoStr, valor, nombre_equipo.value)
     swiftConnectionStore.bringOn("EST_INDIVIDUAL")
     // bringOn()
   } else if(liveBtn.value[tipo] == true) {
@@ -250,11 +253,14 @@ const takeOff = () => {
   swiftConnectionStore.rtRemote.playMethod("EST_INDIVIDUAL::takeOff")
 }
 
-const mostrarEstadistica = (nombre, dorsal, tipo, valor)=> {
+const mostrarEstadistica = (nombre, dorsal, tipo, valor, equipo)=> {
   swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::NOMBRE_JUGADORTEXT","String", nombre)
   swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::NUMEROTEXT","String", dorsal)
   swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::TIPO_ESTADISTICATEXT","String", tipo)
   swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::VALOR_ESTADISTICATEXT","String", valor)
+  const escudo = `ESCUDO_${equipo.replace(/ /g,"_").toUpperCase()}`
+  console.log(escudo)
+  swiftConnectionStore.rtRemote.updateFields("EST_INDIVIDUAL::ESCUDOSHDR", "Shader", escudo)
   // if(swiftConnectionStore.rtRemote) {
   
   //   console.log(nombre, dorsal, tipo, valor)

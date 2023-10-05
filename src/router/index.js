@@ -13,6 +13,8 @@ import EditarEquipoFutbol from '../views/futbol/EditarEquipoFutbol.vue'
 import ListaEquiposFutbol from '../views/futbol/ListaEquiposFutbol.vue'
 import ResumenFutbol from '../views/futbol/ResumenFutbol.vue'
 import AddCompeticionFutbol from '../views/futbol/AddCompeticionFutbol.vue'
+import Basket from '../views/basket/Basket.vue'
+import EditarPartidoBasket from '../views/basket/EditarPartidoBasket.vue'
 import Vumetro from '../views/vumetro/Vumetro.vue'
 import Settings from '../views/Settings.vue'
 
@@ -92,6 +94,21 @@ const router = createRouter({
       path: '/vumetro',
       name: 'vumetro',
       component: Vumetro
+    },
+    {
+      path: '/basket',
+      name: 'basket',
+      component: Basket
+    },
+    {
+      path: '/basket',
+      name: 'basket',
+      component: Basket
+    },
+    {
+      path: '/basket/editarpartidobasket/:id',
+      name: 'editarpartidobasekt',
+      component: EditarPartidoBasket
     },
     {
       path: '/settings',

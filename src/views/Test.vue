@@ -5,6 +5,12 @@
     </v-col>
   </v-row>
   <v-row>
+    <v-row>
+      <v-col>
+        {{ testMSG }}
+        <v-btn @click="enviarWS" color="success">ENVIAR WS</v-btn>
+      </v-col>
+    </v-row>
     <v-col cols="12" class="text-center">
       <BotonLive nombre="REDES_SOCIALES" @activar="activarGrafico"/>
       <BotonLive nombre="COPY" @activar="activarGrafico"/>
@@ -50,8 +56,8 @@
     <v-col>
       <BotonLive nombre="TICKER" @activar="activarGrafico"/>
     </v-col>
-    <v-col cols="12" v-for="(titular, index) in titulares" :key="titular">
-      <div>{{ titular }} <v-btn :color="colorLive !== index ? 'success' : 'error'" @click="rotular(titular, index)">ENVIAR</v-btn></div>
+    <v-col cols="12" v-for="(titular, index) in titulares.filter((el) => el !== null)" :key="titular" >
+      <div v-if="titular !== null">{{ titular }} <v-btn :color="colorLive !== index ? 'success' : 'error'" @click="rotular(titular, index)">ENVIAR</v-btn></div>
       
     </v-col>
     
@@ -62,20 +68,36 @@
 
   import {  ref } from 'vue';
   import { useSwiftConnectionStore } from "../store/swiftConnection"
+  import { useFutbolWebsocketStore } from "../store/futbolWebsocket"
   import { usegSheetStore } from "../store/gSheet"
   import BotonLive from '@/components/simple/botonLive.vue' 
   import { computed } from 'vue';
-import { watch } from 'vue';
+  import { watch } from 'vue';  
 
+
+
+
+  
+  
+  
   const swiftConnectionStore = useSwiftConnectionStore()
+  const futbolWebsocket = useFutbolWebsocketStore()
   const gSheetStore = usegSheetStore()
-  gSheetStore.getLista()
+  // gSheetStore.getLista()
   const hoja = computed(() => gSheetStore.getValoresHoja)
   // console.log(hoja.value)
-
+  
   swiftConnectionStore.startConnection()
   swiftConnectionStore.startVideo()
+  
+  // Prueba websocket
 
+
+  futbolWebsocket.conectarWS()
+  // futbolWebsocket.enviarWS()
+  const enviarWS = () => futbolWebsocket.enviarWS({message: "test"})
+
+  const testMSG = computed(() => futbolWebsocket.getTest)
 
   const xPos = [920, 850, 780, 710, 640, 570, 500, 430]
 
@@ -334,22 +356,6 @@ import { watch } from 'vue';
 }
   const degToCompass = grados => {
               
-    // const direcciones = [
-    // "N", "NNE", "NE", "ENE",
-    // "E", "ESE", "SE", "SSE",
-    // "S", "SSO", "SO", "OSO",
-    // "O", "ONO", "NO", "NNO"
-    // ];
-
-    // // Aseguramos que los grados estén en el rango de 0 a 360
-    // grados = (grados + 360) % 360;
-    // console.log(grados)
-
-    // // Calculamos el índice en el arreglo de direcciones
-    // const index = Math.floor((grados + 11.25) / 22.5);
-
-    // // Devolvemos la dirección del viento correspondiente
-    // return direcciones[index];
       const val = Math.floor((grados/22.5) + 0.5)
       const arr = ["N","NNE","NE","ENE","E","ESE", "SE", "SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"]
       return arr[(val % 16)]
@@ -374,11 +380,21 @@ import { watch } from 'vue';
   }
 
   const titulares = computed(() => hoja.value.map((el) => {
-    const tit = el[0] + ". " + el[3]
-    // console.log(el)
+    // para corredores
+    // const tit = el[1] !== undefined ? el[0] + ". " + el[1] : null
+    // return tit
+    // para RSS
+    let tit
+    if(el[0].includes("|")) {
+      tit = el[0].split("|")[1] + ". " + el[3]
+    } else {
+      tit = el[0] + ". " + el[3]
+    }
+    console.log(tit)
     return tit
     // el[0].replace(/\\/g, '')
   }))
+
     
 
   watch(() => hoja, val => {
