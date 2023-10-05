@@ -9,6 +9,11 @@
       <v-col cols="2" offset="2" class="text-center"><v-btn color="success"  @click="router.push(`/basket/editarpartidobasket/localstorage`)">EDITAR PARTIDO</v-btn></v-col>
       <!-- <v-col cols="12" class="text-center"><v-btn color="success" @click="crono">CRONO</v-btn></v-col> -->
     </v-row>
+    <v-row>
+      <v-col>
+        <PartidoBasketIndividual />
+      </v-col>
+    </v-row>
     <!-- <v-row>
       <v-col class="text-center">
         <video id="myVideoId" width="620" height="480" autoplay muted playsinline/>
@@ -35,9 +40,24 @@
 <script setup>
 
 import { useRouter } from 'vue-router';
+import { usegBasketStore } from "../../store/basket"
+import { storeToRefs } from 'pinia'
+import PartidoBasketIndividual from "../../components/basket/PartidoBasketIndividual.vue"
 
 
 const router = useRouter()
+
+const basketStore = usegBasketStore()
+
+const { partidoBasket, marcadorBasket } = storeToRefs(basketStore)
+
+basketStore.setPartidoBasket()
+
+// basketStore.resetPartidoBasket()
+console.log(partidoBasket.value)
+
+
+
 
 
 </script>
