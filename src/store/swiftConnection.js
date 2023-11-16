@@ -47,7 +47,7 @@ actions: {
     rtConnection1.onOpen = function() {
       trace("Connection opened");
       self.rtRemote = new RTRemote(rtConnection1, "remote");
-      self.rtRemote.getStatus("Project","Current")
+      // self.rtRemote.getStatus("Project","Current")
       self.swiftConnectionStatus = 1
       // console.log(self.rtRemote)
       // return {videoStream, rtRemote}
@@ -58,6 +58,15 @@ actions: {
       this.swiftConnectionStatus = 0
       self.startConnection();
       }
+    // rtConnection1.onRecieve = function (event) {
+
+    //   console.log("callback")
+    //   response = JSON.parse(event.data);
+    //     if (typeof response.status === "undefined")
+    //     return;
+    //     if (response.status == "")
+    //     return;
+    // }
   },
   OpenConnection()
   {
@@ -67,7 +76,24 @@ actions: {
       trace("Connection opened");
       self.videoStream = new RTVideoStream(rtConnection, "videoProtocol", "myVideoId");
       self.rtRemote = new RTRemote(rtConnection, "remote");
-      self.rtRemote.getStatus("Project","Current")
+
+      self.rtRemote.callbackOpen = function()
+      {
+      console.log("callback open")
+      }
+
+
+      self.rtRemote.callbackRecieve = function(event) {
+        const response = JSON.parse(event.data);
+        console.log(response)
+        if (typeof response.status === "undefined")
+        return;
+        if (response.status == "")
+        return;
+
+
+      }
+      // self.rtRemote.getStatus("Project","Current")
       self.swiftConnectionStatus = 1
       // console.log(self.rtRemote)
       // return {videoStream, rtRemote}
@@ -80,9 +106,10 @@ actions: {
       }
   },
   getStatus(type, filter) {
-    console.log(type, filter)
-    const status = this.rtRemote.getStatus(type, filter)
-    console.log(status)
+    // console.log(type, filter)
+    console.log("status store")
+    this.rtRemote.getStatus(type, filter)
+    // console.log(status)
 
   },
   cambiarImagen() {

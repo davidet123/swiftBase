@@ -1,0 +1,4502 @@
+[
+    {
+        "NOMBRE": "KANDIE, KIBIWOT",
+        "POS_OFICIAL": 1,
+        "DORSAL": 1,
+        "TIEMPO_OFICIAL": "0:57:40",
+        "TIEMPO_REAL": "0:57:38",
+        "PROMEDIO_REAL": "2,44",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "KEJELCHA, YOMIF",
+        "POS_OFICIAL": 2,
+        "DORSAL": 2,
+        "TIEMPO_OFICIAL": "0:57:41",
+        "TIEMPO_REAL": "0:57:40",
+        "PROMEDIO_REAL": "2,44",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "GEBRHIWET, HAGOS",
+        "POS_OFICIAL": 3,
+        "DORSAL": 6,
+        "TIEMPO_OFICIAL": "0:57:41",
+        "TIEMPO_REAL": "0:57:40",
+        "PROMEDIO_REAL": "2,44",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "BAREGA, SELEMON",
+        "POS_OFICIAL": 4,
+        "DORSAL": 9,
+        "TIEMPO_OFICIAL": "0:57:50",
+        "TIEMPO_REAL": "0:57:49",
+        "PROMEDIO_REAL": "2,44",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "SAWE, SABASTIAN",
+        "POS_OFICIAL": 5,
+        "DORSAL": 7,
+        "TIEMPO_OFICIAL": "0:58:29",
+        "TIEMPO_REAL": "0:58:27",
+        "PROMEDIO_REAL": "2,46",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "CHEPKWONY, HILLARY",
+        "POS_OFICIAL": 6,
+        "DORSAL": 8,
+        "TIEMPO_OFICIAL": "0:58:53",
+        "TIEMPO_REAL": "0:58:52",
+        "PROMEDIO_REAL": "2,47",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "KIMELI, MATHEW",
+        "POS_OFICIAL": 7,
+        "DORSAL": 4,
+        "TIEMPO_OFICIAL": "0:59:00",
+        "TIEMPO_REAL": "0:58:58",
+        "PROMEDIO_REAL": "2,48",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "KIMELI, NICHOLAS",
+        "POS_OFICIAL": 8,
+        "DORSAL": 10,
+        "TIEMPO_OFICIAL": "0:59:06",
+        "TIEMPO_REAL": "0:59:05",
+        "PROMEDIO_REAL": "2,48",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "KIPKOECH, HILLARY",
+        "POS_OFICIAL": 9,
+        "DORSAL": 14,
+        "TIEMPO_OFICIAL": "0:59:22",
+        "TIEMPO_REAL": "0:59:22",
+        "PROMEDIO_REAL": "2,49",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "LANGAT, WELDON",
+        "POS_OFICIAL": 10,
+        "DORSAL": 15,
+        "TIEMPO_OFICIAL": "0:59:22",
+        "TIEMPO_REAL": "0:59:22",
+        "PROMEDIO_REAL": "2,49",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "KIPROP, STEPHEN",
+        "POS_OFICIAL": 11,
+        "DORSAL": 3,
+        "TIEMPO_OFICIAL": "0:59:32",
+        "TIEMPO_REAL": "0:59:30",
+        "PROMEDIO_REAL": "2,49",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "WORKU, TADESE",
+        "POS_OFICIAL": 12,
+        "DORSAL": 5,
+        "TIEMPO_OFICIAL": "0:59:33",
+        "TIEMPO_REAL": "0:59:32",
+        "PROMEDIO_REAL": "2,49",
+        "Field2": "M-UNDER23",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "MAYO, CARLOS",
+        "POS_OFICIAL": 13,
+        "DORSAL": 17,
+        "TIEMPO_OFICIAL": "0:59:39",
+        "TIEMPO_REAL": "0:59:39",
+        "PROMEDIO_REAL": "2,50",
+        "Field2": "M-SENIOR",
+        "Field8": "CA ADIDAS"
+    },
+    {
+        "NOMBRE": "BARATA, SAMUEL",
+        "POS_OFICIAL": 14,
+        "DORSAL": 24,
+        "TIEMPO_OFICIAL": "0:59:40",
+        "TIEMPO_REAL": "0:59:40",
+        "PROMEDIO_REAL": "2,50",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "RIVA, PIETRO",
+        "POS_OFICIAL": 15,
+        "DORSAL": 20,
+        "TIEMPO_OFICIAL": "0:59:41",
+        "TIEMPO_REAL": "0:59:41",
+        "PROMEDIO_REAL": "2,50",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "FELIX, BOUR",
+        "POS_OFICIAL": 16,
+        "DORSAL": 23,
+        "TIEMPO_OFICIAL": "1:00:39",
+        "TIEMPO_REAL": "1:00:39",
+        "PROMEDIO_REAL": "2,52",
+        "Field2": "M-SENIOR",
+        "Field8": "Asics team"
+    },
+    {
+        "NOMBRE": "KWEMOI, BRIAN",
+        "POS_OFICIAL": 17,
+        "DORSAL": 13,
+        "TIEMPO_OFICIAL": "1:00:40",
+        "TIEMPO_REAL": "1:00:39",
+        "PROMEDIO_REAL": "2,53",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "BEN DAOUD, HAMID",
+        "POS_OFICIAL": 18,
+        "DORSAL": 16,
+        "TIEMPO_OFICIAL": "1:00:41",
+        "TIEMPO_REAL": "1:00:41",
+        "PROMEDIO_REAL": "2,53",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "SIMBASSA, ABBABIYA",
+        "POS_OFICIAL": 19,
+        "DORSAL": 21,
+        "TIEMPO_OFICIAL": "1:00:42",
+        "TIEMPO_REAL": "1:00:41",
+        "PROMEDIO_REAL": "2,53",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "KIBIWOTT, KELVIN",
+        "POS_OFICIAL": 20,
+        "DORSAL": 19,
+        "TIEMPO_OFICIAL": "1:00:52",
+        "TIEMPO_REAL": "1:00:51",
+        "PROMEDIO_REAL": "2,53",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "BLANCO, JORGE",
+        "POS_OFICIAL": 21,
+        "DORSAL": 30,
+        "TIEMPO_OFICIAL": "1:02:02",
+        "TIEMPO_REAL": "1:02:02",
+        "PROMEDIO_REAL": "2,56",
+        "Field2": "M-SENIOR",
+        "Field8": "ASICS"
+    },
+    {
+        "NOMBRE": "TESFU, FILMON",
+        "POS_OFICIAL": 22,
+        "DORSAL": 32,
+        "TIEMPO_OFICIAL": "1:02:04",
+        "TIEMPO_REAL": "1:02:03",
+        "PROMEDIO_REAL": "2,57",
+        "Field2": "M-SENIOR",
+        "Field8": "Sv sportlust"
+    },
+    {
+        "NOMBRE": "GOMES, H\u00c9LIO",
+        "POS_OFICIAL": 23,
+        "DORSAL": 45,
+        "TIEMPO_OFICIAL": "1:02:07",
+        "TIEMPO_REAL": "1:02:07",
+        "PROMEDIO_REAL": "2,57",
+        "Field2": "M-M35",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "BOULVIN, DORIAN",
+        "POS_OFICIAL": 24,
+        "DORSAL": 34,
+        "TIEMPO_OFICIAL": "1:02:08",
+        "TIEMPO_REAL": "1:02:07",
+        "PROMEDIO_REAL": "2,57",
+        "Field2": "M-SENIOR",
+        "Field8": "Runners'lab Athletics Team"
+    },
+    {
+        "NOMBRE": "ROJO, YAGO",
+        "POS_OFICIAL": 25,
+        "DORSAL": 27,
+        "TIEMPO_OFICIAL": "1:02:18",
+        "TIEMPO_REAL": "1:02:18",
+        "PROMEDIO_REAL": "2,57",
+        "Field2": "M-SENIOR",
+        "Field8": "HOKA"
+    },
+    {
+        "NOMBRE": "PINTO, RUI",
+        "POS_OFICIAL": 26,
+        "DORSAL": 28,
+        "TIEMPO_OFICIAL": "1:02:24",
+        "TIEMPO_REAL": "1:02:23",
+        "PROMEDIO_REAL": "2,57",
+        "Field2": "M-SENIOR",
+        "Field8": "Sporting Clube De Portugal"
+    },
+    {
+        "NOMBRE": "GONZALEZ RIVERA, JORGE",
+        "POS_OFICIAL": 27,
+        "DORSAL": 35,
+        "TIEMPO_OFICIAL": "1:02:27",
+        "TIEMPO_REAL": "1:02:27",
+        "PROMEDIO_REAL": "2,58",
+        "Field2": "M-SENIOR",
+        "Field8": "CLINICA MENORCA CAUG"
+    },
+    {
+        "NOMBRE": "BOUCHIKHI, LAHSENE",
+        "POS_OFICIAL": 28,
+        "DORSAL": 51,
+        "TIEMPO_OFICIAL": "1:02:28",
+        "TIEMPO_REAL": "1:02:27",
+        "PROMEDIO_REAL": "2,58",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "GODEFROY, ALEXIS",
+        "POS_OFICIAL": 29,
+        "DORSAL": 42,
+        "TIEMPO_OFICIAL": "1:02:28",
+        "TIEMPO_REAL": "1:02:28",
+        "PROMEDIO_REAL": "2,58",
+        "Field2": "M-SENIOR",
+        "Field8": "BLAGNAC SC"
+    },
+    {
+        "NOMBRE": "GUERRA, JAVIER",
+        "POS_OFICIAL": 30,
+        "DORSAL": 22,
+        "TIEMPO_OFICIAL": "1:02:30",
+        "TIEMPO_REAL": "1:02:30",
+        "PROMEDIO_REAL": "2,58",
+        "Field2": "M-M35",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "SANCHEZ GOMEZ, PABLO",
+        "POS_OFICIAL": 31,
+        "DORSAL": 41,
+        "TIEMPO_OFICIAL": "1:02:51",
+        "TIEMPO_REAL": "1:02:50",
+        "PROMEDIO_REAL": "2,59",
+        "Field2": "M-SENIOR",
+        "Field8": "Vicky Foods  Athletics"
+    },
+    {
+        "NOMBRE": "GODDARD, ED",
+        "POS_OFICIAL": 32,
+        "DORSAL": 29,
+        "TIEMPO_OFICIAL": "1:02:52",
+        "TIEMPO_REAL": "1:02:52",
+        "PROMEDIO_REAL": "2,59",
+        "Field2": "M-SENIOR",
+        "Field8": "ASICS"
+    },
+    {
+        "NOMBRE": "ASSORGIA, GIANLUCA",
+        "POS_OFICIAL": 33,
+        "DORSAL": 37,
+        "TIEMPO_OFICIAL": "1:03:39",
+        "TIEMPO_REAL": "1:03:39",
+        "PROMEDIO_REAL": "3,01",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "DAVIES, JONATHAN STUART",
+        "POS_OFICIAL": 34,
+        "DORSAL": 525,
+        "TIEMPO_OFICIAL": "1:03:45",
+        "TIEMPO_REAL": "1:03:44",
+        "PROMEDIO_REAL": "3,01",
+        "Field2": "M-SENIOR",
+        "Field8": "HOKA"
+    },
+    {
+        "NOMBRE": "LOCKLEY, OLLIE",
+        "POS_OFICIAL": 35,
+        "DORSAL": 33,
+        "TIEMPO_OFICIAL": "1:03:45",
+        "TIEMPO_REAL": "1:03:44",
+        "PROMEDIO_REAL": "3,01",
+        "Field2": "M-SENIOR",
+        "Field8": "Leeds City AC"
+    },
+    {
+        "NOMBRE": "BOUGNOT, IGOR",
+        "POS_OFICIAL": 36,
+        "DORSAL": 545,
+        "TIEMPO_OFICIAL": "1:03:47",
+        "TIEMPO_REAL": "1:03:46",
+        "PROMEDIO_REAL": "3,01",
+        "Field2": "M-SENIOR",
+        "Field8": "Entente Sud Lyonnais"
+    },
+    {
+        "NOMBRE": "EL MAZOURY, AHMED",
+        "POS_OFICIAL": 37,
+        "DORSAL": 561,
+        "TIEMPO_OFICIAL": "1:03:50",
+        "TIEMPO_REAL": "1:03:48",
+        "PROMEDIO_REAL": "3,02",
+        "Field2": "M-SENIOR",
+        "Field8": "Recastello Radici Group"
+    },
+    {
+        "NOMBRE": "SICOT, MAEL",
+        "POS_OFICIAL": 38,
+        "DORSAL": 78,
+        "TIEMPO_OFICIAL": "1:03:58",
+        "TIEMPO_REAL": "1:03:58",
+        "PROMEDIO_REAL": "3,02",
+        "Field2": "M-SENIOR",
+        "Field8": "TEMPO RUN CLUB"
+    },
+    {
+        "NOMBRE": "FREDDY, GUIMARD",
+        "POS_OFICIAL": 39,
+        "DORSAL": 53,
+        "TIEMPO_OFICIAL": "1:04:00",
+        "TIEMPO_REAL": "1:04:00",
+        "PROMEDIO_REAL": "3,02",
+        "Field2": "M-M35",
+        "Field8": "Ales cevennes"
+    },
+    {
+        "NOMBRE": "ZAJ\u00cdC, MARTIN",
+        "POS_OFICIAL": 40,
+        "DORSAL": 74,
+        "TIEMPO_OFICIAL": "1:04:28",
+        "TIEMPO_REAL": "1:04:27",
+        "PROMEDIO_REAL": "3,03",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "CHELIMO, MARGARET",
+        "POS_OFICIAL": 41,
+        "DORSAL": 202,
+        "TIEMPO_OFICIAL": "1:04:46",
+        "TIEMPO_REAL": "1:04:44",
+        "PROMEDIO_REAL": "3,04",
+        "Field2": "F-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "BAUTISTA ROVIRA, PABLO",
+        "POS_OFICIAL": 42,
+        "DORSAL": 535,
+        "TIEMPO_OFICIAL": "1:04:49",
+        "TIEMPO_REAL": "1:04:46",
+        "PROMEDIO_REAL": "3,04",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. PUERTAS LORCA"
+    },
+    {
+        "NOMBRE": "JENNINGS, EMMET",
+        "POS_OFICIAL": 43,
+        "DORSAL": 66,
+        "TIEMPO_OFICIAL": "1:04:52",
+        "TIEMPO_REAL": "1:04:51",
+        "PROMEDIO_REAL": "3,04",
+        "Field2": "M-SENIOR",
+        "Field8": "Dundrum South Dublin AC"
+    },
+    {
+        "NOMBRE": "CHEPTAI, IRINE",
+        "POS_OFICIAL": 44,
+        "DORSAL": 204,
+        "TIEMPO_OFICIAL": "1:04:53",
+        "TIEMPO_REAL": "1:04:51",
+        "PROMEDIO_REAL": "3,05",
+        "Field2": "F-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "MOAKES, SAMUEL",
+        "POS_OFICIAL": 45,
+        "DORSAL": 44,
+        "TIEMPO_OFICIAL": "1:04:58",
+        "TIEMPO_REAL": "1:04:56",
+        "PROMEDIO_REAL": "3,05",
+        "Field2": "M-SENIOR",
+        "Field8": "Notts AC"
+    },
+    {
+        "NOMBRE": "DE LEON, FRANCISCO JAVIER",
+        "POS_OFICIAL": 46,
+        "DORSAL": 38,
+        "TIEMPO_OFICIAL": "1:04:58",
+        "TIEMPO_REAL": "1:04:58",
+        "PROMEDIO_REAL": "3,05",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "VALENTE, JO\u00c3O",
+        "POS_OFICIAL": 47,
+        "DORSAL": 50,
+        "TIEMPO_OFICIAL": "1:05:00",
+        "TIEMPO_REAL": "1:04:59",
+        "PROMEDIO_REAL": "3,05",
+        "Field2": "M-SENIOR",
+        "Field8": "Thomar Athletics"
+    },
+    {
+        "NOMBRE": "BERSEE, DOMINIC",
+        "POS_OFICIAL": 48,
+        "DORSAL": 22000,
+        "TIEMPO_OFICIAL": "1:05:04",
+        "TIEMPO_REAL": "1:05:03",
+        "PROMEDIO_REAL": "3,05",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "MARCIK, VLADIMIR",
+        "POS_OFICIAL": 49,
+        "DORSAL": 55,
+        "TIEMPO_OFICIAL": "1:05:10",
+        "TIEMPO_REAL": "1:05:09",
+        "PROMEDIO_REAL": "3,05",
+        "Field2": "M-SENIOR",
+        "Field8": "AK \u0160koda Plze\u0148"
+    },
+    {
+        "NOMBRE": "SERRANO GARCIA DE DIONISIO, FRANCISCO",
+        "POS_OFICIAL": 50,
+        "DORSAL": 56,
+        "TIEMPO_OFICIAL": "1:05:13",
+        "TIEMPO_REAL": "1:05:11",
+        "PROMEDIO_REAL": "3,05",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. ALBACETE DIPUT"
+    },
+    {
+        "NOMBRE": "CHEPNGETICH, JANET",
+        "POS_OFICIAL": 51,
+        "DORSAL": 208,
+        "TIEMPO_OFICIAL": "1:05:15",
+        "TIEMPO_REAL": "1:05:13",
+        "PROMEDIO_REAL": "3,06",
+        "Field2": "F-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "SALAVERRIA ZAPIRAIN, PABLO",
+        "POS_OFICIAL": 52,
+        "DORSAL": 36,
+        "TIEMPO_OFICIAL": "1:05:25",
+        "TIEMPO_REAL": "1:05:24",
+        "PROMEDIO_REAL": "3,06",
+        "Field2": "M-SENIOR",
+        "Field8": "Hinaco Monz\u00f3n"
+    },
+    {
+        "NOMBRE": "ATSE HERRERA, JONATHAN",
+        "POS_OFICIAL": 53,
+        "DORSAL": 61,
+        "TIEMPO_OFICIAL": "1:05:26",
+        "TIEMPO_REAL": "1:05:26",
+        "PROMEDIO_REAL": "3,06",
+        "Field2": "M-M35",
+        "Field8": "Equipo nacional Costa de Marfil"
+    },
+    {
+        "NOMBRE": "ANTOINE, VILLECHENAUD",
+        "POS_OFICIAL": 54,
+        "DORSAL": 46,
+        "TIEMPO_OFICIAL": "1:05:28",
+        "TIEMPO_REAL": "1:05:26",
+        "PROMEDIO_REAL": "3,06",
+        "Field2": "M-SENIOR",
+        "Field8": "Grand Angoul\u00eame Athl\u00e9tisme"
+    },
+    {
+        "NOMBRE": "GONZALEZ-MOHINO MAYORALAS, FERNANDO",
+        "POS_OFICIAL": 55,
+        "DORSAL": 447,
+        "TIEMPO_OFICIAL": "1:05:45",
+        "TIEMPO_REAL": "1:05:43",
+        "PROMEDIO_REAL": "3,07",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. ALBACETE DIPUT"
+    },
+    {
+        "NOMBRE": "CALAHORRA BENITO, ASIER",
+        "POS_OFICIAL": 56,
+        "DORSAL": 601,
+        "TIEMPO_OFICIAL": "1:05:46",
+        "TIEMPO_REAL": "1:05:44",
+        "PROMEDIO_REAL": "3,07",
+        "Field2": "M-UNDER23",
+        "Field8": "CANGURO A.A.C."
+    },
+    {
+        "NOMBRE": "GOMEZ SARRIA, JOSEP",
+        "POS_OFICIAL": 57,
+        "DORSAL": 474,
+        "TIEMPO_OFICIAL": "1:05:51",
+        "TIEMPO_REAL": "1:05:49",
+        "PROMEDIO_REAL": "3,07",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "SCH\u00d6NENBERGER, URS",
+        "POS_OFICIAL": 58,
+        "DORSAL": 54,
+        "TIEMPO_OFICIAL": "1:05:59",
+        "TIEMPO_REAL": "1:05:58",
+        "PROMEDIO_REAL": "3,08",
+        "Field2": "M-SENIOR",
+        "Field8": "LC Regensdorf"
+    },
+    {
+        "NOMBRE": "SANGAHANLI, AVELINO",
+        "POS_OFICIAL": 59,
+        "DORSAL": 57,
+        "TIEMPO_OFICIAL": "1:06:07",
+        "TIEMPO_REAL": "1:06:04",
+        "PROMEDIO_REAL": "3,08",
+        "Field2": "M-SENIOR",
+        "Field8": "Kufukula"
+    },
+    {
+        "NOMBRE": "GEBRESLASE, GOTYTOM",
+        "POS_OFICIAL": 60,
+        "DORSAL": 203,
+        "TIEMPO_OFICIAL": "1:06:12",
+        "TIEMPO_REAL": "1:06:10",
+        "PROMEDIO_REAL": "3,08",
+        "Field2": "F-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "ANTOINE, RONDOT",
+        "POS_OFICIAL": 61,
+        "DORSAL": 526,
+        "TIEMPO_OFICIAL": "1:06:19",
+        "TIEMPO_REAL": "1:06:17",
+        "PROMEDIO_REAL": "3,09",
+        "Field2": "M-M35",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "GEZAHAGN, TIGIST",
+        "POS_OFICIAL": 62,
+        "DORSAL": 207,
+        "TIEMPO_OFICIAL": "1:06:20",
+        "TIEMPO_REAL": "1:06:18",
+        "PROMEDIO_REAL": "3,09",
+        "Field2": "F-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "MICALLEF, LUKE",
+        "POS_OFICIAL": 63,
+        "DORSAL": 572,
+        "TIEMPO_OFICIAL": "1:06:22",
+        "TIEMPO_REAL": "1:06:21",
+        "PROMEDIO_REAL": "3,09",
+        "Field2": "M-SENIOR",
+        "Field8": "Malta"
+    },
+    {
+        "NOMBRE": "MENA MARCUELLO, SERGIO",
+        "POS_OFICIAL": 64,
+        "DORSAL": 60,
+        "TIEMPO_OFICIAL": "1:06:23",
+        "TIEMPO_REAL": "1:06:23",
+        "PROMEDIO_REAL": "3,09",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "KEJETA, MELAT",
+        "POS_OFICIAL": 65,
+        "DORSAL": 201,
+        "TIEMPO_OFICIAL": "1:06:25",
+        "TIEMPO_REAL": "1:06:24",
+        "PROMEDIO_REAL": "3,09",
+        "Field2": "F-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "SOH, SOH RUI YONG",
+        "POS_OFICIAL": 66,
+        "DORSAL": 62,
+        "TIEMPO_OFICIAL": "1:06:45",
+        "TIEMPO_REAL": "1:06:44",
+        "PROMEDIO_REAL": "3,10",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "A\u00d1ON BLASCO, BORJA",
+        "POS_OFICIAL": 67,
+        "DORSAL": 435,
+        "TIEMPO_OFICIAL": "1:06:46",
+        "TIEMPO_REAL": "1:06:43",
+        "PROMEDIO_REAL": "3,10",
+        "Field2": "M-SENIOR",
+        "Field8": "C.D. METAESPORT"
+    },
+    {
+        "NOMBRE": "FINK, LEANDER",
+        "POS_OFICIAL": 68,
+        "DORSAL": 1201,
+        "TIEMPO_OFICIAL": "1:06:48",
+        "TIEMPO_REAL": "1:06:46",
+        "PROMEDIO_REAL": "3,10",
+        "Field2": "M-UNDER23",
+        "Field8": "TV Alzey"
+    },
+    {
+        "NOMBRE": "MOUSSU, TH\u00c9O",
+        "POS_OFICIAL": 69,
+        "DORSAL": 517,
+        "TIEMPO_OFICIAL": "1:06:50",
+        "TIEMPO_REAL": "1:06:48",
+        "PROMEDIO_REAL": "3,10",
+        "Field2": "M-SENIOR",
+        "Field8": "Athletic Club La Roche sur Yon"
+    },
+    {
+        "NOMBRE": "ANGEL FERNANDEZ, RUBEN",
+        "POS_OFICIAL": 70,
+        "DORSAL": 424,
+        "TIEMPO_OFICIAL": "1:06:55",
+        "TIEMPO_REAL": "1:06:53",
+        "PROMEDIO_REAL": "3,10",
+        "Field2": "M-SENIOR",
+        "Field8": "Zona de Meta"
+    },
+    {
+        "NOMBRE": "ALONSO MU\u00d1OZ, JORGE",
+        "POS_OFICIAL": 71,
+        "DORSAL": 586,
+        "TIEMPO_OFICIAL": "1:06:55",
+        "TIEMPO_REAL": "1:06:52",
+        "PROMEDIO_REAL": "3,10",
+        "Field2": "M-SENIOR",
+        "Field8": "RFB BOADILLA"
+    },
+    {
+        "NOMBRE": "MEDALL JUAN, JAVIER",
+        "POS_OFICIAL": 72,
+        "DORSAL": 606,
+        "TIEMPO_OFICIAL": "1:07:01",
+        "TIEMPO_REAL": "1:06:57",
+        "PROMEDIO_REAL": "3,11",
+        "Field2": "M-M35",
+        "Field8": "RUN ADDICTION"
+    },
+    {
+        "NOMBRE": "ADRIEN, NOEL",
+        "POS_OFICIAL": 73,
+        "DORSAL": 527,
+        "TIEMPO_OFICIAL": "1:07:02",
+        "TIEMPO_REAL": "1:06:58",
+        "PROMEDIO_REAL": "3,11",
+        "Field2": "M-SENIOR",
+        "Field8": "Waco"
+    },
+    {
+        "NOMBRE": "AGUSTIN ESCRICHE, LUIS",
+        "POS_OFICIAL": 74,
+        "DORSAL": 253,
+        "TIEMPO_OFICIAL": "1:07:10",
+        "TIEMPO_REAL": "1:07:09",
+        "PROMEDIO_REAL": "3,11",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. ALBACETE DIPUT"
+    },
+    {
+        "NOMBRE": "HARRISON, SAMANTHA",
+        "POS_OFICIAL": 75,
+        "DORSAL": 210,
+        "TIEMPO_OFICIAL": "1:07:10",
+        "TIEMPO_REAL": "1:07:08",
+        "PROMEDIO_REAL": "3,11",
+        "Field2": "F-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "DEL POZO ALVAREZ, MIGUEL",
+        "POS_OFICIAL": 76,
+        "DORSAL": 421,
+        "TIEMPO_OFICIAL": "1:07:12",
+        "TIEMPO_REAL": "1:07:10",
+        "PROMEDIO_REAL": "3,11",
+        "Field2": "M-M40",
+        "Field8": "C.A. \u00a0SUANZES - SAN BLAS"
+    },
+    {
+        "NOMBRE": "BELKACEM, JEREMY",
+        "POS_OFICIAL": 77,
+        "DORSAL": 544,
+        "TIEMPO_OFICIAL": "1:07:24",
+        "TIEMPO_REAL": "1:07:24",
+        "PROMEDIO_REAL": "3,12",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. BALMA"
+    },
+    {
+        "NOMBRE": "RIOS RODRIGUEZ, EDWART",
+        "POS_OFICIAL": 78,
+        "DORSAL": 528,
+        "TIEMPO_OFICIAL": "1:07:31",
+        "TIEMPO_REAL": "1:07:29",
+        "PROMEDIO_REAL": "3,12",
+        "Field2": "M-SENIOR",
+        "Field8": "INTEC ZOITI"
+    },
+    {
+        "NOMBRE": "REMI, RICHART",
+        "POS_OFICIAL": 79,
+        "DORSAL": 422,
+        "TIEMPO_OFICIAL": "1:07:52",
+        "TIEMPO_REAL": "1:07:50",
+        "PROMEDIO_REAL": "3,13",
+        "Field2": "M-SENIOR",
+        "Field8": "Run Up Nanterre"
+    },
+    {
+        "NOMBRE": "VIEITO VILACOBA, JOSE MANUEL",
+        "POS_OFICIAL": 80,
+        "DORSAL": 415,
+        "TIEMPO_OFICIAL": "1:07:54",
+        "TIEMPO_REAL": "1:07:51",
+        "PROMEDIO_REAL": "3,13",
+        "Field2": "M-M35",
+        "Field8": "ATLETISMO SAR VERM\u00da PETRONI"
+    },
+    {
+        "NOMBRE": "GARCIA GAVILAN, DANIEL",
+        "POS_OFICIAL": 81,
+        "DORSAL": 508,
+        "TIEMPO_OFICIAL": "1:07:54",
+        "TIEMPO_REAL": "1:07:52",
+        "PROMEDIO_REAL": "3,13",
+        "Field2": "M-SENIOR",
+        "Field8": "Trops cueva de nerja"
+    },
+    {
+        "NOMBRE": "VIDAL RIBERO, JUAN",
+        "POS_OFICIAL": 82,
+        "DORSAL": 541,
+        "TIEMPO_OFICIAL": "1:07:58",
+        "TIEMPO_REAL": "1:07:56",
+        "PROMEDIO_REAL": "3,13",
+        "Field2": "M-M40",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "DIAZ CARRETERO, JOSEP",
+        "POS_OFICIAL": 83,
+        "DORSAL": 445,
+        "TIEMPO_OFICIAL": "1:08:21",
+        "TIEMPO_REAL": "1:08:18",
+        "PROMEDIO_REAL": "3,14",
+        "Field2": "M-SENIOR",
+        "Field8": "RUNNERS ESPANYOL"
+    },
+    {
+        "NOMBRE": "SIMON, ANTONIN",
+        "POS_OFICIAL": 84,
+        "DORSAL": 607,
+        "TIEMPO_OFICIAL": "1:08:23",
+        "TIEMPO_REAL": "1:08:20",
+        "PROMEDIO_REAL": "3,14",
+        "Field2": "M-SENIOR",
+        "Field8": "Athle pays de Foug\u00e8res"
+    },
+    {
+        "NOMBRE": "POSTILL, NATHAN",
+        "POS_OFICIAL": 85,
+        "DORSAL": 537,
+        "TIEMPO_OFICIAL": "1:08:25",
+        "TIEMPO_REAL": "1:08:22",
+        "PROMEDIO_REAL": "3,15",
+        "Field2": "M-SENIOR",
+        "Field8": "Border Harriers AC"
+    },
+    {
+        "NOMBRE": "MENTA MARTINEZ, JAVIER",
+        "POS_OFICIAL": 86,
+        "DORSAL": 485,
+        "TIEMPO_OFICIAL": "1:08:31",
+        "TIEMPO_REAL": "1:08:28",
+        "PROMEDIO_REAL": "3,15",
+        "Field2": "M-SENIOR",
+        "Field8": "Zumeatarra Atletismo Taldea"
+    },
+    {
+        "NOMBRE": "BINZAK, JOHNNY",
+        "POS_OFICIAL": 87,
+        "DORSAL": 539,
+        "TIEMPO_OFICIAL": "1:08:34",
+        "TIEMPO_REAL": "1:08:30",
+        "PROMEDIO_REAL": "3,15",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "CARMONA PARADA, FRANCESC",
+        "POS_OFICIAL": 88,
+        "DORSAL": 524,
+        "TIEMPO_OFICIAL": "1:08:38",
+        "TIEMPO_REAL": "1:08:35",
+        "PROMEDIO_REAL": "3,15",
+        "Field2": "M-M35",
+        "Field8": "CAVA"
+    },
+    {
+        "NOMBRE": "THOMAS, DROUAULT",
+        "POS_OFICIAL": 89,
+        "DORSAL": 548,
+        "TIEMPO_OFICIAL": "1:08:39",
+        "TIEMPO_REAL": "1:08:37",
+        "PROMEDIO_REAL": "3,15",
+        "Field2": "M-SENIOR",
+        "Field8": "S/L Endurance 72"
+    },
+    {
+        "NOMBRE": "HAFTU, NIGSTI",
+        "POS_OFICIAL": 90,
+        "DORSAL": 206,
+        "TIEMPO_OFICIAL": "1:08:42",
+        "TIEMPO_REAL": "1:08:40",
+        "PROMEDIO_REAL": "3,15",
+        "Field2": "F-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "TREJO ALEMAN, ROBERTO CARLOS",
+        "POS_OFICIAL": 91,
+        "DORSAL": 600,
+        "TIEMPO_OFICIAL": "1:08:43",
+        "TIEMPO_REAL": "1:08:40",
+        "PROMEDIO_REAL": "3,15",
+        "Field2": "M-M40",
+        "Field8": "HIRU-HERRI"
+    },
+    {
+        "NOMBRE": "ALLAGUI D\u00cdEZ, ISMAEL",
+        "POS_OFICIAL": 92,
+        "DORSAL": 577,
+        "TIEMPO_OFICIAL": "1:08:44",
+        "TIEMPO_REAL": "1:08:42",
+        "PROMEDIO_REAL": "3,15",
+        "Field2": "M-UNDER23",
+        "Field8": "ZURICH Runners"
+    },
+    {
+        "NOMBRE": "ABDELMOUNEM, ABDELKARIM ARABI",
+        "POS_OFICIAL": 93,
+        "DORSAL": 574,
+        "TIEMPO_OFICIAL": "1:08:44",
+        "TIEMPO_REAL": "1:08:41",
+        "PROMEDIO_REAL": "3,15",
+        "Field2": "M-SENIOR",
+        "Field8": "Courir \u00e0 Abbeville"
+    },
+    {
+        "NOMBRE": "YOUNES CHELLOUBI, MOHAMED RIDA",
+        "POS_OFICIAL": 94,
+        "DORSAL": 496,
+        "TIEMPO_OFICIAL": "1:08:48",
+        "TIEMPO_REAL": "1:08:45",
+        "PROMEDIO_REAL": "3,16",
+        "Field2": "M-M40",
+        "Field8": "C.C. LA LLEBRE"
+    },
+    {
+        "NOMBRE": "GIMENO BENAVENT, JUAN",
+        "POS_OFICIAL": 95,
+        "DORSAL": 591,
+        "TIEMPO_OFICIAL": "1:08:48",
+        "TIEMPO_REAL": "1:08:46",
+        "PROMEDIO_REAL": "3,16",
+        "Field2": "M-M35",
+        "Field8": "C.A. CARNICAS SERRANO"
+    },
+    {
+        "NOMBRE": "ESPERANZA MATEOS, FERNANDO",
+        "POS_OFICIAL": 96,
+        "DORSAL": 450,
+        "TIEMPO_OFICIAL": "1:08:48",
+        "TIEMPO_REAL": "1:08:46",
+        "PROMEDIO_REAL": "3,16",
+        "Field2": "M-M35",
+        "Field8": "INTEC ZOITI"
+    },
+    {
+        "NOMBRE": "ECHAMENDI VILLANUEVA, MIKEL",
+        "POS_OFICIAL": 97,
+        "DORSAL": 436,
+        "TIEMPO_OFICIAL": "1:08:50",
+        "TIEMPO_REAL": "1:08:47",
+        "PROMEDIO_REAL": "3,16",
+        "Field2": "M-SENIOR",
+        "Field8": "HIRU-HERRI"
+    },
+    {
+        "NOMBRE": "NI\u00d1O ESPINOSA, SERGI",
+        "POS_OFICIAL": 98,
+        "DORSAL": 542,
+        "TIEMPO_OFICIAL": "1:08:50",
+        "TIEMPO_REAL": "1:08:47",
+        "PROMEDIO_REAL": "3,16",
+        "Field2": "M-SENIOR",
+        "Field8": "SONS OF RUNNING RIVAS"
+    },
+    {
+        "NOMBRE": "MACIA GARCIA, FRANCISCO VICENTE",
+        "POS_OFICIAL": 99,
+        "DORSAL": 602,
+        "TIEMPO_OFICIAL": "1:08:50",
+        "TIEMPO_REAL": "1:08:47",
+        "PROMEDIO_REAL": "3,16",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. MARATHON CREVILLENTE"
+    },
+    {
+        "NOMBRE": "ALONSO ARES, VICTOR",
+        "POS_OFICIAL": 100,
+        "DORSAL": 531,
+        "TIEMPO_OFICIAL": "1:08:53",
+        "TIEMPO_REAL": "1:08:52",
+        "PROMEDIO_REAL": "3,16",
+        "Field2": "M-M35",
+        "Field8": "Vicky Foods Athletics"
+    },
+    {
+        "NOMBRE": "LAURENT, MAEL",
+        "POS_OFICIAL": 101,
+        "DORSAL": 476,
+        "TIEMPO_OFICIAL": "1:08:55",
+        "TIEMPO_REAL": "1:08:52",
+        "PROMEDIO_REAL": "3,16",
+        "Field2": "M-SENIOR",
+        "Field8": "AC NARBONNE MEDITERRANEE"
+    },
+    {
+        "NOMBRE": "PALOMO DEL ROSARIO, DAVID",
+        "POS_OFICIAL": 102,
+        "DORSAL": 423,
+        "TIEMPO_OFICIAL": "1:08:56",
+        "TIEMPO_REAL": "1:08:54",
+        "PROMEDIO_REAL": "3,16",
+        "Field2": "M-M40",
+        "Field8": "HIRU-HERRI"
+    },
+    {
+        "NOMBRE": "BORG, DAVID",
+        "POS_OFICIAL": 103,
+        "DORSAL": 24272,
+        "TIEMPO_OFICIAL": "1:09:00",
+        "TIEMPO_REAL": "1:08:59",
+        "PROMEDIO_REAL": "3,16",
+        "Field2": "M-UNDER23",
+        "Field8": "Gozo Athletix AC"
+    },
+    {
+        "NOMBRE": "BELDA VIDAL, FERRAN",
+        "POS_OFICIAL": 104,
+        "DORSAL": 500,
+        "TIEMPO_OFICIAL": "1:09:01",
+        "TIEMPO_REAL": "1:08:57",
+        "PROMEDIO_REAL": "3,16",
+        "Field2": "M-SENIOR",
+        "Field8": "C.D. METAESPORT"
+    },
+    {
+        "NOMBRE": "PALOMERA SVENSSON, SAMUEL",
+        "POS_OFICIAL": 105,
+        "DORSAL": 595,
+        "TIEMPO_OFICIAL": "1:09:01",
+        "TIEMPO_REAL": "1:08:58",
+        "PROMEDIO_REAL": "3,16",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. CARNICAS SERRANO"
+    },
+    {
+        "NOMBRE": "NIEVES, GUSTAVO",
+        "POS_OFICIAL": 106,
+        "DORSAL": 1075,
+        "TIEMPO_OFICIAL": "1:09:02",
+        "TIEMPO_REAL": "1:08:59",
+        "PROMEDIO_REAL": "3,16",
+        "Field2": "M-M40",
+        "Field8": "REAL CLUB CELTA ATLETISMO"
+    },
+    {
+        "NOMBRE": "LOMIDZE, GIORGI",
+        "POS_OFICIAL": 107,
+        "DORSAL": 900,
+        "TIEMPO_OFICIAL": "1:09:03",
+        "TIEMPO_REAL": "1:09:03",
+        "PROMEDIO_REAL": "3,16",
+        "Field2": "M-SENIOR",
+        "Field8": "Ministry Of Defense Of Georgia"
+    },
+    {
+        "NOMBRE": "GARCIA GALAN, JOSHUA",
+        "POS_OFICIAL": 108,
+        "DORSAL": 590,
+        "TIEMPO_OFICIAL": "1:09:06",
+        "TIEMPO_REAL": "1:09:04",
+        "PROMEDIO_REAL": "3,17",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. CARNICAS SERRANO"
+    },
+    {
+        "NOMBRE": "LLAMAZARES REY, ANIBAL",
+        "POS_OFICIAL": 109,
+        "DORSAL": 411,
+        "TIEMPO_OFICIAL": "1:09:07",
+        "TIEMPO_REAL": "1:09:03",
+        "PROMEDIO_REAL": "3,17",
+        "Field2": "M-M40",
+        "Field8": "DELTA VALENCIA C.A."
+    },
+    {
+        "NOMBRE": "SELLAK IDRISSI, ACHARAF",
+        "POS_OFICIAL": 110,
+        "DORSAL": 889,
+        "TIEMPO_OFICIAL": "1:09:08",
+        "TIEMPO_REAL": "1:09:05",
+        "PROMEDIO_REAL": "3,17",
+        "Field2": "M-M35",
+        "Field8": "Stadium Casablanca"
+    },
+    {
+        "NOMBRE": "MUELA CASTRO, JORDI",
+        "POS_OFICIAL": 111,
+        "DORSAL": 540,
+        "TIEMPO_OFICIAL": "1:09:08",
+        "TIEMPO_REAL": "1:09:04",
+        "PROMEDIO_REAL": "3,17",
+        "Field2": "M-M35",
+        "Field8": "C.N. Matar\u00f3"
+    },
+    {
+        "NOMBRE": "BURUCS, FERENC",
+        "POS_OFICIAL": 112,
+        "DORSAL": 513,
+        "TIEMPO_OFICIAL": "1:09:11",
+        "TIEMPO_REAL": "1:09:11",
+        "PROMEDIO_REAL": "3,17",
+        "Field2": "M-M35",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "SIERES GOMEZ, AGUSTIN",
+        "POS_OFICIAL": 113,
+        "DORSAL": 597,
+        "TIEMPO_OFICIAL": "1:09:11",
+        "TIEMPO_REAL": "1:09:08",
+        "PROMEDIO_REAL": "3,17",
+        "Field2": "M-M40",
+        "Field8": "C.A. CARNICAS SERRANO"
+    },
+    {
+        "NOMBRE": "BAS BALLESTER, MIQUEL",
+        "POS_OFICIAL": 114,
+        "DORSAL": 442,
+        "TIEMPO_OFICIAL": "1:09:12",
+        "TIEMPO_REAL": "1:09:09",
+        "PROMEDIO_REAL": "3,17",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "PONCE PEREZ, JESUS",
+        "POS_OFICIAL": 115,
+        "DORSAL": 596,
+        "TIEMPO_OFICIAL": "1:09:14",
+        "TIEMPO_REAL": "1:09:12",
+        "PROMEDIO_REAL": "3,17",
+        "Field2": "M-M40",
+        "Field8": "C.A. CARNICAS SERRANO"
+    },
+    {
+        "NOMBRE": "ALBARA\u00d1EZ SOTO, JAUME",
+        "POS_OFICIAL": 116,
+        "DORSAL": 499,
+        "TIEMPO_OFICIAL": "1:09:20",
+        "TIEMPO_REAL": "1:09:17",
+        "PROMEDIO_REAL": "3,17",
+        "Field2": "M-SENIOR",
+        "Field8": "C.D. METAESPORT"
+    },
+    {
+        "NOMBRE": "STURM, CHRISTOPH",
+        "POS_OFICIAL": 117,
+        "DORSAL": 491,
+        "TIEMPO_OFICIAL": "1:09:27",
+        "TIEMPO_REAL": "1:09:23",
+        "PROMEDIO_REAL": "3,18",
+        "Field2": "M-SENIOR",
+        "Field8": "Skivereinigung Amberg"
+    },
+    {
+        "NOMBRE": "LIONEL, PETRIACQ",
+        "POS_OFICIAL": 118,
+        "DORSAL": 559,
+        "TIEMPO_OFICIAL": "1:09:29",
+        "TIEMPO_REAL": "1:09:25",
+        "PROMEDIO_REAL": "3,18",
+        "Field2": "M-M45",
+        "Field8": "Pas Basque Athl\u00e9tisme"
+    },
+    {
+        "NOMBRE": "PIPER, PAUL",
+        "POS_OFICIAL": 119,
+        "DORSAL": 404,
+        "TIEMPO_OFICIAL": "1:09:30",
+        "TIEMPO_REAL": "1:09:25",
+        "PROMEDIO_REAL": "3,18",
+        "Field2": "M-M40",
+        "Field8": "West 4 Harriers"
+    },
+    {
+        "NOMBRE": "REIGADO, ROBERTO",
+        "POS_OFICIAL": 120,
+        "DORSAL": 532,
+        "TIEMPO_OFICIAL": "1:09:30",
+        "TIEMPO_REAL": "1:09:28",
+        "PROMEDIO_REAL": "3,18",
+        "Field2": "M-SENIOR",
+        "Field8": "CD Areias S. Jo\u00e3o"
+    },
+    {
+        "NOMBRE": "ALMANSA, JUAN FERNANDO",
+        "POS_OFICIAL": 121,
+        "DORSAL": 567,
+        "TIEMPO_OFICIAL": "1:09:33",
+        "TIEMPO_REAL": "1:09:29",
+        "PROMEDIO_REAL": "3,18",
+        "Field2": "M-M45",
+        "Field8": "C.A. TROTASIERRA DE HORNACHUELOS"
+    },
+    {
+        "NOMBRE": "BRUNET CABRERA, SANTIAGO",
+        "POS_OFICIAL": 122,
+        "DORSAL": 427,
+        "TIEMPO_OFICIAL": "1:09:34",
+        "TIEMPO_REAL": "1:09:31",
+        "PROMEDIO_REAL": "3,18",
+        "Field2": "M-M35",
+        "Field8": "C.A. XATIVA"
+    },
+    {
+        "NOMBRE": "SAEZ SANCHEZ, DAVID",
+        "POS_OFICIAL": 123,
+        "DORSAL": 412,
+        "TIEMPO_OFICIAL": "1:09:34",
+        "TIEMPO_REAL": "1:09:29",
+        "PROMEDIO_REAL": "3,18",
+        "Field2": "M-M35",
+        "Field8": "REDOLAT TEAM CLUB"
+    },
+    {
+        "NOMBRE": "MART\u00cdNEZ HERRERO, DAVID",
+        "POS_OFICIAL": 124,
+        "DORSAL": 455,
+        "TIEMPO_OFICIAL": "1:09:34",
+        "TIEMPO_REAL": "1:09:30",
+        "PROMEDIO_REAL": "3,18",
+        "Field2": "M-M35",
+        "Field8": "CLUB ATLETISME RICKYSPORTEAM ALZIRA"
+    },
+    {
+        "NOMBRE": "GOH, SHAUN",
+        "POS_OFICIAL": 125,
+        "DORSAL": 581,
+        "TIEMPO_OFICIAL": "1:09:35",
+        "TIEMPO_REAL": "1:09:32",
+        "PROMEDIO_REAL": "3,18",
+        "Field2": "M-SENIOR",
+        "Field8": "Singapore"
+    },
+    {
+        "NOMBRE": "WAN, CHEUK HEI",
+        "POS_OFICIAL": 126,
+        "DORSAL": 521,
+        "TIEMPO_OFICIAL": "1:09:37",
+        "TIEMPO_REAL": "1:09:34",
+        "PROMEDIO_REAL": "3,18",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "WIKSTR\u00d6M, CAROLINA",
+        "POS_OFICIAL": 127,
+        "DORSAL": 218,
+        "TIEMPO_OFICIAL": "1:09:39",
+        "TIEMPO_REAL": "1:09:37",
+        "PROMEDIO_REAL": "3,18",
+        "Field2": "F-SENIOR",
+        "Field8": "Upsala IF"
+    },
+    {
+        "NOMBRE": "VALERA VALERA, GINES",
+        "POS_OFICIAL": 128,
+        "DORSAL": 426,
+        "TIEMPO_OFICIAL": "1:09:39",
+        "TIEMPO_REAL": "1:09:36",
+        "PROMEDIO_REAL": "3,18",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. PUERTO TORREVIEJA"
+    },
+    {
+        "NOMBRE": "HAGANS, LAUREN",
+        "POS_OFICIAL": 129,
+        "DORSAL": 212,
+        "TIEMPO_OFICIAL": "1:09:41",
+        "TIEMPO_REAL": "1:09:37",
+        "PROMEDIO_REAL": "3,18",
+        "Field2": "F-W35",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "LUENGO, LAURA",
+        "POS_OFICIAL": 130,
+        "DORSAL": 221,
+        "TIEMPO_OFICIAL": "1:09:41",
+        "TIEMPO_REAL": "1:09:40",
+        "PROMEDIO_REAL": "3,18",
+        "Field2": "F-SENIOR",
+        "Field8": "SEOANE PANPIN"
+    },
+    {
+        "NOMBRE": "OVETT, FREDDY",
+        "POS_OFICIAL": 131,
+        "DORSAL": 279,
+        "TIEMPO_OFICIAL": "1:09:43",
+        "TIEMPO_REAL": "1:09:41",
+        "PROMEDIO_REAL": "3,18",
+        "Field2": "M-SENIOR",
+        "Field8": "SOAR"
+    },
+    {
+        "NOMBRE": "CANELADA ALVARADO, JAVIER",
+        "POS_OFICIAL": 132,
+        "DORSAL": 556,
+        "TIEMPO_OFICIAL": "1:09:44",
+        "TIEMPO_REAL": "1:09:41",
+        "PROMEDIO_REAL": "3,18",
+        "Field2": "M-M35",
+        "Field8": "CAPEX"
+    },
+    {
+        "NOMBRE": "LLAMAZARES REY, ALEJANDRO",
+        "POS_OFICIAL": 133,
+        "DORSAL": 660,
+        "TIEMPO_OFICIAL": "1:09:45",
+        "TIEMPO_REAL": "1:09:40",
+        "PROMEDIO_REAL": "3,18",
+        "Field2": "M-M40",
+        "Field8": "DELTA VALENCIA C.A."
+    },
+    {
+        "NOMBRE": "BOWEN-JONES, CALLUM",
+        "POS_OFICIAL": 134,
+        "DORSAL": 565,
+        "TIEMPO_OFICIAL": "1:09:45",
+        "TIEMPO_REAL": "1:09:42",
+        "PROMEDIO_REAL": "3,18",
+        "Field2": "M-SENIOR",
+        "Field8": "Newham and Essex Beagles"
+    },
+    {
+        "NOMBRE": "BULENS, JELLE",
+        "POS_OFICIAL": 135,
+        "DORSAL": 562,
+        "TIEMPO_OFICIAL": "1:09:46",
+        "TIEMPO_REAL": "1:09:43",
+        "PROMEDIO_REAL": "3,18",
+        "Field2": "M-SENIOR",
+        "Field8": "AV Phoenix"
+    },
+    {
+        "NOMBRE": "BRIZ RUIZ, ADRIAN",
+        "POS_OFICIAL": 136,
+        "DORSAL": 473,
+        "TIEMPO_OFICIAL": "1:09:46",
+        "TIEMPO_REAL": "1:09:46",
+        "PROMEDIO_REAL": "3,18",
+        "Field2": "M-M35",
+        "Field8": "Pi\u00e9lagos"
+    },
+    {
+        "NOMBRE": "BATTISTELLA, ELIO",
+        "POS_OFICIAL": 137,
+        "DORSAL": 487,
+        "TIEMPO_OFICIAL": "1:09:46",
+        "TIEMPO_REAL": "1:09:46",
+        "PROMEDIO_REAL": "3,18",
+        "Field2": "M-M45",
+        "Field8": "A.S.D. DAUNIA RUNNING"
+    },
+    {
+        "NOMBRE": "BORRED\u00c1 LLACER, CARLOS",
+        "POS_OFICIAL": 138,
+        "DORSAL": 401,
+        "TIEMPO_OFICIAL": "1:09:47",
+        "TIEMPO_REAL": "1:09:43",
+        "PROMEDIO_REAL": "3,18",
+        "Field2": "M-M35",
+        "Field8": "C.E. LA VESPA DE NOVETL\u00c8"
+    },
+    {
+        "NOMBRE": "BENAGES IBA\u00d1EZ, ALEJANDRO",
+        "POS_OFICIAL": 139,
+        "DORSAL": 546,
+        "TIEMPO_OFICIAL": "1:09:48",
+        "TIEMPO_REAL": "1:09:46",
+        "PROMEDIO_REAL": "3,19",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "GOMEZ MARTINEZ, DAVID",
+        "POS_OFICIAL": 140,
+        "DORSAL": 516,
+        "TIEMPO_OFICIAL": "1:09:48",
+        "TIEMPO_REAL": "1:09:47",
+        "PROMEDIO_REAL": "3,19",
+        "Field2": "M-SENIOR",
+        "Field8": "L\u2019OM Picassent"
+    },
+    {
+        "NOMBRE": "FERRER CAMA\u00d1ES, ALBERT",
+        "POS_OFICIAL": 141,
+        "DORSAL": 681,
+        "TIEMPO_OFICIAL": "1:09:49",
+        "TIEMPO_REAL": "1:09:45",
+        "PROMEDIO_REAL": "3,19",
+        "Field2": "M-SENIOR",
+        "Field8": "A.D. MAESTRAZGO"
+    },
+    {
+        "NOMBRE": "ULRIKSEN, KRISTIAN",
+        "POS_OFICIAL": 142,
+        "DORSAL": 414,
+        "TIEMPO_OFICIAL": "1:09:53",
+        "TIEMPO_REAL": "1:09:49",
+        "PROMEDIO_REAL": "3,19",
+        "Field2": "M-M35",
+        "Field8": "Tromso Lopeklubb"
+    },
+    {
+        "NOMBRE": "CA\u00d1AMERO ESCOBAR, ISRAEL",
+        "POS_OFICIAL": 143,
+        "DORSAL": 456,
+        "TIEMPO_OFICIAL": "1:09:56",
+        "TIEMPO_REAL": "1:09:54",
+        "PROMEDIO_REAL": "3,19",
+        "Field2": "M-M40",
+        "Field8": "C.A. SAN PABLO"
+    },
+    {
+        "NOMBRE": "PLA SEGURA, EDU",
+        "POS_OFICIAL": 144,
+        "DORSAL": 408,
+        "TIEMPO_OFICIAL": "1:09:57",
+        "TIEMPO_REAL": "1:09:54",
+        "PROMEDIO_REAL": "3,19",
+        "Field2": "M-M35",
+        "Field8": "C.E. VINAROS"
+    },
+    {
+        "NOMBRE": "MASON, CHRIS",
+        "POS_OFICIAL": 145,
+        "DORSAL": 452,
+        "TIEMPO_OFICIAL": "1:09:57",
+        "TIEMPO_REAL": "1:09:53",
+        "PROMEDIO_REAL": "3,19",
+        "Field2": "M-M40",
+        "Field8": "Ealing, Southall and Middlesex AC"
+    },
+    {
+        "NOMBRE": "NAVARRETE SANTANA, ESTHER",
+        "POS_OFICIAL": 146,
+        "DORSAL": 241,
+        "TIEMPO_OFICIAL": "1:09:58",
+        "TIEMPO_REAL": "1:09:57",
+        "PROMEDIO_REAL": "3,19",
+        "Field2": "F-SENIOR",
+        "Field8": "Real Club Celta"
+    },
+    {
+        "NOMBRE": "EGEA FERRANDEZ, FELIPE",
+        "POS_OFICIAL": 147,
+        "DORSAL": 425,
+        "TIEMPO_OFICIAL": "1:10:03",
+        "TIEMPO_REAL": "1:10:02",
+        "PROMEDIO_REAL": "3,19",
+        "Field2": "M-UNDER23",
+        "Field8": "C.A. CREVILLENTE"
+    },
+    {
+        "NOMBRE": "PAROLIN, MARCO",
+        "POS_OFICIAL": 148,
+        "DORSAL": 879,
+        "TIEMPO_OFICIAL": "1:10:05",
+        "TIEMPO_REAL": "1:09:59",
+        "PROMEDIO_REAL": "3,19",
+        "Field2": "M-SENIOR",
+        "Field8": "Blackpool Wyre & Fylde AC"
+    },
+    {
+        "NOMBRE": "FERN\u00c1NDEZ R\u00cdOS, JONATHAN",
+        "POS_OFICIAL": 149,
+        "DORSAL": 605,
+        "TIEMPO_OFICIAL": "1:10:06",
+        "TIEMPO_REAL": "1:10:02",
+        "PROMEDIO_REAL": "3,19",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "FIGUEIREDO, JOAQUIM",
+        "POS_OFICIAL": 150,
+        "DORSAL": 512,
+        "TIEMPO_OFICIAL": "1:10:07",
+        "TIEMPO_REAL": "1:10:06",
+        "PROMEDIO_REAL": "3,19",
+        "Field2": "M-M55",
+        "Field8": "C.D.S.Salvador do Campo"
+    },
+    {
+        "NOMBRE": "LOJO FERNANDEZ, JOSE",
+        "POS_OFICIAL": 151,
+        "DORSAL": 898,
+        "TIEMPO_OFICIAL": "1:10:08",
+        "TIEMPO_REAL": "1:09:58",
+        "PROMEDIO_REAL": "3,19",
+        "Field2": "M-M40",
+        "Field8": "San Miguel de Marin"
+    },
+    {
+        "NOMBRE": "REBILAS, ADAM",
+        "POS_OFICIAL": 152,
+        "DORSAL": 1965,
+        "TIEMPO_OFICIAL": "1:10:12",
+        "TIEMPO_REAL": "1:10:11",
+        "PROMEDIO_REAL": "3,20",
+        "Field2": "M-SENIOR",
+        "Field8": "Team Kopec"
+    },
+    {
+        "NOMBRE": "MCCORMACK, FIONNUALA",
+        "POS_OFICIAL": 153,
+        "DORSAL": 211,
+        "TIEMPO_OFICIAL": "1:10:13",
+        "TIEMPO_REAL": "1:10:13",
+        "PROMEDIO_REAL": "3,20",
+        "Field2": "F-W35",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "FERNANDEZ GARCIA, MIGUEL",
+        "POS_OFICIAL": 154,
+        "DORSAL": 454,
+        "TIEMPO_OFICIAL": "1:10:13",
+        "TIEMPO_REAL": "1:10:10",
+        "PROMEDIO_REAL": "3,20",
+        "Field2": "M-M35",
+        "Field8": "TRIATLO GANDIA"
+    },
+    {
+        "NOMBRE": "MOLINA SALAS, MARIO",
+        "POS_OFICIAL": 155,
+        "DORSAL": 482,
+        "TIEMPO_OFICIAL": "1:10:14",
+        "TIEMPO_REAL": "1:10:11",
+        "PROMEDIO_REAL": "3,20",
+        "Field2": "M-M40",
+        "Field8": "C.A. PUERTAS LORCA"
+    },
+    {
+        "NOMBRE": "ROMEO RUIZ, PABLO",
+        "POS_OFICIAL": 156,
+        "DORSAL": 402,
+        "TIEMPO_OFICIAL": "1:10:14",
+        "TIEMPO_REAL": "1:10:11",
+        "PROMEDIO_REAL": "3,20",
+        "Field2": "M-M35",
+        "Field8": "ESCUELA RUSA"
+    },
+    {
+        "NOMBRE": "JIM\u00c9NEZ CAMPOS, CARLOS",
+        "POS_OFICIAL": 157,
+        "DORSAL": 1264,
+        "TIEMPO_OFICIAL": "1:10:17",
+        "TIEMPO_REAL": "1:10:05",
+        "PROMEDIO_REAL": "3,20",
+        "Field2": "M-M35",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "TORRES NAVARRO, VICENTE",
+        "POS_OFICIAL": 158,
+        "DORSAL": 598,
+        "TIEMPO_OFICIAL": "1:10:17",
+        "TIEMPO_REAL": "1:10:14",
+        "PROMEDIO_REAL": "3,20",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. CARNICAS SERRANO"
+    },
+    {
+        "NOMBRE": "NAVARRO POVEDA, ANTONIO",
+        "POS_OFICIAL": 159,
+        "DORSAL": 428,
+        "TIEMPO_OFICIAL": "1:10:20",
+        "TIEMPO_REAL": "1:10:16",
+        "PROMEDIO_REAL": "3,20",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. NOVELDA CARMENCITA"
+    },
+    {
+        "NOMBRE": "EXP\u00d3SITO CAMPOS, CRISTIAN",
+        "POS_OFICIAL": 160,
+        "DORSAL": 480,
+        "TIEMPO_OFICIAL": "1:10:20",
+        "TIEMPO_REAL": "1:10:16",
+        "PROMEDIO_REAL": "3,20",
+        "Field2": "M-M35",
+        "Field8": "Club Atletismo Burela"
+    },
+    {
+        "NOMBRE": "GRAMENDOLA, ANTONIO ALESSANDRO",
+        "POS_OFICIAL": 161,
+        "DORSAL": 584,
+        "TIEMPO_OFICIAL": "1:10:20",
+        "TIEMPO_REAL": "1:10:17",
+        "PROMEDIO_REAL": "3,20",
+        "Field2": "M-SENIOR",
+        "Field8": "Azzurra Garbagnate Milanese"
+    },
+    {
+        "NOMBRE": "HERNANDO CALLEJA, DANIEL",
+        "POS_OFICIAL": 162,
+        "DORSAL": 523,
+        "TIEMPO_OFICIAL": "1:10:23",
+        "TIEMPO_REAL": "1:10:19",
+        "PROMEDIO_REAL": "3,20",
+        "Field2": "M-M45",
+        "Field8": "Atletismo Fuenlabrada"
+    },
+    {
+        "NOMBRE": "DE POORTER, AXEL",
+        "POS_OFICIAL": 163,
+        "DORSAL": 550,
+        "TIEMPO_OFICIAL": "1:10:24",
+        "TIEMPO_REAL": "1:10:21",
+        "PROMEDIO_REAL": "3,20",
+        "Field2": "M-SENIOR",
+        "Field8": "Run and freedom"
+    },
+    {
+        "NOMBRE": "ARIAS, ALEJANDRO",
+        "POS_OFICIAL": 164,
+        "DORSAL": 403,
+        "TIEMPO_OFICIAL": "1:10:25",
+        "TIEMPO_REAL": "1:10:21",
+        "PROMEDIO_REAL": "3,20",
+        "Field2": "M-SENIOR",
+        "Field8": "Club Triatl\u00f3n Perlas Colmenar Viejo"
+    },
+    {
+        "NOMBRE": "CHRZANOWSKI, PATRYK",
+        "POS_OFICIAL": 165,
+        "DORSAL": 878,
+        "TIEMPO_OFICIAL": "1:10:26",
+        "TIEMPO_REAL": "1:10:21",
+        "PROMEDIO_REAL": "3,20",
+        "Field2": "M-SENIOR",
+        "Field8": "PCH SPORT TEAM"
+    },
+    {
+        "NOMBRE": "ARRAUSI OSUA, ANDER",
+        "POS_OFICIAL": 166,
+        "DORSAL": 631,
+        "TIEMPO_OFICIAL": "1:10:27",
+        "TIEMPO_REAL": "1:10:21",
+        "PROMEDIO_REAL": "3,20",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. LA BLANCA"
+    },
+    {
+        "NOMBRE": "SANSABAS BOSCA, ALEJANDRO",
+        "POS_OFICIAL": 167,
+        "DORSAL": 24256,
+        "TIEMPO_OFICIAL": "1:10:27",
+        "TIEMPO_REAL": "1:10:24",
+        "PROMEDIO_REAL": "3,20",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. CARNICAS SERRANO"
+    },
+    {
+        "NOMBRE": "RAMOS FERNANDEZ, MARCOS",
+        "POS_OFICIAL": 168,
+        "DORSAL": 843,
+        "TIEMPO_OFICIAL": "1:10:28",
+        "TIEMPO_REAL": "1:10:25",
+        "PROMEDIO_REAL": "3,20",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. FENT CAMI"
+    },
+    {
+        "NOMBRE": "FREIRE MATA, SERGIO",
+        "POS_OFICIAL": 169,
+        "DORSAL": 459,
+        "TIEMPO_OFICIAL": "1:10:31",
+        "TIEMPO_REAL": "1:10:31",
+        "PROMEDIO_REAL": "3,21",
+        "Field2": "M-SENIOR",
+        "Field8": "RFC BOADILLA"
+    },
+    {
+        "NOMBRE": "CABRERO COMPANY, JAVIER",
+        "POS_OFICIAL": 170,
+        "DORSAL": 614,
+        "TIEMPO_OFICIAL": "1:10:32",
+        "TIEMPO_REAL": "1:10:30",
+        "PROMEDIO_REAL": "3,21",
+        "Field2": "M-SENIOR",
+        "Field8": "INERTIAL"
+    },
+    {
+        "NOMBRE": "ALVAREZ QUINTANA, JUANMA",
+        "POS_OFICIAL": 171,
+        "DORSAL": 912,
+        "TIEMPO_OFICIAL": "1:10:34",
+        "TIEMPO_REAL": "1:10:32",
+        "PROMEDIO_REAL": "3,21",
+        "Field2": "M-SENIOR",
+        "Field8": "MARAT\u00d3N CASAR"
+    },
+    {
+        "NOMBRE": "GONZALEZ DE LA PUENTE, HUGO",
+        "POS_OFICIAL": 172,
+        "DORSAL": 457,
+        "TIEMPO_OFICIAL": "1:10:36",
+        "TIEMPO_REAL": "1:10:33",
+        "PROMEDIO_REAL": "3,21",
+        "Field2": "M-M35",
+        "Field8": "Tritones Rioja"
+    },
+    {
+        "NOMBRE": "ALFONSO CARRILLO, SERGIO",
+        "POS_OFICIAL": 173,
+        "DORSAL": 522,
+        "TIEMPO_OFICIAL": "1:10:36",
+        "TIEMPO_REAL": "1:10:34",
+        "PROMEDIO_REAL": "3,21",
+        "Field2": "M-UNDER23",
+        "Field8": "C.A. CREVILLENTE"
+    },
+    {
+        "NOMBRE": "HATEFNEJAD, TONY",
+        "POS_OFICIAL": 174,
+        "DORSAL": 417,
+        "TIEMPO_OFICIAL": "1:10:38",
+        "TIEMPO_REAL": "1:10:35",
+        "PROMEDIO_REAL": "3,21",
+        "Field2": "M-M35",
+        "Field8": "H\u00e4lle IF"
+    },
+    {
+        "NOMBRE": "PINTO, JOAO",
+        "POS_OFICIAL": 175,
+        "DORSAL": 824,
+        "TIEMPO_OFICIAL": "1:10:39",
+        "TIEMPO_REAL": "1:10:31",
+        "PROMEDIO_REAL": "3,21",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "ESTARRIAGA NAVARRO, ASIER",
+        "POS_OFICIAL": 176,
+        "DORSAL": 707,
+        "TIEMPO_OFICIAL": "1:10:40",
+        "TIEMPO_REAL": "1:10:34",
+        "PROMEDIO_REAL": "3,21",
+        "Field2": "M-SENIOR",
+        "Field8": "HIRU-HERRI"
+    },
+    {
+        "NOMBRE": "ESCRIG ROMERO, ADRI\u00c1N",
+        "POS_OFICIAL": 177,
+        "DORSAL": 944,
+        "TIEMPO_OFICIAL": "1:10:40",
+        "TIEMPO_REAL": "1:10:35",
+        "PROMEDIO_REAL": "3,21",
+        "Field2": "M-SENIOR",
+        "Field8": "CD ISD HURACAN PUERTO SAGUNTO"
+    },
+    {
+        "NOMBRE": "SANCHEZ-MARISCAL MARTIN, ALBERTO",
+        "POS_OFICIAL": 178,
+        "DORSAL": 538,
+        "TIEMPO_OFICIAL": "1:10:41",
+        "TIEMPO_REAL": "1:10:38",
+        "PROMEDIO_REAL": "3,21",
+        "Field2": "M-SENIOR",
+        "Field8": "CLUB ATLETISMO ARROYOMOLINOS"
+    },
+    {
+        "NOMBRE": "MARTINS, DANIEL",
+        "POS_OFICIAL": 179,
+        "DORSAL": 534,
+        "TIEMPO_OFICIAL": "1:10:42",
+        "TIEMPO_REAL": "1:10:41",
+        "PROMEDIO_REAL": "3,21",
+        "Field2": "M-SENIOR",
+        "Field8": "CD Areias S. Jo\u00e3o"
+    },
+    {
+        "NOMBRE": "GARC\u00cdA MASCARELL, JAVIER",
+        "POS_OFICIAL": 180,
+        "DORSAL": 471,
+        "TIEMPO_OFICIAL": "1:10:43",
+        "TIEMPO_REAL": "1:10:40",
+        "PROMEDIO_REAL": "3,21",
+        "Field2": "M-M45",
+        "Field8": "maskarell.org"
+    },
+    {
+        "NOMBRE": "KAMALOV, KAINAR",
+        "POS_OFICIAL": 181,
+        "DORSAL": 21021,
+        "TIEMPO_OFICIAL": "1:10:43",
+        "TIEMPO_REAL": "1:10:41",
+        "PROMEDIO_REAL": "3,21",
+        "Field2": "M-SENIOR",
+        "Field8": "Dakansa"
+    },
+    {
+        "NOMBRE": "MADRO\u00d1AL GAL\u00c1N, CARLOS",
+        "POS_OFICIAL": 182,
+        "DORSAL": 536,
+        "TIEMPO_OFICIAL": "1:10:44",
+        "TIEMPO_REAL": "1:10:41",
+        "PROMEDIO_REAL": "3,21",
+        "Field2": "M-UNDER23",
+        "Field8": "SDUPV.  Universitat Polit\u00e8cnica de Val\u00e8ncia"
+    },
+    {
+        "NOMBRE": "SANCHEZ GOMEZ, MANEL",
+        "POS_OFICIAL": 183,
+        "DORSAL": 803,
+        "TIEMPO_OFICIAL": "1:10:45",
+        "TIEMPO_REAL": "1:10:38",
+        "PROMEDIO_REAL": "3,21",
+        "Field2": "M-M45",
+        "Field8": "Avinent Manresa"
+    },
+    {
+        "NOMBRE": "GALIMANY, MARTA",
+        "POS_OFICIAL": 184,
+        "DORSAL": 215,
+        "TIEMPO_OFICIAL": "1:10:45",
+        "TIEMPO_REAL": "1:10:44",
+        "PROMEDIO_REAL": "3,21",
+        "Field2": "F-W35",
+        "Field8": "CA ADIDAS"
+    },
+    {
+        "NOMBRE": "DAVIS, AMY",
+        "POS_OFICIAL": 185,
+        "DORSAL": 217,
+        "TIEMPO_OFICIAL": "1:10:46",
+        "TIEMPO_REAL": "1:10:43",
+        "PROMEDIO_REAL": "3,21",
+        "Field2": "F-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "KEARNEY, EMILY",
+        "POS_OFICIAL": 186,
+        "DORSAL": 229,
+        "TIEMPO_OFICIAL": "1:10:47",
+        "TIEMPO_REAL": "1:10:45",
+        "PROMEDIO_REAL": "3,21",
+        "Field2": "F-SENIOR",
+        "Field8": "Warriors Pentathlon & Athletics Club"
+    },
+    {
+        "NOMBRE": "SOLDEVILA CORONADO, ALEJANDRO",
+        "POS_OFICIAL": 187,
+        "DORSAL": 954,
+        "TIEMPO_OFICIAL": "1:10:48",
+        "TIEMPO_REAL": "1:10:42",
+        "PROMEDIO_REAL": "3,21",
+        "Field2": "M-M35",
+        "Field8": "C.A. CARNICAS SERRANO"
+    },
+    {
+        "NOMBRE": "CRESPO ROMERA, SALVADOR",
+        "POS_OFICIAL": 188,
+        "DORSAL": 444,
+        "TIEMPO_OFICIAL": "1:10:49",
+        "TIEMPO_REAL": "1:10:45",
+        "PROMEDIO_REAL": "3,21",
+        "Field2": "M-M40",
+        "Field8": "CRESPO RUNNERS"
+    },
+    {
+        "NOMBRE": "LAGOUTTE, DAMIEN",
+        "POS_OFICIAL": 189,
+        "DORSAL": 690,
+        "TIEMPO_OFICIAL": "1:10:50",
+        "TIEMPO_REAL": "1:10:45",
+        "PROMEDIO_REAL": "3,21",
+        "Field2": "M-M35",
+        "Field8": "AS MONACO ATHLETISME"
+    },
+    {
+        "NOMBRE": "PAULE MARTIN, JAIRO",
+        "POS_OFICIAL": 190,
+        "DORSAL": 746,
+        "TIEMPO_OFICIAL": "1:10:50",
+        "TIEMPO_REAL": "1:10:46",
+        "PROMEDIO_REAL": "3,21",
+        "Field2": "M-SENIOR",
+        "Field8": "C.D. CORREAYO SPAR TENERIFE"
+    },
+    {
+        "NOMBRE": "PALOMERA SVENSSON, DAVID",
+        "POS_OFICIAL": 191,
+        "DORSAL": 949,
+        "TIEMPO_OFICIAL": "1:10:50",
+        "TIEMPO_REAL": "1:10:44",
+        "PROMEDIO_REAL": "3,21",
+        "Field2": "M-M35",
+        "Field8": "C.A. CARNICAS SERRANO"
+    },
+    {
+        "NOMBRE": "VINCENT, VIRLICHIE",
+        "POS_OFICIAL": 192,
+        "DORSAL": 854,
+        "TIEMPO_OFICIAL": "1:10:53",
+        "TIEMPO_REAL": "1:10:49",
+        "PROMEDIO_REAL": "3,22",
+        "Field2": "M-M45",
+        "Field8": "AZUR OLYMPIQUE CHARENTON"
+    },
+    {
+        "NOMBRE": "DA SILVA GODINHO, SUSANA CRISTINA",
+        "POS_OFICIAL": 193,
+        "DORSAL": 228,
+        "TIEMPO_OFICIAL": "1:10:53",
+        "TIEMPO_REAL": "1:10:51",
+        "PROMEDIO_REAL": "3,22",
+        "Field2": "F-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "SANTOS, HELDER",
+        "POS_OFICIAL": 194,
+        "DORSAL": 24538,
+        "TIEMPO_OFICIAL": "1:10:53",
+        "TIEMPO_REAL": "1:10:52",
+        "PROMEDIO_REAL": "3,22",
+        "Field2": "M-M40",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "DONNELLY, JORDAN",
+        "POS_OFICIAL": 195,
+        "DORSAL": 925,
+        "TIEMPO_OFICIAL": "1:10:54",
+        "TIEMPO_REAL": "1:10:48",
+        "PROMEDIO_REAL": "3,22",
+        "Field2": "M-M35",
+        "Field8": "HEARTBREAKERS"
+    },
+    {
+        "NOMBRE": "GONZALEZ HERNANDEZ, JOSE",
+        "POS_OFICIAL": 196,
+        "DORSAL": 780,
+        "TIEMPO_OFICIAL": "1:10:54",
+        "TIEMPO_REAL": "1:10:49",
+        "PROMEDIO_REAL": "3,22",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. PUERTO TORREVIEJA"
+    },
+    {
+        "NOMBRE": "ARENAS SANCHEZ, JOSE LUIS",
+        "POS_OFICIAL": 197,
+        "DORSAL": 446,
+        "TIEMPO_OFICIAL": "1:10:54",
+        "TIEMPO_REAL": "1:10:52",
+        "PROMEDIO_REAL": "3,22",
+        "Field2": "M-M45",
+        "Field8": "C.A. UTIEL"
+    },
+    {
+        "NOMBRE": "POLO VICENTE, DIEGO",
+        "POS_OFICIAL": 198,
+        "DORSAL": 578,
+        "TIEMPO_OFICIAL": "1:10:54",
+        "TIEMPO_REAL": "1:10:50",
+        "PROMEDIO_REAL": "3,22",
+        "Field2": "M-SENIOR",
+        "Field8": "C.D. METAESPORT"
+    },
+    {
+        "NOMBRE": "PALOMERA SVENSSON, GABRIEL",
+        "POS_OFICIAL": 199,
+        "DORSAL": 950,
+        "TIEMPO_OFICIAL": "1:10:55",
+        "TIEMPO_REAL": "1:10:48",
+        "PROMEDIO_REAL": "3,22",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. CARNICAS SERRANO"
+    },
+    {
+        "NOMBRE": "BIZKARRA ETXEGIBEL, GORKA",
+        "POS_OFICIAL": 200,
+        "DORSAL": 673,
+        "TIEMPO_OFICIAL": "1:10:55",
+        "TIEMPO_REAL": "1:10:49",
+        "PROMEDIO_REAL": "3,22",
+        "Field2": "M-M35",
+        "Field8": "Cafes Foronda Dida Kirol taldea"
+    },
+    {
+        "NOMBRE": "ERIKSEN, LARS-KRISTIAN",
+        "POS_OFICIAL": 201,
+        "DORSAL": 604,
+        "TIEMPO_OFICIAL": "1:10:56",
+        "TIEMPO_REAL": "1:10:51",
+        "PROMEDIO_REAL": "3,22",
+        "Field2": "M-M40",
+        "Field8": "Netfit"
+    },
+    {
+        "NOMBRE": "IBORRA MIQUEL, VICENT",
+        "POS_OFICIAL": 202,
+        "DORSAL": 20847,
+        "TIEMPO_OFICIAL": "1:10:56",
+        "TIEMPO_REAL": "1:10:56",
+        "PROMEDIO_REAL": "3,22",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "BLANEY, ANNE-MARIE",
+        "POS_OFICIAL": 203,
+        "DORSAL": 220,
+        "TIEMPO_OFICIAL": "1:10:57",
+        "TIEMPO_REAL": "1:10:54",
+        "PROMEDIO_REAL": "3,22",
+        "Field2": "F-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "PEREZ GIL, SAMUEL",
+        "POS_OFICIAL": 204,
+        "DORSAL": 409,
+        "TIEMPO_OFICIAL": "1:10:57",
+        "TIEMPO_REAL": "1:10:57",
+        "PROMEDIO_REAL": "3,22",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. UTIEL"
+    },
+    {
+        "NOMBRE": "DE LA INSUA SUNYER, FRAN",
+        "POS_OFICIAL": 205,
+        "DORSAL": 589,
+        "TIEMPO_OFICIAL": "1:11:00",
+        "TIEMPO_REAL": "1:10:56",
+        "PROMEDIO_REAL": "3,22",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. CAMPOS"
+    },
+    {
+        "NOMBRE": "FORTEZA FERRER, BIEL",
+        "POS_OFICIAL": 206,
+        "DORSAL": 929,
+        "TIEMPO_OFICIAL": "1:11:00",
+        "TIEMPO_REAL": "1:10:53",
+        "PROMEDIO_REAL": "3,22",
+        "Field2": "M-SENIOR",
+        "Field8": "ZURICH Runners"
+    },
+    {
+        "NOMBRE": "ANTONETE SANCHEZ, MOISES",
+        "POS_OFICIAL": 207,
+        "DORSAL": 7273,
+        "TIEMPO_OFICIAL": "1:11:01",
+        "TIEMPO_REAL": "1:10:56",
+        "PROMEDIO_REAL": "3,22",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A.  BADAJOZ"
+    },
+    {
+        "NOMBRE": "BAS MORA, MICHEL",
+        "POS_OFICIAL": 208,
+        "DORSAL": 634,
+        "TIEMPO_OFICIAL": "1:11:05",
+        "TIEMPO_REAL": "1:10:53",
+        "PROMEDIO_REAL": "3,22",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. I RUN CALP"
+    },
+    {
+        "NOMBRE": "GARROTE SAYO, GERARD",
+        "POS_OFICIAL": 209,
+        "DORSAL": 481,
+        "TIEMPO_OFICIAL": "1:11:06",
+        "TIEMPO_REAL": "1:11:02",
+        "PROMEDIO_REAL": "3,22",
+        "Field2": "M-M35",
+        "Field8": "B.A athletics"
+    },
+    {
+        "NOMBRE": "MARTINEZ GOMEZ, LUIS FELIX",
+        "POS_OFICIAL": 210,
+        "DORSAL": 594,
+        "TIEMPO_OFICIAL": "1:11:10",
+        "TIEMPO_REAL": "1:11:08",
+        "PROMEDIO_REAL": "3,22",
+        "Field2": "M-M50",
+        "Field8": "C.A. CARNICAS SERRANO"
+    },
+    {
+        "NOMBRE": "VANDENBON, SIMON",
+        "POS_OFICIAL": 211,
+        "DORSAL": 847,
+        "TIEMPO_OFICIAL": "1:11:11",
+        "TIEMPO_REAL": "1:11:01",
+        "PROMEDIO_REAL": "3,22",
+        "Field2": "M-SENIOR",
+        "Field8": "Macw"
+    },
+    {
+        "NOMBRE": "PERRIER, MARIE",
+        "POS_OFICIAL": 212,
+        "DORSAL": 230,
+        "TIEMPO_OFICIAL": "1:11:13",
+        "TIEMPO_REAL": "1:11:11",
+        "PROMEDIO_REAL": "3,23",
+        "Field2": "F-SENIOR",
+        "Field8": "C.A. BALMA"
+    },
+    {
+        "NOMBRE": "TORMO GARCIA, ISIDRO SALVADOR",
+        "POS_OFICIAL": 213,
+        "DORSAL": 429,
+        "TIEMPO_OFICIAL": "1:11:15",
+        "TIEMPO_REAL": "1:11:11",
+        "PROMEDIO_REAL": "3,23",
+        "Field2": "M-M40",
+        "Field8": "C.A. KIL\u00d3METRO 42"
+    },
+    {
+        "NOMBRE": "ANDREAS MANUEL, SPROTT",
+        "POS_OFICIAL": 214,
+        "DORSAL": 853,
+        "TIEMPO_OFICIAL": "1:11:17",
+        "TIEMPO_REAL": "1:11:10",
+        "PROMEDIO_REAL": "3,23",
+        "Field2": "M-SENIOR",
+        "Field8": "Ayyo Team Essen"
+    },
+    {
+        "NOMBRE": "MORRIS, DAVID",
+        "POS_OFICIAL": 215,
+        "DORSAL": 701,
+        "TIEMPO_OFICIAL": "1:11:18",
+        "TIEMPO_REAL": "1:11:08",
+        "PROMEDIO_REAL": "3,23",
+        "Field2": "M-M40",
+        "Field8": "City of Stoke AC"
+    },
+    {
+        "NOMBRE": "QUILES PARRA, BLAS JESUS",
+        "POS_OFICIAL": 216,
+        "DORSAL": 464,
+        "TIEMPO_OFICIAL": "1:11:22",
+        "TIEMPO_REAL": "1:11:20",
+        "PROMEDIO_REAL": "3,23",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. SURESTE"
+    },
+    {
+        "NOMBRE": "MORUNO BENITA, JOSE DAVID",
+        "POS_OFICIAL": 217,
+        "DORSAL": 813,
+        "TIEMPO_OFICIAL": "1:11:24",
+        "TIEMPO_REAL": "1:11:19",
+        "PROMEDIO_REAL": "3,23",
+        "Field2": "M-SENIOR",
+        "Field8": "S.D. CORRECAMINOS"
+    },
+    {
+        "NOMBRE": "VILLALBA JATIVA, VICENTE",
+        "POS_OFICIAL": 218,
+        "DORSAL": 413,
+        "TIEMPO_OFICIAL": "1:11:24",
+        "TIEMPO_REAL": "1:11:19",
+        "PROMEDIO_REAL": "3,23",
+        "Field2": "M-M35",
+        "Field8": "REDOLAT TEAM CLUB"
+    },
+    {
+        "NOMBRE": "CHRISTOPHE, PARMENTIER",
+        "POS_OFICIAL": 219,
+        "DORSAL": 519,
+        "TIEMPO_OFICIAL": "1:11:25",
+        "TIEMPO_REAL": "1:11:21",
+        "PROMEDIO_REAL": "3,23",
+        "Field2": "M-M40",
+        "Field8": "CO HARFLEUR"
+    },
+    {
+        "NOMBRE": "K\u00c9VIN, LE CLERCH TR\u00c9GOUR\u00c8S",
+        "POS_OFICIAL": 220,
+        "DORSAL": 552,
+        "TIEMPO_OFICIAL": "1:11:30",
+        "TIEMPO_REAL": "1:11:25",
+        "PROMEDIO_REAL": "3,23",
+        "Field2": "M-SENIOR",
+        "Field8": "Bannalec Pays de Quimperl\u00e9 Athl\u00e9tisme"
+    },
+    {
+        "NOMBRE": "MART\u00cd PONS, JOSE",
+        "POS_OFICIAL": 221,
+        "DORSAL": 629,
+        "TIEMPO_OFICIAL": "1:11:31",
+        "TIEMPO_REAL": "1:11:24",
+        "PROMEDIO_REAL": "3,23",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. MONTAVERNER"
+    },
+    {
+        "NOMBRE": "DEL BARRIO, IV\u00c1N",
+        "POS_OFICIAL": 222,
+        "DORSAL": 960,
+        "TIEMPO_OFICIAL": "1:11:32",
+        "TIEMPO_REAL": "1:11:26",
+        "PROMEDIO_REAL": "3,23",
+        "Field2": "M-M40",
+        "Field8": "MSC Running Team"
+    },
+    {
+        "NOMBRE": "V\u00c1ZQUEZ CALDERA, JOSE ANTONIO",
+        "POS_OFICIAL": 223,
+        "DORSAL": 938,
+        "TIEMPO_OFICIAL": "1:11:32",
+        "TIEMPO_REAL": "1:11:26",
+        "PROMEDIO_REAL": "3,23",
+        "Field2": "M-SENIOR",
+        "Field8": "Malabar Merida"
+    },
+    {
+        "NOMBRE": "LOPEZ IBA\u00d1EZ, JACOBO",
+        "POS_OFICIAL": 224,
+        "DORSAL": 769,
+        "TIEMPO_OFICIAL": "1:11:32",
+        "TIEMPO_REAL": "1:11:27",
+        "PROMEDIO_REAL": "3,23",
+        "Field2": "M-M35",
+        "Field8": "MORVEDRE TRIATLON"
+    },
+    {
+        "NOMBRE": "JIMENEZ MATEO, ADRI\u00c0",
+        "POS_OFICIAL": 225,
+        "DORSAL": 498,
+        "TIEMPO_OFICIAL": "1:11:33",
+        "TIEMPO_REAL": "1:11:30",
+        "PROMEDIO_REAL": "3,23",
+        "Field2": "M-M35",
+        "Field8": "Avinent Manresa"
+    },
+    {
+        "NOMBRE": "CASTRO PONS, SALVA",
+        "POS_OFICIAL": 226,
+        "DORSAL": 737,
+        "TIEMPO_OFICIAL": "1:11:34",
+        "TIEMPO_REAL": "1:11:26",
+        "PROMEDIO_REAL": "3,24",
+        "Field2": "M-M40",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "FLORIDO PAV\u00d3N, ANTONIO MIGUEL",
+        "POS_OFICIAL": 227,
+        "DORSAL": 786,
+        "TIEMPO_OFICIAL": "1:11:35",
+        "TIEMPO_REAL": "1:11:27",
+        "PROMEDIO_REAL": "3,24",
+        "Field2": "M-M35",
+        "Field8": "CLUB TRIATL\u00d3N BENALM\u00c1DENA"
+    },
+    {
+        "NOMBRE": "GRUPPEN, JACELYN",
+        "POS_OFICIAL": 228,
+        "DORSAL": 219,
+        "TIEMPO_OFICIAL": "1:11:35",
+        "TIEMPO_REAL": "1:11:33",
+        "PROMEDIO_REAL": "3,24",
+        "Field2": "F-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "RAGA VILAR, CARLOS",
+        "POS_OFICIAL": 229,
+        "DORSAL": 759,
+        "TIEMPO_OFICIAL": "1:11:38",
+        "TIEMPO_REAL": "1:11:27",
+        "PROMEDIO_REAL": "3,24",
+        "Field2": "M-M40",
+        "Field8": "RUNNERS CIUTAT DE VALENCIA"
+    },
+    {
+        "NOMBRE": "GAMEZ, FRANCISCO JAVIER",
+        "POS_OFICIAL": 230,
+        "DORSAL": 823,
+        "TIEMPO_OFICIAL": "1:11:39",
+        "TIEMPO_REAL": "1:11:34",
+        "PROMEDIO_REAL": "3,24",
+        "Field2": "M-M40",
+        "Field8": "C.D. TRAVERTORO"
+    },
+    {
+        "NOMBRE": "\u00dcMM\u00dc, KIRAZ",
+        "POS_OFICIAL": 231,
+        "DORSAL": 896,
+        "TIEMPO_OFICIAL": "1:11:40",
+        "TIEMPO_REAL": "1:11:34",
+        "PROMEDIO_REAL": "3,24",
+        "Field2": "F-W40",
+        "Field8": "Ayyo Team Essen"
+    },
+    {
+        "NOMBRE": "MOLINA ROMERO, EDUARDO",
+        "POS_OFICIAL": 232,
+        "DORSAL": 3479,
+        "TIEMPO_OFICIAL": "1:11:46",
+        "TIEMPO_REAL": "1:11:46",
+        "PROMEDIO_REAL": "3,24",
+        "Field2": "M-M45",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "CENTENO ABRIL, VICTOR",
+        "POS_OFICIAL": 233,
+        "DORSAL": 924,
+        "TIEMPO_OFICIAL": "1:11:47",
+        "TIEMPO_REAL": "1:11:36",
+        "PROMEDIO_REAL": "3,24",
+        "Field2": "M-UNDER23",
+        "Field8": "ZURICH Runners"
+    },
+    {
+        "NOMBRE": "PARRILLA PORTOLES, DAVID",
+        "POS_OFICIAL": 234,
+        "DORSAL": 462,
+        "TIEMPO_OFICIAL": "1:11:48",
+        "TIEMPO_REAL": "1:11:45",
+        "PROMEDIO_REAL": "3,24",
+        "Field2": "M-M40",
+        "Field8": "DELTA VALENCIA C.A."
+    },
+    {
+        "NOMBRE": "MIER ALONSO, JAVIER",
+        "POS_OFICIAL": 235,
+        "DORSAL": 756,
+        "TIEMPO_OFICIAL": "1:11:48",
+        "TIEMPO_REAL": "1:11:43",
+        "PROMEDIO_REAL": "3,24",
+        "Field2": "M-M45",
+        "Field8": "La Cerezal Team"
+    },
+    {
+        "NOMBRE": "LOPEZ-TORIBIO QUEVEDO, ILLAN",
+        "POS_OFICIAL": 236,
+        "DORSAL": 945,
+        "TIEMPO_OFICIAL": "1:11:51",
+        "TIEMPO_REAL": "1:11:41",
+        "PROMEDIO_REAL": "3,24",
+        "Field2": "M-SENIOR",
+        "Field8": "PILO\u00d1A DEPORTE"
+    },
+    {
+        "NOMBRE": "VIDAL GOMIS, CARLOS",
+        "POS_OFICIAL": 237,
+        "DORSAL": 693,
+        "TIEMPO_OFICIAL": "1:11:52",
+        "TIEMPO_REAL": "1:11:44",
+        "PROMEDIO_REAL": "3,24",
+        "Field2": "M-SENIOR",
+        "Field8": "ATLETISME ONTINYENT"
+    },
+    {
+        "NOMBRE": "BADENES GARCIA, ADRIAN",
+        "POS_OFICIAL": 238,
+        "DORSAL": 420,
+        "TIEMPO_OFICIAL": "1:11:53",
+        "TIEMPO_REAL": "1:11:49",
+        "PROMEDIO_REAL": "3,24",
+        "Field2": "M-M35",
+        "Field8": "C.E. LA VESPA DE NOVETL\u00c8"
+    },
+    {
+        "NOMBRE": "MARTIN, BRIAN",
+        "POS_OFICIAL": 239,
+        "DORSAL": 558,
+        "TIEMPO_OFICIAL": "1:11:54",
+        "TIEMPO_REAL": "1:11:50",
+        "PROMEDIO_REAL": "3,24",
+        "Field2": "M-M40",
+        "Field8": "Drogheda & District AC"
+    },
+    {
+        "NOMBRE": "MENDEZ, LAURA",
+        "POS_OFICIAL": 240,
+        "DORSAL": 224,
+        "TIEMPO_OFICIAL": "1:11:55",
+        "TIEMPO_REAL": "1:11:54",
+        "PROMEDIO_REAL": "3,25",
+        "Field2": "F-W35",
+        "Field8": "ASICS"
+    },
+    {
+        "NOMBRE": "VAN VLIET, WILBERTUS",
+        "POS_OFICIAL": 241,
+        "DORSAL": 483,
+        "TIEMPO_OFICIAL": "1:11:56",
+        "TIEMPO_REAL": "1:11:52",
+        "PROMEDIO_REAL": "3,25",
+        "Field2": "M-SENIOR",
+        "Field8": "CIKO '66"
+    },
+    {
+        "NOMBRE": "VIZZINI, ALESSANDRO",
+        "POS_OFICIAL": 242,
+        "DORSAL": 899,
+        "TIEMPO_OFICIAL": "1:11:57",
+        "TIEMPO_REAL": "1:11:51",
+        "PROMEDIO_REAL": "3,25",
+        "Field2": "M-SENIOR",
+        "Field8": "EVOLVE ENDURANCE CLUB"
+    },
+    {
+        "NOMBRE": "AUSINA GIMENO, SALVA",
+        "POS_OFICIAL": 243,
+        "DORSAL": 761,
+        "TIEMPO_OFICIAL": "1:11:57",
+        "TIEMPO_REAL": "1:11:50",
+        "PROMEDIO_REAL": "3,25",
+        "Field2": "M-SENIOR",
+        "Field8": "CLUB ATLETISME RICKYSPORTEAM ALZIRA"
+    },
+    {
+        "NOMBRE": "ALOCEN GUTIERREZ, JOSE MIGUEL",
+        "POS_OFICIAL": 244,
+        "DORSAL": 443,
+        "TIEMPO_OFICIAL": "1:11:57",
+        "TIEMPO_REAL": "1:11:53",
+        "PROMEDIO_REAL": "3,25",
+        "Field2": "M-M40",
+        "Field8": "REDOLAT TEAM CLUB"
+    },
+    {
+        "NOMBRE": "MOLLA SANCHIS, JOAQUIN",
+        "POS_OFICIAL": 245,
+        "DORSAL": 433,
+        "TIEMPO_OFICIAL": "1:11:58",
+        "TIEMPO_REAL": "1:11:54",
+        "PROMEDIO_REAL": "3,25",
+        "Field2": "M-M45",
+        "Field8": "C.A. KIL\u00d3METRO 42"
+    },
+    {
+        "NOMBRE": "MORO MERINO, JAVIER",
+        "POS_OFICIAL": 246,
+        "DORSAL": 937,
+        "TIEMPO_OFICIAL": "1:12:00",
+        "TIEMPO_REAL": "1:11:56",
+        "PROMEDIO_REAL": "3,25",
+        "Field2": "M-M45",
+        "Field8": "226ERS"
+    },
+    {
+        "NOMBRE": "PRIETO GARCIA, CESAR",
+        "POS_OFICIAL": 247,
+        "DORSAL": 1093,
+        "TIEMPO_OFICIAL": "1:12:01",
+        "TIEMPO_REAL": "1:11:53",
+        "PROMEDIO_REAL": "3,25",
+        "Field2": "M-M45",
+        "Field8": "Pi\u00e9lagos"
+    },
+    {
+        "NOMBRE": "ZU\u00d1IGA, ARIEL",
+        "POS_OFICIAL": 248,
+        "DORSAL": 575,
+        "TIEMPO_OFICIAL": "1:12:04",
+        "TIEMPO_REAL": "1:12:01",
+        "PROMEDIO_REAL": "3,25",
+        "Field2": "M-SENIOR",
+        "Field8": "team bowie"
+    },
+    {
+        "NOMBRE": "TOFFANO, SIMONE",
+        "POS_OFICIAL": 249,
+        "DORSAL": 583,
+        "TIEMPO_OFICIAL": "1:12:06",
+        "TIEMPO_REAL": "1:12:02",
+        "PROMEDIO_REAL": "3,25",
+        "Field2": "M-M40",
+        "Field8": "AMATORI ATLETICA CASORATE"
+    },
+    {
+        "NOMBRE": "SABATER RAMIREZ, ALVARO",
+        "POS_OFICIAL": 250,
+        "DORSAL": 806,
+        "TIEMPO_OFICIAL": "1:12:06",
+        "TIEMPO_REAL": "1:11:59",
+        "PROMEDIO_REAL": "3,25",
+        "Field2": "M-SENIOR",
+        "Field8": "CLUB ATLETISMO TORTUGA ALGEMES\u00cd"
+    },
+    {
+        "NOMBRE": "PEREZ, MARIA JOSE",
+        "POS_OFICIAL": 251,
+        "DORSAL": 231,
+        "TIEMPO_OFICIAL": "1:12:08",
+        "TIEMPO_REAL": "1:12:06",
+        "PROMEDIO_REAL": "3,25",
+        "Field2": "F-SENIOR",
+        "Field8": "C.A. CARNICAS SERRANO"
+    },
+    {
+        "NOMBRE": "GIMENEZ, NACHO",
+        "POS_OFICIAL": 252,
+        "DORSAL": 40,
+        "TIEMPO_OFICIAL": "1:12:09",
+        "TIEMPO_REAL": "1:12:08",
+        "PROMEDIO_REAL": "3,25",
+        "Field2": "M-SENIOR",
+        "Field8": "CARNICAS SERRANO"
+    },
+    {
+        "NOMBRE": "FRANC\u00c9S BELDA, VICENT",
+        "POS_OFICIAL": 253,
+        "DORSAL": 653,
+        "TIEMPO_OFICIAL": "1:12:10",
+        "TIEMPO_REAL": "1:12:05",
+        "PROMEDIO_REAL": "3,25",
+        "Field2": "M-UNDER23",
+        "Field8": "Riber\u2019s Team"
+    },
+    {
+        "NOMBRE": "MART\u00cdNEZ HERN\u00c1NDEZ, V\u00cdCTOR",
+        "POS_OFICIAL": 254,
+        "DORSAL": 694,
+        "TIEMPO_OFICIAL": "1:12:10",
+        "TIEMPO_REAL": "1:12:04",
+        "PROMEDIO_REAL": "3,25",
+        "Field2": "M-SENIOR",
+        "Field8": "REDOLAT TEAM CLUB"
+    },
+    {
+        "NOMBRE": "GONZ\u00c1LEZ Q, MANUEL",
+        "POS_OFICIAL": 255,
+        "DORSAL": 807,
+        "TIEMPO_OFICIAL": "1:12:10",
+        "TIEMPO_REAL": "1:12:04",
+        "PROMEDIO_REAL": "3,25",
+        "Field2": "M-M35",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "VERDU GUILLEN, FRANCESC XAVIER",
+        "POS_OFICIAL": 256,
+        "DORSAL": 624,
+        "TIEMPO_OFICIAL": "1:12:14",
+        "TIEMPO_REAL": "1:12:06",
+        "PROMEDIO_REAL": "3,25",
+        "Field2": "M-M40",
+        "Field8": "CAVA STOCK LOGISTIC"
+    },
+    {
+        "NOMBRE": "ALCA\u00d1IZ CARBONELL, CARLOS",
+        "POS_OFICIAL": 257,
+        "DORSAL": 405,
+        "TIEMPO_OFICIAL": "1:12:14",
+        "TIEMPO_REAL": "1:12:10",
+        "PROMEDIO_REAL": "3,25",
+        "Field2": "M-M35",
+        "Field8": "CLUB ATLETISME RICKYSPORTEAM ALZIRA"
+    },
+    {
+        "NOMBRE": "OUHADDOU, FATIMA",
+        "POS_OFICIAL": 258,
+        "DORSAL": 214,
+        "TIEMPO_OFICIAL": "1:12:16",
+        "TIEMPO_REAL": "1:12:14",
+        "PROMEDIO_REAL": "3,26",
+        "Field2": "F-SENIOR",
+        "Field8": "C.A. ADA CALVIA"
+    },
+    {
+        "NOMBRE": "VALIENTE ARRIAGA, JOSE VICENTE",
+        "POS_OFICIAL": 259,
+        "DORSAL": 633,
+        "TIEMPO_OFICIAL": "1:12:16",
+        "TIEMPO_REAL": "1:12:11",
+        "PROMEDIO_REAL": "3,26",
+        "Field2": "M-M40",
+        "Field8": "REDOLAT TEAM CLUB"
+    },
+    {
+        "NOMBRE": "AMOROS CANDELA, DAVID",
+        "POS_OFICIAL": 260,
+        "DORSAL": 649,
+        "TIEMPO_OFICIAL": "1:12:17",
+        "TIEMPO_REAL": "1:12:13",
+        "PROMEDIO_REAL": "3,26",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. CREVILLENTE"
+    },
+    {
+        "NOMBRE": "ROCANIERES, PIERRE",
+        "POS_OFICIAL": 261,
+        "DORSAL": 916,
+        "TIEMPO_OFICIAL": "1:12:21",
+        "TIEMPO_REAL": "1:12:11",
+        "PROMEDIO_REAL": "3,26",
+        "Field2": "M-SENIOR",
+        "Field8": "Entente Poitiers Athle 86"
+    },
+    {
+        "NOMBRE": "GONZ\u00c1LEZ GARC\u00cdA, \u00c1NGEL LUIS",
+        "POS_OFICIAL": 262,
+        "DORSAL": 909,
+        "TIEMPO_OFICIAL": "1:12:22",
+        "TIEMPO_REAL": "1:12:17",
+        "PROMEDIO_REAL": "3,26",
+        "Field2": "M-M45",
+        "Field8": "Morata de Taju\u00f1a"
+    },
+    {
+        "NOMBRE": "BONTEMPS, MICKAEL",
+        "POS_OFICIAL": 263,
+        "DORSAL": 848,
+        "TIEMPO_OFICIAL": "1:12:23",
+        "TIEMPO_REAL": "1:12:16",
+        "PROMEDIO_REAL": "3,26",
+        "Field2": "M-SENIOR",
+        "Field8": "Gien athl\u00e9 marathon"
+    },
+    {
+        "NOMBRE": "MACCAGNAN, FABIOMASSIMO",
+        "POS_OFICIAL": 264,
+        "DORSAL": 793,
+        "TIEMPO_OFICIAL": "1:12:25",
+        "TIEMPO_REAL": "1:12:15",
+        "PROMEDIO_REAL": "3,26",
+        "Field2": "M-SENIOR",
+        "Field8": "Sedentari"
+    },
+    {
+        "NOMBRE": "IN\u00c8S, HAMOUDI",
+        "POS_OFICIAL": 265,
+        "DORSAL": 866,
+        "TIEMPO_OFICIAL": "1:12:26",
+        "TIEMPO_REAL": "1:12:18",
+        "PROMEDIO_REAL": "3,26",
+        "Field2": "F-UNDER23",
+        "Field8": "US TALENCE"
+    },
+    {
+        "NOMBRE": "JULLIEN, JUSTIN",
+        "POS_OFICIAL": 266,
+        "DORSAL": 503,
+        "TIEMPO_OFICIAL": "1:12:26",
+        "TIEMPO_REAL": "1:12:23",
+        "PROMEDIO_REAL": "3,26",
+        "Field2": "M-SENIOR",
+        "Field8": "ACLO"
+    },
+    {
+        "NOMBRE": "LANDA TRANCA, ALBERTO",
+        "POS_OFICIAL": 267,
+        "DORSAL": 506,
+        "TIEMPO_OFICIAL": "1:12:27",
+        "TIEMPO_REAL": "1:12:22",
+        "PROMEDIO_REAL": "3,26",
+        "Field2": "M-M35",
+        "Field8": "C.A. S.S. DE LOS REYES - CLINICA MENORCA"
+    },
+    {
+        "NOMBRE": "HORTELANO RUBIO, MARCOS",
+        "POS_OFICIAL": 268,
+        "DORSAL": 579,
+        "TIEMPO_OFICIAL": "1:12:27",
+        "TIEMPO_REAL": "1:12:22",
+        "PROMEDIO_REAL": "3,26",
+        "Field2": "M-M35",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "MARTINEZ HERNANDEZ, MIGUEL ANGEL",
+        "POS_OFICIAL": 269,
+        "DORSAL": 805,
+        "TIEMPO_OFICIAL": "1:12:28",
+        "TIEMPO_REAL": "1:12:21",
+        "PROMEDIO_REAL": "3,26",
+        "Field2": "M-M40",
+        "Field8": "C.A. MANRESA"
+    },
+    {
+        "NOMBRE": "CAPLLIURE PIERA, JOSE MANUEL",
+        "POS_OFICIAL": 270,
+        "DORSAL": 437,
+        "TIEMPO_OFICIAL": "1:12:28",
+        "TIEMPO_REAL": "1:12:24",
+        "PROMEDIO_REAL": "3,26",
+        "Field2": "M-M40",
+        "Field8": "CLUB ATLETISME RICKYSPORTEAM ALZIRA"
+    },
+    {
+        "NOMBRE": "ROMANSKI, PHILLIP",
+        "POS_OFICIAL": 271,
+        "DORSAL": 22200,
+        "TIEMPO_OFICIAL": "1:12:29",
+        "TIEMPO_REAL": "1:12:22",
+        "PROMEDIO_REAL": "3,26",
+        "Field2": "M-M35",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "CAMPO, LIDIA",
+        "POS_OFICIAL": 272,
+        "DORSAL": 226,
+        "TIEMPO_OFICIAL": "1:12:30",
+        "TIEMPO_REAL": "1:12:28",
+        "PROMEDIO_REAL": "3,26",
+        "Field2": "F-SENIOR",
+        "Field8": "HOKA"
+    },
+    {
+        "NOMBRE": "RODRIGUEZ MORALES, SAMUEL",
+        "POS_OFICIAL": 273,
+        "DORSAL": 678,
+        "TIEMPO_OFICIAL": "1:12:30",
+        "TIEMPO_REAL": "1:12:25",
+        "PROMEDIO_REAL": "3,26",
+        "Field2": "M-M40",
+        "Field8": "DELTA VALENCIA C.A."
+    },
+    {
+        "NOMBRE": "RODR\u00cdGUEZ GARRAPUCHO, JUAN MANUEL",
+        "POS_OFICIAL": 274,
+        "DORSAL": 932,
+        "TIEMPO_OFICIAL": "1:12:34",
+        "TIEMPO_REAL": "1:12:27",
+        "PROMEDIO_REAL": "3,26",
+        "Field2": "M-M40",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "SICOT, GWENN-A\u00cbL",
+        "POS_OFICIAL": 275,
+        "DORSAL": 811,
+        "TIEMPO_OFICIAL": "1:12:34",
+        "TIEMPO_REAL": "1:12:28",
+        "PROMEDIO_REAL": "3,26",
+        "Field2": "M-UNDER23",
+        "Field8": "JA MELLESSE"
+    },
+    {
+        "NOMBRE": "BENOIT, HUGO",
+        "POS_OFICIAL": 276,
+        "DORSAL": 926,
+        "TIEMPO_OFICIAL": "1:12:36",
+        "TIEMPO_REAL": "1:12:28",
+        "PROMEDIO_REAL": "3,26",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "MONFORT RODRIGUEZ, HUGO",
+        "POS_OFICIAL": 277,
+        "DORSAL": 625,
+        "TIEMPO_OFICIAL": "1:12:36",
+        "TIEMPO_REAL": "1:12:28",
+        "PROMEDIO_REAL": "3,26",
+        "Field2": "M-SENIOR",
+        "Field8": "C.E. VINAROS"
+    },
+    {
+        "NOMBRE": "GARCIA CORTES, DANIEL AUGUSTO",
+        "POS_OFICIAL": 278,
+        "DORSAL": 779,
+        "TIEMPO_OFICIAL": "1:12:38",
+        "TIEMPO_REAL": "1:12:33",
+        "PROMEDIO_REAL": "3,27",
+        "Field2": "M-SENIOR",
+        "Field8": "TEAM HICHAM"
+    },
+    {
+        "NOMBRE": "MILAN, FRANCISCO",
+        "POS_OFICIAL": 279,
+        "DORSAL": 654,
+        "TIEMPO_OFICIAL": "1:12:38",
+        "TIEMPO_REAL": "1:12:29",
+        "PROMEDIO_REAL": "3,27",
+        "Field2": "M-M45",
+        "Field8": "ESCUELA DEL CORREDOR PACO MILAN"
+    },
+    {
+        "NOMBRE": "FUMANAL ALGUETA, DAVID",
+        "POS_OFICIAL": 280,
+        "DORSAL": 486,
+        "TIEMPO_OFICIAL": "1:12:39",
+        "TIEMPO_REAL": "1:12:34",
+        "PROMEDIO_REAL": "3,27",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. OROEL EL CISNE"
+    },
+    {
+        "NOMBRE": "MOLINA MALDONADO, JOS\u00c9 LUIS",
+        "POS_OFICIAL": 281,
+        "DORSAL": 742,
+        "TIEMPO_OFICIAL": "1:12:39",
+        "TIEMPO_REAL": "1:12:27",
+        "PROMEDIO_REAL": "3,27",
+        "Field2": "M-M35",
+        "Field8": "Treiningrey"
+    },
+    {
+        "NOMBRE": "BELKHADEM, KARIM",
+        "POS_OFICIAL": 282,
+        "DORSAL": 11247,
+        "TIEMPO_OFICIAL": "1:12:41",
+        "TIEMPO_REAL": "1:12:35",
+        "PROMEDIO_REAL": "3,27",
+        "Field2": "M-M50",
+        "Field8": "ASPTT NICE"
+    },
+    {
+        "NOMBRE": "VIRGILI ESPADA, JULI\u00c1N",
+        "POS_OFICIAL": 283,
+        "DORSAL": 808,
+        "TIEMPO_OFICIAL": "1:12:44",
+        "TIEMPO_REAL": "1:12:38",
+        "PROMEDIO_REAL": "3,27",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. MINGLANILLA"
+    },
+    {
+        "NOMBRE": "CONDE ALVAREZ, RUBEN",
+        "POS_OFICIAL": 284,
+        "DORSAL": 739,
+        "TIEMPO_OFICIAL": "1:12:44",
+        "TIEMPO_REAL": "1:12:36",
+        "PROMEDIO_REAL": "3,27",
+        "Field2": "M-M40",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "HOAREAU, ETIENNE",
+        "POS_OFICIAL": 285,
+        "DORSAL": 890,
+        "TIEMPO_OFICIAL": "1:12:45",
+        "TIEMPO_REAL": "1:12:35",
+        "PROMEDIO_REAL": "3,27",
+        "Field2": "M-UNDER23",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "CABALLERO PIERNAS, RUBEN",
+        "POS_OFICIAL": 286,
+        "DORSAL": 472,
+        "TIEMPO_OFICIAL": "1:12:45",
+        "TIEMPO_REAL": "1:12:42",
+        "PROMEDIO_REAL": "3,27",
+        "Field2": "M-M40",
+        "Field8": "C.A. BENIDORM"
+    },
+    {
+        "NOMBRE": "TIRADO CORTES, SAUL",
+        "POS_OFICIAL": 287,
+        "DORSAL": 869,
+        "TIEMPO_OFICIAL": "1:12:46",
+        "TIEMPO_REAL": "1:12:40",
+        "PROMEDIO_REAL": "3,27",
+        "Field2": "M-SENIOR",
+        "Field8": "Team Manolo Contador"
+    },
+    {
+        "NOMBRE": "DOMENE RUBIO, CARLOS",
+        "POS_OFICIAL": 288,
+        "DORSAL": 677,
+        "TIEMPO_OFICIAL": "1:12:49",
+        "TIEMPO_REAL": "1:12:44",
+        "PROMEDIO_REAL": "3,27",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. NOVELDA CARMENCITA"
+    },
+    {
+        "NOMBRE": "ALCAL\u00c1 CASAS, DANIEL",
+        "POS_OFICIAL": 289,
+        "DORSAL": 865,
+        "TIEMPO_OFICIAL": "1:12:51",
+        "TIEMPO_REAL": "1:12:44",
+        "PROMEDIO_REAL": "3,27",
+        "Field2": "M-M35",
+        "Field8": "C.A. S.S. DE LOS REYES - CLINICA MENORCA"
+    },
+    {
+        "NOMBRE": "GIMENEZ SOLAZ, DAVID",
+        "POS_OFICIAL": 290,
+        "DORSAL": 776,
+        "TIEMPO_OFICIAL": "1:12:51",
+        "TIEMPO_REAL": "1:12:45",
+        "PROMEDIO_REAL": "3,27",
+        "Field2": "M-M40",
+        "Field8": "C.A. UTIEL"
+    },
+    {
+        "NOMBRE": "BORREDA FELIU, JORDI",
+        "POS_OFICIAL": 291,
+        "DORSAL": 709,
+        "TIEMPO_OFICIAL": "1:12:52",
+        "TIEMPO_REAL": "1:12:47",
+        "PROMEDIO_REAL": "3,27",
+        "Field2": "M-M40",
+        "Field8": "C.E. LA VESPA DE NOVETL\u00c8"
+    },
+    {
+        "NOMBRE": "MART\u00cdNEZ CERD\u00c1N, JOS\u00c9 LUIS",
+        "POS_OFICIAL": 292,
+        "DORSAL": 763,
+        "TIEMPO_OFICIAL": "1:12:53",
+        "TIEMPO_REAL": "1:12:47",
+        "PROMEDIO_REAL": "3,27",
+        "Field2": "M-M45",
+        "Field8": "C.A.Nogalte -Hogar Pto. Lumbreras"
+    },
+    {
+        "NOMBRE": "CELA NOVOA, IV\u00c1N",
+        "POS_OFICIAL": 293,
+        "DORSAL": 942,
+        "TIEMPO_OFICIAL": "1:12:53",
+        "TIEMPO_REAL": "1:12:42",
+        "PROMEDIO_REAL": "3,27",
+        "Field2": "M-M40",
+        "Field8": "CAO NAVIA"
+    },
+    {
+        "NOMBRE": "ORTIZ PACHECO, JAVIER",
+        "POS_OFICIAL": 294,
+        "DORSAL": 741,
+        "TIEMPO_OFICIAL": "1:12:53",
+        "TIEMPO_REAL": "1:12:49",
+        "PROMEDIO_REAL": "3,27",
+        "Field2": "M-M40",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "DE GROOT, HENRICUS",
+        "POS_OFICIAL": 295,
+        "DORSAL": 24254,
+        "TIEMPO_OFICIAL": "1:12:55",
+        "TIEMPO_REAL": "1:12:45",
+        "PROMEDIO_REAL": "3,27",
+        "Field2": "M-M35",
+        "Field8": "AV Oss'78"
+    },
+    {
+        "NOMBRE": "SARASSO, ADRIEN",
+        "POS_OFICIAL": 296,
+        "DORSAL": 668,
+        "TIEMPO_OFICIAL": "1:12:56",
+        "TIEMPO_REAL": "1:12:47",
+        "PROMEDIO_REAL": "3,27",
+        "Field2": "M-SENIOR",
+        "Field8": "ESCO 44 ST NAZAIRE"
+    },
+    {
+        "NOMBRE": "PORCEL S\u00c1NCHEZ, AMADOR",
+        "POS_OFICIAL": 297,
+        "DORSAL": 752,
+        "TIEMPO_OFICIAL": "1:12:56",
+        "TIEMPO_REAL": "1:12:51",
+        "PROMEDIO_REAL": "3,27",
+        "Field2": "M-M35",
+        "Field8": "C.E. LA VESPA DE NOVETL\u00c8"
+    },
+    {
+        "NOMBRE": "ANDRZEJCZAK, MONIKA",
+        "POS_OFICIAL": 298,
+        "DORSAL": 246,
+        "TIEMPO_OFICIAL": "1:12:56",
+        "TIEMPO_REAL": "1:12:54",
+        "PROMEDIO_REAL": "3,27",
+        "Field2": "F-W35",
+        "Field8": "Ruchowa Akademia Zdrowia"
+    },
+    {
+        "NOMBRE": "BADENES GARCIA, JOAQUIN",
+        "POS_OFICIAL": 299,
+        "DORSAL": 689,
+        "TIEMPO_OFICIAL": "1:12:57",
+        "TIEMPO_REAL": "1:12:53",
+        "PROMEDIO_REAL": "3,27",
+        "Field2": "M-M40",
+        "Field8": "C.E. LA VESPA DE NOVETL\u00c8"
+    },
+    {
+        "NOMBRE": "AZZOPARDI, STEFAN",
+        "POS_OFICIAL": 300,
+        "DORSAL": 920,
+        "TIEMPO_OFICIAL": "1:12:58",
+        "TIEMPO_REAL": "1:12:55",
+        "PROMEDIO_REAL": "3,28",
+        "Field2": "M-M40",
+        "Field8": "Zurrieq Wolves AC"
+    },
+    {
+        "NOMBRE": "KNIGHT, OWEN",
+        "POS_OFICIAL": 301,
+        "DORSAL": 825,
+        "TIEMPO_OFICIAL": "1:12:58",
+        "TIEMPO_REAL": "1:12:46",
+        "PROMEDIO_REAL": "3,28",
+        "Field2": "M-SENIOR",
+        "Field8": "Brighton Phoenix"
+    },
+    {
+        "NOMBRE": "GARC\u00cdA MART\u00cdN, JOSE MANUEL",
+        "POS_OFICIAL": 302,
+        "DORSAL": 725,
+        "TIEMPO_OFICIAL": "1:12:59",
+        "TIEMPO_REAL": "1:12:52",
+        "PROMEDIO_REAL": "3,28",
+        "Field2": "M-M35",
+        "Field8": "IRONWILL"
+    },
+    {
+        "NOMBRE": "TATAY ALAPONT, JOSEP",
+        "POS_OFICIAL": 303,
+        "DORSAL": 1011,
+        "TIEMPO_OFICIAL": "1:13:01",
+        "TIEMPO_REAL": "1:12:59",
+        "PROMEDIO_REAL": "3,28",
+        "Field2": "M-M40",
+        "Field8": "SYNAPSE"
+    },
+    {
+        "NOMBRE": "LAZKANO LETAMENDI, ANDER",
+        "POS_OFICIAL": 304,
+        "DORSAL": 479,
+        "TIEMPO_OFICIAL": "1:13:02",
+        "TIEMPO_REAL": "1:12:58",
+        "PROMEDIO_REAL": "3,28",
+        "Field2": "M-M35",
+        "Field8": "Zumeatarra Atletismo Taldea"
+    },
+    {
+        "NOMBRE": "BENEDETTI, ALESSIO",
+        "POS_OFICIAL": 305,
+        "DORSAL": 886,
+        "TIEMPO_OFICIAL": "1:13:02",
+        "TIEMPO_REAL": "1:12:52",
+        "PROMEDIO_REAL": "3,28",
+        "Field2": "M-SENIOR",
+        "Field8": "S.S. Tenno"
+    },
+    {
+        "NOMBRE": "VALERO FERN\u00c1NDEZ, \u00c1NGEL",
+        "POS_OFICIAL": 306,
+        "DORSAL": 1284,
+        "TIEMPO_OFICIAL": "1:13:04",
+        "TIEMPO_REAL": "1:12:54",
+        "PROMEDIO_REAL": "3,28",
+        "Field2": "M-SENIOR",
+        "Field8": "Piensos Canales"
+    },
+    {
+        "NOMBRE": "VI\u00d1OLES FERRI, VORO",
+        "POS_OFICIAL": 307,
+        "DORSAL": 647,
+        "TIEMPO_OFICIAL": "1:13:05",
+        "TIEMPO_REAL": "1:12:57",
+        "PROMEDIO_REAL": "3,28",
+        "Field2": "M-SENIOR",
+        "Field8": "COBARDE'S TEAM"
+    },
+    {
+        "NOMBRE": "CASTILLO FERN\u00c1NDEZ, SERGIO",
+        "POS_OFICIAL": 308,
+        "DORSAL": 439,
+        "TIEMPO_OFICIAL": "1:13:06",
+        "TIEMPO_REAL": "1:13:03",
+        "PROMEDIO_REAL": "3,28",
+        "Field2": "M-SENIOR",
+        "Field8": "Real Runners"
+    },
+    {
+        "NOMBRE": "SANCHIS CAMBRA, ENRIQUE",
+        "POS_OFICIAL": 309,
+        "DORSAL": 749,
+        "TIEMPO_OFICIAL": "1:13:08",
+        "TIEMPO_REAL": "1:13:01",
+        "PROMEDIO_REAL": "3,28",
+        "Field2": "M-M40",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "PASCUAL SALES, JORDI",
+        "POS_OFICIAL": 310,
+        "DORSAL": 669,
+        "TIEMPO_OFICIAL": "1:13:08",
+        "TIEMPO_REAL": "1:13:04",
+        "PROMEDIO_REAL": "3,28",
+        "Field2": "M-M35",
+        "Field8": "C.E.C. ANTELLA"
+    },
+    {
+        "NOMBRE": "CARDONA FERNANDEZ, DARIO",
+        "POS_OFICIAL": 311,
+        "DORSAL": 684,
+        "TIEMPO_OFICIAL": "1:13:09",
+        "TIEMPO_REAL": "1:13:04",
+        "PROMEDIO_REAL": "3,28",
+        "Field2": "M-M40",
+        "Field8": "XTREM ALMENARA"
+    },
+    {
+        "NOMBRE": "LOPEZ GUIJARRO, JUAN ANTONIO",
+        "POS_OFICIAL": 312,
+        "DORSAL": 639,
+        "TIEMPO_OFICIAL": "1:13:09",
+        "TIEMPO_REAL": "1:13:03",
+        "PROMEDIO_REAL": "3,28",
+        "Field2": "M-M40",
+        "Field8": "REDOLAT TEAM CLUB"
+    },
+    {
+        "NOMBRE": "PIQUERAS TORRES, JONATHAN",
+        "POS_OFICIAL": 313,
+        "DORSAL": 712,
+        "TIEMPO_OFICIAL": "1:13:13",
+        "TIEMPO_REAL": "1:13:07",
+        "PROMEDIO_REAL": "3,28",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. FAVARA"
+    },
+    {
+        "NOMBRE": "CHOKHELI, LEVAN",
+        "POS_OFICIAL": 314,
+        "DORSAL": 504,
+        "TIEMPO_OFICIAL": "1:13:14",
+        "TIEMPO_REAL": "1:13:14",
+        "PROMEDIO_REAL": "3,28",
+        "Field2": "M-SENIOR",
+        "Field8": "Lisi Night Wolwes"
+    },
+    {
+        "NOMBRE": "ALC\u00d3N GINER, EDUARDO",
+        "POS_OFICIAL": 315,
+        "DORSAL": 510,
+        "TIEMPO_OFICIAL": "1:13:14",
+        "TIEMPO_REAL": "1:13:05",
+        "PROMEDIO_REAL": "3,28",
+        "Field2": "M-M45",
+        "Field8": "S.D. CORRECAMINOS"
+    },
+    {
+        "NOMBRE": "BERZAL DE LUIS, DAVID",
+        "POS_OFICIAL": 316,
+        "DORSAL": 801,
+        "TIEMPO_OFICIAL": "1:13:14",
+        "TIEMPO_REAL": "1:13:03",
+        "PROMEDIO_REAL": "3,28",
+        "Field2": "M-M40",
+        "Field8": "DLC TRAIL TEAM"
+    },
+    {
+        "NOMBRE": "MARTIN MORA, LUIS",
+        "POS_OFICIAL": 317,
+        "DORSAL": 957,
+        "TIEMPO_OFICIAL": "1:13:14",
+        "TIEMPO_REAL": "1:13:06",
+        "PROMEDIO_REAL": "3,28",
+        "Field2": "M-M40",
+        "Field8": "Pielagos"
+    },
+    {
+        "NOMBRE": "PANCORBO ALVAREZ, BENITO",
+        "POS_OFICIAL": 318,
+        "DORSAL": 704,
+        "TIEMPO_OFICIAL": "1:13:17",
+        "TIEMPO_REAL": "1:13:10",
+        "PROMEDIO_REAL": "3,28",
+        "Field2": "M-M45",
+        "Field8": "globerosrunner"
+    },
+    {
+        "NOMBRE": "JAVALOY PEREZ, FERNANDO",
+        "POS_OFICIAL": 319,
+        "DORSAL": 497,
+        "TIEMPO_OFICIAL": "1:13:17",
+        "TIEMPO_REAL": "1:13:13",
+        "PROMEDIO_REAL": "3,28",
+        "Field2": "M-M35",
+        "Field8": "Club atletismo Nogalte"
+    },
+    {
+        "NOMBRE": "FERRER VIRGOS, ISRAEL",
+        "POS_OFICIAL": 320,
+        "DORSAL": 638,
+        "TIEMPO_OFICIAL": "1:13:19",
+        "TIEMPO_REAL": "1:13:13",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-M40",
+        "Field8": "ESCUELA RUSA"
+    },
+    {
+        "NOMBRE": "TOMAS DE ROSELLO, SERGI",
+        "POS_OFICIAL": 321,
+        "DORSAL": 627,
+        "TIEMPO_OFICIAL": "1:13:19",
+        "TIEMPO_REAL": "1:13:11",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-SENIOR",
+        "Field8": "C.E. LA VESPA DE NOVETL\u00c8"
+    },
+    {
+        "NOMBRE": "CH\u00c9REL, CORENTIN",
+        "POS_OFICIAL": 322,
+        "DORSAL": 1577,
+        "TIEMPO_OFICIAL": "1:13:19",
+        "TIEMPO_REAL": "1:13:11",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-SENIOR",
+        "Field8": "Foug\u00e8res"
+    },
+    {
+        "NOMBRE": "S\u00c1NCHEZ JIM\u00c9NEZ, LEONARDO",
+        "POS_OFICIAL": 323,
+        "DORSAL": 702,
+        "TIEMPO_OFICIAL": "1:13:20",
+        "TIEMPO_REAL": "1:13:15",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-M40",
+        "Field8": "ECOSPORT SPORT TEAM"
+    },
+    {
+        "NOMBRE": "LL\u00c0CER ESPLUGUES, JORGE",
+        "POS_OFICIAL": 324,
+        "DORSAL": 795,
+        "TIEMPO_OFICIAL": "1:13:21",
+        "TIEMPO_REAL": "1:13:16",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-M35",
+        "Field8": "ONDARA TRI-ESPORT"
+    },
+    {
+        "NOMBRE": "ALMI\u00d1ANA MAS, IGNASI",
+        "POS_OFICIAL": 325,
+        "DORSAL": 727,
+        "TIEMPO_OFICIAL": "1:13:21",
+        "TIEMPO_REAL": "1:13:13",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-M35",
+        "Field8": "TIRA TU DAVANT"
+    },
+    {
+        "NOMBRE": "MORENO GONZ\u00c1LEZ, DANIEL",
+        "POS_OFICIAL": 326,
+        "DORSAL": 661,
+        "TIEMPO_OFICIAL": "1:13:23",
+        "TIEMPO_REAL": "1:13:11",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-SENIOR",
+        "Field8": "Bull runners by Dani andujar"
+    },
+    {
+        "NOMBRE": "RIVILLA ARIAS, IV\u00c1N",
+        "POS_OFICIAL": 327,
+        "DORSAL": 913,
+        "TIEMPO_OFICIAL": "1:13:24",
+        "TIEMPO_REAL": "1:13:14",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-M35",
+        "Field8": "VG RUNNING"
+    },
+    {
+        "NOMBRE": "MART\u00cdNEZ VILLASUR, DAVID",
+        "POS_OFICIAL": 328,
+        "DORSAL": 877,
+        "TIEMPO_OFICIAL": "1:13:24",
+        "TIEMPO_REAL": "1:13:14",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-M40",
+        "Field8": "VG RUNNING"
+    },
+    {
+        "NOMBRE": "GARCIA PUENTE, JONATHAN",
+        "POS_OFICIAL": 329,
+        "DORSAL": 407,
+        "TIEMPO_OFICIAL": "1:13:24",
+        "TIEMPO_REAL": "1:13:20",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-M40",
+        "Field8": "La Cerezal Team"
+    },
+    {
+        "NOMBRE": "MORCILLO GARCIA, DAVID",
+        "POS_OFICIAL": 330,
+        "DORSAL": 748,
+        "TIEMPO_OFICIAL": "1:13:25",
+        "TIEMPO_REAL": "1:13:20",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. GANDIA"
+    },
+    {
+        "NOMBRE": "CORTELL JUAN, JUAN CARLOS",
+        "POS_OFICIAL": 331,
+        "DORSAL": 695,
+        "TIEMPO_OFICIAL": "1:13:26",
+        "TIEMPO_REAL": "1:13:16",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-M35",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "TOYOS FERNANDEZ, JESUS",
+        "POS_OFICIAL": 332,
+        "DORSAL": 955,
+        "TIEMPO_OFICIAL": "1:13:26",
+        "TIEMPO_REAL": "1:13:18",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-M45",
+        "Field8": "Pielagos"
+    },
+    {
+        "NOMBRE": "DOBLAS, VICTOR",
+        "POS_OFICIAL": 333,
+        "DORSAL": 585,
+        "TIEMPO_OFICIAL": "1:13:27",
+        "TIEMPO_REAL": "1:13:04",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-SENIOR",
+        "Field8": "PCteam"
+    },
+    {
+        "NOMBRE": "ESCANDON MARTINEZ, JOSE MANUEL",
+        "POS_OFICIAL": 334,
+        "DORSAL": 897,
+        "TIEMPO_OFICIAL": "1:13:28",
+        "TIEMPO_REAL": "1:13:21",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-M45",
+        "Field8": "CANGAS DE ONIS ATLETISMO"
+    },
+    {
+        "NOMBRE": "RODRIGUEZ PE\u00d1A, FRANCISCO MIGUEL",
+        "POS_OFICIAL": 335,
+        "DORSAL": 819,
+        "TIEMPO_OFICIAL": "1:13:28",
+        "TIEMPO_REAL": "1:13:21",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. GUADARRAMA"
+    },
+    {
+        "NOMBRE": "MURAS, PETR",
+        "POS_OFICIAL": 336,
+        "DORSAL": 470,
+        "TIEMPO_OFICIAL": "1:13:29",
+        "TIEMPO_REAL": "1:13:26",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-SENIOR",
+        "Field8": "SSK V\u00edtkovice"
+    },
+    {
+        "NOMBRE": "MEDINA AMER, CARLOS",
+        "POS_OFICIAL": 337,
+        "DORSAL": 1067,
+        "TIEMPO_OFICIAL": "1:13:29",
+        "TIEMPO_REAL": "1:13:22",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-M35",
+        "Field8": "CA XILXES"
+    },
+    {
+        "NOMBRE": "LOIC, SICOT",
+        "POS_OFICIAL": 338,
+        "DORSAL": 765,
+        "TIEMPO_OFICIAL": "1:13:30",
+        "TIEMPO_REAL": "1:13:23",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-SENIOR",
+        "Field8": "CIMA PAYS D'AURAY"
+    },
+    {
+        "NOMBRE": "ORELLANA MONTERO, JOS\u00c9 MANUEL",
+        "POS_OFICIAL": 339,
+        "DORSAL": 715,
+        "TIEMPO_OFICIAL": "1:13:30",
+        "TIEMPO_REAL": "1:13:23",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-M35",
+        "Field8": "C.A. CARMONA PAEZ"
+    },
+    {
+        "NOMBRE": "SEVERIJN, ALVIN",
+        "POS_OFICIAL": 340,
+        "DORSAL": 903,
+        "TIEMPO_OFICIAL": "1:13:31",
+        "TIEMPO_REAL": "1:13:23",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-SENIOR",
+        "Field8": "HAAG ATLETIEK"
+    },
+    {
+        "NOMBRE": "MOHAMED, BAHOU",
+        "POS_OFICIAL": 341,
+        "DORSAL": 936,
+        "TIEMPO_OFICIAL": "1:13:32",
+        "TIEMPO_REAL": "1:13:31",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-M40",
+        "Field8": "Run Up Nanterre"
+    },
+    {
+        "NOMBRE": "HUERTA FELIPE, MIGUEL ANGEL",
+        "POS_OFICIAL": 342,
+        "DORSAL": 751,
+        "TIEMPO_OFICIAL": "1:13:35",
+        "TIEMPO_REAL": "1:13:35",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-M35",
+        "Field8": "TRIATLON ALBACETE"
+    },
+    {
+        "NOMBRE": "MAYOR CASTILLO, PERE",
+        "POS_OFICIAL": 343,
+        "DORSAL": 643,
+        "TIEMPO_OFICIAL": "1:13:36",
+        "TIEMPO_REAL": "1:13:30",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "S\u00c1NCHEZ BEL\u00c9N, FRANCISCO JAVIER",
+        "POS_OFICIAL": 344,
+        "DORSAL": 770,
+        "TIEMPO_OFICIAL": "1:13:37",
+        "TIEMPO_REAL": "1:13:31",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-M45",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "FERN\u00c1NDEZ LLUCH, JORGE",
+        "POS_OFICIAL": 345,
+        "DORSAL": 1356,
+        "TIEMPO_OFICIAL": "1:13:38",
+        "TIEMPO_REAL": "1:13:28",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "ESTEBAN SILVA, HECTOR",
+        "POS_OFICIAL": 346,
+        "DORSAL": 650,
+        "TIEMPO_OFICIAL": "1:13:38",
+        "TIEMPO_REAL": "1:13:30",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-M35",
+        "Field8": "A TOTA CANYA"
+    },
+    {
+        "NOMBRE": "BUFFET, JEAN-VALENTIN",
+        "POS_OFICIAL": 347,
+        "DORSAL": 568,
+        "TIEMPO_OFICIAL": "1:13:39",
+        "TIEMPO_REAL": "1:13:30",
+        "PROMEDIO_REAL": "3,29",
+        "Field2": "M-SENIOR",
+        "Field8": "Athle pays de Foug\u00e8res"
+    },
+    {
+        "NOMBRE": "MONZO GOMEZ, FRANCISCO",
+        "POS_OFICIAL": 348,
+        "DORSAL": 489,
+        "TIEMPO_OFICIAL": "1:13:41",
+        "TIEMPO_REAL": "1:13:37",
+        "PROMEDIO_REAL": "3,30",
+        "Field2": "M-M35",
+        "Field8": "C.D. METAESPORT"
+    },
+    {
+        "NOMBRE": "MART\u00cdNEZ ELENA, JUAN PABLO",
+        "POS_OFICIAL": 349,
+        "DORSAL": 714,
+        "TIEMPO_OFICIAL": "1:13:41",
+        "TIEMPO_REAL": "1:13:35",
+        "PROMEDIO_REAL": "3,30",
+        "Field2": "M-M50",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "TESURI, MAR\u00cdA LUZ",
+        "POS_OFICIAL": 350,
+        "DORSAL": 233,
+        "TIEMPO_OFICIAL": "1:13:43",
+        "TIEMPO_REAL": "1:13:43",
+        "PROMEDIO_REAL": "3,30",
+        "Field2": "F-SENIOR",
+        "Field8": "Libre"
+    },
+    {
+        "NOMBRE": "AVI\u00d1\u00d3 NAVARRO, V\u00cdCTOR",
+        "POS_OFICIAL": 351,
+        "DORSAL": 449,
+        "TIEMPO_OFICIAL": "1:13:43",
+        "TIEMPO_REAL": "1:13:39",
+        "PROMEDIO_REAL": "3,30",
+        "Field2": "M-M35",
+        "Field8": "CRESPO RUNNERS"
+    },
+    {
+        "NOMBRE": "RICO CACERES, RAUL",
+        "POS_OFICIAL": 352,
+        "DORSAL": 953,
+        "TIEMPO_OFICIAL": "1:13:45",
+        "TIEMPO_REAL": "1:13:39",
+        "PROMEDIO_REAL": "3,30",
+        "Field2": "M-M40",
+        "Field8": "C.A. CARNICAS SERRANO"
+    },
+    {
+        "NOMBRE": "KALS\u00c5S, KNUD",
+        "POS_OFICIAL": 353,
+        "DORSAL": 963,
+        "TIEMPO_OFICIAL": "1:13:45",
+        "TIEMPO_REAL": "1:13:35",
+        "PROMEDIO_REAL": "3,30",
+        "Field2": "M-M40",
+        "Field8": "Kristiansand L\u00f8peklubb"
+    },
+    {
+        "NOMBRE": "LLUCH D\u00cdAZ, JOSEP VICENT",
+        "POS_OFICIAL": 354,
+        "DORSAL": 778,
+        "TIEMPO_OFICIAL": "1:13:45",
+        "TIEMPO_REAL": "1:13:35",
+        "PROMEDIO_REAL": "3,30",
+        "Field2": "M-M35",
+        "Field8": "S.D. CORRECAMINOS"
+    },
+    {
+        "NOMBRE": "SCHN\u00dcRIGER, SAMIRA",
+        "POS_OFICIAL": 355,
+        "DORSAL": 238,
+        "TIEMPO_OFICIAL": "1:13:45",
+        "TIEMPO_REAL": "1:13:43",
+        "PROMEDIO_REAL": "3,30",
+        "Field2": "F-SENIOR",
+        "Field8": "LC Regensdorf"
+    },
+    {
+        "NOMBRE": "BARBERO MARTINEZ, RAUL",
+        "POS_OFICIAL": 356,
+        "DORSAL": 2745,
+        "TIEMPO_OFICIAL": "1:13:46",
+        "TIEMPO_REAL": "1:13:43",
+        "PROMEDIO_REAL": "3,30",
+        "Field2": "M-M40",
+        "Field8": "caixabank runners"
+    },
+    {
+        "NOMBRE": "HOSPITAL LOPEZ, IVAN",
+        "POS_OFICIAL": 357,
+        "DORSAL": 753,
+        "TIEMPO_OFICIAL": "1:13:46",
+        "TIEMPO_REAL": "1:13:39",
+        "PROMEDIO_REAL": "3,30",
+        "Field2": "M-SENIOR",
+        "Field8": "Reinosa Running"
+    },
+    {
+        "NOMBRE": "GILL, MARCUS",
+        "POS_OFICIAL": 358,
+        "DORSAL": 784,
+        "TIEMPO_OFICIAL": "1:13:46",
+        "TIEMPO_REAL": "1:13:35",
+        "PROMEDIO_REAL": "3,30",
+        "Field2": "M-SENIOR",
+        "Field8": "HLK"
+    },
+    {
+        "NOMBRE": "CANDELA FAJARDO, JOSE",
+        "POS_OFICIAL": 359,
+        "DORSAL": 646,
+        "TIEMPO_OFICIAL": "1:13:47",
+        "TIEMPO_REAL": "1:13:43",
+        "PROMEDIO_REAL": "3,30",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. CREVILLENTE"
+    },
+    {
+        "NOMBRE": "TALLERI, WILLIAM",
+        "POS_OFICIAL": 360,
+        "DORSAL": 834,
+        "TIEMPO_OFICIAL": "1:13:47",
+        "TIEMPO_REAL": "1:13:40",
+        "PROMEDIO_REAL": "3,30",
+        "Field2": "M-M45",
+        "Field8": "San vito pol."
+    },
+    {
+        "NOMBRE": "S\u00c1NCHEZ PLATERO, DAVID",
+        "POS_OFICIAL": 361,
+        "DORSAL": 642,
+        "TIEMPO_OFICIAL": "1:13:49",
+        "TIEMPO_REAL": "1:13:40",
+        "PROMEDIO_REAL": "3,30",
+        "Field2": "M-M35",
+        "Field8": "C.A. UTIEL"
+    },
+    {
+        "NOMBRE": "GO\u00d1I, IGNACIO",
+        "POS_OFICIAL": 362,
+        "DORSAL": 798,
+        "TIEMPO_OFICIAL": "1:13:49",
+        "TIEMPO_REAL": "1:13:38",
+        "PROMEDIO_REAL": "3,30",
+        "Field2": "M-M45",
+        "Field8": "IRONWILL SOLIDEO"
+    },
+    {
+        "NOMBRE": "DE LA PUENTE ALONSO, DIEGO",
+        "POS_OFICIAL": 363,
+        "DORSAL": 2002,
+        "TIEMPO_OFICIAL": "1:13:51",
+        "TIEMPO_REAL": "1:13:44",
+        "PROMEDIO_REAL": "3,30",
+        "Field2": "M-UNDER23",
+        "Field8": "Vicky Foods Athletics"
+    },
+    {
+        "NOMBRE": "STOJANI, KRISTIAN",
+        "POS_OFICIAL": 364,
+        "DORSAL": 1515,
+        "TIEMPO_OFICIAL": "1:13:51",
+        "TIEMPO_REAL": "1:13:46",
+        "PROMEDIO_REAL": "3,30",
+        "Field2": "M-SENIOR",
+        "Field8": "Nordlicht Ausdauer-Coaching"
+    },
+    {
+        "NOMBRE": "WENDT, CHRISTOPHER",
+        "POS_OFICIAL": 365,
+        "DORSAL": 1238,
+        "TIEMPO_OFICIAL": "1:13:51",
+        "TIEMPO_REAL": "1:13:33",
+        "PROMEDIO_REAL": "3,30",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "BLAY MART\u00cdNEZ, DAVID",
+        "POS_OFICIAL": 366,
+        "DORSAL": 747,
+        "TIEMPO_OFICIAL": "1:13:53",
+        "TIEMPO_REAL": "1:13:47",
+        "PROMEDIO_REAL": "3,30",
+        "Field2": "M-M45",
+        "Field8": "CLUB ATLETISME RICKYSPORTEAM ALZIRA"
+    },
+    {
+        "NOMBRE": "M\u00c9NDEZ ESCALANTE, JOSE LUIS",
+        "POS_OFICIAL": 367,
+        "DORSAL": 636,
+        "TIEMPO_OFICIAL": "1:13:53",
+        "TIEMPO_REAL": "1:13:45",
+        "PROMEDIO_REAL": "3,30",
+        "Field2": "M-M50",
+        "Field8": "HIRU-HERRI"
+    },
+    {
+        "NOMBRE": "ABURTO CORONA, LUIS JESUS",
+        "POS_OFICIAL": 368,
+        "DORSAL": 852,
+        "TIEMPO_OFICIAL": "1:13:54",
+        "TIEMPO_REAL": "1:13:46",
+        "PROMEDIO_REAL": "3,30",
+        "Field2": "M-UNDER23",
+        "Field8": "Simoni Runners"
+    },
+    {
+        "NOMBRE": "SERRANO NIETO, JUANJO",
+        "POS_OFICIAL": 369,
+        "DORSAL": 870,
+        "TIEMPO_OFICIAL": "1:13:54",
+        "TIEMPO_REAL": "1:13:47",
+        "PROMEDIO_REAL": "3,30",
+        "Field2": "M-SENIOR",
+        "Field8": "ISO +"
+    },
+    {
+        "NOMBRE": "ALFAGEME SANGUINO, CARLOS",
+        "POS_OFICIAL": 370,
+        "DORSAL": 1395,
+        "TIEMPO_OFICIAL": "1:13:56",
+        "TIEMPO_REAL": "1:13:47",
+        "PROMEDIO_REAL": "3,30",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "MORANTE DEL VISO, JESUS",
+        "POS_OFICIAL": 371,
+        "DORSAL": 721,
+        "TIEMPO_OFICIAL": "1:14:01",
+        "TIEMPO_REAL": "1:13:54",
+        "PROMEDIO_REAL": "3,31",
+        "Field2": "M-M40",
+        "Field8": "C.A. S.S. DE LOS REYES - CLINICA MENORCA"
+    },
+    {
+        "NOMBRE": "MART\u00cd MART\u00cdNEZ, CARLOS",
+        "POS_OFICIAL": 372,
+        "DORSAL": 745,
+        "TIEMPO_OFICIAL": "1:14:03",
+        "TIEMPO_REAL": "1:13:46",
+        "PROMEDIO_REAL": "3,31",
+        "Field2": "M-SENIOR",
+        "Field8": "C.D. RESISTENTIA T3"
+    },
+    {
+        "NOMBRE": "DAVO LOPEZ, JOSE MARIA",
+        "POS_OFICIAL": 373,
+        "DORSAL": 10020,
+        "TIEMPO_OFICIAL": "1:14:03",
+        "TIEMPO_REAL": "1:13:57",
+        "PROMEDIO_REAL": "3,31",
+        "Field2": "M-M50",
+        "Field8": "C.A. PUERTO TORREVIEJA"
+    },
+    {
+        "NOMBRE": "LORDAN, GARRETT",
+        "POS_OFICIAL": 374,
+        "DORSAL": 857,
+        "TIEMPO_OFICIAL": "1:14:04",
+        "TIEMPO_REAL": "1:13:57",
+        "PROMEDIO_REAL": "3,31",
+        "Field2": "M-M40",
+        "Field8": "Clonakilty roadrunners"
+    },
+    {
+        "NOMBRE": "SORIANO GUASP, XISCO",
+        "POS_OFICIAL": 375,
+        "DORSAL": 24544,
+        "TIEMPO_OFICIAL": "1:14:05",
+        "TIEMPO_REAL": "1:14:01",
+        "PROMEDIO_REAL": "3,31",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. VILAMARXANT"
+    },
+    {
+        "NOMBRE": "MURCIA LOPEZ, CRISTIAN",
+        "POS_OFICIAL": 376,
+        "DORSAL": 626,
+        "TIEMPO_OFICIAL": "1:14:07",
+        "TIEMPO_REAL": "1:14:02",
+        "PROMEDIO_REAL": "3,31",
+        "Field2": "M-SENIOR",
+        "Field8": "REDOLAT TEAM CLUB"
+    },
+    {
+        "NOMBRE": "P\u00c9REZ RODR\u00cdGUEZ, PABLO",
+        "POS_OFICIAL": 377,
+        "DORSAL": 1320,
+        "TIEMPO_OFICIAL": "1:14:10",
+        "TIEMPO_REAL": "1:13:51",
+        "PROMEDIO_REAL": "3,31",
+        "Field2": "M-M35",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "ESPEJO, CRISTINA",
+        "POS_OFICIAL": 378,
+        "DORSAL": 244,
+        "TIEMPO_OFICIAL": "1:14:12",
+        "TIEMPO_REAL": "1:14:10",
+        "PROMEDIO_REAL": "3,31",
+        "Field2": "F-SENIOR",
+        "Field8": "PLAYAS DE CASTELLON"
+    },
+    {
+        "NOMBRE": "DAVIU, SERGIO",
+        "POS_OFICIAL": 379,
+        "DORSAL": 640,
+        "TIEMPO_OFICIAL": "1:14:14",
+        "TIEMPO_REAL": "1:14:09",
+        "PROMEDIO_REAL": "3,31",
+        "Field2": "M-M40",
+        "Field8": "MALALTS DE CORRER"
+    },
+    {
+        "NOMBRE": "HOLZ, MATTHIAS",
+        "POS_OFICIAL": 380,
+        "DORSAL": 1582,
+        "TIEMPO_OFICIAL": "1:14:14",
+        "TIEMPO_REAL": "1:14:06",
+        "PROMEDIO_REAL": "3,31",
+        "Field2": "M-SENIOR",
+        "Field8": "LSF M\u00fcnster"
+    },
+    {
+        "NOMBRE": "PARDO SARRIA, JACOBO",
+        "POS_OFICIAL": 381,
+        "DORSAL": 659,
+        "TIEMPO_OFICIAL": "1:14:15",
+        "TIEMPO_REAL": "1:14:07",
+        "PROMEDIO_REAL": "3,31",
+        "Field2": "M-M35",
+        "Field8": "BRIPAC"
+    },
+    {
+        "NOMBRE": "SANTOS SANCHO, JOSE ENRIQUE",
+        "POS_OFICIAL": 382,
+        "DORSAL": 441,
+        "TIEMPO_OFICIAL": "1:14:15",
+        "TIEMPO_REAL": "1:14:11",
+        "PROMEDIO_REAL": "3,31",
+        "Field2": "M-SENIOR",
+        "Field8": "REDOLAT TEAM CLUB"
+    },
+    {
+        "NOMBRE": "LINSCOTT, WILLIAM",
+        "POS_OFICIAL": 383,
+        "DORSAL": 1513,
+        "TIEMPO_OFICIAL": "1:14:21",
+        "TIEMPO_REAL": "1:14:08",
+        "PROMEDIO_REAL": "3,31",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "MARTINEZ GIL, JACOBO",
+        "POS_OFICIAL": 384,
+        "DORSAL": 593,
+        "TIEMPO_OFICIAL": "1:14:22",
+        "TIEMPO_REAL": "1:14:18",
+        "PROMEDIO_REAL": "3,31",
+        "Field2": "M-M45",
+        "Field8": "C.A. CARNICAS SERRANO"
+    },
+    {
+        "NOMBRE": "THOMAS, DESBARBIEUX",
+        "POS_OFICIAL": 385,
+        "DORSAL": 826,
+        "TIEMPO_OFICIAL": "1:14:23",
+        "TIEMPO_REAL": "1:14:17",
+        "PROMEDIO_REAL": "3,32",
+        "Field2": "M-SENIOR",
+        "Field8": "ACNM"
+    },
+    {
+        "NOMBRE": "GROV TURVOLL, JOAR",
+        "POS_OFICIAL": 386,
+        "DORSAL": 1380,
+        "TIEMPO_OFICIAL": "1:14:25",
+        "TIEMPO_REAL": "1:14:08",
+        "PROMEDIO_REAL": "3,32",
+        "Field2": "M-SENIOR",
+        "Field8": "Bod\u00f8 bauta"
+    },
+    {
+        "NOMBRE": "HERNANDEZ CAPEL, ISMAEL",
+        "POS_OFICIAL": 387,
+        "DORSAL": 1573,
+        "TIEMPO_OFICIAL": "1:14:25",
+        "TIEMPO_REAL": "1:14:18",
+        "PROMEDIO_REAL": "3,32",
+        "Field2": "M-M40",
+        "Field8": "C.A. TROTASIERRA DE HORNACHUELOS"
+    },
+    {
+        "NOMBRE": "BARRIOS PARRA, ROM\u00c1N",
+        "POS_OFICIAL": 388,
+        "DORSAL": 827,
+        "TIEMPO_OFICIAL": "1:14:26",
+        "TIEMPO_REAL": "1:14:21",
+        "PROMEDIO_REAL": "3,32",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "REINHARD, MARTIN LEO",
+        "POS_OFICIAL": 389,
+        "DORSAL": 884,
+        "TIEMPO_OFICIAL": "1:14:28",
+        "TIEMPO_REAL": "1:14:21",
+        "PROMEDIO_REAL": "3,32",
+        "Field2": "M-SENIOR",
+        "Field8": "Reinhard Running Club"
+    },
+    {
+        "NOMBRE": "GARC\u00cdA GARC\u00cdA, ALEJANDRO",
+        "POS_OFICIAL": 390,
+        "DORSAL": 1497,
+        "TIEMPO_OFICIAL": "1:14:28",
+        "TIEMPO_REAL": "1:14:19",
+        "PROMEDIO_REAL": "3,32",
+        "Field2": "M-SENIOR",
+        "Field8": "C.A. LA BA\u00d1EZA"
+    },
+    {
+        "NOMBRE": "DELMAS, JORIS",
+        "POS_OFICIAL": 391,
+        "DORSAL": 466,
+        "TIEMPO_OFICIAL": "1:14:28",
+        "TIEMPO_REAL": "1:14:23",
+        "PROMEDIO_REAL": "3,32",
+        "Field2": "M-SENIOR",
+        "Field8": "Stade Rodez Athl\u00e9tisme"
+    },
+    {
+        "NOMBRE": "SIERRA GOMEZ, JAIME",
+        "POS_OFICIAL": 392,
+        "DORSAL": 623,
+        "TIEMPO_OFICIAL": "1:14:30",
+        "TIEMPO_REAL": "1:14:21",
+        "PROMEDIO_REAL": "3,32",
+        "Field2": "M-SENIOR",
+        "Field8": "C.D. METAESPORT"
+    },
+    {
+        "NOMBRE": "GRANERO CERD\u00c1, ALEJANDRO",
+        "POS_OFICIAL": 393,
+        "DORSAL": 711,
+        "TIEMPO_OFICIAL": "1:14:31",
+        "TIEMPO_REAL": "1:14:25",
+        "PROMEDIO_REAL": "3,32",
+        "Field2": "M-M40",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "N\u00c9EL, VALENTIN",
+        "POS_OFICIAL": 394,
+        "DORSAL": 888,
+        "TIEMPO_OFICIAL": "1:14:32",
+        "TIEMPO_REAL": "1:14:24",
+        "PROMEDIO_REAL": "3,32",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "SIERRA CONCEJO, DAVID",
+        "POS_OFICIAL": 395,
+        "DORSAL": 1167,
+        "TIEMPO_OFICIAL": "1:14:33",
+        "TIEMPO_REAL": "1:14:19",
+        "PROMEDIO_REAL": "3,32",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "IGLESIAS GOMEZ, JAVIER",
+        "POS_OFICIAL": 396,
+        "DORSAL": 772,
+        "TIEMPO_OFICIAL": "1:14:34",
+        "TIEMPO_REAL": "1:14:25",
+        "PROMEDIO_REAL": "3,32",
+        "Field2": "M-M45",
+        "Field8": "CD La Purisima"
+    },
+    {
+        "NOMBRE": "MU\u00d1OZ MU\u00d1OZ, RUBEN",
+        "POS_OFICIAL": 397,
+        "DORSAL": 967,
+        "TIEMPO_OFICIAL": "1:14:35",
+        "TIEMPO_REAL": "1:14:25",
+        "PROMEDIO_REAL": "3,32",
+        "Field2": "M-SENIOR",
+        "Field8": "DELTA VALENCIA C.A."
+    },
+    {
+        "NOMBRE": "SATORRE GONZ\u00c1LEZ, GUILLEM",
+        "POS_OFICIAL": 398,
+        "DORSAL": 1455,
+        "TIEMPO_OFICIAL": "1:14:35",
+        "TIEMPO_REAL": "1:14:23",
+        "PROMEDIO_REAL": "3,32",
+        "Field2": "M-SENIOR",
+        "Field8": "CONCABEZA CLUB DE TRIATLON"
+    },
+    {
+        "NOMBRE": "ESCUDIER, HUGO",
+        "POS_OFICIAL": 399,
+        "DORSAL": 927,
+        "TIEMPO_OFICIAL": "1:14:36",
+        "TIEMPO_REAL": "1:14:29",
+        "PROMEDIO_REAL": "3,32",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "GOMEZ SANCHEZ, RAUL",
+        "POS_OFICIAL": 400,
+        "DORSAL": 943,
+        "TIEMPO_OFICIAL": "1:14:37",
+        "TIEMPO_REAL": "1:14:33",
+        "PROMEDIO_REAL": "3,32",
+        "Field2": "M-M40",
+        "Field8": "C.D. ATLETISMO Y TRIATL\u00d3N RUNRUNDATA"
+    },
+    {
+        "NOMBRE": "INGL\u00c9S FRUTOS, JUAN ANTONIO",
+        "POS_OFICIAL": 401,
+        "DORSAL": 817,
+        "TIEMPO_OFICIAL": "1:14:38",
+        "TIEMPO_REAL": "1:14:31",
+        "PROMEDIO_REAL": "3,32",
+        "Field2": "M-SENIOR",
+        "Field8": "C.D Trirunner Pozo Estrecho"
+    },
+    {
+        "NOMBRE": "MARTIN  HIDALGO, FRANCISCO JAVIER",
+        "POS_OFICIAL": 402,
+        "DORSAL": 1308,
+        "TIEMPO_OFICIAL": "1:14:38",
+        "TIEMPO_REAL": "1:14:31",
+        "PROMEDIO_REAL": "3,32",
+        "Field2": "M-M50",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "O'NEILL, LAURENCE",
+        "POS_OFICIAL": 403,
+        "DORSAL": 931,
+        "TIEMPO_OFICIAL": "1:14:39",
+        "TIEMPO_REAL": "1:14:32",
+        "PROMEDIO_REAL": "3,32",
+        "Field2": "M-SENIOR",
+        "Field8": "Strabane Triathlon Club"
+    },
+    {
+        "NOMBRE": "SARRABLO GRACIA, IVAN",
+        "POS_OFICIAL": 404,
+        "DORSAL": 766,
+        "TIEMPO_OFICIAL": "1:14:39",
+        "TIEMPO_REAL": "1:14:33",
+        "PROMEDIO_REAL": "3,32",
+        "Field2": "M-M40",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "ARMERO MELI\u00c1, GERARD",
+        "POS_OFICIAL": 405,
+        "DORSAL": 10420,
+        "TIEMPO_OFICIAL": "1:14:40",
+        "TIEMPO_REAL": "1:14:28",
+        "PROMEDIO_REAL": "3,32",
+        "Field2": "M-UNDER20",
+        "Field8": "Club Atletisme Porreres"
+    },
+    {
+        "NOMBRE": "MESTRE QUEROL, ALBERT",
+        "POS_OFICIAL": 406,
+        "DORSAL": 622,
+        "TIEMPO_OFICIAL": "1:14:43",
+        "TIEMPO_REAL": "1:14:37",
+        "PROMEDIO_REAL": "3,32",
+        "Field2": "M-M35",
+        "Field8": "TRAIL CER LA SENIA"
+    },
+    {
+        "NOMBRE": "GALLARDO PEREZ, DAVID",
+        "POS_OFICIAL": 407,
+        "DORSAL": 662,
+        "TIEMPO_OFICIAL": "1:14:44",
+        "TIEMPO_REAL": "1:14:35",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-M35",
+        "Field8": "C.A. RAFEL"
+    },
+    {
+        "NOMBRE": "ALFARO RAMS, DIEGO",
+        "POS_OFICIAL": 408,
+        "DORSAL": 1375,
+        "TIEMPO_OFICIAL": "1:14:45",
+        "TIEMPO_REAL": "1:14:39",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-M35",
+        "Field8": "Kefit Ejercicio & Salud"
+    },
+    {
+        "NOMBRE": "KLEIJWEGT, TWAN",
+        "POS_OFICIAL": 409,
+        "DORSAL": 902,
+        "TIEMPO_OFICIAL": "1:14:45",
+        "TIEMPO_REAL": "1:14:38",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "MART\u00cdN GARC\u00cdA, MIGUEL \u00c1NGEL",
+        "POS_OFICIAL": 410,
+        "DORSAL": 788,
+        "TIEMPO_OFICIAL": "1:14:45",
+        "TIEMPO_REAL": "1:14:36",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-SENIOR",
+        "Field8": "Fisio&Fit Herv\u00e1s"
+    },
+    {
+        "NOMBRE": "FERREIRA G\u00d3MEZ, ALBERTO",
+        "POS_OFICIAL": 411,
+        "DORSAL": 7504,
+        "TIEMPO_OFICIAL": "1:14:46",
+        "TIEMPO_REAL": "1:14:36",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-M40",
+        "Field8": "Grupo Ubesol Lab. Maverick"
+    },
+    {
+        "NOMBRE": "WATTS, DANIEL",
+        "POS_OFICIAL": 412,
+        "DORSAL": 12321,
+        "TIEMPO_OFICIAL": "1:14:47",
+        "TIEMPO_REAL": "1:14:37",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-M35",
+        "Field8": "Indy Runners"
+    },
+    {
+        "NOMBRE": "SEGRELLES QUILIS, JES\u00daS",
+        "POS_OFICIAL": 413,
+        "DORSAL": 835,
+        "TIEMPO_OFICIAL": "1:14:47",
+        "TIEMPO_REAL": "1:14:40",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-M45",
+        "Field8": "C.A. GANDIA-ALPESA"
+    },
+    {
+        "NOMBRE": "PEREZ PE\u00d1ALVER, DANIEL",
+        "POS_OFICIAL": 414,
+        "DORSAL": 1525,
+        "TIEMPO_OFICIAL": "1:14:47",
+        "TIEMPO_REAL": "1:14:36",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "CASU, FILIPPO",
+        "POS_OFICIAL": 415,
+        "DORSAL": 905,
+        "TIEMPO_OFICIAL": "1:14:47",
+        "TIEMPO_REAL": "1:14:39",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-M35",
+        "Field8": "Isolarun"
+    },
+    {
+        "NOMBRE": "GANDIA RIBELLES, ALBERTO",
+        "POS_OFICIAL": 416,
+        "DORSAL": 700,
+        "TIEMPO_OFICIAL": "1:14:48",
+        "TIEMPO_REAL": "1:14:43",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-M35",
+        "Field8": "C.A. LA VALL DE SEGO"
+    },
+    {
+        "NOMBRE": "PUYALTO DE PABLO, MIGUEL",
+        "POS_OFICIAL": 417,
+        "DORSAL": 1160,
+        "TIEMPO_OFICIAL": "1:14:48",
+        "TIEMPO_REAL": "1:14:37",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-M40",
+        "Field8": "Atletismo Intec Zoiti Huesca"
+    },
+    {
+        "NOMBRE": "VAZQUEZ UBEDA, TONI",
+        "POS_OFICIAL": 418,
+        "DORSAL": 671,
+        "TIEMPO_OFICIAL": "1:14:48",
+        "TIEMPO_REAL": "1:14:41",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-M35",
+        "Field8": "C.E. LA VESPA DE NOVETL\u00c8"
+    },
+    {
+        "NOMBRE": "GIMENO UROZ, JOSE VICENTE",
+        "POS_OFICIAL": 419,
+        "DORSAL": 736,
+        "TIEMPO_OFICIAL": "1:14:49",
+        "TIEMPO_REAL": "1:14:42",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-M40",
+        "Field8": "REDOLAT TEAM CLUB"
+    },
+    {
+        "NOMBRE": "MENESES TRUJILLO, JOSE FRANCISCO",
+        "POS_OFICIAL": 420,
+        "DORSAL": 962,
+        "TIEMPO_OFICIAL": "1:14:49",
+        "TIEMPO_REAL": "1:14:40",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-M40",
+        "Field8": "PINTURAS JORBA"
+    },
+    {
+        "NOMBRE": "SHARP, MATTHEW",
+        "POS_OFICIAL": 421,
+        "DORSAL": 460,
+        "TIEMPO_OFICIAL": "1:14:53",
+        "TIEMPO_REAL": "1:14:48",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-M40",
+        "Field8": "LAURISTON RUNNERS CLUB"
+    },
+    {
+        "NOMBRE": "CALERO FERN\u00c1NDEZ, JES\u00daS",
+        "POS_OFICIAL": 422,
+        "DORSAL": 710,
+        "TIEMPO_OFICIAL": "1:14:53",
+        "TIEMPO_REAL": "1:14:41",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-M40",
+        "Field8": "C.D.E. RUNNING ALBACETE"
+    },
+    {
+        "NOMBRE": "ROBLES DEL MORAL, DIEGO",
+        "POS_OFICIAL": 423,
+        "DORSAL": 553,
+        "TIEMPO_OFICIAL": "1:14:54",
+        "TIEMPO_REAL": "1:14:48",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-SENIOR",
+        "Field8": "MSC Running Team"
+    },
+    {
+        "NOMBRE": "SOM, BRAM",
+        "POS_OFICIAL": 424,
+        "DORSAL": 935,
+        "TIEMPO_OFICIAL": "1:14:54",
+        "TIEMPO_REAL": "1:14:42",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-M40",
+        "Field8": "NIKE RUNNING"
+    },
+    {
+        "NOMBRE": "CAZORLA BOZA, ANTONIO",
+        "POS_OFICIAL": 425,
+        "DORSAL": 648,
+        "TIEMPO_OFICIAL": "1:14:55",
+        "TIEMPO_REAL": "1:14:53",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-M45",
+        "Field8": "CLUB ATLETISMO RUBELTOR"
+    },
+    {
+        "NOMBRE": "BORG, JOSEPH",
+        "POS_OFICIAL": 426,
+        "DORSAL": 860,
+        "TIEMPO_OFICIAL": "1:14:57",
+        "TIEMPO_REAL": "1:14:51",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-M35",
+        "Field8": "MELLIEHA ATHLETIC CLUB"
+    },
+    {
+        "NOMBRE": "SILVESTRE CINTERO, ISMAEL",
+        "POS_OFICIAL": 427,
+        "DORSAL": 1000,
+        "TIEMPO_OFICIAL": "1:14:59",
+        "TIEMPO_REAL": "1:14:41",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-SENIOR",
+        "Field8": "REDOLAT TEAM CLUB"
+    },
+    {
+        "NOMBRE": "GREGORY, SAM",
+        "POS_OFICIAL": 428,
+        "DORSAL": 799,
+        "TIEMPO_OFICIAL": "1:15:00",
+        "TIEMPO_REAL": "1:14:54",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-M35",
+        "Field8": "Pontypridd Roadents"
+    },
+    {
+        "NOMBRE": "NORDVIK, EIRIK",
+        "POS_OFICIAL": 429,
+        "DORSAL": 872,
+        "TIEMPO_OFICIAL": "1:15:00",
+        "TIEMPO_REAL": "1:14:51",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-M40",
+        "Field8": "Namdal l\u00f8peklubb"
+    },
+    {
+        "NOMBRE": "ESTEBAN FERRER, JUAN CARLOS",
+        "POS_OFICIAL": 430,
+        "DORSAL": 1634,
+        "TIEMPO_OFICIAL": "1:15:01",
+        "TIEMPO_REAL": "1:14:42",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-SENIOR",
+        "Field8": "REDOLAT TEAM CLUB"
+    },
+    {
+        "NOMBRE": "BURRELL, SCOTT",
+        "POS_OFICIAL": 431,
+        "DORSAL": 1076,
+        "TIEMPO_OFICIAL": "1:15:01",
+        "TIEMPO_REAL": "1:14:47",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-SENIOR",
+        "Field8": "Clapham Chasers"
+    },
+    {
+        "NOMBRE": "GARC\u00cdA G\u00d3MEZ, V\u00cdCTOR",
+        "POS_OFICIAL": 432,
+        "DORSAL": 1393,
+        "TIEMPO_OFICIAL": "1:15:02",
+        "TIEMPO_REAL": "1:14:52",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-M35",
+        "Field8": "Atletismo Arenteiro"
+    },
+    {
+        "NOMBRE": "JACK, NEIL",
+        "POS_OFICIAL": 433,
+        "DORSAL": 619,
+        "TIEMPO_OFICIAL": "1:15:02",
+        "TIEMPO_REAL": "1:14:53",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-M35",
+        "Field8": "Edinburgh Athletic Club"
+    },
+    {
+        "NOMBRE": "ALERT BALLESTEROS, ROBERT",
+        "POS_OFICIAL": 434,
+        "DORSAL": 800,
+        "TIEMPO_OFICIAL": "1:15:03",
+        "TIEMPO_REAL": "1:14:57",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-SENIOR",
+        "Field8": ""
+    },
+    {
+        "NOMBRE": "PANIZO TIERNO, SANTIAGO",
+        "POS_OFICIAL": 435,
+        "DORSAL": 1219,
+        "TIEMPO_OFICIAL": "1:15:04",
+        "TIEMPO_REAL": "1:14:51",
+        "PROMEDIO_REAL": "3,33",
+        "Field2": "M-M45",
+        "Field8": "VG RUNNING"
+    },
+    {
+        "NOMBRE": "SANCHEZ AGUILAR, JESUS",
+        "POS_OFICIAL": 436,
+        "DORSAL": 743,
+        "TIEMPO_OFICIAL": "1:15:05",
+        "TIEMPO_REAL": "1:14:56",
+        "PROMEDIO_REAL": "3,34",
+        "Field2": "M-M45",
+        "Field8": "Facvac"
+    },
+    {
+        "NOMBRE": "RUBIO JIMENEZ, VICTOR",
+        "POS_OFICIAL": 437,
+        "DORSAL": 2004,
+        "TIEMPO_OFICIAL": "1:15:05",
+        "TIEMPO_REAL": "1:14:47",
+        "PROMEDIO_REAL": "3,34",
+        "Field2": "M-UNDER20",
+        "Field8": "REDOLAT TEAM CLUB"
+    },
+    {
+        "NOMBRE": "INFANTE CONEJO, AYOZE",
+        "POS_OFICIAL": 438,
+        "DORSAL": 675,
+        "TIEMPO_OFICIAL": "1:15:06",
+        "TIEMPO_REAL": "1:15:01",
+        "PROMEDIO_REAL": "3,34",
+        "Field2": "M-M35",
+        "Field8": "CD Correayo Spar Tenerife"
+    },
+    {
+        "NOMBRE": "BARREIRO GOME, MARTIN",
+        "POS_OFICIAL": 439,
+        "DORSAL": 24543,
+        "TIEMPO_OFICIAL": "1:15:06",
+        "TIEMPO_REAL": "1:14:56",
+        "PROMEDIO_REAL": "3,34",
+        "Field2": "M-SENIOR",
+        "Field8": "TRINORTH"
+    },
+    {
+        "NOMBRE": "ESPINOSA, M\u00c0RIUS",
+        "POS_OFICIAL": 440,
+        "DORSAL": 1617,
+        "TIEMPO_OFICIAL": "1:15:08",
+        "TIEMPO_REAL": "1:14:53",
+        "PROMEDIO_REAL": "3,34",
+        "Field2": "M-SENIOR",
+        "Field8": "CAIXA RURAL D'ALGEMESI"
+    },
+    {
+        "NOMBRE": "GAMRA, KHELIFA",
+        "POS_OFICIAL": 441,
+        "DORSAL": 1107,
+        "TIEMPO_OFICIAL": "1:15:09",
+        "TIEMPO_REAL": "1:15:03",
+        "PROMEDIO_REAL": "3,34",
+        "Field2": "M-M50",
+        "Field8": "Esl pierres-benite"
+    },
+    {
+        "NOMBRE": "SERRANO CARRASCO, ABRAHAM",
+        "POS_OFICIAL": 442,
+        "DORSAL": 688,
+        "TIEMPO_OFICIAL": "1:15:10",
+        "TIEMPO_REAL": "1:15:03",
+        "PROMEDIO_REAL": "3,34",
+        "Field2": "M-SENIOR",
+        "Field8": "C.D. RESISTENTIA T3"
+    },
+    {
+        "NOMBRE": "RYAN, MEGHAN",
+        "POS_OFICIAL": 443,
+        "DORSAL": 245,
+        "TIEMPO_OFICIAL": "1:15:11",
+        "TIEMPO_REAL": "1:15:08",
+        "PROMEDIO_REAL": "3,34",
+        "Field2": "F-SENIOR",
+        "Field8": "DSD AC"
+    },
+    {
+        "NOMBRE": "ADUNA, TAMIRU FRANCISCO",
+        "POS_OFICIAL": 444,
+        "DORSAL": 655,
+        "TIEMPO_OFICIAL": "1:15:14",
+        "TIEMPO_REAL": "1:15:04",
+        "PROMEDIO_REAL": "3,34",
+        "Field2": "M-M35",
+        "Field8": "RUNNERS CIUTAT DE VALENCIA"
+    },
+    {
+        "NOMBRE": "ROZMAN, UROS",
+        "POS_OFICIAL": 445,
+        "DORSAL": 809,
+        "TIEMPO_OFICIAL": "1:15:14",
+        "TIEMPO_REAL": "1:15:08",
+        "PROMEDIO_REAL": "3,34",
+        "Field2": "M-M35",
+        "Field8": "AD Olimpik Intersport SLO"
+    },
+    {
+        "NOMBRE": "DARSA ZUERAS, BORJA",
+        "POS_OFICIAL": 446,
+        "DORSAL": 24255,
+        "TIEMPO_OFICIAL": "1:15:15",
+        "TIEMPO_REAL": "1:15:05",
+        "PROMEDIO_REAL": "3,34",
+        "Field2": "M-M35",
+        "Field8": "ESCUELA RUSA"
+    },
+    {
+        "NOMBRE": "VAISEY, SIMON",
+        "POS_OFICIAL": 447,
+        "DORSAL": 923,
+        "TIEMPO_OFICIAL": "1:15:22",
+        "TIEMPO_REAL": "1:15:09",
+        "PROMEDIO_REAL": "3,34",
+        "Field2": "M-SENIOR",
+        "Field8": "Kent  Athletics Club"
+    },
+    {
+        "NOMBRE": "PROIETTI, ANDREA",
+        "POS_OFICIAL": 448,
+        "DORSAL": 2590,
+        "TIEMPO_OFICIAL": "1:15:25",
+        "TIEMPO_REAL": "1:15:16",
+        "PROMEDIO_REAL": "3,34",
+        "Field2": "M-SENIOR",
+        "Field8": "ASD LBM SPORT TEAM"
+    },
+    {
+        "NOMBRE": "ESCOBAR SAGARDIA, DANIEL",
+        "POS_OFICIAL": 449,
+        "DORSAL": 842,
+        "TIEMPO_OFICIAL": "1:15:25",
+        "TIEMPO_REAL": "1:15:19",
+        "PROMEDIO_REAL": "3,34",
+        "Field2": "M-M40",
+        "Field8": "CALAGURRIS ATLETICO"
+    },
+    {
+        "NOMBRE": "SIMONI, MARCO",
+        "POS_OFICIAL": 450,
+        "DORSAL": 1361,
+        "TIEMPO_OFICIAL": "1:15:26",
+        "TIEMPO_REAL": "1:15:13",
+        "PROMEDIO_REAL": "3,35",
+        "Field2": "M-M40",
+        "Field8": "Asd Francesco Francia"
+    }
+]

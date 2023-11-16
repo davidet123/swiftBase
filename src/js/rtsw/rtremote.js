@@ -385,6 +385,12 @@ function RTRemote(rtswProtocol, protocolId)
 
 	this.callbackRecieve = function(event)
 	{
+    const response = JSON.parse(event.data);
+    // console.log(response)
+    // if (typeof response.status === "undefined")
+    // return;
+    // if (response.status == "")
+    // return;
 	}
 }
 

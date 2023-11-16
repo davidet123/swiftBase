@@ -39,6 +39,7 @@
       await gSheetStore.getLista()
 
       basketStore.setPartidoBasket()
+      // basketStore.resetPartidoBasket()
     }
 
   })

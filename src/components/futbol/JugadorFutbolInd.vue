@@ -10,7 +10,7 @@
                   <h4>{{ jugador.numero }}</h4>
                 </v-col>
                 <v-col cols="4">
-                  <p>&nbsp&nbsp|&nbsp&nbsp {{ jugador.apodo }}</p>
+                  <p>{{ jugador.apodo }}</p>
                 </v-col>
                 <v-col cols="1"><p>{{ jugador.estadistica.goles.length }}</p></v-col>
                 <v-col cols="1"><p>{{ jugador.estadistica.faltas }}</p></v-col>

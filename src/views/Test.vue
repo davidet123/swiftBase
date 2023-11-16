@@ -16,7 +16,8 @@
       <BotonLive nombre="COPY" @activar="activarGrafico"/>
       <BotonLive nombre="PIP" @activar="activarGrafico"/>
       <BotonLive nombre="ORATGE" @activar="activarOratge"/>
-      <v-btn color="success" @click="canviOratge" variant="flat" size="small">CANVI ORATGE</v-btn>
+      <v-btn color="success" @click="canviOratge" variant="flat" size="x-small">CANVI ORATGE</v-btn>
+      <v-btn color="success" @click="swiftConnectionStore.getStatus('Scenegraph', 'Current')" variant="flat" size="x-small">STATUS</v-btn>
       
     </v-col>
     <v-col cols="4" offset="4">
@@ -52,15 +53,26 @@
       </v-select>
     </v-col>
   </v-row>
-  <v-row v-if="hoja">
-    <v-col>
-      <BotonLive nombre="TICKER" @activar="activarGrafico"/>
+  <v-row>
+    <v-col cols="6">
+      <v-row v-if="hoja">
+        <v-col>
+          <BotonLive nombre="TICKER" @activar="activarGrafico"/>
+        </v-col>
+        <v-col cols="12" v-for="(titular, index) in titulares.filter((el) => el !== null)" :key="titular" >
+          <div v-if="titular !== null">{{ titular }} <v-btn :color="colorLive !== index ? 'success' : 'error'" @click="rotular(titular, index)">ENVIAR</v-btn></div>
+        </v-col>
+      </v-row>
     </v-col>
-    <v-col cols="12" v-for="(titular, index) in titulares.filter((el) => el !== null)" :key="titular" >
-      <div v-if="titular !== null">{{ titular }} <v-btn :color="colorLive !== index ? 'success' : 'error'" @click="rotular(titular, index)">ENVIAR</v-btn></div>
+    <v-col cols="6">
+      <p v-for="item in jsonReaderStore.data" :key="item.NOMBRE">
+      
+        {{ item.POS_OFICIAL }} - {{ item.DORSAL }} {{ item.NOMBRE }} - {{ item.TIEMPO_OFICIAL }} <BotonLive nombre="MARATON" @activar="activarGrafico"/>
+      </p>
+      
+      
       
     </v-col>
-    
   </v-row>
 </template>
 
@@ -70,6 +82,8 @@
   import { useSwiftConnectionStore } from "../store/swiftConnection"
   import { useFutbolWebsocketStore } from "../store/futbolWebsocket"
   import { usegSheetStore } from "../store/gSheet"
+  import { usejsonReaderStore } from "../store/jsonReader"
+  // import { usexmlReaderStore } from "../store/xmlReader"
   import BotonLive from '@/components/simple/botonLive.vue' 
   import { computed } from 'vue';
   import { watch } from 'vue';  
@@ -83,7 +97,22 @@
   const swiftConnectionStore = useSwiftConnectionStore()
   const futbolWebsocket = useFutbolWebsocketStore()
   const gSheetStore = usegSheetStore()
+  const jsonReaderStore= usejsonReaderStore()
+  // const xmlReaderStore = usexmlReaderStore()
   // gSheetStore.getLista()
+
+
+
+  // JSON READER
+
+  jsonReaderStore.getJson()
+
+  // XML READER
+
+  // xmlReaderStore.getXML()
+
+
+
   const hoja = computed(() => gSheetStore.getValoresHoja)
   // console.log(hoja.value)
   
@@ -186,7 +215,7 @@
   let tickerLive = false
 
   const rotular = (titular, index) => {
-    swiftConnectionStore.getStatus("method", "Current")
+    // swiftConnectionStore.getStatus("method", "Current")
     // console.log(titular)
     if (!live.value) {   
       colorLive.value = index
@@ -196,17 +225,18 @@
       for (let i = 0; i <= 2; i++) {
         texto += titulares.value[i] + " "
       }
-      // console.log(texto)
+      console.log(texto)
 
-      swiftConnectionStore.cueGraphic("TICKER")
       swiftConnectionStore.rtRemote.updateFields('TICKER::slugTextTEXT', "String",  titular.replace(/\r\n|\n\r|\n|\r/g, ' '))
+      // swiftConnectionStore.rtRemote.updateFields('TICKER::Ticker', "Contents",  titular.replace(/\r\n|\n\r|\n|\r/g, ' '))
       // swiftConnectionStore.rtRemote.updateFields('TICKER::slugTextTEXT', "String",  titular.replace(/[\r\n]/g, ' '))
       swiftConnectionStore.rtRemote.updateFields('TICKER::ticker', "NumberCycles",  10)
-      // swiftConnectionStore.rtRemote.updateFields('TICKER::Ticker', "Contents", titulares.value[1])
+      swiftConnectionStore.cueGraphic("TICKER")
       // console.log(titulares.value[1])
       // swiftConnectionStore.rtRemote.updateFields('TICKER::TITULARTEXT', "String", titulares.value[8])
-      swiftConnectionStore.bringOn("TICKER")
+      // swiftConnectionStore.bringOn("TICKER")
       tickerLive = true
+      console.log("tickerlive true")
     } else {
       if(oratgeLive) {
         swiftConnectionStore.oratgeOff()
@@ -234,6 +264,8 @@
 
   // MOSTRAR ORATGE Y LA PRIMERA VEZ CARGAR LOS DATOS
   const activarOratge = (payload) => {
+  
+    console.log("activar aratge")
     if (tickerLive) {
 
     if(payload.live && ciudad.value !== null) {
@@ -361,10 +393,15 @@
       return arr[(val % 16)]
   }
     
+  const cueGrafico = payload => {
+
+  }
 
 
 
   const activarGrafico = payload => {
+    // console.log("status")
+    // swiftConnectionStore.getStatus("Script", "Current")
     // console.log(payload)
     if (payload.live) {   
 
@@ -390,7 +427,7 @@
     } else {
       tit = el[0] + ". " + el[3]
     }
-    console.log(tit)
+    // console.log(tit)
     return tit
     // el[0].replace(/\\/g, '')
   }))

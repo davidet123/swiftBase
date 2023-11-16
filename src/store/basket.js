@@ -208,6 +208,10 @@ export const usegBasketStore = defineStore('basket', {
     updatePartidoBasket(payload) {
       this.partido = payload
       localStorage.setItem('partidoBasket', JSON.stringify(payload))
+    },
+    updateMarcadorBasket(payload) {
+      this.marcador = payload
+      localStorage.setItem('marcadorBasket', JSON.stringify(payload))
     }
   }
 

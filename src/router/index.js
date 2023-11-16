@@ -17,6 +17,8 @@ import Basket from '../views/basket/Basket.vue'
 import EstBasket from '../views/basket/EstBasket.vue'
 import EditarPartidoBasket from '../views/basket/EditarPartidoBasket.vue'
 import Vumetro from '../views/vumetro/Vumetro.vue'
+import Misa from '../views/misa/Misa.vue'
+import AddTextoMisa from '../views/misa/AddTextoMisa.vue'
 import Settings from '../views/Settings.vue'
 
 const router = createRouter({
@@ -115,6 +117,16 @@ const router = createRouter({
       path: '/basket/estbasket/:id',
       name: 'estbasket',
       component: EstBasket
+    },
+    {
+      path: '/misa',
+      name: 'misa',
+      component: Misa
+    },
+    {
+      path: '/addtextomisa',
+      name: 'addtextomisa',
+      component: AddTextoMisa
     },
     {
       path: '/settings',

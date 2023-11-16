@@ -141,4 +141,8 @@
   .botonFutbol {
     color: black !important;
   }
+  /* .boton {
+    color: black !important;
+    background-color: white !important;
+  } */
 </style>
