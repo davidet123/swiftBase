@@ -13,6 +13,7 @@
   import { useFutbolWebsocketStore } from "./store/futbolWebsocket"
   import { useRotulosStore } from "./store/rotulos"
   import { usegSheetStore } from "./store/gSheet"
+  import { useMisaStore } from "./store/misa"
   import { onMounted, onBeforeMount } from 'vue'
 
   const futbolStore = usegFutbolStore()
@@ -20,6 +21,7 @@
   const rotulosStore = useRotulosStore()
   const gSheetStore = usegSheetStore()
   const futbolWebsocket = useFutbolWebsocketStore()
+  const misaStore = useMisaStore()
 
   // Cargar desde firebase
 
@@ -37,6 +39,7 @@
       await futbolStore.cargarMarcadores()
       await rotulosStore.cargarRotulos()
       await gSheetStore.getLista()
+      await misaStore.cargartextoMisa()
 
       basketStore.setPartidoBasket()
       // basketStore.resetPartidoBasket()
@@ -50,8 +53,12 @@
 
 <style>
   v-.main_bg {
-    background-color: black 
+    background-color: black ;
   }
+  body::-webkit-scrollbar {
+    display: none; 
+  }
+  
 </style>
 
 

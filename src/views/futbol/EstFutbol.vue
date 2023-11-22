@@ -11,6 +11,7 @@
 
   <!-- <div v-if="!cargando_equipos && !cargando_partidos"> -->
   <div v-if="partido && marcador" class="mb-4 pb-4">
+    {{ textoMisa }}
     <!-- {{ partido }} -->
       <v-row>
         <v-col cols="12">
@@ -104,7 +105,7 @@
               <v-col cols="12">
                 <h4>Cos tècnic</h4>
               </v-col>
-              <v-col cols="12" class="py-2" v-for="tecnico in equipo_local.cuerpo_tecnico" :id="tecnico.id_cuerpo_tecnico">
+              <v-col cols="12" class="py-2" v-for="tecnico in equipo_local.cuerpo_tecnico" :key="tecnico.id_cuerpo_tecnico">
                 <div v-if="tecnico.nombre">
                   <CuerpoTecnicoIndividual :titulo="tecnico.titulo" :nombre="tecnico.nombre" />
                 </div>
@@ -237,7 +238,7 @@
               <v-col cols="12">
                 <h4>Cos tècnic</h4>
               </v-col>
-              <v-col cols="12" v-for="tecnico in equipo_visitante.cuerpo_tecnico" :id="tecnico.id_cuerpo_tecnico">
+              <v-col cols="12" v-for="tecnico in equipo_visitante.cuerpo_tecnico" :key="tecnico.id_cuerpo_tecnico">
                 <div v-if="tecnico.nombre">
                   <CuerpoTecnicoIndividual :titulo="tecnico.titulo" :nombre="tecnico.nombre"/>
                 </div>
@@ -508,7 +509,7 @@ const cartelaDescanso = payload => {
 
 
 // ROTULOS
-const { rotulo_cargado } = storeToRefs(rotulosStore)
+const { rotulo_cargado, textoMisa } = storeToRefs(rotulosStore)
 const rotulo_cargado_arbitros = computed(() => rotulo_cargado.value.find(rotulo => rotulo.tipo === "DSK_ARBITROS"))
 
 

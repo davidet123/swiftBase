@@ -19,6 +19,7 @@
           <v-btn to="/basket">BASKET</v-btn>
           <v-btn to="/vumetro">VUMETRO</v-btn>
           <v-btn to="/simple">GRAFISME SIMPLE</v-btn>
+          <v-btn to="/misa">MISA</v-btn>
           <v-btn to="/test">TEST</v-btn>
         </v-col>
       </v-row>

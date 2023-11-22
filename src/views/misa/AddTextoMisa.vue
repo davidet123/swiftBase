@@ -36,14 +36,19 @@
   </v-row>
 
   <v-row>
-    <v-col>
+    <v-col cols="6" offset="3">
       <div class="FHDWrapper">
-        <v-col >
+        <v-col>
           <div class="FHD text-center" style="white-space: pre;" :style="estiloTexto">
             <p>{{ text }}</p>
           </div>
         </v-col>
       </div>
+    </v-col>
+  </v-row>
+  <v-row>
+    <v-col class="text-center">
+      <v-btn color="success" @click="addTexto">AFEGIR TEXT</v-btn>
     </v-col>
   </v-row>
 
@@ -53,6 +58,7 @@
 <script setup>
 import { computed, ref } from "vue";
 import { useMisaStore } from "../../store/misa" 
+import router from "@/router";
 
 const misaStore = useMisaStore()
 
@@ -91,12 +97,14 @@ const texto1 = val => {
 
 const addTexto = () => {
   const el = {
-    id: 0,
-      titulo: "Comunion",
-      texto: "asdfasdfadafa",
-      tamaño: 12,
-      color: '#ffffff'
+    id: misaStore.textos.length,
+    titulo: "Comunion",
+    texto: text.value.replace(/\n/g, "&#10;"),
+    tamaño: tamaño.value,
+    color: color.value
   }
+  misaStore.addTexto(el)
+  router.push("/misa")
 }
 
 
