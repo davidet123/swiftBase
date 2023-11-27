@@ -18,6 +18,7 @@ import EstBasket from '../views/basket/EstBasket.vue'
 import EditarPartidoBasket from '../views/basket/EditarPartidoBasket.vue'
 import Vumetro from '../views/vumetro/Vumetro.vue'
 import Misa from '../views/misa/Misa.vue'
+import ControlMisa from '../views/misa/ControlMisa.vue'
 import AddTextoMisa from '../views/misa/AddTextoMisa.vue'
 import MisaFullScreen from '../views/misa/MisaFullScreen.vue'
 import EditarTextoMisa from '../views/misa/EditarTextoMisa.vue'
@@ -135,6 +136,11 @@ const router = createRouter({
       path: '/misafullscreen',
       name: 'misafulscreen',
       component: MisaFullScreen
+    },
+    {
+      path: '/controlmisa',
+      name: 'controlmisa',
+      component: ControlMisa
     },
     {
       path: '/editartextomisa/:id',

@@ -1,185 +1,328 @@
 <template>
-  <v-row>
-    <v-col class="text-center">
-      <h3>Rotulació missa</h3>
-    </v-col>
-  </v-row>
-  <v-row>
-    <v-col cols="4" class="text-center">
-      <v-btn class="boton" color="white">Carregar missa</v-btn>
-    </v-col>
-    <v-col cols="4" class="text-center">
-      <v-btn class="boton" color="white" to="/addtextomisa">Afegir textos missa</v-btn>
-    </v-col>
-    <v-col cols="4" class="text-center">
-      <v-btn class="boton" color="white" @click="fullScreen">Full screen</v-btn>
-    </v-col>
-  </v-row>
-  <v-row>
-    <!-- SIGUIENTE -->
-    <v-col cols="5" class="text-center">
-      <v-row>
-        <v-col>
-          <h4>Següent rotul</h4>
-          <div class="FHDWrapper">
-            <v-col >
-              <div class="FHD text-center" style="white-space: pre;" :style="estiloTextoNext">
-                <p v-if="next !== null">{{ textoNext }}</p>
-              </div>
-            </v-col>
-          </div>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col class="text-center">
-          <v-btn @click="cambioNext(-1)" color="white">&#60;-</v-btn>
-          <v-btn @click="cambioNext(1)" color="white">-&#62;</v-btn>
-        </v-col>
-      </v-row>
-    </v-col>
-    <v-col cols="2" class="text-center">
-      <v-btn @click="toDirecte" color="error">-></v-btn>
+  <div v-if="misaStore.cargandoMisa" class="text-center" style="margin-top:200px;">
+    <v-progress-circular
+      indeterminate
+      color="primary"
+      size="50"
+    ></v-progress-circular>
+  </div>
+  <div v-if="!misaStore.cargandoMisa">
 
-    </v-col>
-    <!-- LIVE -->
-    <v-col cols="5" class="text-center">
-      <h4>Rotul en directe</h4>
-      <div class="FHDWrapper">
-        <v-col >
-          <div class="FHD text-center" style="white-space: pre;" :style="estiloTextoNow">
-            <p v-if="now !== null">{{ textoNow.texto }}</p>
-            <!-- <p>{{ textoNow.texto }}</p> -->
-          </div>
-        </v-col>
-      </div>
-    </v-col>
-  </v-row>
-  <!-- <v-row>
-    <v-col cols=12>
-      <div class="my-2" v-for="(item, index) in textosMisa" :key="item.id">
+    <v-row>
+      <v-col class="text-center">
+        <h3>Rotulació missa</h3>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="4" class="text-center">
+        <v-btn class="boton" color="white" @click="ventanaCargar = true">Carregar missa</v-btn>
+      </v-col>
+      <v-col cols="4" class="text-center">
+        <v-btn class="boton" color="white" to="/addtextomisa">Afegir textos missa</v-btn>
+      </v-col>
+      <v-col cols="4" class="text-center">
+        <v-btn class="boton" color="white" @click="fullScreen">Full screen</v-btn>
+      </v-col>
+    </v-row>
+    <v-row>
+      <!-- SIGUIENTE -->
+      <v-col cols="5" class="text-center">
         <v-row>
-          <v-col cols="3">
-
-            <textoMisaIndividualVue :item="item" :numItem="index"/>
+          <v-col>
+            <h4>Següent rotul</h4>
+            <div class="FHDWrapper">
+              <v-col >
+                <div class="FHD text-center" style="white-space: pre;" :style="estiloTextoNext">
+                  <p v-if="next !== null">{{ textoNext }}</p>
+                </div>
+              </v-col>
+            </div>
           </v-col>
         </v-row>
-      </div>
-    </v-col>
-  </v-row> -->
-  <v-row>
-    <v-col cols="2" v-for="(item, index) in textosMisa" :key="item.id">
-      <textoMisaIndividualVue :item="item" :numItem="index"/>
-    </v-col>
-  </v-row>
-
-
+        <v-row>
+          <v-col class="text-center">
+            <v-btn @click="cambioNext(-1)" color="white">&#60;-</v-btn>
+            <v-btn @click="cambioNext(1)" color="white">-&#62;</v-btn>
+          </v-col>
+        </v-row>
+      </v-col>
+      <v-col cols="2" class="text-center">
+        <v-btn :disabled="!directe" @click="toDirecte(1)" color="error">-></v-btn>
+        <br>
+        <v-btn :color="colorBotonLive" @click="directe = !directe">DIRECTE</v-btn>  
+      </v-col>
+      <!-- LIVE -->
+      <v-col cols="5" class="text-center">
+        <h4>Rotul en directe</h4>
+        <div class="FHDWrapper">
+          <v-col >
+            <div class="FHD text-center" style="white-space: pre;" :style="estiloTextoNow">
+              <p v-if="now !== null">{{ textoNow.texto }}</p>
+              <!-- <p>{{ textoNow.texto }}</p> -->
+            </div>
+          </v-col>
+        </div>
+      </v-col>
+    </v-row>
+    <!-- <v-row>
+      <v-col cols=12>
+        <div class="my-2" v-for="(item, index) in textosMisa" :key="item.id">
+          <v-row>
+            <v-col cols="3">
+  
+              <textoMisaIndividualVue :item="item" :numItem="index"/>
+            </v-col>
+          </v-row>
+        </div>
+      </v-col>
+    </v-row> -->
+    <v-row>
+      <v-col cols="2" v-for="(item, index) in textosMisa" :key="index">
+        <textoMisaIndividualVue :item="item" :numItem="index" :valorDirecte="now"/>
+      </v-col>
+    </v-row>
+  
+    <!-- VENTANA CARGAR MISA -->
+    <v-dialog width="800" v-model="ventanaCargar">
+      <v-card>
+        <v-card-text>
+          <v-row>
+            <v-col cols="12">
+              <h3>Seleccionar missa</h3>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col class="text-center">
+              <v-btn @click="cargarMisaGSheet">CARREGAR DESDE GSHEET</v-btn>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" v-for="misa in misaStore.getMisas" :key="misa.id">
+              <v-row>
+                <v-col cols="2">
+                  <h4>{{ misa.fecha }}</h4>                
+                </v-col>
+                <v-col cols="4">
+                  <h4>{{ misa.nombreMisa }}</h4>                
+                </v-col>
+                <v-col cols="2">
+                  <v-btn color="success" size="x-small" @click="cargarMisa(misa.id)">Carregar</v-btn>
+                </v-col>
+                <v-col cols="2">
+                  <v-btn color="blue" size="x-small" @click="editarMisa(misa.id)">Editar</v-btn>
+                </v-col>
+                <v-col cols="2">
+                  <v-btn color="error" size="x-small" @click="duplicarMisa">Duplicar</v-btn>
+                </v-col>
+              </v-row>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" class=text-center>
+              <v-btn @click="ventanaCargar = false" color="error" size="x-small">TANCAR</v-btn>
+            </v-col>
+          </v-row>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 
 <script setup>
 import { storeToRefs } from "pinia";
 import { useMisaStore } from "../../store/misa" 
 import { useSwiftConnectionStore } from "../../store/swiftConnection"
+import { usegSheetStore } from "../../store/gSheet"
 
 import textoMisaIndividualVue from "@/components/misa/textoMisaIndividual.vue";
 import { computed, ref } from "vue";
 import { onBeforeMount } from "vue";
+import { watch } from "vue";
+import router from "@/router";
 
 
 const misaStore = useMisaStore()
+const gSheetStore = usegSheetStore()
 
 
 // onBeforeMount(async () => {
 //   misaStore.cargartextoMisa()
 // })
 
-const { textoLive } = storeToRefs(misaStore)
+const { textoFullScreen } = storeToRefs(misaStore)
 
-
-
+const ventanaCargar = ref(false)
 
 const swiftConnectionStore = useSwiftConnectionStore()
 
 swiftConnectionStore.startConnection()
 
-const idMisa = ref(0)
-const textosMisa = misaStore.getMisaById(idMisa.value)
-// console.log(textosMisa)
+// const idMisa = ref(0)
+const idMisa = computed(() => misaStore.misaCargada)
+// console.log(misaStore.misaCargada)
+// const textosMisa = misaStore.getMisaById(idMisa.value)
+// const textosMisa = ref(null)
 
 
-const now = ref(textoLive.value)
-const next = ref(0)
-// const textoNow = computed(() => textosMisa[now.value].texto)
-const textoNow = computed(() => misaStore.getTextoLive)
-console.log(textoNow.value)
-const textoNext = computed(() => textosMisa[next.value].texto)
-// console.log(textosMisa[now.value])
+
+gSheetStore.getListaMisa()
+
+// const valoresMisaGSheet = computed(() => gSheetStore.getValoresMisaGSheet)
+
+const cargarMisaGSheet = () => {
+  misaStore.crearMisaGsheet(gSheetStore.getValoresMisaGSheet)
+}
+
+const textosMisa = computed(() => misaStore.getMisaById(idMisa.value))
+
+const directe = ref(false)
+let blink
+let colorBotonLive = ref("success")
+
+
+
+
+
+const now = ref(0)
+const next = ref(1)
+
+const textoNow = computed(() => textosMisa.value[now.value])
+const textoNext = computed(() => textosMisa.value[next.value].texto)
+
 
 const estiloTextoNow = computed (() => {
   if(now.value !== null) {
     return {
-      fontSize: textosMisa[now.value].tamaño * 0.8 + "px",
-      color: textosMisa[now.value].color
+      fontSize: textosMisa.value[now.value].tamaño * 0.8 + "px",
+      color: textosMisa.value[now.value].color
     }
   }
 })
 const estiloTextoNext = computed (() => {
-  if(next.value !== null) {
-    return {
-      fontSize: textosMisa[next.value].tamaño * 0.8 + "px",
-      color: textosMisa[next.value].color
+  console.log(textosMisa.value.length)
+  if(textosMisa.value.length >= 2)  {
+
+    if(next.value !== null) {
+      return {
+        fontSize: textosMisa.value[next.value].tamaño * 0.8 + "px", 
+        color: textosMisa.value[next.value].color
+      }
     }
   }
 })
 
 const cambioNext = val => {
-  if (val == 1 && next.value < textosMisa.length -1) {
+  if (val == 1 && next.value < textosMisa.value.length -1) {
     next.value ++
   } else if (val == -1 && next.value >= 1) {
     next.value --
   }
 }
 const cambioColor = (hex) => {
-  // Remove the hash (#) if it exists
-  hex = hex.replace(/^#/, '');
+  console.log(hex)
+  if(hex) {
 
-  // Parse the hexadecimal color components
-  var bigint = parseInt(hex, 16);
-  var r = (bigint >> 16) & 255;
-  var g = (bigint >> 8) & 255;
-  var b = bigint & 255;
-
-  // Normalize the RGB values to be between 0 and 1
-  var normalizedR = r / 255;
-  var normalizedG = g / 255;
-  var normalizedB = b / 255;
-  const str = normalizedR + "," + normalizedG + "," + normalizedB
-
-  // Return the normalized RGB values as an object
-  return str
+    // Remove the hash (#) if it exists
+    hex = hex.replace(/^#/, '');
+  
+    // Parse the hexadecimal color components
+    var bigint = parseInt(hex, 16);
+    var r = (bigint >> 16) & 255;
+    var g = (bigint >> 8) & 255;
+    var b = bigint & 255;
+  
+    // Normalize the RGB values to be between 0 and 1
+    var normalizedR = r / 255;
+    var normalizedG = g / 255;
+    var normalizedB = b / 255;
+    const str = normalizedR + "," + normalizedG + "," + normalizedB
+  
+    // Return the normalized RGB values as an object
+    return str
+  }
 }
 
-const toDirecte = () => {
-  console.log(now.value)
-  console.log(next.value)
-  console.log(textosMisa.length)
+const toDirecte = (val) => {
+  // console.log(now.value)
+  // console.log(next.value)
+  // console.log(textosMisa.length)
   now.value = next.value
   misaStore.setTextoLive(now.value)
-  console.log(textoNow.value.texto)
+  // console.log(textoNow.value)
+  misaStore.actualizarTextoFullScreen(textoNow.value)
+
   // swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaTEXT", "String", textosMisa[now.value].texto)
   // swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSHDR", "MaterialDiffuse", cambioColor(textosMisa[now.value].color))
-  swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaTEXT", "String", textoNow.value.texto)
-  swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSHDR", "MaterialDiffuse", cambioColor(textoNow.value.color))
+  // swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaTEXT", "String", textoNow.value.texto)
+  // swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSHDR", "MaterialDiffuse", cambioColor(textoNow.value.color))
   // misaStore.live = now.value
   // now.value ++
   // next.value ++
-  if(next.value !== textosMisa.length -1) {
-    next.value ++
+  if(next.value !== textosMisa.value.length -1) {
+    next.value += val
   } 
 }
 
 const fullScreen = () => {
   window.open("http://localhost:8000/misafullscreen", '_blank','location=yes,height=1920,width=1080,scrollbars=no,status=yes')
 }
+
+const cargarMisa = id => {
+  console.log(id)
+  misaStore.setMisaCargada(id)
+  misaStore.setTextoLive(0)
+  now.value = 0
+  next.value = 1
+  // misaStore.cargarMisa(id)
+  console.log(textosMisa.value)
+}
+
+const editarMisa = id => {
+  router.push(`editarmisa/${id}`)
+}
+
+const duplicarMisa = () => {
+  console.log("duplicarMisa")
+}
+
+document.addEventListener("keydown", (event) => {
+  if(directe.value) {
+
+    if (event.key === "ArrowRight") toDirecte(1)
+    if (event.key === "ArrowLeft") toDirecte(-1)
+  }
+  // console.log(event.key)
+});
+
+watch(() => textoFullScreen, val => {
+  console.log(val.value)
+  if(directe.value) {
+    // swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaTEXT", "String", textoNow.value.texto)
+    // swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSHDR", "MaterialDiffuse", cambioColor(textoNow.value.color))
+  }
+  // textosMisa.value = misaStore.getMisaById(val.value)
+  // console.log(val.value)
+},{
+  deep: true
+})
+watch(() => directe, val => {
+  if(!val.value) {
+    clearInterval(blink)
+    colorBotonLive.value = "success"
+  } else if (val.value) {
+    let i = 1
+    blink = setInterval(() => {
+      if(i%2 == 0) {
+        colorBotonLive.value = "white"
+      } else {
+        colorBotonLive.value = "error"
+      }
+      i++
+    }, 500)
+  }
+},{
+  deep: true
+})
 
 </script>
 
