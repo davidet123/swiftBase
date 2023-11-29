@@ -14,14 +14,14 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="4" class="text-center">
+      <!-- <v-col cols="4" class="text-center">
         <v-btn class="boton" color="white" @click="ventanaCargar = true">Carregar missa</v-btn>
       </v-col>
       <v-col cols="4" class="text-center">
         <v-btn class="boton" color="white" to="/addtextomisa">Afegir textos missa</v-btn>
-      </v-col>
-      <v-col cols="4" class="text-center">
-        <v-btn class="boton" color="white" @click="fullScreen">Full screen</v-btn>
+      </v-col> -->
+      <v-col cols="4" class="text-center" offset="4">
+        <v-btn class="boton" color="success" @click="fullScreen">PANTALLA COMPLETA</v-btn>
       </v-col>
     </v-row>
     <v-row>
@@ -54,6 +54,7 @@
       <!-- LIVE -->
       <v-col cols="5" class="text-center">
         <h4>Rotul en directe</h4>
+        <p>Caracteres: {{ textoNow.texto.length }}</p>
         <div class="FHDWrapper">
           <v-col >
             <div class="FHD text-center" style="white-space: pre;" :style="estiloTextoNow">
@@ -76,9 +77,25 @@
         </div>
       </v-col>
     </v-row> -->
-    <v-row>
-      <v-col cols="2" v-for="(item, index) in textosMisa" :key="index">
-        <textoMisaIndividualVue :item="item" :numItem="index" :valorDirecte="now"/>
+    <!-- <v-row>
+      <v-col>
+        <v-infinite-scroll
+        :items="textosMisa"
+        >
+        <template v-for="(item, index) in items" :key="item">
+          <textoMisaIndividualVue :item="item" :numItem="now" :nextItem="next"/>
+
+
+        </template>
+
+
+
+        </v-infinite-scroll>
+      </v-col>
+    </v-row> -->
+    <v-row style="height: 200px;">
+      <v-col :cols="12 / 5" v-for="(item, index) in listaTextos" :key="index" class="text-center">
+        <textoMisaIndividualVue :item="item" :numItem="now" :nextItem="next"/>
       </v-col>
     </v-row>
   
@@ -165,7 +182,7 @@ const idMisa = computed(() => misaStore.misaCargada)
 
 
 
-gSheetStore.getListaMisa()
+// gSheetStore.getListaMisa()
 
 // const valoresMisaGSheet = computed(() => gSheetStore.getValoresMisaGSheet)
 
@@ -174,6 +191,7 @@ const cargarMisaGSheet = () => {
 }
 
 const textosMisa = computed(() => misaStore.getMisaById(idMisa.value))
+
 
 const directe = ref(false)
 let blink
@@ -185,6 +203,17 @@ let colorBotonLive = ref("success")
 
 const now = ref(0)
 const next = ref(1)
+
+const listaTextos = computed(() => {
+  const textos = misaStore.getMisaById(idMisa.value)
+  
+  let n = 5;
+  let start = Math.max(0, Math.min(Math.floor(next.value-n/2), textos.length-n));
+  const nuevaLista = textos.slice(start, start+n);
+  // console.log(nuevaLista)
+  return nuevaLista
+  
+})
 
 const textoNow = computed(() => textosMisa.value[now.value])
 const textoNext = computed(() => textosMisa.value[next.value].texto)
@@ -199,7 +228,6 @@ const estiloTextoNow = computed (() => {
   }
 })
 const estiloTextoNext = computed (() => {
-  console.log(textosMisa.value.length)
   if(textosMisa.value.length >= 2)  {
 
     if(next.value !== null) {
@@ -264,17 +292,24 @@ const toDirecte = (val) => {
 }
 
 const fullScreen = () => {
-  window.open("http://localhost:8000/misafullscreen", '_blank','location=yes,height=1920,width=1080,scrollbars=no,status=yes')
+  window.open("/misafullscreen", '_blank','location=yes,height=1920,width=1080,scrollbars=no,status=yes')
 }
 
 const cargarMisa = id => {
-  console.log(id)
+  // console.log(id)
   misaStore.setMisaCargada(id)
   misaStore.setTextoLive(0)
+  // misaStore.actualizarTextoFullScreen({
+  //       id: 0,
+  //       titulo: "NEGRO",
+  //       texto: "",
+  //       tamaño: 70,
+  //       color: '#000000'
+  //     })
   now.value = 0
   next.value = 1
   // misaStore.cargarMisa(id)
-  console.log(textosMisa.value)
+  // console.log(textosMisa.value)
 }
 
 const editarMisa = id => {
@@ -282,7 +317,7 @@ const editarMisa = id => {
 }
 
 const duplicarMisa = () => {
-  console.log("duplicarMisa")
+  // console.log("duplicarMisa")
 }
 
 document.addEventListener("keydown", (event) => {
@@ -294,8 +329,8 @@ document.addEventListener("keydown", (event) => {
   // console.log(event.key)
 });
 
-watch(() => textoFullScreen, val => {
-  console.log(val.value)
+watch(() => textoFullScreen, (newValue, oldValue) => {
+  console.log(newValue.value, oldValue.value)
   if(directe.value) {
     // swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaTEXT", "String", textoNow.value.texto)
     // swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSHDR", "MaterialDiffuse", cambioColor(textoNow.value.color))

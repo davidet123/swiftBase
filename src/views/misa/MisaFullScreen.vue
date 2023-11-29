@@ -11,16 +11,23 @@
 
   import { storeToRefs } from "pinia"
   import { useMisaStore } from "../../store/misa" 
+  import { onBeforeMount } from "vue";
 
   const misaStore = useMisaStore()
   const { textoFullScreen } = storeToRefs(misaStore)
+
+  onBeforeMount(async () => {
+    await misaStore.cargartextoMisa()
+  })
 
   
   
   
   const estiloTexto = computed (() => {
     let mult = 2.8
-    if(textoFullScreen.value.texto.length <= 22) mult = 4
+    if(textoFullScreen.value.texto.length <= 22) mult = 4 
+    if(textoFullScreen.value.texto.length >= 60 && textoFullScreen.value.texto.length <= 80) mult = 2.5 
+    if(textoFullScreen.value.texto.length >= 80) mult = 2.5
     return {
       fontSize: textoFullScreen.value.tamaño * mult + "px" || "70px",
       color: textoFullScreen.value.color || "#ffffff"

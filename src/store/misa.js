@@ -8,6 +8,8 @@ import db from '../firebase/init.js'
 
 export const useMisaStore = defineStore('misa', {
   state: () => ({
+    dbMisaCargada: false,
+    gSheetMisaCargada: false,
     textoLive: 0,
     idTextoLive: null,
     misaCargada: 0,
@@ -23,35 +25,40 @@ export const useMisaStore = defineStore('misa', {
         titulo: "NEGRO",
         texto: "",
         tamaño: 70,
-        color: '#000000'
+        color: '#000000',
+        numero: 0
       },
       {
         id: 3,
         titulo: "Comunion",
         texto: "Poble de Déu, poble en marxa; junts fem camí.",
         tamaño: 70,
-        color: '#f2a508'
+        color: '#f2a508',
+        numero: 0
       },
       {
         id: 1,
         titulo: "Comunion",
         texto: "poble de Déu, església que avança; el regne ja està ací. ",
         tamaño: 70,
-        color: '#ffffff'
+        color: '#ffffff',
+        numero: 0
       },
       {
         id: 2,
         titulo: "Comunion",
         texto: "marcat sovint per tantes pors, però viu en el Crist lluminós.",
         tamaño: 70,
-        color: '#ffffff'
+        color: '#ffffff',
+        numero: 0
       },
       {
         id: 4,
         titulo: "Comunion",
         texto: "Camina al llarc del temps, travessa mars pregons, ",
         tamaño: 70,
-        color: '#00ff00'
+        color: '#00ff00',
+        numero: 0
       },
     ] ,
     textosMisa:[
@@ -78,14 +85,17 @@ export const useMisaStore = defineStore('misa', {
         fecha: misa.fecha,
         nombreMisa: misa.nombreMisa
       }
-    })
+    }),
+    getMisaCargada: state => state.textosMisa.find(el => el.id == state.misaCargada)
     
   },
   actions: {
     getMisaById(id) {
       const misas = this.getMisas.map(el => el.id)
+      // console.log(misas)
       if(!misas.includes(id)) {
-        this.setMisaCargada(0)
+        // console.log("GETMISA")
+        // this.setMisaCargada(0)
         id = 0
       }
 
@@ -123,9 +133,10 @@ export const useMisaStore = defineStore('misa', {
             let valorTextoMisa = change.doc.data()
             this.textoLive = valorTextoMisa.textoMisa
             this.idTextoLive = change.doc.id
-            this.misaCargada = valorTextoMisa.misaCargada
+            // this.misaCargada = valorTextoMisa.misaCargada
             this.textoFullScreen = valorTextoMisa.textoFullScreen
             this.cargandoMisa = false
+            this.dbMisaCargada = true
             // console.log(this.textoFullScreen)
           } else if (change.type === "modified") {
             let cambioTextoMisa = change.doc.data()
@@ -135,7 +146,6 @@ export const useMisaStore = defineStore('misa', {
             this.textoFullScreen = cambioTextoMisa.textoFullScreen
             this.cargandoMisa = false
             // this.actualizarRotulos(nuevo_rotulo)
-            // console.log("ACTUALIZANDO ID TEXTO MISA")
           } 
         })
       })
@@ -183,8 +193,8 @@ export const useMisaStore = defineStore('misa', {
       
       const encabezados = payload.slice(1)
       const textoEncabezado = encabezados.shift()
-      const fecha = textoEncabezado[0]
-      const nombreMisa = textoEncabezado[1] || "Misa Gsheet"
+      const fecha = textoEncabezado[1]
+      const nombreMisa = textoEncabezado[2] || "Misa Gsheet"
       const textos = encabezados.slice(1)
       // const encabezados = textos.shift()
       // textos.slice(1)
@@ -205,17 +215,20 @@ export const useMisaStore = defineStore('misa', {
           titulo: "NEGRO",
           texto: "",
           tamaño: 0,
-          color: '#FFFFFF'
+          color: '#FFFFFF',
+          numero: 0
         }
         texto.id = `GS${index}`
-        if(el[0]) texto.texto = el[0]
-        if(el[1]) {
-          if(el[1] == "TRUE") texto.color = "#00FF00"
+        // console.log(el[2])
+        if (el[0]) texto.numero = parseInt(el[0])
+        if(el[1]) texto.texto = el[1]
+        if(el[2]) {
+          if(el[2] == "TRUE") texto.color = "#00AF00"
         }
-        if(el[2]) texto.titulo = el[2]
+        if(el[3]) texto.titulo = el[3]
         texto.tamaño = 70
         textosMisaGSheet.idTextos.push(`GS${index}`)
-        this.textos.push(texto)
+        if(el[2]) this.textos.push(texto)
 
         index++
         // console.log(this.textos)
@@ -228,9 +241,12 @@ export const useMisaStore = defineStore('misa', {
         color: '#FFFFFF'
       })
       textosMisaGSheet.idTextos.push(`GS${index}`)
-      this.textosMisa.push(textosMisaGSheet)
-      // this.misaCargada = textosMisaGSheet.id
       // console.log(textosMisaGSheet)
+      this.textosMisa.push(textosMisaGSheet)
+      // console.log(this.textosMisa)
+      this.misaCargada = textosMisaGSheet.id
+      this.gSheetMisaCargada = true
+      this.actualizarMisaCargada(textosMisaGSheet.id)
 
     }
 

@@ -6,7 +6,8 @@ export const usegSheetStore = defineStore('gSheet', {
   state: () => ({
     valoresHoja: [],
     gSheetLoading: false,
-    valoresMisaGSheet: null
+    valoresMisaGSheet: null,
+    gSheetMisaLoading: false
   }),
   getters: {
     getValoresHoja(state) {
@@ -58,7 +59,7 @@ export const usegSheetStore = defineStore('gSheet', {
       })
       
     }, // fin funcion getLista()
-    getListaMisa() {
+    async getListaMisa() {
       // id de la hoja de calculo
       // idSheets = '1sbZtJvR5q_1rdDF34sWNaylH-1j_41gSCgEYYZRRIU8';
       //// nuestra      APIKey
@@ -67,7 +68,7 @@ export const usegSheetStore = defineStore('gSheet', {
       // values = 'A2:AZ100';
       // fetch es un método nativo para hacer peticiones http
       // en el navegador 
-      this.gSheetLoading = true
+      this.gSheetMisaLoading = true
       const apiKey = import.meta.env.VITE_APP_APIKEY
       const idSheets =  import.meta.env.VITE_APP_IDSHEETS
       const values = 'MISSA!A1:C300'
@@ -77,10 +78,10 @@ export const usegSheetStore = defineStore('gSheet', {
       }).then((valores)=>{
         let tempValores = valores.values.slice() // TODOS LOS VALORES
         this.valoresMisaGSheet = tempValores
-        this.gSheetLoading = false
+        this.gSheetMisaLoading = false
       }).catch(err=>{
         console.log(err);
-        this.gSheetLoading = false
+        this.gSheetMisaLoading = false
       })
       
     }, // fin funcion getLista()

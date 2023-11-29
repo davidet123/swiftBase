@@ -99,7 +99,7 @@ actions: {
       // return {videoStream, rtRemote}
     }
     rtConnection.onClose = function() {
-      trace("Connection Closed, try again…");
+      if(this.rtRemote) trace("Connection Closed, try again…");
       // If the connection closes, attempt to reopen it.
       this.swiftConnectionStatus = 0
       self.OpenConnection();
@@ -108,7 +108,7 @@ actions: {
   getStatus(type, filter) {
     // console.log(type, filter)
     console.log("status store")
-    this.rtRemote.getStatus(type, filter)
+    if(this.rtRemote) this.rtRemote.getStatus(type, filter)
     // console.log(status)
 
   },
@@ -118,24 +118,30 @@ actions: {
     const node = 'grafica'
     const ruta = 'C:\\Users\\deimo\\Downloads\\' + this.fileName
     // console.log(ruta)
-    this.rtRemote.updateFields(grafico + "::" + node + "SHDR", "TextureImage", ruta)
+    if(this.rtRemote) this.rtRemote.updateFields(grafico + "::" + node + "SHDR", "TextureImage", ruta)
+  },
+  startTransaction() {
+    if(this.rtRemote) this.rtRemote.startTransaction()
+  },
+  endTransaction() {
+    if(this.rtRemote) this.rtRemote.endTransaction()
   },
   cueGraphic (metodo) {
-    // console.log(metodo)
-    this.rtRemote.playMethod(metodo + "::cueGraphic")
+    console.log(this.rtRemote)
+    if (this.rtRemote) this.rtRemote.playMethod(metodo + "::cueGraphic")
   },
   bringOn (metodo) {
     console.log(metodo + "::bringOn")
-    this.rtRemote.playGraphic(metodo)
-    this.rtRemote.playMethod(metodo + "::bringOn")
+    if(this.rtRemote) this.rtRemote.playGraphic(metodo)
+    if(this.rtRemote) this.rtRemote.playMethod(metodo + "::bringOn")
   },
   takeOff (metodo) {
     console.log(metodo + "::takeOff")
-      this.rtRemote.playMethod(metodo + "::takeOff")
+    if(this.rtRemote) this.rtRemote.playMethod(metodo + "::takeOff")
   },
   startClock (metodo) {
     console.log('Startclock')
-      if(this.rtRemote) this.rtRemote.playMethod(metodo + "::startClock")
+    if(this.rtRemote) this.rtRemote.playMethod(metodo + "::startClock")
   },
   stopClock (metodo) {
     if(this.rtRemote) this.rtRemote.playMethod(metodo + "::stopClock")
@@ -144,17 +150,17 @@ actions: {
     if(this.rtRemote) this.rtRemote.playMethod(metodo + "::resetClock")
   },
   oratgeOn () {
-    this.rtRemote.playMethod("TICKER::oratgeOn")
+    if(this.rtRemote) this.rtRemote.playMethod("TICKER::oratgeOn")
   },
   oratgeOff () {
-    this.rtRemote.playMethod("TICKER::oratgeOff")
+    if(this.rtRemote) this.rtRemote.playMethod("TICKER::oratgeOff")
   },
   añadidoOn(tiempo) {
-    this.rtRemote.updateFields("MARCADOR::DESCUENTOTEXT", "String", `${tiempo}'`)
-    this.rtRemote.playMethod("MARCADOR::descuentoOn")
+    if(this.rtRemote) this.rtRemote.updateFields("MARCADOR::DESCUENTOTEXT", "String", `${tiempo}'`)
+    if(this.rtRemote) this.rtRemote.playMethod("MARCADOR::descuentoOn")
   },
   añadidoOff() {
-    this.rtRemote.playMethod("MARCADOR::descuentoOff")
+    if(this.rtRemote) this.rtRemote.playMethod("MARCADOR::descuentoOff")
   },
   
 

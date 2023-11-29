@@ -8,10 +8,22 @@
     <v-col cols="6" offset="3">
       <div class="FHDWrapperFull">
           <div class="FHDFull text-center" style="white-space: pre;" :style="estiloTexto">
-            <VisorMisa class="my-2" :texto="textoFullScreen.texto" :color="textoFullScreen.color" :tamaño="textoFullScreen.tamaño"/>
-            
+            <VisorMisa class="my-2" :texto="textoFullScreen.texto" :color="textoFullScreen.color" :tamaño="textoFullScreen.tamaño"/>            
           </div>
       </div>
+    </v-col>
+  </v-row>
+  <v-row>
+    <v-col class="text-center">      
+      <p v-if="cargandoMisa"><v-icon size="large" color="red" icon="mdi-circle-medium"></v-icon>Carregant base de dades</p>
+      <p v-if="!cargandoMisa"><v-icon size="large" color="green" icon="mdi-circle-medium"></v-icon>Base de dades carregades</p>
+      <p v-if="gSheetMisaLoading"><v-icon size="large" color="red" icon="mdi-circle-medium"></v-icon>Carregant dades gSheet</p>
+      <p v-if="!gSheetMisaLoading"><v-icon size="large" color="green" icon="mdi-circle-medium"></v-icon>Dades gSheet carregades</p>
+      <p v-if="swiftConnectionStatus == 0"><v-icon size="large" color="red" icon="mdi-circle-medium"></v-icon>Conectant a swift</p>
+      <p v-if="swiftConnectionStatus == 1"><v-icon size="large" color="green" icon="mdi-circle-medium"></v-icon>Conectat a Swift</p>
+      <br>
+      <!-- <p v-if="cargandoMisa || gSheetMisaLoading"><v-icon size="large" color="red" icon="mdi-circle-medium"></v-icon>Carregant dades missa...</p>
+      <p v-else><v-icon size="large" color="green" icon="mdi-circle-medium"></v-icon>Dades carregades</p> -->
     </v-col>
   </v-row>
 </template>
@@ -21,15 +33,25 @@
 
   import { storeToRefs } from "pinia"
   import { useMisaStore } from "../../store/misa" 
+  import { usegSheetStore } from "../../store/gSheet"
   import VisorMisa from "@/components/misa/VisorMisa.vue";
   import { useSwiftConnectionStore } from "../../store/swiftConnection"
 
   const misaStore = useMisaStore()
-  const { textoFullScreen } = storeToRefs(misaStore)
-
   const swiftConnectionStore = useSwiftConnectionStore()
-
+  const gSheetStore = usegSheetStore()
+  
+  const { textoFullScreen, idTextoLive, cargandoMisa } = storeToRefs(misaStore)
+  const { gSheetMisaLoading } = storeToRefs(gSheetStore)
+  const { swiftConnectionStatus } = storeToRefs(swiftConnectionStore)
+  
+  if(!idTextoLive.value) misaStore.cargartextoMisa()
+  
+  
   swiftConnectionStore.startConnection()
+  
+
+  const { rtRemote } = storeToRefs(swiftConnectionStore)
 
   const cambioColor = (hex) => {
   // console.log(hex)
@@ -69,10 +91,26 @@
   })
 
   watch(() => textoFullScreen, val => {
-  console.log(cambioColor(textoFullScreen.value.color))
+    console.log(val.value)
+    console.log(swiftConnectionStatus.value)
+    swiftConnectionStore.cueGraphic("PRUEBA_MISA")
+    swiftConnectionStore.startTransaction()
+    if(textoFullScreen.value.texto === "" || textoFullScreen.value.texto === " ") {
+      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::GRUPO", "Display", "false")
+    } else {
+      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::GRUPO", "Display", "true")
+    }
+    let altura = "100"
+    if(textoFullScreen.value.texto.length >= 49) altura = "140"
   // if(directe.value) {
-    swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaTEXT", "String", textoFullScreen.value.texto)
-    swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSHDR", "MaterialDiffuse", cambioColor(textoFullScreen.value.color))
+    const textoRectangleSize = `1580, ${altura}`
+    // console.log(textoFullScreen)
+
+    if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::rectangle2DGEOM", "RectangleSize", textoRectangleSize)
+    if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaTEXT", "String", textoFullScreen.value.texto)
+    if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSHDR", "MaterialDiffuse", cambioColor(textoFullScreen.value.color))
+    if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSombraTEXT", "String", textoFullScreen.value.texto)
+    swiftConnectionStore.endTransaction()
   // }
   // textosMisa.value = misaStore.getMisaById(val.value)
   // console.log(val.value)
@@ -91,7 +129,7 @@
 } */
   .FHDWrapperFull {
     width: 100%;
-    /* height: 337px; */
+    height: 337px;
     margin: 0 auto;
     position: relative;
     background-color: black;

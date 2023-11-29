@@ -1,9 +1,9 @@
 <template>
   <!-- <v-card class="textoMisa"> -->
   <v-card class="textoMisa" :style="colorBorde">
-    <v-card-title>
-      <h6>ID texto {{ numItem }} - {{ valorDirecte }}</h6>
-    </v-card-title>
+    <!-- <v-card-title>
+      <h6>now {{ numItem + 1 }} next {{ nextItem }}</h6>
+    </v-card-title> -->
     <!-- <v-card-subtitle>
       <h4>{{item.titulo}}</h4>
     </v-card-subtitle> -->
@@ -23,12 +23,12 @@
           </div>
         </v-col>
       </v-row>
-      <p class="text-right">{{ numItem + 1 }} / {{ totalRotulos }}</p>
+      <p class="text-right">{{ item.numero }} / {{ totalRotulos }}</p>
       <!-- <p>{{item.texto}}</p> -->
     </v-card-text>
-    <v-card-actions>
+    <!-- <v-card-actions>
       <v-btn color="error" @click="goTo()">EDITAR</v-btn>
-    </v-card-actions>
+    </v-card-actions> -->
   </v-card>
 </template>
 
@@ -46,7 +46,7 @@ const misaStore = useMisaStore()
 
 const { textoLive, misaCargada } = storeToRefs(misaStore)
 
-const props = defineProps(["item", "numItem", "valorDirecte"])
+const props = defineProps(["item", "numItem", "nextItem"])
 
 
 const totalRotulos = computed(() => {
@@ -58,17 +58,21 @@ const totalRotulos = computed(() => {
 // console.log(misaCargada.value)
 
 
-const { item, numItem, valorDirecte } = toRefs(props)
-console.log(numItem.value, valorDirecte.value)
-const colorBorde = computed(() => {
-  if(misaStore.getTextoLive) {
-    if(numItem.value == valorDirecte.value) {
-      return {
-        border: '2px solid red'
-      }
-    }
+const { item, numItem, nextItem } = toRefs(props)
 
+const colorBorde = computed(() => {
+  if(nextItem.value + 1 == item.value.numero) {
+    return {
+      border: '2px solid green'
+    }
   }
+  if(numItem.value + 1 == item.value.numero) {
+    return {
+      border: '2px solid red'
+    }
+  }
+
+  
 })
 
 const estiloTexto = computed (() => {
@@ -90,7 +94,7 @@ const goTo = () => {
   width: 250px;
 }
   .contenedor {
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
   }
 </style>
