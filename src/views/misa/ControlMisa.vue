@@ -90,12 +90,12 @@
     
   })
 
-  watch(() => textoFullScreen, val => {
-    console.log(val.value)
-    console.log(swiftConnectionStatus.value)
+  watch(() => textoFullScreen, (newValue, oldValue) => {
+    console.log(newValue.value, oldValue.value)
+    // console.log(swiftConnectionStatus.value)
     swiftConnectionStore.cueGraphic("PRUEBA_MISA")
     swiftConnectionStore.startTransaction()
-    if(textoFullScreen.value.texto === "" || textoFullScreen.value.texto === " ") {
+    if(newValue.value.texto === "" || newValue.value.texto === " ") {
       if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::GRUPO", "Display", "false")
     } else {
       if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::GRUPO", "Display", "true")
@@ -107,9 +107,9 @@
     // console.log(textoFullScreen)
 
     if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::rectangle2DGEOM", "RectangleSize", textoRectangleSize)
-    if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaTEXT", "String", textoFullScreen.value.texto)
-    if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSHDR", "MaterialDiffuse", cambioColor(textoFullScreen.value.color))
-    if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSombraTEXT", "String", textoFullScreen.value.texto)
+    if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaTEXT", "String", newValue.value.texto)
+    if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSHDR", "MaterialDiffuse", cambioColor(newValue.value.color))
+    if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSombraTEXT", "String", newValue.value.texto)
     swiftConnectionStore.endTransaction()
   // }
   // textosMisa.value = misaStore.getMisaById(val.value)
@@ -151,7 +151,8 @@
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    text-wrap: wrap;
+    /* text-wrap: wrap; */
+    white-space: normal;
   }
 
 

@@ -222,8 +222,14 @@ const disparoAPuerta = val => {
 
 const updateDB = (jugador) => {
   // console.log(equipo)
-  futbolStore.updateEstPartido(id_partido, jugador, equipo.value)
+  if(id_partido == "localStorage") {
+    console.log(jugador)
+  } else {
+    futbolStore.updateEstPartido(id_partido, jugador, equipo.value)
+
+  }
 }
+
 const total_disparos = () => {
   return `${jugador.value.estadistica.disparos_al_arco}/${jugador.value.estadistica.disparos}`
 }

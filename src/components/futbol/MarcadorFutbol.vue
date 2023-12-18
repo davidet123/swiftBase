@@ -318,7 +318,12 @@
     temporizador = setInterval(() => {
       tiempoActual.value += 1
       marcador.value.temporizador.posesion[equipo_en_posesion.value] += 1
-      futbolStore.setMinutosPartido(`${tiempoMarcador.value.split(":")[0]}'`)
+      if(id == "localStorage") {
+        console.log('minutos partido ls')
+      } else {
+
+        futbolStore.setMinutosPartido(`${tiempoMarcador.value.split(":")[0]}'`)
+      }
     }, 1000)
     marcador.value.temporizador.inicio_tiempo = inicio_tiempo.value
     actualizarMarcador()
@@ -455,19 +460,12 @@
         setTiempoMarcador()
         swiftConnectionStore.resetClock('MARCADOR')
       }
-      // const min = tiempoMarcador.value.split(":")[0]
-      // const seg = tiempoMarcador.value.split(":")[1]
-      // swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Minute", min)     
-      // swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Second", seg) 
+      // console.log(equipos.value)
+      
       swiftConnectionStore.rtRemote.updateFields(`MARCADOR::EQUIPO_LOCALTEXT`, "String", equipos.value.local)
       swiftConnectionStore.rtRemote.updateFields(`MARCADOR::EQUIPO_VISITANTETEXT`, "String", equipos.value.visitante)
       swiftConnectionStore.rtRemote.updateFields("MARCADOR::LOCALTEXT","String", marcador.value.goles.local)
       swiftConnectionStore.rtRemote.updateFields("MARCADOR::VISITANTETEXT","String", marcador.value.goles.visitante)
-        
-
-        // const minutos = tiempoMarcador.value.split(":")[0]
-        // console.log(parseInt(minutos))
-        // swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Minute", minutos)
         
         
         swiftConnectionStore.bringOn('MARCADOR')

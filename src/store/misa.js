@@ -116,12 +116,15 @@ export const useMisaStore = defineStore('misa', {
     },
     setTextoLive(id) {
       this.textoLive = id
-      this.actualizarTextoLive(id)
+      // this.actualizarTextoLive(id)
     },
     setMisaCargada(id) {
       this.misaCargada = id
       this.actualizarMisaCargada(id)
     },
+    // actualizarMisa(payload) {
+
+    // },
     // base de datos
     async cargartextoMisa () {
       // this.rotulos = []
@@ -137,6 +140,7 @@ export const useMisaStore = defineStore('misa', {
             this.textoFullScreen = valorTextoMisa.textoFullScreen
             this.cargandoMisa = false
             this.dbMisaCargada = true
+            console.log("added")
             // console.log(this.textoFullScreen)
           } else if (change.type === "modified") {
             let cambioTextoMisa = change.doc.data()
@@ -146,11 +150,13 @@ export const useMisaStore = defineStore('misa', {
             this.textoFullScreen = cambioTextoMisa.textoFullScreen
             this.cargandoMisa = false
             // this.actualizarRotulos(nuevo_rotulo)
+            console.log("updated")
           } 
         })
       })
     },
     async actualizarTextoFullScreen (payload) {
+      console.log("Actualizar fullscreen")
       const docRef = doc(db, "misa", this.idTextoLive)
       await updateDoc(docRef, {
         textoFullScreen: payload
@@ -223,7 +229,7 @@ export const useMisaStore = defineStore('misa', {
         if (el[0]) texto.numero = parseInt(el[0])
         if(el[1]) texto.texto = el[1]
         if(el[2]) {
-          if(el[2] == "TRUE") texto.color = "#00AF00"
+          if(el[2] == "TRUE") texto.color = "#00FF00"
         }
         if(el[3]) texto.titulo = el[3]
         texto.tamaño = 70

@@ -70,7 +70,8 @@
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    text-wrap: wrap;
+    /* text-wrap: wrap; */
+    white-space: normal;
   }
 
 

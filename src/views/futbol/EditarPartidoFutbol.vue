@@ -12,7 +12,7 @@
   <div v-if="partido">
     <v-row>
       <v-col cols="12" class="text-center">
-        <h3>EDITAR PARTIDO {{ partido.equipo_local.nombre_equipo }} vs {{ partido.equipo_visitante.nombre_equipo }}</h3>
+        <h3>EDITAR PARTIDO FUTBOL {{ partido.equipo_local.nombre_equipo }} vs {{ partido.equipo_visitante.nombre_equipo }}</h3>
       </v-col>
     </v-row>
     <v-row>
@@ -75,26 +75,38 @@
         ></v-select>
       </v-col>
     </v-row>
-    <v-row v-else>
-      <v-row>
 
-        <v-col cols="6">
+    <!-- EQUIPO DESDE LOCAL STORAGE -->
+    <v-row v-else class="mx-4">
+      <v-row>
+        <v-col cols="4">
           <v-text-field
             v-model="nuevoPartido.equipo_local.nombre_equipo"
             label="Equipo local"
           ></v-text-field>
         </v-col>
-        <v-col cols="6">
+        <v-col cols="2">
+          <v-text-field
+            v-model="nuevoPartido.equipo_local.display_name"
+            label="Equipo local"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="4">
           <v-text-field
           v-model="nuevoPartido.equipo_visitante.nombre_equipo"
             label="Equipo visitante"
           ></v-text-field>
         </v-col >
+        <v-col cols="2">
+          <v-text-field
+          v-model="nuevoPartido.equipo_visitante.display_name"
+            label="Equipo visitante"
+          ></v-text-field>
+        </v-col >
         <!-- Jugadores local -->
         <v-col cols="6" v-for="equipoWS in equiposWS" :key="equipoWS.nombre_equipo"> 
-          <v-col cols="12" v-for="jugador in equipoWS" :key="jugador.id_jugador">
+          <v-col cols="12" v-for="jugador in equipoWS.jugadores" :key="jugador.id_jugador">
             <v-row>
-
               <v-col cols="1" class="ma-0 pa-0">
                 <v-text-field density="compact" v-model="jugador.numero" label="Numero"></v-text-field>
               </v-col>
@@ -122,12 +134,31 @@
                   density="compact"
                   label="Posicion"
                 ></v-select> 
-  
               </v-col>                                
             </v-row>
-
           </v-col>
-          
+
+          <v-row>
+            <v-col cols="12">
+              <h3>Cuerpo Técnico</h3>
+              <v-row v-for="persona in equipoWS.cuerpo_tecnico" :key="persona.id_cuerpo_tecnico">
+                <v-col cols="12">
+                  <p>{{ persona.titulo }}</p>
+                </v-col>
+                <v-col cols="6" class="ma-0 pa-0">
+                  <v-text-field density="compact" v-model="persona.nombre" label="Nombre"></v-text-field>
+                </v-col>
+                <v-col cols="3" class="ma-0 pa-0">
+                  <v-text-field density="compact" v-model="persona.nacionalidad" label="Nacionalidad"></v-text-field>
+                </v-col>
+                <v-col cols="3" class="ma-0 pa-0">
+                  <v-text-field density="compact" v-model="persona.fecha_nacimiento" label="Fecha nacimiento"></v-text-field>
+                </v-col>
+              </v-row>
+              <!-- {{ equipoWS.cuerpo_tecnico }} -->
+    
+            </v-col>
+          </v-row>
 
         </v-col>
       </v-row>
@@ -287,7 +318,7 @@
   const competiciones = computed(() => futbolStore.getCompeticiones)
   
   let nuevoPartido = ref(null)
-  const equiposWS = computed(() => [nuevoPartido.value.equipo_local.jugadores, nuevoPartido.value.equipo_visitante.jugadores])
+  const equiposWS = computed(() => [nuevoPartido.value.equipo_local, nuevoPartido.value.equipo_visitante])
   
   // const partido = computed(() => {
   //   const refPartido =  partidos.value.find(partido=> {

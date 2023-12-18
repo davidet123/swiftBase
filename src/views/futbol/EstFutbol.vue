@@ -15,6 +15,7 @@
     <!-- {{ partido }} -->
       <v-row>
         <v-col cols="12">
+          {{  nombreEquipos }}
           <MarcadorFutbol :marcador = "marcador" :tiempo="partido.tiempo" :equipos="nombreEquipos" @updateDB="updateDB"/>
         </v-col>
       </v-row>
@@ -514,6 +515,7 @@ const rotulo_cargado_arbitros = computed(() => rotulo_cargado.value.find(rotulo 
 
 
 const nombreEquipos = computed(() => {
+  console.log(partido.value)
   return {local: partido.value.equipo_local.display_name, visitante: partido.value.equipo_visitante.display_name}
 }) 
 
@@ -735,9 +737,10 @@ const updateDB = () => {
 }
 
 const estFinales = (metodo) => {
-  // console.log(metodo)
-  const valoresLocal = `0%~${dispLocalTotal.value}~${dispAlArcoLocalTotal.value}~${faltasLocalTotales.value}~${taLocalTotales.value}~${trLocalTotales.value}~0`
-  const valoresVisitante = `0%~${dispVisitanteTotal.value}~${dispVisitanteAlArcoTotal.value}~${faltasVisitanteTotales.value}~${taVisitanteTotales.value}~${trVisitanteTotales.value}~0`
+  // console.log(fueraJuegoLocal.value)
+  // console.log(fueraJuegoVisitante.value)
+  const valoresLocal = `0%~${dispLocalTotal.value}~${dispAlArcoLocalTotal.value}~${faltasLocalTotales.value}~${taLocalTotales.value}~${trLocalTotales.value}~${fueraJuegoLocal.value}`
+  const valoresVisitante = `0%~${dispVisitanteTotal.value}~${dispVisitanteAlArcoTotal.value}~${faltasVisitanteTotales.value}~${taVisitanteTotales.value}~${trVisitanteTotales.value}~${fueraJuegoVisitante.value}`
   // console.log(valoresVisitante)
   if(metodo.live) {
     // swiftConnectionStore.rtRemote.startTransaction ()
@@ -898,12 +901,15 @@ const activarGrafico = payload => {
 
     if (payload.live) {
       swiftConnectionStore.cueGraphic('ALINEACION')
+      // console.log(entrenador)
       swiftConnectionStore.rtRemote.updateFields(`ALINEACION::NOMBRE_ENTRENADORTEXT`, "String", entrenador)
       let i = 1
       // console.log(jugadores)
       jugadores.forEach(jug => {
         let nombre = jug.nombre
         // if(jug.posicion === "Portero") nombre += " G"
+        // console.log(jug.dorsal)
+        // console.log(nombre)
         swiftConnectionStore.rtRemote.updateFields(`ALINEACION::DORSAL_${i}TEXT`, "String", jug.dorsal)
         swiftConnectionStore.rtRemote.updateFields(`ALINEACION::NOMBRE_${i}TEXT`, "String", nombre)
         i ++
@@ -958,9 +964,12 @@ const activarGrafico = payload => {
       let i = 1
 
       listaSuplentes.forEach(jug => {
-        let nombre = jug.nombre_jugador
+        // console.log(jug)
+        let nombre = jug.nombre_jugador || " "
+        let numero = jug.numero || " "
+        // console.log(nombre, numero)
         if(jug.posicion === "Portero") nombre += " G"
-        swiftConnectionStore.rtRemote.updateFields(`ALINEACION::DORSAL_${i}TEXT`, "String", jug.numero)
+        swiftConnectionStore.rtRemote.updateFields(`ALINEACION::DORSAL_${i}TEXT`, "String", numero)
         swiftConnectionStore.rtRemote.updateFields(`ALINEACION::NOMBRE_${i}TEXT`, "String", nombre)
         i ++
       })

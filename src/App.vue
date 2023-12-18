@@ -27,8 +27,8 @@
 
   onBeforeMount(async () => {
     // console.log(futbolStore.getPartidos)
-    futbolWebsocket.getLocalStorage()
-    futbolWebsocket.conectarWS()
+    // futbolWebsocket.getLocalStorage()
+    // futbolWebsocket.conectarWS()
     if(futbolStore.getPartidos.length == 0) {
       console.log("onbeforemount")
       await futbolStore.cargarJugadores()

@@ -1,19 +1,23 @@
 
 import { defineStore } from 'pinia'
 
+import { usegFutbolStore } from './futbol'
+
 // import { doc, collection, onSnapshot, addDoc, updateDoc } from "firebase/firestore"
 // the firestore instance
 // import db from '../firebase/init.js'
 
 export const useFutbolWebsocketStore = defineStore('futbolWebsocket', {
 
+
   state: () => ({
     connectionState: null,
     socket: null,
-    URLWebsocket: 'ws://192.168.22.52:8001',
+    URLWebsocket: 'ws://localhost:8001',
     wsData: null,
     wsPartido: null,
     wsMarcador: null,
+    minutosPartido: null
   }),
   getters: {
     getTest (state) {
@@ -39,9 +43,13 @@ export const useFutbolWebsocketStore = defineStore('futbolWebsocket', {
       }
     },
     isConnected: (state) => !!state.socket,
+    getMinutosPartido: state => state.minutosPartido,
 
   },
   actions: {
+    setMinutosPartido(tiempo) {
+      this.minutosPartido = tiempo
+    },
     
     conectarWS() {
       if (this.isConnected) return;
@@ -91,8 +99,13 @@ export const useFutbolWebsocketStore = defineStore('futbolWebsocket', {
     },
     getLocalStorage() {
       if(localStorage.getItem('partido') !== null && localStorage.getItem('marcador') !== null) {
-        this.wsPartido = JSON.parse(localStorage.getItem('partido'))
-        this.wsMarcador = JSON.parse(localStorage.getItem('marcador'))
+        const partido = JSON.parse(localStorage.getItem('partido'))
+        const marcador = JSON.parse(localStorage.getItem('marcador'))
+        this.wsPartido = partido
+        this.wsMarcador = marcador
+        const futbolStore = usegFutbolStore()
+        // futbolStore.addPartidoWS(partido)
+        // futbolStore.addMarcadorWS(marcador)
       } else {
         this.resetLocalStorage()
       }

@@ -54,7 +54,7 @@
       <!-- LIVE -->
       <v-col cols="5" class="text-center">
         <h4>Rotul en directe</h4>
-        <p>Caracteres: {{ textoNow.texto.length }}</p>
+        <!-- <p>Caracteres: {{ textoNow.texto.length }}</p> -->
         <div class="FHDWrapper">
           <v-col >
             <div class="FHD text-center" style="white-space: pre;" :style="estiloTextoNow">
@@ -218,21 +218,30 @@ const listaTextos = computed(() => {
 const textoNow = computed(() => textosMisa.value[now.value])
 const textoNext = computed(() => textosMisa.value[next.value].texto)
 
+const maxAncho = 1600
+
+
 
 const estiloTextoNow = computed (() => {
+  const ancho = window.innerWidth
+  const relacion = ancho / maxAncho >= 1 ? 1 : ancho / maxAncho
   if(now.value !== null) {
     return {
-      fontSize: textosMisa.value[now.value].tamaño * 0.8 + "px",
+      fontSize: textosMisa.value[now.value].tamaño * 0.8 * relacion + "px",
       color: textosMisa.value[now.value].color
     }
   }
 })
 const estiloTextoNext = computed (() => {
+  const ancho = window.innerWidth
+  const relacion = ancho / maxAncho >= 1 ? 1 : ancho / maxAncho
   if(textosMisa.value.length >= 2)  {
+    console.log(window.innerWidth)
+    console.log(textosMisa.value[next.value].tamaño)
 
     if(next.value !== null) {
       return {
-        fontSize: textosMisa.value[next.value].tamaño * 0.8 + "px", 
+        fontSize: textosMisa.value[next.value].tamaño * 0.8 * relacion + "px", 
         color: textosMisa.value[next.value].color
       }
     }
@@ -275,12 +284,12 @@ const toDirecte = (val) => {
   // console.log(next.value)
   // console.log(textosMisa.length)
   now.value = next.value
+  const color = textoNow.value.color == '#00FF00' ? '#00AF00' : '#FFFFFF'
   misaStore.setTextoLive(now.value)
   // console.log(textoNow.value)
   misaStore.actualizarTextoFullScreen(textoNow.value)
+  console.log(color)
 
-  // swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaTEXT", "String", textosMisa[now.value].texto)
-  // swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSHDR", "MaterialDiffuse", cambioColor(textosMisa[now.value].color))
   // swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaTEXT", "String", textoNow.value.texto)
   // swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSHDR", "MaterialDiffuse", cambioColor(textoNow.value.color))
   // misaStore.live = now.value
@@ -330,11 +339,11 @@ document.addEventListener("keydown", (event) => {
 });
 
 watch(() => textoFullScreen, (newValue, oldValue) => {
-  console.log(newValue.value, oldValue.value)
-  if(directe.value) {
-    // swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaTEXT", "String", textoNow.value.texto)
-    // swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSHDR", "MaterialDiffuse", cambioColor(textoNow.value.color))
-  }
+  // console.log(newValue.value, oldValue.value)
+  // if(directe.value) {
+  //   swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaTEXT", "String", textoNow.value.texto)
+  //   swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSHDR", "MaterialDiffuse", cambioColor(textoNow.value.color))
+  // }
   // textosMisa.value = misaStore.getMisaById(val.value)
   // console.log(val.value)
 },{
@@ -387,7 +396,8 @@ watch(() => directe, val => {
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    text-wrap: wrap;
+    /* text-wrap: wrap; */
+    white-space: normal;
   }
 
 

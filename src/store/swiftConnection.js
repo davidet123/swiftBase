@@ -127,7 +127,7 @@ actions: {
     if(this.rtRemote) this.rtRemote.endTransaction()
   },
   cueGraphic (metodo) {
-    console.log(this.rtRemote)
+    // console.log(this.rtRemote)
     if (this.rtRemote) this.rtRemote.playMethod(metodo + "::cueGraphic")
   },
   bringOn (metodo) {

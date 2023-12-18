@@ -20,7 +20,8 @@ export const useWebsocketStore = defineStore('websocket', {
     dataValue: null,
     arrayValues: [],
     factorVolumen: 0.7,
-    URLWebsocket: 'ws://localhost:8081',
+    URLWebsocket: 'ws://localhost:8080',
+    texto: null
   }),
   getters: {
     nivelVumetro (state) {
@@ -64,7 +65,7 @@ export const useWebsocketStore = defineStore('websocket', {
       // let state = document.querySelector(".websocketOff")
       const self = this
 
-      console.log(this.socket)
+      // console.log(this.socket)
       
       // Abre la conexión
       this.socket.addEventListener('open', function (event) {
@@ -88,8 +89,12 @@ export const useWebsocketStore = defineStore('websocket', {
       
       // Escucha por mensajes
       this.socket.addEventListener('message', function (event) {
+        // console.log("mensaje")
         // incializar_vumetro(event.data)
-        self.valor = parseFloat(event.data)
+        // self.valor = parseFloat(event.data)
+        // console.log(JSON.parse(event.data))
+        self.texto = JSON.parse(event.data)
+        // console.log(JSON.parse(event.data))
         // Añadir valores al array
         self.dataValue = Math.floor(event.data * self.factorVolumen)
         if (self.recording) {

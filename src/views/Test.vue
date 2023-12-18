@@ -5,6 +5,17 @@
     </v-col>
   </v-row>
   <v-row>
+    <v-col class="text-center">
+      X:{{ x }} y:{{ y }}
+      <span v-if="texto">{{ texto.partial }}</span>
+    </v-col>
+  </v-row>
+  <v-row>
+    <v-col>
+      <video id="video1"  autoplay muted />
+    </v-col>
+  </v-row>
+  <v-row>
     <v-row>
       <v-col>
         {{ testMSG }}
@@ -81,12 +92,18 @@
   import {  ref } from 'vue';
   import { useSwiftConnectionStore } from "../store/swiftConnection"
   import { useFutbolWebsocketStore } from "../store/futbolWebsocket"
+  import { useWebsocketStore } from "../store/websocket"
   import { usegSheetStore } from "../store/gSheet"
   import { usejsonReaderStore } from "../store/jsonReader"
   // import { usexmlReaderStore } from "../store/xmlReader"
   import BotonLive from '@/components/simple/botonLive.vue' 
   import { computed } from 'vue';
   import { watch } from 'vue';  
+  import { onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
+  // import { createWorker } from 'tesseract.js';
+
+  // console.log(createWorker)
 
 
 
@@ -98,9 +115,82 @@
   const futbolWebsocket = useFutbolWebsocketStore()
   const gSheetStore = usegSheetStore()
   const jsonReaderStore= usejsonReaderStore()
+  const websocketStore = useWebsocketStore()
+
+
+
+
+  websocketStore.conectarWS()
+
+
+  const { texto } = storeToRefs(websocketStore)
+
+  // const frase = ref("")
+  let palabras = []
+
+  
+
+  const frase = computed(() => {
+    // const temp = []
+    if (texto.value) {
+      if(texto.value.texto !== "") palabras.push(texto.value.text)
+    }
+  if(palabras.length == 20) palabras = []
+    return palabras.join(' ')
+
+  })
   // const xmlReaderStore = usexmlReaderStore()
   // gSheetStore.getLista()
 
+  // WEBCAM
+  // let video
+  // onMounted(() => {
+  //   video = document.getElementById("video1")
+  //   console.log(document)
+  // })
+
+  // const video = document.getElementById("video1")
+  // console.log(video)
+
+  // const startWebcam = () => {
+  //   navigator.mediaDevices
+  //   // .enumerateDevices()
+  //   // .then((devices) => {
+  //   //   devices.forEach((device) => {
+  //   //     console.log(`${device.kind}: ${device.label} id = ${device.deviceId}`);
+  //   //   });
+  //   // })
+  //   .getUserMedia({
+  //     video: {width: 1048, height: 576},
+  //     audio: false
+  //   })
+  //   .then( stream => {
+  //     console.log(stream)
+  //     video.srcObject = stream
+  //   })
+  // }
+
+
+
+  // startWebcam()
+
+  // MOVIMIENTO RATON
+  const x = ref(0)
+  const y = ref(0)
+
+  // document.onmousemove = (e => {
+  //   console.log(e)
+  //   let h = window.innerHeight
+  //   let posY = h - e.clientY
+
+  //   swiftConnectionStore.rtRemote.updateFields("MOVIMIENTO::CIRCULOTRFM", "Translate", `${e.clientX},${posY}`)
+  //   x.value = e.clientX
+  //   y.value = posY
+
+  // })
+  // document.onmousemove = ((e) => {
+  //   console.log(e.clientX)
+  // })  
 
 
   // JSON READER
@@ -434,8 +524,14 @@
 
     
 
-  watch(() => hoja, val => {
-      // console.log(val.value.length)
+  watch(() => texto, val => {
+      let temp = val.value.partial
+      let nuevoTexto = ""
+      console.log(nuevoTexto.length)
+      if(temp.length >= 60) nuevoTexto = temp.slice(60)
+      
+      // console.log(val.value.partial.length)
+      if(val.value.partial !== null) swiftConnectionStore.rtRemote.updateFields('SUBTITULOS::SUBTITULOTEXT', "String", temp.toUpperCase())
       // console.log(titulares.value[1])
     },{
       deep: true

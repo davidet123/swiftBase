@@ -5,6 +5,8 @@ import { getStorage, ref, uploadBytes } from "firebase/storage";
 // the firestore instance
 import db from '../firebase/init.js'
 
+import { useFutbolWebsocketStore } from "./futbolWebsocket"
+
 
 export const usegFutbolStore = defineStore('futbol', {
   state: () => ({
@@ -2727,6 +2729,13 @@ export const usegFutbolStore = defineStore('futbol', {
         return partido.id_partido == id
       })
     },
+    addPartidoWS(payload) {
+      this.partidos.push(payload)
+      console.log(this.partidos)
+    },
+    addMarcadorWS(payload) {
+      this.marcadores.push(payload)
+    },
     
     async addPartido(partido, marcador) {
       const docRef = await addDoc(collection(db, 'partidos_futbol'), partido)
@@ -2787,6 +2796,8 @@ export const usegFutbolStore = defineStore('futbol', {
             }
           })
         })
+        const futbolWebsocket = useFutbolWebsocketStore()
+        futbolWebsocket.getLocalStorage()
         
       } catch (err) {
         console.log(err)
