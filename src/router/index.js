@@ -17,17 +17,19 @@ import Basket from '../views/basket/Basket.vue'
 import EstBasket from '../views/basket/EstBasket.vue'
 import EditarPartidoBasket from '../views/basket/EditarPartidoBasket.vue'
 import Vumetro from '../views/vumetro/Vumetro.vue'
-import Misa from '../views/misa/Misa.vue'
 import MenuMisa from '../views/misa/MenuMisa.vue'
 import ControlMisa from '../views/misa/ControlMisa.vue'
 import AddTextoMisa from '../views/misa/AddTextoMisa.vue'
 import MisaFullScreen from '../views/misa/MisaFullScreen.vue'
 import EditarTextoMisa from '../views/misa/EditarTextoMisa.vue'
 import EditarMisa from '../views/misa/EditarMisa.vue'
+import Misa from '../views/misa/Misa.vue'
+import Teleprompter from '../views/teleprompter/Teleprompter.vue'
 import Settings from '../views/Settings.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  // history: createWebHistory(),
   routes: [
     {
       path: '/',
@@ -93,7 +95,8 @@ const router = createRouter({
       path: '/futbol/editarequipofutbol/:id',
       name: 'editarequipofutbol',
       component: EditarEquipoFutbol
-    },{
+    },
+    {
       path: '/futbol/addcompeticionfutbol',
       name: 'addcompeticionfutbol',
       component: AddCompeticionFutbol
@@ -124,14 +127,14 @@ const router = createRouter({
       component: EstBasket
     },
     {
-      path: '/misa',
-      name: 'misa',
-      component: Misa
-    },
-    {
       path: '/menumisa',
       name: 'menumisa',
       component: MenuMisa
+    },
+    {
+      path: '/misa',
+      name: 'misa',
+      component: Misa
     },
     {
       path: '/addtextomisa',
@@ -157,6 +160,11 @@ const router = createRouter({
       path: '/editarmisa/:id',
       name: 'editarmisa',
       component: EditarMisa
+    },
+    {
+      path: '/teleprompter',
+      name: 'teleprompter',
+      component: Teleprompter
     },
     {
       path: '/settings',

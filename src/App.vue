@@ -29,6 +29,7 @@
     // console.log(futbolStore.getPartidos)
     // futbolWebsocket.getLocalStorage()
     // futbolWebsocket.conectarWS()
+    // await  misaStore.setControl(false)
     if(futbolStore.getPartidos.length == 0) {
       console.log("onbeforemount")
       await futbolStore.cargarJugadores()

@@ -47,9 +47,11 @@
         </v-row>
       </v-col>
       <v-col cols="2" class="text-center">
-        <v-btn :disabled="!directe" @click="toDirecte(1)" color="error">-></v-btn>
+        <v-btn :disabled="!directe" @click="toDirecte(1)" color="error" class="my-1">-></v-btn>
         <br>
-        <v-btn :color="colorBotonLive" @click="directe = !directe">DIRECTE</v-btn>  
+        <v-btn :color="colorBotonLive" @click="directe = !directe" class="my-1">DIRECTE</v-btn>  
+        <br>
+        <v-btn :disabled="!directe" @click="reenviarDirecte" color="error" class="my-1">REENVIAR</v-btn>
       </v-col>
       <!-- LIVE -->
       <v-col cols="5" class="text-center">
@@ -154,8 +156,8 @@ import { usegSheetStore } from "../../store/gSheet"
 import textoMisaIndividualVue from "@/components/misa/textoMisaIndividual.vue";
 import { computed, ref } from "vue";
 import { onBeforeMount } from "vue";
-import { watch } from "vue";
-import router from "@/router";
+import { watch } from "vue"
+import router from "@/router"
 
 
 const misaStore = useMisaStore()
@@ -165,6 +167,7 @@ const gSheetStore = usegSheetStore()
 // onBeforeMount(async () => {
 //   misaStore.cargartextoMisa()
 // })
+misaStore.cargartextoMisa()
 
 const { textoFullScreen } = storeToRefs(misaStore)
 
@@ -172,7 +175,7 @@ const ventanaCargar = ref(false)
 
 const swiftConnectionStore = useSwiftConnectionStore()
 
-swiftConnectionStore.startConnection()
+// swiftConnectionStore.startConnection()
 
 // const idMisa = ref(0)
 const idMisa = computed(() => misaStore.misaCargada)
@@ -190,22 +193,30 @@ const cargarMisaGSheet = () => {
   misaStore.crearMisaGsheet(gSheetStore.getValoresMisaGSheet)
 }
 
-const textosMisa = computed(() => misaStore.getMisaById(idMisa.value))
+// const textosMisa = computed(() => misaStore.getMisaById(idMisa.value))
+const textosMisa = computed(() => JSON.parse(localStorage.getItem('misa')))
+
+console.log(textosMisa.value)
 
 
 const directe = ref(false)
 let blink
 let colorBotonLive = ref("success")
 
+const misaData = JSON.parse(localStorage.getItem('misaData'))
+
+// console.log(misaData)
 
 
 
 
-const now = ref(0)
-const next = ref(1)
+
+const now = ref(misaData.now)
+const next = ref(misaData.next)
 
 const listaTextos = computed(() => {
-  const textos = misaStore.getMisaById(idMisa.value)
+  // const textos = misaStore.getMisaById(idMisa.value)
+  const textos = JSON.parse(localStorage.getItem('misa'))
   
   let n = 5;
   let start = Math.max(0, Math.min(Math.floor(next.value-n/2), textos.length-n));
@@ -217,6 +228,9 @@ const listaTextos = computed(() => {
 
 const textoNow = computed(() => textosMisa.value[now.value])
 const textoNext = computed(() => textosMisa.value[next.value].texto)
+
+console.log(textoNow.value)
+
 
 const maxAncho = 1600
 
@@ -236,8 +250,7 @@ const estiloTextoNext = computed (() => {
   const ancho = window.innerWidth
   const relacion = ancho / maxAncho >= 1 ? 1 : ancho / maxAncho
   if(textosMisa.value.length >= 2)  {
-    console.log(window.innerWidth)
-    console.log(textosMisa.value[next.value].tamaño)
+    // console.log(textosMisa.value[next.value])
 
     if(next.value !== null) {
       return {
@@ -280,24 +293,33 @@ const cambioColor = (hex) => {
 }
 
 const toDirecte = (val) => {
-  // console.log(now.value)
-  // console.log(next.value)
   // console.log(textosMisa.length)
   now.value = next.value
   const color = textoNow.value.color == '#00FF00' ? '#00AF00' : '#FFFFFF'
   misaStore.setTextoLive(now.value)
-  // console.log(textoNow.value)
   misaStore.actualizarTextoFullScreen(textoNow.value)
-  console.log(color)
-
+  // console.log(color)
+  
   // swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaTEXT", "String", textoNow.value.texto)
   // swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSHDR", "MaterialDiffuse", cambioColor(textoNow.value.color))
   // misaStore.live = now.value
   // now.value ++
   // next.value ++
-  if(next.value !== textosMisa.value.length -1) {
+  if(next.value !== textosMisa.value.length -1 && next.value > 0) {
+    // console.log(next.value)
     next.value += val
-  } 
+  } else if (next.value == 0 && val == -1) {
+    next.value = 1
+    now.value = 0
+  }
+  // console.log(now.value)
+  // console.log(next.value)
+  // console.log(textoNow.value)
+  setLocalStorage()
+}
+
+const reenviarDirecte = () => {
+ if (textoNow.value) misaStore.reenviarTextoFullScreen(textoNow.value)
 }
 
 const fullScreen = () => {
@@ -329,7 +351,7 @@ const duplicarMisa = () => {
   // console.log("duplicarMisa")
 }
 
-document.addEventListener("keydown", (event) => {
+document.addEventListener("keyup", (event) => {
   if(directe.value) {
 
     if (event.key === "ArrowRight") toDirecte(1)
@@ -338,17 +360,29 @@ document.addEventListener("keydown", (event) => {
   // console.log(event.key)
 });
 
-watch(() => textoFullScreen, (newValue, oldValue) => {
-  // console.log(newValue.value, oldValue.value)
-  // if(directe.value) {
-  //   swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaTEXT", "String", textoNow.value.texto)
-  //   swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSHDR", "MaterialDiffuse", cambioColor(textoNow.value.color))
+const setLocalStorage = () => {
+  // const data = {
+  //   now: now.value,
+  //   next: next.value
   // }
-  // textosMisa.value = misaStore.getMisaById(val.value)
-  // console.log(val.value)
-},{
-  deep: true
-})
+  misaData.now = now.value
+  misaData.next = next.value
+  // console.log(data)
+  localStorage.setItem('misaData', JSON.stringify(misaData))
+
+}
+
+// watch(() => textoFullScreen, (newValue, oldValue) => {
+//   // console.log(newValue.value, oldValue.value)
+//   // if(directe.value) {
+//   //   swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaTEXT", "String", textoNow.value.texto)
+//   //   swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSHDR", "MaterialDiffuse", cambioColor(textoNow.value.color))
+//   // }
+//   // textosMisa.value = misaStore.getMisaById(val.value)
+//   // console.log(val.value)
+// },{
+//   deep: true
+// })
 watch(() => directe, val => {
   if(!val.value) {
     clearInterval(blink)

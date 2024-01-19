@@ -50,10 +50,15 @@ const props = defineProps(["item", "numItem", "nextItem"])
 
 
 const totalRotulos = computed(() => {
-  return  misaStore.getMisaById(misaCargada.value).length
+  return  JSON.parse(localStorage.getItem('misa')).length
   // console.log(misa)
 
 })
+// const totalRotulos = computed(() => {
+//   return  misaStore.getMisaById(misaCargada.value).length
+//   // console.log(misa)
+
+// })
 
 // console.log(misaCargada.value)
 
@@ -63,12 +68,12 @@ const { item, numItem, nextItem } = toRefs(props)
 const colorBorde = computed(() => {
   if(nextItem.value + 1 == item.value.numero) {
     return {
-      border: '2px solid green'
+      border: '4px solid green'
     }
   }
   if(numItem.value + 1 == item.value.numero) {
     return {
-      border: '2px solid red'
+      border: '4px solid red'
     }
   }
 

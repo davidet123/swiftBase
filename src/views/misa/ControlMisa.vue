@@ -90,11 +90,25 @@
     
   })
 
+  misaStore.setControl(true)
+
+  const control = computed(() => misaStore.control)
+
+  watch(() => control.value, val => {
+    if(val == false) {
+      misaStore.setControl(true)
+    }
+    console.log(val)
+  },
+  {
+    deep: true
+  })
+
   watch(() => textoFullScreen, (newValue, oldValue) => {
     console.log(newValue.value, oldValue.value)
     // console.log(swiftConnectionStatus.value)
-    swiftConnectionStore.cueGraphic("PRUEBA_MISA")
-    swiftConnectionStore.startTransaction()
+    // swiftConnectionStore.cueGraphic("PRUEBA_MISA")
+    // swiftConnectionStore.startTransaction()
     if(newValue.value.texto === "" || newValue.value.texto === " ") {
       if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::GRUPO", "Display", "false")
     } else {
@@ -110,7 +124,7 @@
     if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaTEXT", "String", newValue.value.texto)
     if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSHDR", "MaterialDiffuse", cambioColor(newValue.value.color))
     if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSombraTEXT", "String", newValue.value.texto)
-    swiftConnectionStore.endTransaction()
+    // swiftConnectionStore.endTransaction()
   // }
   // textosMisa.value = misaStore.getMisaById(val.value)
   // console.log(val.value)

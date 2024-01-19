@@ -14,53 +14,56 @@ export const useMisaStore = defineStore('misa', {
     idTextoLive: null,
     misaCargada: 0,
     cargandoMisa: false,
+    control: false,
+    idDatabase: 'nGfIsKvgCm2AsOF66LP2',
     textoFullScreen: {
       texto: "",
       color: "#ffffff",
       titulo: ""
     },
-    textos: [
-      {
-        id: 0,
-        titulo: "NEGRO",
-        texto: "",
-        tamaño: 70,
-        color: '#000000',
-        numero: 0
-      },
-      {
-        id: 3,
-        titulo: "Comunion",
-        texto: "Poble de Déu, poble en marxa; junts fem camí.",
-        tamaño: 70,
-        color: '#f2a508',
-        numero: 0
-      },
-      {
-        id: 1,
-        titulo: "Comunion",
-        texto: "poble de Déu, església que avança; el regne ja està ací. ",
-        tamaño: 70,
-        color: '#ffffff',
-        numero: 0
-      },
-      {
-        id: 2,
-        titulo: "Comunion",
-        texto: "marcat sovint per tantes pors, però viu en el Crist lluminós.",
-        tamaño: 70,
-        color: '#ffffff',
-        numero: 0
-      },
-      {
-        id: 4,
-        titulo: "Comunion",
-        texto: "Camina al llarc del temps, travessa mars pregons, ",
-        tamaño: 70,
-        color: '#00ff00',
-        numero: 0
-      },
-    ] ,
+    textos: [],
+    // textos: [
+    //   {
+    //     id: 0,
+    //     titulo: "NEGRO",
+    //     texto: "",
+    //     tamaño: 70,
+    //     color: '#000000',
+    //     numero: 0
+    //   },
+    //   {
+    //     id: 3,
+    //     titulo: "Comunion",
+    //     texto: "Poble de Déu, poble en marxa; junts fem camí.",
+    //     tamaño: 70,
+    //     color: '#f2a508',
+    //     numero: 0
+    //   },
+    //   {
+    //     id: 1,
+    //     titulo: "Comunion",
+    //     texto: "poble de Déu, església que avança; el regne ja està ací. ",
+    //     tamaño: 70,
+    //     color: '#ffffff',
+    //     numero: 0
+    //   },
+    //   {
+    //     id: 2,
+    //     titulo: "Comunion",
+    //     texto: "marcat sovint per tantes pors, però viu en el Crist lluminós.",
+    //     tamaño: 70,
+    //     color: '#ffffff',
+    //     numero: 0
+    //   },
+    //   {
+    //     id: 4,
+    //     titulo: "Comunion",
+    //     texto: "Camina al llarc del temps, travessa mars pregons, ",
+    //     tamaño: 70,
+    //     color: '#00ff00',
+    //     numero: 0
+    //   },
+    // ] ,
     textosMisa:[
       {
         id: 0,
@@ -133,21 +136,23 @@ export const useMisaStore = defineStore('misa', {
       const docSnap = onSnapshot(collection(db, 'misa'), doc => {
         doc.docChanges().forEach((change) => {
           if (change.type === "added") {
-            let valorTextoMisa = change.doc.data()
-            this.textoLive = valorTextoMisa.textoMisa
+            let datos = change.doc.data()
+            this.textoLive = datos.textoMisa
             this.idTextoLive = change.doc.id
             // this.misaCargada = valorTextoMisa.misaCargada
-            this.textoFullScreen = valorTextoMisa.textoFullScreen
+            this.textoFullScreen = datos.textoFullScreen
+            this.control = datos.control
             this.cargandoMisa = false
             this.dbMisaCargada = true
             console.log("added")
             // console.log(this.textoFullScreen)
           } else if (change.type === "modified") {
-            let cambioTextoMisa = change.doc.data()
-            this.textoLive = cambioTextoMisa.textoMisa
+            let datos = change.doc.data()
+            this.textoLive = datos.textoMisa
             this.idTextoLive = change.doc.id
-            this.misaCargada = cambioTextoMisa.misaCargada
-            this.textoFullScreen = cambioTextoMisa.textoFullScreen
+            this.misaCargada = datos.misaCargada
+            this.textoFullScreen = datos.textoFullScreen
+            this.control = datos.control
             this.cargandoMisa = false
             // this.actualizarRotulos(nuevo_rotulo)
             console.log("updated")
@@ -156,12 +161,21 @@ export const useMisaStore = defineStore('misa', {
       })
     },
     async actualizarTextoFullScreen (payload) {
-      console.log("Actualizar fullscreen")
+      // console.log("Actualizar fullscreen")
       const docRef = doc(db, "misa", this.idTextoLive)
       await updateDoc(docRef, {
         textoFullScreen: payload
       })
 
+    },
+    async reenviarTextoFullScreen (payload) {
+      const docRef = doc(db, "misa", this.idTextoLive)
+      await updateDoc(docRef, {
+        textoFullScreen: null
+      })
+      await updateDoc(docRef, {
+        textoFullScreen: payload
+      })
     },
 
     async actualizarTextoLive (val) {      
@@ -175,6 +189,13 @@ export const useMisaStore = defineStore('misa', {
       const docRef = doc(db, "misa", this.idTextoLive)
       await updateDoc(docRef, {
         misaCargada: val
+      })
+    },
+    async setControl (val) {   
+      // console.log(this.idTextoLive)   
+      const docRef = doc(db, "misa", this.idDatabase)
+      await updateDoc(docRef, {
+        control: val
       })
     },
 
@@ -196,6 +217,7 @@ export const useMisaStore = defineStore('misa', {
       })
     },
     crearMisaGsheet(payload) {
+      localStorage.setItem('misa', null)
       
       const encabezados = payload.slice(1)
       const textoEncabezado = encabezados.shift()
@@ -252,6 +274,14 @@ export const useMisaStore = defineStore('misa', {
       // console.log(this.textosMisa)
       this.misaCargada = textosMisaGSheet.id
       this.gSheetMisaCargada = true
+      const data = {
+        nombre: nombreMisa,
+        fecha: fecha,
+        now: 0,
+        next: 1
+      }
+      localStorage.setItem('misa', JSON.stringify(this.textos))
+      localStorage.setItem('misaData', JSON.stringify(data))
       this.actualizarMisaCargada(textosMisaGSheet.id)
 
     }

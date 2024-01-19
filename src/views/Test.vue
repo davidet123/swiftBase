@@ -4,7 +4,7 @@
       <video id="myVideoId" width="620" height="349" autoplay muted playsinline/>
     </v-col>
   </v-row>
-  <v-row>
+  <!-- <v-row>
     <v-col class="text-center">
       X:{{ x }} y:{{ y }}
       <span v-if="texto">{{ texto.partial }}</span>
@@ -13,6 +13,34 @@
   <v-row>
     <v-col>
       <video id="video1"  autoplay muted />
+    </v-col>
+  </v-row> -->
+  <v-row>
+    <v-col cols="12" class="text-center">DSK ANIMADO</v-col>
+  </v-row>  
+  <v-row>
+    <v-col cols="4" offset="1">
+      <v-text-field v-model="nombre" label="Nombre"></v-text-field>      
+    </v-col>
+    <v-col cols="4" offset="1">
+      <v-text-field v-model="cargo" label="Cargo"></v-text-field>
+    </v-col>
+    <v-col cols="4" >
+      <v-text-field v-model="titular" label="Titular"></v-text-field>      
+    </v-col>
+    <v-col cols="4" >
+      <v-text-field v-model="subtitular1" label="Subtitular 1"></v-text-field>      
+    </v-col>
+    <v-col cols="4">
+      <v-text-field v-model="subtitular2" label="Subtitular 2"></v-text-field>      
+    </v-col>
+  </v-row>
+  <v-row>
+    <v-col class="text-center">
+      <BotonLive nombre="DSK_ANIMADO" @activar="activarDskAnimado"/>
+      <v-btn color="success" @click="subtitularIn">SUBTITULAR IN</v-btn>
+      <v-btn color="success" @click="subtitularSwitch">CAMBIO SUBTITULAR</v-btn>
+      <v-btn color="success" @click="SubtitularOut">SUBTITULAR OUT</v-btn>
     </v-col>
   </v-row>
   <v-row>
@@ -122,6 +150,46 @@ import { storeToRefs } from 'pinia';
 
   websocketStore.conectarWS()
 
+
+
+// DSK ANIMADO
+  const titular = ref("")
+  const subtitular1 = ref("")
+  const subtitular2 = ref("")
+  const nombre = ref("")
+  const cargo = ref("")
+  const activarDskAnimado = payload => {
+    console.log(payload)
+    console.log(titular.value)
+
+    if(payload.live) {
+      
+      swiftConnectionStore.cueGraphic(payload.nombre)
+      swiftConnectionStore.rtRemote.updateFields('DSK_ANIMADO::TITULARTEXT', "String", titular.value)
+      swiftConnectionStore.rtRemote.updateFields('DSK_ANIMADO::SUBTITULAR1TEXT', "String", subtitular1.value)
+      swiftConnectionStore.rtRemote.updateFields('DSK_ANIMADO::SUBTITULAR2TEXT', "String", subtitular2.value)
+      swiftConnectionStore.rtRemote.updateFields('DSK_ANIMADO::NOMBRETEXT', "String", nombre.value)
+      swiftConnectionStore.rtRemote.updateFields('DSK_ANIMADO::CARGOTEXT', "String", cargo.value)
+      swiftConnectionStore.bringOn(payload.nombre)
+    } else {
+      swiftConnectionStore.takeOff(payload.nombre)
+    }
+  }
+
+  const subtitularIn = () => {
+    swiftConnectionStore.rtRemote.playMethod("DSK_ANIMADO::subtitularesOn")
+  }
+  const subtitularSwitch = () => {
+    swiftConnectionStore.rtRemote.playMethod("DSK_ANIMADO::subtitularSwitch")
+  }
+  const SubtitularOut = () => {
+    swiftConnectionStore.rtRemote.playMethod("DSK_ANIMADO::subtitularesOff")
+  }
+
+
+
+
+  // FIN DSK ANIMADO
 
   const { texto } = storeToRefs(websocketStore)
 
