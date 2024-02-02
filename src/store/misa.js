@@ -8,6 +8,9 @@ import db from '../firebase/init.js'
 
 export const useMisaStore = defineStore('misa', {
   state: () => ({
+    // URLWebsocket: 'ws://localhost:8001',
+    URLWebsocket: 'ws://192.168.28.33:8001',
+    // URLWebsocket: 'ws://10.200.1.249:8001',
     dbMisaCargada: false,
     gSheetMisaCargada: false,
     textoLive: 0,
@@ -15,13 +18,20 @@ export const useMisaStore = defineStore('misa', {
     misaCargada: 0,
     cargandoMisa: false,
     control: false,
+    paginaFullScreen: false,
     idDatabase: 'nGfIsKvgCm2AsOF66LP2',
     textoFullScreen: {
       texto: "",
       color: "#ffffff",
       titulo: ""
     },
+    datosMisaLS: null,
     textos: [],
+    textoWS: {
+      texto: "",
+      color: "#ffffff",
+      titulo: ""
+    },
     // textos: [
     //   {
     //     id: 0,
@@ -95,9 +105,7 @@ export const useMisaStore = defineStore('misa', {
   actions: {
     getMisaById(id) {
       const misas = this.getMisas.map(el => el.id)
-      // console.log(misas)
       if(!misas.includes(id)) {
-        // console.log("GETMISA")
         // this.setMisaCargada(0)
         id = 0
       }
@@ -142,20 +150,20 @@ export const useMisaStore = defineStore('misa', {
             // this.misaCargada = valorTextoMisa.misaCargada
             this.textoFullScreen = datos.textoFullScreen
             this.control = datos.control
+            this.paginaFullScreen = datos.paginaFullScreen
             this.cargandoMisa = false
             this.dbMisaCargada = true
-            console.log("added")
             // console.log(this.textoFullScreen)
           } else if (change.type === "modified") {
             let datos = change.doc.data()
-            this.textoLive = datos.textoMisa
-            this.idTextoLive = change.doc.id
-            this.misaCargada = datos.misaCargada
-            this.textoFullScreen = datos.textoFullScreen
+            // this.textoLive = datos.textoMisa
+            // this.idTextoLive = change.doc.id
+            // this.misaCargada = datos.misaCargada
+            // this.textoFullScreen = datos.textoFullScreen
             this.control = datos.control
-            this.cargandoMisa = false
-            // this.actualizarRotulos(nuevo_rotulo)
-            console.log("updated")
+            this.paginaFullScreen = datos.paginaFullScreen
+            // this.cargandoMisa = false
+            // // this.actualizarRotulos(nuevo_rotulo)
           } 
         })
       })
@@ -192,10 +200,19 @@ export const useMisaStore = defineStore('misa', {
       })
     },
     async setControl (val) {   
-      // console.log(this.idTextoLive)   
+      // console.log(this.idTextoLive) 
+      // console.log(val)  
       const docRef = doc(db, "misa", this.idDatabase)
       await updateDoc(docRef, {
         control: val
+      })
+    },
+    async setPaginaFullScreen (val) {   
+      // console.log(this.idTextoLive) 
+      // console.log(val)  
+      const docRef = doc(db, "misa", this.idDatabase)
+      await updateDoc(docRef, {
+        paginaFullScreen: val
       })
     },
 
@@ -278,12 +295,66 @@ export const useMisaStore = defineStore('misa', {
         nombre: nombreMisa,
         fecha: fecha,
         now: 0,
-        next: 1
+        next: 1,
+        urlWS: this.URLWebsocket
       }
+
+      // const dataWS = JSON.parse(localStorage.getItem('misaData'))
+      // console.log(dataWS)
+      // if(dataWS.urlWS !== data.urlWS) data.urlWS = dataWS.urlWS
+      this.datosMisaLS = data
       localStorage.setItem('misa', JSON.stringify(this.textos))
       localStorage.setItem('misaData', JSON.stringify(data))
       this.actualizarMisaCargada(textosMisaGSheet.id)
 
+    },
+    conectarWS() {
+      if (this.isConnected) return;
+
+      this.socket = new WebSocket(this.URLWebsocket);
+
+      this.socket.addEventListener('open', () => {
+        console.log('Connected to WebSocket server.');
+      });
+
+      this.socket.addEventListener('message', (event) => {
+
+        const res = JSON.parse(event.data)
+        // if (res.hasOwnProperty('partido')) {
+        //   this.wsPartido = res.partido
+        //   localStorage.setItem('partido', JSON.stringify(res.partido))
+        // } 
+        // if (res.hasOwnProperty('marcador')) {
+        //   this.wsMarcador = res.marcador
+        //   localStorage.setItem('marcador', JSON.stringify(res.marcador))
+        // }
+        this.textoWS = res
+        // console.log(res)
+
+
+        // this.wsData = JSON.parse(event.data)
+        // localStorage.setItem('partido', JSON.stringify(this.wsData))
+        // console.log(this.test)
+      });
+
+      this.socket.addEventListener('close', (event) => {
+        console.log(`WebSocket closed with code: ${event.code}, reason: ${event.reason}`);
+        this.socket = null;
+      });
+    },
+    enviarWS(mensaje) {
+      // console.log(mensaje)
+      // Enviar mensaje al servidor
+      // const mensaje = {mensaje: 'test'}
+      this.socket.send(JSON.stringify(mensaje));
+      // if (this.isConnected) {
+      // }
+    },
+    setUrlWS(payload) {
+      this.URLWebsocket = payload
+      const data = JSON.parse(localStorage.getItem('misaData'))
+      data.urlWS = payload
+      localStorage.setItem('misaData', JSON.stringify(data))
     }
 
     

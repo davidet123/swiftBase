@@ -5,7 +5,8 @@ This software is the sole property or RTSoftware Ltd.
 You are not permitted to re-distribute, modify or re-purpose for any reason
 this without express permission from RTSoftware Ltd, UK.
 ************************************************************/
-// import {trace} from './rtsw'
+// import {trace} from './rtsw.js'
+
 
 function RTRemote(rtswProtocol, protocolId)
 {
@@ -242,10 +243,16 @@ function RTRemote(rtswProtocol, protocolId)
 				'filter': filter
 			}
 		}
+
+    // console.log()
 		
 		trace(JSON.stringify(data));
 
 		rtswProtocol.send(protocolId, data);
+    // console.log(res)
+    // return 
+    // console.log(JSON.stringify(data))
+    return JSON.stringify(data)
 	}
 
 	this.updateFields = function(nodeName,afieldName,afieldValue)
@@ -381,11 +388,13 @@ function RTRemote(rtswProtocol, protocolId)
 	
 	this.callbackError = function(error)
 	{
+    console.log(error)
 	}
 
 	this.callbackRecieve = function(event)
 	{
-    const response = JSON.parse(event.data);
+    return JSON.parse(event.data);
+    // const response = JSON.parse(event.data);
     // console.log(response)
     // if (typeof response.status === "undefined")
     // return;

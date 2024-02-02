@@ -8,7 +8,7 @@
     <v-col cols="6" offset="3">
       <div class="FHDWrapperFull">
           <div class="FHDFull text-center" style="white-space: pre;" :style="estiloTexto">
-            <VisorMisa class="my-2" :texto="textoFullScreen.texto" :color="textoFullScreen.color" :tamaño="textoFullScreen.tamaño"/>            
+            <VisorMisa class="my-2" :texto="textoWS.texto" :color="textoFullScreen.color" :tamaño="textoFullScreen.tamaño"/>            
           </div>
       </div>
     </v-col>
@@ -21,10 +21,13 @@
       <p v-if="!gSheetMisaLoading"><v-icon size="large" color="green" icon="mdi-circle-medium"></v-icon>Dades gSheet carregades</p>
       <p v-if="swiftConnectionStatus == 0"><v-icon size="large" color="red" icon="mdi-circle-medium"></v-icon>Conectant a swift</p>
       <p v-if="swiftConnectionStatus == 1"><v-icon size="large" color="green" icon="mdi-circle-medium"></v-icon>Conectat a Swift</p>
+      <p v-if="!paginaFullScreen"><v-icon size="large" color="red" icon="mdi-circle-medium"></v-icon>Pagina full screen sense obrir</p>
+      <p v-if="paginaFullScreen == 1"><v-icon size="large" color="green" icon="mdi-circle-medium"></v-icon>Pagina full screen oberta</p>
       <br>
       <!-- <p v-if="cargandoMisa || gSheetMisaLoading"><v-icon size="large" color="red" icon="mdi-circle-medium"></v-icon>Carregant dades missa...</p>
       <p v-else><v-icon size="large" color="green" icon="mdi-circle-medium"></v-icon>Dades carregades</p> -->
     </v-col>
+
   </v-row>
 </template>
 
@@ -36,12 +39,13 @@
   import { usegSheetStore } from "../../store/gSheet"
   import VisorMisa from "@/components/misa/VisorMisa.vue";
   import { useSwiftConnectionStore } from "../../store/swiftConnection"
+  import { ref } from "firebase/storage";
 
   const misaStore = useMisaStore()
   const swiftConnectionStore = useSwiftConnectionStore()
   const gSheetStore = usegSheetStore()
   
-  const { textoFullScreen, idTextoLive, cargandoMisa } = storeToRefs(misaStore)
+  const { textoFullScreen, idTextoLive, cargandoMisa, textoWS } = storeToRefs(misaStore)
   const { gSheetMisaLoading } = storeToRefs(gSheetStore)
   const { swiftConnectionStatus } = storeToRefs(swiftConnectionStore)
   
@@ -49,9 +53,20 @@
   
   
   swiftConnectionStore.startConnection()
+  misaStore.conectarWS()
+
+  misaStore.setPaginaFullScreen(false)
   
 
   const { rtRemote } = storeToRefs(swiftConnectionStore)
+  const { paginaFullScreen } = storeToRefs(misaStore)
+
+  // const textoFS = computed(() => {
+  //   if(textoWS.value) return textoFS.value.texto
+  //   return " "
+  // })
+
+  // const textoFS = ref(textoWS.value.texto || "")
 
   const cambioColor = (hex) => {
   // console.log(hex)
@@ -76,10 +91,6 @@
       return str
     }
   }
-
-
-
-  
   
   
   const estiloTexto = computed (() => {
@@ -94,40 +105,91 @@
 
   const control = computed(() => misaStore.control)
 
+
+  const actualizarSwift = value => {
+    
+    // console.log(value.color)
+    const color = value.color == '#FFFFFF' ? '#000000' : '#00FF00'
+    let altura = "80"
+    if(value.texto.length >= 66) altura = "140"
+    // if(directe.value) {
+    const textoRectangleSize = `1580, ${altura}`
+    // console.log(value.texto.length)
+    
+    swiftConnectionStore.startTransaction()
+    if(value.texto === "" || value.texto === " " || value.color !== '#FFFFFF') {
+      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::GRUPO", "Display", "false")
+    } else {
+      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaTEXT", "String", value.texto)
+      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::rectangle2DGEOM", "RectangleSize", textoRectangleSize)
+      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSHDR", "MaterialDiffuse", cambioColor(color))
+      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::GRUPO", "Display", "true")
+
+    }
+    // if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSombraTEXT", "String", newValue.value.texto)
+    swiftConnectionStore.endTransaction()
+    // status = swiftConnectionStore.getStatus("Metho", "Current")
+    // console.log(swiftConnectionStore.getStatus("Script", "Current"))
+
+  }
+
+  const fullScreenAbierta = ref(false)
+
   watch(() => control.value, val => {
+    
     if(val == false) {
       misaStore.setControl(true)
     }
-    console.log(val)
+    // console.log(val)
+  },
+  {
+    deep: true
+  })
+  watch(() => textoWS.value, val => {
+    // if(val == false) {
+    //   misaStore.setControl(true)
+    // }
+    // console.log(val)
+    actualizarSwift(val)
   },
   {
     deep: true
   })
 
   watch(() => textoFullScreen, (newValue, oldValue) => {
-    console.log(newValue.value, oldValue.value)
+    // console.clear()
+    // console.log(newValue.value)
+    let status = null
     // console.log(swiftConnectionStatus.value)
     // swiftConnectionStore.cueGraphic("PRUEBA_MISA")
-    // swiftConnectionStore.startTransaction()
-    if(newValue.value.texto === "" || newValue.value.texto === " ") {
-      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::GRUPO", "Display", "false")
-    } else {
-      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::GRUPO", "Display", "true")
-    }
-    let altura = "100"
-    if(textoFullScreen.value.texto.length >= 49) altura = "140"
-  // if(directe.value) {
-    const textoRectangleSize = `1580, ${altura}`
-    // console.log(textoFullScreen)
+      //   swiftConnectionStore.startTransaction()
+      //   if(newValue.value.texto === "" || newValue.value.texto === " ") {
+      //     if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::GRUPO", "Display", "false")
+      //   } else {
+      //     if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::GRUPO", "Display", "true")
+      //   }
+      //   const color = newValue.value.color == '#FFFFFF' ? '#000000' : '#003099'
+      //   let altura = "80"
+      //   if(textoFullScreen.value.texto.length >= 73) altura = "140"
+      // // if(directe.value) {
+      //   const textoRectangleSize = `1580, ${altura}`
+      //   // console.log(textoFullScreen)
 
-    if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::rectangle2DGEOM", "RectangleSize", textoRectangleSize)
-    if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaTEXT", "String", newValue.value.texto)
-    if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSHDR", "MaterialDiffuse", cambioColor(newValue.value.color))
-    if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSombraTEXT", "String", newValue.value.texto)
-    // swiftConnectionStore.endTransaction()
-  // }
-  // textosMisa.value = misaStore.getMisaById(val.value)
-  // console.log(val.value)
+      //   if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::rectangle2DGEOM", "RectangleSize", textoRectangleSize)
+      //   if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaTEXT", "String", newValue.value.texto)
+      //   if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSHDR", "MaterialDiffuse", cambioColor(color))
+      //   // if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSombraTEXT", "String", newValue.value.texto)
+      //   swiftConnectionStore.endTransaction()
+      //   // status = swiftConnectionStore.getStatus("Metho", "Current")
+      //   console.log(swiftConnectionStore.getStatus("Script", "Current"))
+      // // }
+      // // textosMisa.value = misaStore.getMisaById(val.value)
+      // // console.log(val.value)
+    // actualizarSwift(newValue.value)
+    // status = swiftConnectionStore.getStatus("Method", "Current")
+    // console.log(status)
+
+    
 },{
   deep: true
 })

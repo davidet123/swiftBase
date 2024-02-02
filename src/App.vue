@@ -39,7 +39,7 @@
       await futbolStore.cargarPartidos()
       await futbolStore.cargarMarcadores()
       await rotulosStore.cargarRotulos()
-      await gSheetStore.getLista()
+      // await gSheetStore.getLista()
       // await misaStore.cargartextoMisa()
 
       basketStore.setPartidoBasket()

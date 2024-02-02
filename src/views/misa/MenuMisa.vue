@@ -8,17 +8,20 @@
   <v-divider class="my-4"></v-divider>
   <v-row>
     <v-col cols="4">
-
       <v-row>
-        <v-col cols="12" class="text-center">
+        <v-col cols="12" class="text-center" v-if="nombreMisaLocalstorage">
             <h4>Ultima missa carregada </h4>
             <br>
             <p>{{ nombreMisaLocalstorage }}</p>
         </v-col>
-        <v-col cols="12" class="text-center">
+        <v-col cols="12" class="text-center" v-if="fechaMisaLocalstorage">
             <h4>Data ultima missa carregada </h4>
             <br>
             <p>{{ fechaMisaLocalstorage }}</p>
+        </v-col>
+        <v-col cols="12" class="text-center" v-if="!nombreMisaLocalstorage || !fechaMisaLocalstorage">
+          <p>No hay datos en localstorage</p>
+
         </v-col>
       </v-row>
       <v-row>
@@ -33,11 +36,29 @@
       <!-- <p v-if="!misa">Missa carregada:</p>
       <br> -->
       <p><span v-if="misa">{{ misa.nombreMisa }}</span><span v-else>---</span></p>
-      <v-btn color="success" :disabled="!misaStore.gSheetMisaCargada" to="/misa" class="mt-4">MISSA</v-btn>
+      <v-btn color="success" :disabled="!misaStore.gSheetMisaCargada" to="/misa" class="mt-4">INICIAR MISSA</v-btn>
       <p>Començar nova missa</p>
     </v-col>
     <v-col cols="4" class="text-center">
-      <v-btn color="white" to="/controlmisa" target="_blank">CONTROL MISSA</v-btn>
+      <v-row>
+        <v-col class="text-center">
+          <v-btn color="white" to="/controlmisa" target="_blank">CONTROL MISSA</v-btn>
+
+        </v-col>
+
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <v-text-field
+          v-model="urlWS"
+          label="URL WEBSOCKET">
+          </v-text-field>
+          <p>{{ URLWebsocket }}</p>
+        </v-col>
+        <v-col>
+          <v-btn size="x-small" color="success" @click="setUrlWS">ACEPTAR</v-btn>
+        </v-col>
+      </v-row>
     </v-col>
   </v-row>
   <v-divider class="my-4"></v-divider>
@@ -75,7 +96,7 @@ import { watch } from "vue";
 const misaStore = useMisaStore()
 const gSheetStore = usegSheetStore()
 
-const { cargandoMisa } = storeToRefs(misaStore)
+const { cargandoMisa, URLWebsocket } = storeToRefs(misaStore)
 const { gSheetMisaLoading } = storeToRefs(gSheetStore)
 
 
@@ -86,10 +107,18 @@ gSheetStore.getListaMisa()
 
 // Leer localstorage
 
-const misaData = JSON.parse(localStorage.getItem('misaData'))
+const datosMisa = {
+        nombre: null,
+        fecha: null,
+        now: 0,
+        next: 1
+      }
 
-const nombreMisaLocalstorage = ref(misaData.nombre)
-const fechaMisaLocalstorage = ref(misaData.fecha)
+const misaData = computed(() => JSON.parse(localStorage.getItem('misaData')) || datosMisa)
+// console.log(misaData)
+
+const nombreMisaLocalstorage = ref(misaData.value.nombre)
+const fechaMisaLocalstorage = ref(misaData.value.fecha)
 
 
 // poner control en falso
@@ -97,6 +126,10 @@ const fechaMisaLocalstorage = ref(misaData.fecha)
 misaStore.setControl(false)
 
 const control = computed(() => misaStore.control)
+
+
+
+const urlWS = ref(misaData.value.urlWS)
 
 const valoresMisa = computed(() => gSheetStore.getValoresMisaGSheet)
 // misaStore.crearMisaGsheet(gSheetStore.getValoresMisaGSheet)
@@ -108,12 +141,17 @@ const misa = ref(null)
 const cargarMisa = () => {
   misaStore.crearMisaGsheet(valoresMisa.value)
   misa.value = misaStore.getMisas.find(el => el.id == idMisa.value)
-  // misaData = JSON.parse(localStorage.getItem('misaData'))
-  // nombreMisaLocalstorage.value = misaData.nombre
-  // fechaMisaLocalstorage.value = misaData.fecha
+  const data = JSON.parse(localStorage.getItem('misaData'))
+  nombreMisaLocalstorage.value = data.nombre
+  fechaMisaLocalstorage.value = data.fecha
+  urlWS.value = data.url
 }
 
-// watch(() => control.value, val => {
+const setUrlWS = () => {
+  misaStore.setUrlWS(urlWS.value)
+}
+
+// watch(() => datosMisaLS.value, val => {
 //   console.log(val)
 // },
 // {

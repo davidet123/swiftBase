@@ -5918,7 +5918,7 @@ function RTConnection(paramUrl, paramHeartbeatFrequency, paramHeartbeatTimeout)
         if (json.response == "pong") {
             this.havePong = true;
         } else if (json.response == "addProtocol") {
-            trace("Added protocol " + json.protocol + " ( " + json.protocolId + ")");
+            console.log("Added protocol " + json.protocol + " ( " + json.protocolId + ")");
             m_protocols[json.protocolId].callbackOpen();
     	}
     	else if(json.response == "getPermissions")
@@ -5929,6 +5929,8 @@ function RTConnection(paramUrl, paramHeartbeatFrequency, paramHeartbeatTimeout)
     	{
             m_protocols[json.protocolId].callbackRecieve(event);
         }
+      // console.log(json)
+      return json
     }
 
     this.closeConnection = function()

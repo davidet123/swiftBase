@@ -46,13 +46,19 @@
           </v-col>
         </v-row>
       </v-col>
+      <!-- COLUMNA CENTRAK -->
       <v-col cols="2" class="text-center">
         <v-btn :disabled="!directe" @click="toDirecte(1)" color="error" class="my-1">-></v-btn>
         <br>
         <v-btn :color="colorBotonLive" @click="directe = !directe" class="my-1">DIRECTE</v-btn>  
         <br>
-        <v-btn :disabled="!directe" @click="reenviarDirecte" color="error" class="my-1">REENVIAR</v-btn>
-      </v-col>
+        <v-btn :disabled="!directe" @click="reenviarDirecte" color="error" class="my-1">REENVIAR (SPACE)</v-btn>
+        <br>
+        <br>
+        <v-btn :disabled="!directe" @click="limpiarPantalla" color="error" class="my-1">LIMPIAR (Q)</v-btn>
+        <br>
+        <p>{{ tiuloNow }}</p>
+        </v-col>
       <!-- LIVE -->
       <v-col cols="5" class="text-center">
         <h4>Rotul en directe</h4>
@@ -60,7 +66,7 @@
         <div class="FHDWrapper">
           <v-col >
             <div class="FHD text-center" style="white-space: pre;" :style="estiloTextoNow">
-              <p v-if="now !== null">{{ textoNow.texto }}</p>
+              <p v-if="now !== null && !limpiarLive">{{ textoNow.texto }}</p>
               <!-- <p>{{ textoNow.texto }}</p> -->
             </div>
           </v-col>
@@ -97,7 +103,7 @@
     </v-row> -->
     <v-row style="height: 200px;">
       <v-col :cols="12 / 5" v-for="(item, index) in listaTextos" :key="index" class="text-center">
-        <textoMisaIndividualVue :item="item" :numItem="now" :nextItem="next"/>
+        <textoMisaIndividualVue :item="item" :numItem="now" :nextItem="next" />
       </v-col>
     </v-row>
   
@@ -164,10 +170,12 @@ const misaStore = useMisaStore()
 const gSheetStore = usegSheetStore()
 
 
+
 // onBeforeMount(async () => {
 //   misaStore.cargartextoMisa()
 // })
-misaStore.cargartextoMisa()
+// misaStore.cargartextoMisa()
+misaStore.conectarWS()
 
 const { textoFullScreen } = storeToRefs(misaStore)
 
@@ -196,7 +204,7 @@ const cargarMisaGSheet = () => {
 // const textosMisa = computed(() => misaStore.getMisaById(idMisa.value))
 const textosMisa = computed(() => JSON.parse(localStorage.getItem('misa')))
 
-console.log(textosMisa.value)
+
 
 
 const directe = ref(false)
@@ -214,6 +222,7 @@ const misaData = JSON.parse(localStorage.getItem('misaData'))
 const now = ref(misaData.now)
 const next = ref(misaData.next)
 
+// console.log(textosMisa.value[next.value])
 const listaTextos = computed(() => {
   // const textos = misaStore.getMisaById(idMisa.value)
   const textos = JSON.parse(localStorage.getItem('misa'))
@@ -228,12 +237,19 @@ const listaTextos = computed(() => {
 
 const textoNow = computed(() => textosMisa.value[now.value])
 const textoNext = computed(() => textosMisa.value[next.value].texto)
+const tiuloNow = computed(() => {
+  if(textoNow.value.titulo == "NEGRO") return ""
+  return textoNow.value.titulo
+})
 
-console.log(textoNow.value)
+const limpiarLive = ref(false)
+
 
 
 const maxAncho = 1600
 
+
+const tamañoLetra = 0.7
 
 
 const estiloTextoNow = computed (() => {
@@ -241,7 +257,7 @@ const estiloTextoNow = computed (() => {
   const relacion = ancho / maxAncho >= 1 ? 1 : ancho / maxAncho
   if(now.value !== null) {
     return {
-      fontSize: textosMisa.value[now.value].tamaño * 0.8 * relacion + "px",
+      fontSize: textosMisa.value[now.value].tamaño * tamañoLetra * relacion + "px",
       color: textosMisa.value[now.value].color
     }
   }
@@ -254,7 +270,7 @@ const estiloTextoNext = computed (() => {
 
     if(next.value !== null) {
       return {
-        fontSize: textosMisa.value[next.value].tamaño * 0.8 * relacion + "px", 
+        fontSize: textosMisa.value[next.value].tamaño * tamañoLetra * relacion + "px", 
         color: textosMisa.value[next.value].color
       }
     }
@@ -269,7 +285,7 @@ const cambioNext = val => {
   }
 }
 const cambioColor = (hex) => {
-  console.log(hex)
+  // console.log(hex)
   if(hex) {
 
     // Remove the hash (#) if it exists
@@ -292,8 +308,42 @@ const cambioColor = (hex) => {
   }
 }
 
+const limpiarPantalla = () => {
+  // const textoNowTemp = now.value
+  // now.value = 0
+  // console.log(now.value)
+  // console.log(next.value)
+
+  if(limpiarLive.value == false) {
+
+    let texto = {
+      id: 0,
+      titulo: "NEGRO",
+      texto: "",
+      tamaño: 0,
+      color: '#FFFFFF',
+      numero: 0
+    }
+  
+  
+    // misaStore.actualizarTextoFullScreen(texto)  
+    misaStore.enviarWS(texto)
+    // now.value = textoNowTemp
+  
+    if(next.value >= 1 && now.value >= 1) {
+      now.value  -= 1
+      next.value  -= 1
+    }
+    limpiarLive.value = true
+  }
+
+}
+
 const toDirecte = (val) => {
   // console.log(textosMisa.length)
+  limpiarLive.value = false
+
+  
   now.value = next.value
   const color = textoNow.value.color == '#00FF00' ? '#00AF00' : '#FFFFFF'
   misaStore.setTextoLive(now.value)
@@ -305,21 +355,54 @@ const toDirecte = (val) => {
   // misaStore.live = now.value
   // now.value ++
   // next.value ++
-  if(next.value !== textosMisa.value.length -1 && next.value > 0) {
-    // console.log(next.value)
-    next.value += val
-  } else if (next.value == 0 && val == -1) {
-    next.value = 1
-    now.value = 0
-  }
+  // if(val == 1) {
+  //   if(next.value !== textosMisa.value.length -1) {
+  //     // console.log(next.value)
+  //     next.value += val
+  //   } else if (next.value == 0 && val == -1) {
+  //     next.value = 1
+  //     now.value = 0
+  //   }
+
+  // } else if (val == -1) {
+  //   if(next.value !== textosMisa.value.length -1) {
+  //     // console.log(next.value)
+  //     next.value = now.value + 1
+  //   } else if (next.value == 0 && val == -1) {
+  //     next.value = 1
+  //     now.value = 0
+  //   }
+  // }
+
+  if(next.value !== textosMisa.value.length -1) {
+      // console.log(next.value)
+      next.value += val
+    } else if (next.value == 0 && val == -1) {
+      next.value = 1
+      now.value = 0
+    }
+
   // console.log(now.value)
   // console.log(next.value)
   // console.log(textoNow.value)
   setLocalStorage()
+  misaStore.enviarWS(textoNow.value)
 }
 
 const reenviarDirecte = () => {
- if (textoNow.value) misaStore.reenviarTextoFullScreen(textoNow.value)
+  let texto = {
+      id: 0,
+      titulo: "NEGRO",
+      texto: "     ",
+      tamaño: 0,
+      color: '#FFFFFF',
+      numero: 0
+    }
+  // misaStore.actualizarTextoFullScreen(texto) 
+  // misaStore.actualizarTextoFullScreen(textosMisa.value[now.value]) 
+  misaStore.enviarWS(texto)
+  // console.log(textosMisa.value[now.value].texto)
+//  if (textoNow.value) misaStore.reenviarTextoFullScreen(textoNow.value)
 }
 
 const fullScreen = () => {
@@ -353,9 +436,14 @@ const duplicarMisa = () => {
 
 document.addEventListener("keyup", (event) => {
   if(directe.value) {
+    const key = event.key
 
     if (event.key === "ArrowRight") toDirecte(1)
+
     if (event.key === "ArrowLeft") toDirecte(-1)
+    if (key.toUpperCase() === "Q") limpiarPantalla()
+    if (event.key === " ") reenviarDirecte()
+    
   }
   // console.log(event.key)
 });

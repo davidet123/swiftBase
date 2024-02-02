@@ -72,6 +72,9 @@ actions: {
   {
     const rtConnection = new RTConnection(this.URLSwift, 5, 2);
     const self = this
+    rtConnection.callbackRecieve = function (e) {
+      console.log(e)
+    }
     rtConnection.onOpen = function() {
       trace("Connection opened");
       self.videoStream = new RTVideoStream(rtConnection, "videoProtocol", "myVideoId");
@@ -91,6 +94,8 @@ actions: {
         if (response.status == "")
         return;
 
+        // console.log(response)
+
 
       }
       // self.rtRemote.getStatus("Project","Current")
@@ -104,11 +109,14 @@ actions: {
       this.swiftConnectionStatus = 0
       self.OpenConnection();
       }
+    rtConnection.callbackRecieve = function(e) {
+      console.log(e)
+    }
   },
   getStatus(type, filter) {
     // console.log(type, filter)
-    console.log("status store")
-    if(this.rtRemote) this.rtRemote.getStatus(type, filter)
+    // console.log("status store")
+    if(this.rtRemote) return this.rtRemote.getStatus(type, filter)
     // console.log(status)
 
   },

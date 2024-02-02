@@ -1,38 +1,64 @@
 <template>
   <div class="FHDWrapperFull">
       <div class="FHDFull text-center" style="white-space: pre;" :style="estiloTexto">
-        <p v-if="textoFullScreen !== null">{{ textoFullScreen.texto }}</p>
+        <p v-if="textoFullScreen !== null">{{ textoWS.texto }}</p>
       </div>
   </div>
 </template>
 
 <script setup>
-  import { computed } from "vue"
+  import { computed, watch } from "vue"
 
   import { storeToRefs } from "pinia"
   import { useMisaStore } from "../../store/misa" 
   import { onBeforeMount } from "vue";
 
   const misaStore = useMisaStore()
-  const { textoFullScreen } = storeToRefs(misaStore)
+  const { textoFullScreen, textoWS, paginaFullScreen } = storeToRefs(misaStore)
 
   onBeforeMount(async () => {
     await misaStore.cargartextoMisa()
   })
+
+  misaStore.conectarWS()
+
+  misaStore.setPaginaFullScreen(true)
 
   
   
   
   const estiloTexto = computed (() => {
     let mult = 2.8
-    if(textoFullScreen.value.texto.length <= 22) mult = 4 
-    if(textoFullScreen.value.texto.length >= 60 && textoFullScreen.value.texto.length <= 80) mult = 2.5 
-    if(textoFullScreen.value.texto.length >= 80) mult = 2.5
+    if(textoWS.value.texto.length <= 22) mult = 3.8 
+    if(textoWS.value.texto.length >= 60 && textoFullScreen.value.texto.length <= 80) mult = 2.3 
+    if(textoWS.value.texto.length >= 80) mult = 2.3
     return {
-      fontSize: textoFullScreen.value.tamaño * mult + "px" || "70px",
-      color: textoFullScreen.value.color || "#ffffff"
+      fontSize: textoWS.value.tamaño * mult + "px" || "70px",
+      color: textoWS.value.color || "#ffffff"
     }
     
+  })
+  // const estiloTexto = computed (() => {
+  //   let mult = 2.8
+  //   if(textoFullScreen.value.texto.length <= 22) mult = 4 
+  //   if(textoFullScreen.value.texto.length >= 60 && textoFullScreen.value.texto.length <= 80) mult = 2.5 
+  //   if(textoFullScreen.value.texto.length >= 80) mult = 2.5
+  //   return {
+  //     fontSize: textoFullScreen.value.tamaño * mult + "px" || "70px",
+  //     color: textoFullScreen.value.color || "#ffffff"
+  //   }
+    
+  // })
+
+  watch(() => paginaFullScreen.value, val => {
+    
+    if(val == false) {
+      misaStore.setPaginaFullScreen(true)
+    }
+    // console.log(val)
+    },
+    {
+      deep: true
   })
 
 </script>
