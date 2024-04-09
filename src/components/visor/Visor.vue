@@ -2,7 +2,7 @@
   <v-col cols="12" class="contenedor-video">
     <v-row>
       <v-col class="text-center">
-        <video id="myVideoId" width="620" height="349" autoplay muted playsinline/>
+        <video id="myVideoId" width="540" height="304" autoplay muted playsinline/>
       </v-col>
     </v-row>
   </v-col>

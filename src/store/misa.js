@@ -9,8 +9,11 @@ import db from '../firebase/init.js'
 export const useMisaStore = defineStore('misa', {
   state: () => ({
     // URLWebsocket: 'ws://localhost:8001',
-    URLWebsocket: 'ws://192.168.28.33:8001',
+    // URLWebsocket: 'ws://192.168.28.33:8001',
     // URLWebsocket: 'ws://10.200.1.249:8001',
+    URLWebsocket: 'ws://169.254.254.8:8001',
+    socket: null,
+    socketStatus: 0,
     dbMisaCargada: false,
     gSheetMisaCargada: false,
     textoLive: 0,
@@ -19,6 +22,8 @@ export const useMisaStore = defineStore('misa', {
     cargandoMisa: false,
     control: false,
     paginaFullScreen: false,
+    controlLS: false,
+    fullScreenLS: false,
     idDatabase: 'nGfIsKvgCm2AsOF66LP2',
     textoFullScreen: {
       texto: "",
@@ -99,7 +104,14 @@ export const useMisaStore = defineStore('misa', {
         nombreMisa: misa.nombreMisa
       }
     }),
-    getMisaCargada: state => state.textosMisa.find(el => el.id == state.misaCargada)
+    getMisaCargada: state => state.textosMisa.find(el => el.id == state.misaCargada),
+    getSocketStatus: state => {
+      if(state.socket) {
+        return state.socket.readyState
+      } else {
+        return "status 0"
+      }
+    }
     
   },
   actions: {
@@ -296,7 +308,9 @@ export const useMisaStore = defineStore('misa', {
         fecha: fecha,
         now: 0,
         next: 1,
-        urlWS: this.URLWebsocket
+        urlWS: this.URLWebsocket,
+        controlLS: false,
+        fullScreenLS: false
       }
 
       // const dataWS = JSON.parse(localStorage.getItem('misaData'))
@@ -305,36 +319,42 @@ export const useMisaStore = defineStore('misa', {
       this.datosMisaLS = data
       localStorage.setItem('misa', JSON.stringify(this.textos))
       localStorage.setItem('misaData', JSON.stringify(data))
-      this.actualizarMisaCargada(textosMisaGSheet.id)
+      // this.actualizarMisaCargada(textosMisaGSheet.id)
 
     },
     conectarWS() {
-      if (this.isConnected) return;
+      if (this.isConnected) return
 
-      this.socket = new WebSocket(this.URLWebsocket);
-
+      this.socket = new WebSocket(this.URLWebsocket)
+      
       this.socket.addEventListener('open', () => {
         console.log('Connected to WebSocket server.');
+        this.socketStatus = this.socket.readyState
+
       });
 
       this.socket.addEventListener('message', (event) => {
 
         const res = JSON.parse(event.data)
-        // if (res.hasOwnProperty('partido')) {
-        //   this.wsPartido = res.partido
-        //   localStorage.setItem('partido', JSON.stringify(res.partido))
-        // } 
-        // if (res.hasOwnProperty('marcador')) {
-        //   this.wsMarcador = res.marcador
-        //   localStorage.setItem('marcador', JSON.stringify(res.marcador))
-        // }
-        this.textoWS = res
+        if (res.hasOwnProperty('textoMisa')) {
+          console.log(res)
+          this.textoWS = res.textoMisa
+          // this.wsPartido = res.partido
+          // localStorage.setItem('partido', JSON.stringify(res.partido))
+        } 
+        else if (res.hasOwnProperty('datosMisa')) {
+          // console.log(res.datosMisa.controlLS)
+          this.datosMisaLS = res.datosMisa
+          this.controlLS = res.datosMisa.controlLS
+          this.fullScreenLS = res.datosMisa.fullScreenLS
+        }
+        else {
+          console.log("Datos no validos WS")
+        }
+        // this.textoWS = res
         // console.log(res)
 
 
-        // this.wsData = JSON.parse(event.data)
-        // localStorage.setItem('partido', JSON.stringify(this.wsData))
-        // console.log(this.test)
       });
 
       this.socket.addEventListener('close', (event) => {
@@ -346,15 +366,61 @@ export const useMisaStore = defineStore('misa', {
       // console.log(mensaje)
       // Enviar mensaje al servidor
       // const mensaje = {mensaje: 'test'}
-      this.socket.send(JSON.stringify(mensaje));
+      const data = {textoMisa: mensaje}
+      this.socket.send(JSON.stringify(data))
       // if (this.isConnected) {
       // }
+    },
+    setLocalStorage(tipo, payload){
+      if(tipo == "control") {
+        const data = {controlMisa: payload}
+        localStorage.setItem('controlMisa', JSON.stringify(data))
+      } else if (tipo == "fullscreen") {
+        const data = {fullscreenMisa: payload}
+        localStorage.setItem('fullscreenMisa', JSON.stringify(data))
+      }
+
     },
     setUrlWS(payload) {
       this.URLWebsocket = payload
       const data = JSON.parse(localStorage.getItem('misaData'))
       data.urlWS = payload
       localStorage.setItem('misaData', JSON.stringify(data))
+    },
+    setControlLS(payload) {
+      // console.log("controlLS = ", payload)
+      this.controlLS = payload
+      this.updateControlLS("control", payload)
+    },
+    setfullScreenLS(payload) {
+      // console.log("fullScreenLS = ", payload)
+      this.fullScreenLS = payload
+      this.updateControlLS("fullscreen", payload)
+
+    },
+    updateControlLS(tipo, payload) {
+      const data = JSON.parse(localStorage.getItem('misaData'))
+      // console.log(data.controlLS)
+      if(tipo == "control") {
+        data.controlLS = payload
+        localStorage.setItem('misaData', JSON.stringify(data))
+        console.log(data.controlLS)
+        if(this.socketStatus == 1) {
+          this.socket.send(JSON.stringify({datosMisa: data}))
+        } else {
+          console.log("Websocket status 0")
+        }
+      } else if (tipo == "fullscreen") {
+        data.fullScreenLS = payload
+        localStorage.setItem('misaData', JSON.stringify(data))
+        if(this.socketStatus == 1) {
+          console.log("fullscreen")
+          this.socket.send(JSON.stringify({datosMisa: data}))
+        } else {
+          console.log("Websocket status 0")
+        }
+      }
+      // console.log(this.socketStatus)
     }
 
     

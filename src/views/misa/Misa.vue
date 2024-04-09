@@ -106,6 +106,7 @@
         <textoMisaIndividualVue :item="item" :numItem="now" :nextItem="next" />
       </v-col>
     </v-row>
+    
   
     <!-- VENTANA CARGAR MISA -->
     <v-dialog width="800" v-model="ventanaCargar">
@@ -145,6 +146,7 @@
           <v-row>
             <v-col cols="12" class=text-center>
               <v-btn @click="ventanaCargar = false" color="error" size="x-small">TANCAR</v-btn>
+              
             </v-col>
           </v-row>
         </v-card-text>
@@ -175,13 +177,18 @@ const gSheetStore = usegSheetStore()
 //   misaStore.cargartextoMisa()
 // })
 // misaStore.cargartextoMisa()
-misaStore.conectarWS()
+// onBeforeMount(() => {
 
-const { textoFullScreen } = storeToRefs(misaStore)
+// misaStore.conectarWS()
+// })
+
+const { textoFullScreen, socket } = storeToRefs(misaStore)
 
 const ventanaCargar = ref(false)
 
 const swiftConnectionStore = useSwiftConnectionStore()
+
+
 
 // swiftConnectionStore.startConnection()
 
@@ -346,8 +353,8 @@ const toDirecte = (val) => {
   
   now.value = next.value
   const color = textoNow.value.color == '#00FF00' ? '#00AF00' : '#FFFFFF'
-  misaStore.setTextoLive(now.value)
-  misaStore.actualizarTextoFullScreen(textoNow.value)
+  // misaStore.setTextoLive(now.value)
+  // misaStore.actualizarTextoFullScreen(textoNow.value)
   // console.log(color)
   
   // swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaTEXT", "String", textoNow.value.texto)
@@ -453,10 +460,11 @@ const setLocalStorage = () => {
   //   now: now.value,
   //   next: next.value
   // }
-  misaData.now = now.value
-  misaData.next = next.value
+  const data = JSON.parse(localStorage.getItem('misaData'))
+  data.now = now.value
+  data.next = next.value
   // console.log(data)
-  localStorage.setItem('misaData', JSON.stringify(misaData))
+  localStorage.setItem('misaData', JSON.stringify(data))
 
 }
 

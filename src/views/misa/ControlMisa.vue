@@ -21,9 +21,13 @@
       <p v-if="!gSheetMisaLoading"><v-icon size="large" color="green" icon="mdi-circle-medium"></v-icon>Dades gSheet carregades</p>
       <p v-if="swiftConnectionStatus == 0"><v-icon size="large" color="red" icon="mdi-circle-medium"></v-icon>Conectant a swift</p>
       <p v-if="swiftConnectionStatus == 1"><v-icon size="large" color="green" icon="mdi-circle-medium"></v-icon>Conectat a Swift</p>
-      <p v-if="!paginaFullScreen"><v-icon size="large" color="red" icon="mdi-circle-medium"></v-icon>Pagina full screen sense obrir</p>
-      <p v-if="paginaFullScreen == 1"><v-icon size="large" color="green" icon="mdi-circle-medium"></v-icon>Pagina full screen oberta</p>
+      <p v-if="socketStatus !== 1"><v-icon size="large" color="red" icon="mdi-circle-medium"></v-icon>Conectant al websocket</p>
+      <p v-if="socketStatus == 1"><v-icon size="large" color="green" icon="mdi-circle-medium"></v-icon>Conectat al websocket</p>
+      <p v-if="!fullScreenLS"><v-icon size="large" color="red" icon="mdi-circle-medium"></v-icon>Pagina full screen sense obrir</p>
+      <p v-if="fullScreenLS == 1"><v-icon size="large" color="green" icon="mdi-circle-medium"></v-icon>Pagina full screen oberta</p>
       <br>
+      {{ misaStore.getSocketStatus }}
+      {{ socket }}
       <!-- <p v-if="cargandoMisa || gSheetMisaLoading"><v-icon size="large" color="red" icon="mdi-circle-medium"></v-icon>Carregant dades missa...</p>
       <p v-else><v-icon size="large" color="green" icon="mdi-circle-medium"></v-icon>Dades carregades</p> -->
     </v-col>
@@ -40,26 +44,29 @@
   import VisorMisa from "@/components/misa/VisorMisa.vue";
   import { useSwiftConnectionStore } from "../../store/swiftConnection"
   import { ref } from "firebase/storage";
+import { onBeforeMount } from "vue";
 
   const misaStore = useMisaStore()
   const swiftConnectionStore = useSwiftConnectionStore()
   const gSheetStore = usegSheetStore()
   
-  const { textoFullScreen, idTextoLive, cargandoMisa, textoWS } = storeToRefs(misaStore)
+  const { textoFullScreen, idTextoLive, cargandoMisa, textoWS, controlLS, paginaFullScreen, socket, socketStatus, fullScreenLS } = storeToRefs(misaStore)
   const { gSheetMisaLoading } = storeToRefs(gSheetStore)
   const { swiftConnectionStatus } = storeToRefs(swiftConnectionStore)
   
-  if(!idTextoLive.value) misaStore.cargartextoMisa()
+  // if(!idTextoLive.value) misaStore.cargartextoMisa()
   
-  
-  swiftConnectionStore.startConnection()
-  misaStore.conectarWS()
+  // onBeforeMount(() => {
 
-  misaStore.setPaginaFullScreen(false)
+  //   misaStore.conectarWS()
+  // })
+  swiftConnectionStore.startConnection()
+
+  // misaStore.setPaginaFullScreen(false)
   
 
   const { rtRemote } = storeToRefs(swiftConnectionStore)
-  const { paginaFullScreen } = storeToRefs(misaStore)
+  // const { paginaFullScreen, socket, socketStatus } = storeToRefs(misaStore)
 
   // const textoFS = computed(() => {
   //   if(textoWS.value) return textoFS.value.texto
@@ -101,9 +108,10 @@
     
   })
 
-  misaStore.setControl(true)
+  // if (socket) misaStore.setControlLS(true)
 
-  const control = computed(() => misaStore.control)
+  // const control = computed(() => misaStore.control)
+  // const control = computed(() => misaStore.controlLS)
 
 
   const actualizarSwift = value => {
@@ -118,15 +126,15 @@
     
     swiftConnectionStore.startTransaction()
     if(value.texto === "" || value.texto === " " || value.color !== '#FFFFFF') {
-      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::GRUPO", "Display", "false")
+      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISSA::GRUPO", "Display", "false")
     } else {
-      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaTEXT", "String", value.texto)
-      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::rectangle2DGEOM", "RectangleSize", textoRectangleSize)
-      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSHDR", "MaterialDiffuse", cambioColor(color))
-      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::GRUPO", "Display", "true")
+      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISSA::textoMisaTEXT", "String", value.texto)
+      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISSA::rectangle2DGEOM", "RectangleSize", textoRectangleSize)
+      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISSA::textoMisaSHDR", "MaterialDiffuse", cambioColor(color))
+      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISSA::GRUPO", "Display", "true")
 
     }
-    // if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSombraTEXT", "String", newValue.value.texto)
+    // if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISSA::textoMisaSombraTEXT", "String", newValue.value.texto)
     swiftConnectionStore.endTransaction()
     // status = swiftConnectionStore.getStatus("Metho", "Current")
     // console.log(swiftConnectionStore.getStatus("Script", "Current"))
@@ -135,12 +143,22 @@
 
   const fullScreenAbierta = ref(false)
 
-  watch(() => control.value, val => {
+  watch(() => socketStatus.value, val => {
+    if(val == 1 && !controlLS.value) misaStore.setControlLS(true)
+    if(val == 1) misaStore.setfullScreenLS(false)
+    // console.log(val)
+  },
+  {
+    deep: true
+  })
+
+  watch(() => controlLS.value, val => {
+    // console.log(val)
     
     if(val == false) {
-      misaStore.setControl(true)
+      misaStore.setControlLS(true)
+      // console.log("watch controlLS")
     }
-    // console.log(val)
   },
   {
     deep: true
@@ -156,43 +174,43 @@
     deep: true
   })
 
-  watch(() => textoFullScreen, (newValue, oldValue) => {
-    // console.clear()
-    // console.log(newValue.value)
-    let status = null
-    // console.log(swiftConnectionStatus.value)
-    // swiftConnectionStore.cueGraphic("PRUEBA_MISA")
-      //   swiftConnectionStore.startTransaction()
-      //   if(newValue.value.texto === "" || newValue.value.texto === " ") {
-      //     if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::GRUPO", "Display", "false")
-      //   } else {
-      //     if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::GRUPO", "Display", "true")
-      //   }
-      //   const color = newValue.value.color == '#FFFFFF' ? '#000000' : '#003099'
-      //   let altura = "80"
-      //   if(textoFullScreen.value.texto.length >= 73) altura = "140"
-      // // if(directe.value) {
-      //   const textoRectangleSize = `1580, ${altura}`
-      //   // console.log(textoFullScreen)
+//   watch(() => textoFullScreen, (newValue, oldValue) => {
+//     // console.clear()
+//     // console.log(newValue.value)
+//     let status = null
+//     // console.log(swiftConnectionStatus.value)
+//     // swiftConnectionStore.cueGraphic("ROTULACIO_MISSA")
+//       //   swiftConnectionStore.startTransaction()
+//       //   if(newValue.value.texto === "" || newValue.value.texto === " ") {
+//       //     if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISSA::GRUPO", "Display", "false")
+//       //   } else {
+//       //     if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISSA::GRUPO", "Display", "true")
+//       //   }
+//       //   const color = newValue.value.color == '#FFFFFF' ? '#000000' : '#003099'
+//       //   let altura = "80"
+//       //   if(textoFullScreen.value.texto.length >= 73) altura = "140"
+//       // // if(directe.value) {
+//       //   const textoRectangleSize = `1580, ${altura}`
+//       //   // console.log(textoFullScreen)
 
-      //   if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::rectangle2DGEOM", "RectangleSize", textoRectangleSize)
-      //   if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaTEXT", "String", newValue.value.texto)
-      //   if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSHDR", "MaterialDiffuse", cambioColor(color))
-      //   // if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("PRUEBA_MISA::textoMisaSombraTEXT", "String", newValue.value.texto)
-      //   swiftConnectionStore.endTransaction()
-      //   // status = swiftConnectionStore.getStatus("Metho", "Current")
-      //   console.log(swiftConnectionStore.getStatus("Script", "Current"))
-      // // }
-      // // textosMisa.value = misaStore.getMisaById(val.value)
-      // // console.log(val.value)
-    // actualizarSwift(newValue.value)
-    // status = swiftConnectionStore.getStatus("Method", "Current")
-    // console.log(status)
+//       //   if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISSA::rectangle2DGEOM", "RectangleSize", textoRectangleSize)
+//       //   if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISSA::textoMisaTEXT", "String", newValue.value.texto)
+//       //   if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISSA::textoMisaSHDR", "MaterialDiffuse", cambioColor(color))
+//       //   // if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISSA::textoMisaSombraTEXT", "String", newValue.value.texto)
+//       //   swiftConnectionStore.endTransaction()
+//       //   // status = swiftConnectionStore.getStatus("Metho", "Current")
+//       //   console.log(swiftConnectionStore.getStatus("Script", "Current"))
+//       // // }
+//       // // textosMisa.value = misaStore.getMisaById(val.value)
+//       // // console.log(val.value)
+//     // actualizarSwift(newValue.value)
+//     // status = swiftConnectionStore.getStatus("Method", "Current")
+//     // console.log(status)
 
     
-},{
-  deep: true
-})
+// },{
+//   deep: true
+// })
 
 </script>
 

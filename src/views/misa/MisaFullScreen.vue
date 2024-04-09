@@ -14,15 +14,15 @@
   import { onBeforeMount } from "vue";
 
   const misaStore = useMisaStore()
-  const { textoFullScreen, textoWS, paginaFullScreen } = storeToRefs(misaStore)
+  const { textoFullScreen, textoWS, paginaFullScreen, socketStatus, fullScreenLS } = storeToRefs(misaStore)
 
-  onBeforeMount(async () => {
-    await misaStore.cargartextoMisa()
-  })
+  // onBeforeMount(async () => {
+  //   await misaStore.cargartextoMisa()
+  // })
 
-  misaStore.conectarWS()
+  // misaStore.conectarWS()
 
-  misaStore.setPaginaFullScreen(true)
+  // misaStore.setPaginaFullScreen(true)
 
   
   
@@ -49,11 +49,18 @@
   //   }
     
   // })
+  watch(() => socketStatus.value, val => {
+    if(val == 1 && full.value == false) misaStore.setfullScreenLS(true)
+    console.log(val)
+  },
+  {
+    deep: true
+  })
 
-  watch(() => paginaFullScreen.value, val => {
+  watch(() => fullScreenLS.value, val => {
     
     if(val == false) {
-      misaStore.setPaginaFullScreen(true)
+      misaStore.setfullScreenLS(true)
     }
     // console.log(val)
     },

@@ -68,8 +68,8 @@
       <p v-if="!cargandoMisa"><v-icon size="large" color="green" icon="mdi-circle-medium"></v-icon>Base de dades carregades</p>
       <p v-if="gSheetMisaLoading"><v-icon size="large" color="red" icon="mdi-circle-medium"></v-icon>Carregant dades gSheet</p>
       <p v-if="!gSheetMisaLoading"><v-icon size="large" color="green" icon="mdi-circle-medium"></v-icon>Dades gSheet carregades</p>
-      <p v-if="misaStore.control"><v-icon size="large" color="green" icon="mdi-circle-medium"></v-icon>Pàgina control</p>
-      <p v-if="!misaStore.control"><v-icon size="large" color="red" icon="mdi-circle-medium"></v-icon>Pàgina control</p>
+      <p v-if="controlLS"><v-icon size="large" color="green" icon="mdi-circle-medium"></v-icon>Pàgina control</p>
+      <p v-if="!controlLS"><v-icon size="large" color="red" icon="mdi-circle-medium"></v-icon>Pàgina control</p>
       <br>
       <p v-if="cargandoMisa || gSheetMisaLoading"><v-icon size="large" color="red" icon="mdi-circle-medium"></v-icon>Carregant dades missa...</p>
       <p v-else><v-icon size="large" color="green" icon="mdi-circle-medium"></v-icon>Dades carregades</p>
@@ -96,13 +96,13 @@ import { watch } from "vue";
 const misaStore = useMisaStore()
 const gSheetStore = usegSheetStore()
 
-const { cargandoMisa, URLWebsocket } = storeToRefs(misaStore)
+const { cargandoMisa, URLWebsocket, socketStatus, controlLS } = storeToRefs(misaStore)
 const { gSheetMisaLoading } = storeToRefs(gSheetStore)
 
 
 // CARGANDO DATOS
 
-misaStore.cargartextoMisa()
+// misaStore.cargartextoMisa()
 gSheetStore.getListaMisa()
 
 // Leer localstorage
@@ -123,7 +123,7 @@ const fechaMisaLocalstorage = ref(misaData.value.fecha)
 
 // poner control en falso
 
-misaStore.setControl(false)
+// misaStore.setControl(false)
 
 const control = computed(() => misaStore.control)
 
@@ -150,6 +150,14 @@ const cargarMisa = () => {
 const setUrlWS = () => {
   misaStore.setUrlWS(urlWS.value)
 }
+
+watch(() => socketStatus.value, val => {
+    if(val == 1) misaStore.setControlLS(false)
+    console.log(val)
+  },
+  {
+    deep: true
+  })
 
 // watch(() => datosMisaLS.value, val => {
 //   console.log(val)
