@@ -133,7 +133,7 @@ export const usegSheetStore = defineStore('gSheet', {
       this.gSheetMisaLoading = true
       const apiKey = import.meta.env.VITE_APP_APIKEY
       const idSheets =  import.meta.env.VITE_APP_IDSHEETS
-      const values = 'MISSA!A1:D300'
+      const values = 'MISSA!A1:E300'
       fetch("https://content-sheets.googleapis.com/v4/spreadsheets/" +   idSheets + "/values/" + values + "?access_token="+ apiKey +"&key="+  apiKey)
       .then((lista)=>{
         return lista.json()

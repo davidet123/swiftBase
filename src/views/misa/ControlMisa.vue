@@ -168,7 +168,20 @@ import { onBeforeMount } from "vue";
     //   misaStore.setControl(true)
     // }
     // console.log(val)
-    actualizarSwift(val)
+    if(val.directo) {
+      actualizarSwift(val)
+
+    } else {
+      const texto = {
+        id: 0,
+        titulo: "NEGRO",
+        texto: "",
+        tamaño: 0,
+        color: '#FFFFFF',
+        numero: 0
+      }
+      actualizarSwift(texto)
+    }
   },
   {
     deep: true

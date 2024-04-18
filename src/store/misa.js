@@ -9,9 +9,9 @@ import db from '../firebase/init.js'
 export const useMisaStore = defineStore('misa', {
   state: () => ({
     // URLWebsocket: 'ws://localhost:8001',
-    // URLWebsocket: 'ws://192.168.28.33:8001',
+    URLWebsocket: 'ws://192.168.28.33:8001',
     // URLWebsocket: 'ws://10.200.1.249:8001',
-    URLWebsocket: 'ws://169.254.254.8:8001',
+    // URLWebsocket: 'ws://169.254.254.8:8001',
     socket: null,
     socketStatus: 0,
     dbMisaCargada: false,
@@ -273,23 +273,29 @@ export const useMisaStore = defineStore('misa', {
           texto: "",
           tamaño: 0,
           color: '#FFFFFF',
-          numero: 0
+          numero: 0,
+          directo: false
         }
         texto.id = `GS${index}`
-        // console.log(el[2])
+        console.log(el[4])
         if (el[0]) texto.numero = parseInt(el[0])
         if(el[1]) texto.texto = el[1]
         if(el[2]) {
           if(el[2] == "TRUE") texto.color = "#00FF00"
         }
         if(el[3]) texto.titulo = el[3]
+        if(el[4]) {
+          if(el[4] === "TRUE") {
+            texto.directo = true
+          }
+        }
         texto.tamaño = 70
         textosMisaGSheet.idTextos.push(`GS${index}`)
         if(el[2]) this.textos.push(texto)
 
         index++
-        // console.log(this.textos)
       })
+      console.log(this.textos)
       this.textos.push({
         id: `GS${index}`,
         titulo: "NEGRO",
