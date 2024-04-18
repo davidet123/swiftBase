@@ -19,6 +19,8 @@
             :nombre="rotulo.nombre" 
             :numero="rotulo.numero" 
             :colorSeleccion="'#385F73'"
+            :graficosLive="graficosLive"
+            :rotuloLive="rotulo.live"
             @activar="activarGrafico" 
             @eliminar="eliminarRotulo"
             @seleccionar="seleccionar"
@@ -169,14 +171,19 @@
   const gSheetStore = usegSheetStore()
 
 
-  const { retransmisionesSimple, retransmisionCrevillent } = storeToRefs(simpleStore)
+  const { retransmisionesSimple, retransmisionCrevillent, listadoBotonesLive } = storeToRefs(simpleStore)
+  const { rtRemote, graficosLive } = storeToRefs(swiftConnectionStore)
+
   const { listaCrevillent } = storeToRefs(gSheetStore)
 
   const listado = computed(() => {
     return simpleStore.listadoSimple
   })
 
+  // console.log(rtRemote.value)
+
   swiftConnectionStore.startConnection()
+  // swiftConnectionStore.getStatus("Node", "rootNode||ObjectNode|Name")
 
   // const mostrar = val => {
   //   console.log(val)
@@ -273,6 +280,7 @@
 
 
   const activarDesdeLista = payload  => {
+    if(!payload.grafico) return
     console.log(payload)
 
     const listaNombres = ["BANDA_UNICA", "BANDA_DOBLE_TITULO", "TRES_LINEAS", "DSK"]
@@ -301,9 +309,10 @@
     } else {
       swiftConnectionStore.rtRemote.playMethod(metodo + "::takeOff")
     }
+    // updateBotonLive()
     // const updateBotonLive()
   }
-
+ 
   const activarGrafico = payload => {
     console.log(payload)
     if (!payload.live) {
@@ -319,12 +328,16 @@
     swiftConnectionStore.rtRemote.playGraphic(payload.nombre)
     if(payload.valor) swiftConnectionStore.rtRemote.updateFields(payload.nombre + "::FONDOSHDR", "Shader", payload.valor)
     swiftConnectionStore.rtRemote.playMethod(payload.nombre + "::bringOn")
+    // swiftConnectionStore.getStatus("Method", "Current")
     // swiftConnectionStore.rtRemote.updateFields(metodo + "::n1_DUPL", "NumDuplicates", 0)
+    getStatus()
   }
   const takeOff = (payload) => {
     console.log(payload.nombre)
     // swiftConnectionStore.rtRemote.playGraphic(payload.nombre)
     swiftConnectionStore.rtRemote.playMethod(payload.nombre + "::takeOff")
+    swiftConnectionStore.rtRemote.playGraphic("CLEAR")
+    // swiftConnectionStore.rtRemote.playMethod("CLEAR::bringOn")
   }
 
 
@@ -351,11 +364,21 @@
     const filas = longitud % (max / 2) == 0 ? 6 : longitud % (max / 2)
     return (max / filas )
   })
+  const getStatus = () => swiftConnectionStore.getStatus("Node", "rootNode||ObjectNode|Name")
 
 
-//   watch(() => idRetransmision.value, (val) => {
-//     console.log(val)
-// })
+  watch(() => rtRemote.value, (val) => {
+    if(val) {
+      getStatus()
+      swiftConnectionStore.setDatosCargados(true)
+    }
+  })
+  // watch(() => graficosLive.value, (val) => {
+  //   // if(val) swiftConnectionStore.getStatus("Node", "rootNode||ObjectNode|Name")
+  //   console.log(val)
+  // },{
+  //   deep:true
+  // })
  
 </script>
 

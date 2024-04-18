@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 
 export const useSimpleStore = defineStore('simpleStore', {
   state: () => ({
+    listadoBotonesLive: [],
     listado: ['DIRECTE', 'RETORS'],
     listadoSimple: [
       {id:0, nombre: 'DIRECTE', numero:null},
@@ -15,27 +16,33 @@ export const useSimpleStore = defineStore('simpleStore', {
     retransmisionCrevillent: [
       {numero:0,
       nombre: "MOSCA_SEMANA_SANTA",
-      id: "MoscaCrev"
+      id: "MoscaCrev",
+      live: false
     },
       {numero:0,
       nombre: "DIRECTE_LOC",
-      id: "DirecteTorrLoc"
+      id: "DirecteTorrLoc",
+      live: false
     },
       {numero:0,
       nombre: "DIRECTE_PARROQUIA",
-      id: "DirecteTorrParroquia"
+      id: "DirecteTorrParroquia",
+      live: false
     },
       {numero:0,
       nombre: "DSK_CHUS",
-      id: "DskChusTorr"
+      id: "DskChusTorr",
+      live: false
     },
       {numero:0,
       nombre: "DSK_CRISTINA",
-      id: "DskCrisTorr"
+      id: "DskCrisTorr",
+      live: false
     },
       {numero:0,
       nombre: "RETORS",
-      id: "RetorsTorr"
+      id: "RetorsTorr",
+      live: false
     },
     ],
     listaCrevillent: [
@@ -64,10 +71,11 @@ export const useSimpleStore = defineStore('simpleStore', {
     getListaCrevillent() {
       const lista = JSON.parse(localStorage.getItem('listadoCrevillent')) 
       if(lista) this.listaCrevillent = lista
+      const listadoBotonesLive = JSON.parse(localStorage.getItem('listadoCrevillent')) 
+      if(listadoBotonesLive) this.listadoBotonesLive = listadoBotonesLive
     },
 
     addItemCrevillent(payload) {
-      
       this.listaCrevillent.push(payload)
       localStorage.setItem('listadoCrevillent', JSON.stringify(this.listaCrevillent))
     },

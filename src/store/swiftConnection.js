@@ -11,13 +11,18 @@ state: () => ({
   videoStream: null,
   rtRemote: null,
   swiftConnectionStatus: 0,
-  fileName: null
+  fileName: null,
+  graficosLive: null,
+  datosCargados: false
 }),
 
 getters: {
-
+  botonesLive: state => state.graficosLive
 },
 actions: {
+  setDatosCargados(val) {
+    this.datosCargados = val
+  },
   async setUrl(payload) {
     this.URLWebsocket = payload
     const docRef = doc(db, 'settings', 'swift')
@@ -45,12 +50,29 @@ actions: {
     const rtConnection1 = new RTConnection(this.URLSwift, 5, 2);
     const self = this
     rtConnection1.onOpen = function() {
+      console.log(this.graficosLive)
       trace("Connection opened");
       self.rtRemote = new RTRemote(rtConnection1, "remote");
       // self.rtRemote.getStatus("Project","Current")
       self.swiftConnectionStatus = 1
+      self.rtRemote.callbackRecieve = function (e) {
+        const res = JSON.parse(e.data);
+        if(res.status === "undefined") return
+        if(res.status === "") return
+        // console.log(res.status)
+        const elementos = res.status.split(";").filter(n => n)
+        // elementos.map(e => JSON.parse(e))
+        const graficos = []
+        elementos.forEach(element => {
+          graficos.push(element.split("=").pop().replace(/_OBJ/g, ''))
+        })
+        self.graficosLive = graficos
+        console.log(self.graficosLive)
+      }
+
       // console.log(self.rtRemote)
       // return {videoStream, rtRemote}
+      
     }
     rtConnection1.onClose = function() {
       trace("Connection Closed, try again…");
@@ -110,13 +132,22 @@ actions: {
       self.OpenConnection();
       }
     rtConnection.callbackRecieve = function(e) {
+      if(e.data.status === "undefined") return
       console.log(e)
     }
   },
   getStatus(type, filter) {
     // console.log(type, filter)
     // console.log("status store")
-    if(this.rtRemote) return this.rtRemote.getStatus(type, filter)
+
+    if(this.rtRemote) {
+      this.rtRemote.getStatus(type, filter)
+      // this.rtRemote.callbackRecieve = function (e) {
+      //   console.log(e.data)
+      // }
+      // return this.rtRemote.getStatus(type, filter)
+      
+    } 
     // console.log(status)
 
   },

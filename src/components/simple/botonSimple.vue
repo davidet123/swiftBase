@@ -28,6 +28,7 @@
               <v-btn size="x-small" variant="flat" :color="!live ? 'success' : 'error'" @click="insertarGrafico(nuevoNombre)" :disabled="desactivar" >LIVE</v-btn>
             </v-col>
             <v-col cols="6" @click="seleccionar(id, nombre)">
+              {{ rotuloLive }}
               <p v-if="tiempo !== 0">{{ tiempo }}</p>
               <h4>{{ nuevoNombre }} <span :class="cuenta <= 3 ?'red--text' : 'white--text'">{{ tiempo != 0 && cuenta != 0 ? cuenta : "" }}</span> {{ tiempo != 0 && cuenta != 0 ? " segs" : "" }}</h4>
             </v-col>
@@ -100,18 +101,32 @@ import { watch } from 'vue'
 import { ref, computed } from 'vue'
 
 import { useSimpleStore } from "../../store/simple"
+import { useSwiftConnectionStore } from "../../store/swiftConnection"
+import { storeToRefs } from 'pinia'
+
 const simpleStore = useSimpleStore()
+const swiftConnectionStore = useSwiftConnectionStore()
 
-const props = defineProps(["nombre", "numero", "id", "colorSeleccion", "idSeleccion", "activarManual"])
+const { datosCargados } = storeToRefs(swiftConnectionStore)
 
-const { nombre, numero, id, colorSeleccion, idSeleccion, activarManual } = toRefs(props)
+// console.log(graficosLive.value)
+
+const props = defineProps(["nombre", "numero", "id", "colorSeleccion", "idSeleccion", "activarManual", "graficosLive", "rotuloLive"])
+
+const { nombre, numero, id, colorSeleccion, idSeleccion, activarManual, graficosLive, rotuloLive } = toRefs(props)
 const emit = defineEmits(["activar", "eliminar", "seleccionar"])
 
 const seleccionado = ref(false)
 
+
+console.log(rotuloLive.value)
+
+
+
+
 // console.log(id.value)
 
-const live = ref(false)
+const live = ref(rotuloLive.value)
 const reveal = ref(false)
 const tiempo = ref(0)
 const cuenta = ref(tiempo.value)
@@ -123,6 +138,8 @@ const desactivar = computed (() => {
   // return cuenta.value == 0 ? false : true
   return false
 })
+
+
 
 
 const insertarGrafico = val => {
@@ -191,6 +208,19 @@ watch(() => activarManual.value, val => {
     insertarGrafico(nuevoNombre.value)
   }
 })
+
+let cargaInicial = false
+watch(() => graficosLive.value, val => {
+  if(val.includes(nombre.value) && !cargaInicial) {
+  live.value = true
+  cargaInicial = true
+  }
+})
+watch(() => datosCargados.value, val => {
+  console.log(val)
+})
+
+
 
 
 </script>
