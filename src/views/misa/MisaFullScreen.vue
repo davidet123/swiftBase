@@ -20,7 +20,7 @@
   //   await misaStore.cargartextoMisa()
   // })
 
-  // misaStore.conectarWS()
+  misaStore.conectarWS()
 
   // misaStore.setPaginaFullScreen(true)
 
@@ -50,8 +50,8 @@
     
   // })
   watch(() => socketStatus.value, val => {
-    if(val == 1 && full.value == false) misaStore.setfullScreenLS(true)
-    console.log(val)
+    if(val == 1 && fullScreenLS.value == false) misaStore.setfullScreenLS(true)
+    // console.log(val)
   },
   {
     deep: true
@@ -66,6 +66,30 @@
     },
     {
       deep: true
+  })
+
+  watch(() => textoWS.value, val => {
+    // if(val == false) {
+    //   misaStore.setControl(true)
+    // }
+    console.log(val)
+    // if(val.directo) {
+    //   actualizarSwift(val)
+
+    // } else {
+    //   const texto = {
+    //     id: 0,
+    //     titulo: "NEGRO",
+    //     texto: "",
+    //     tamaño: 0,
+    //     color: '#FFFFFF',
+    //     numero: 0
+    //   }
+    //   // actualizarSwift(texto)
+    // }
+  },
+  {
+    deep: true
   })
 
 </script>

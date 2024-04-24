@@ -5,14 +5,24 @@
     </v-col>
   </v-row>
   <v-row>
-    <v-col cols="6" offset="3">
-      <div class="FHDWrapperFull">
-          <div class="FHDFull text-center" style="white-space: pre;" :style="estiloTexto">
-            <VisorMisa class="my-2" :texto="textoWS.texto" :color="textoFullScreen.color" :tamaño="textoFullScreen.tamaño"/>            
-          </div>
-      </div>
+    <v-col cols="6">
+      <h3>Full screen</h3>
+      <v-col cols="12" class="contenedor-video">
+        <v-row>
+          <v-col class="text-center">
+            <VisorMisa class="my-2 video" width="540" height="304" :texto="textoWS.texto" :color="textoFullScreen.color" :tamaño="textoFullScreen.tamaño"/>            
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-col>
+    <v-col cols="6">
+      <h3>SWIFT</h3>
+      <Visor />
     </v-col>
   </v-row>
+  <v-divider>
+
+  </v-divider>
   <v-row>
     <v-col class="text-center">      
       <p v-if="cargandoMisa"><v-icon size="large" color="red" icon="mdi-circle-medium"></v-icon>Carregant base de dades</p>
@@ -44,7 +54,8 @@
   import VisorMisa from "@/components/misa/VisorMisa.vue";
   import { useSwiftConnectionStore } from "../../store/swiftConnection"
   import { ref } from "firebase/storage";
-import { onBeforeMount } from "vue";
+  import { onBeforeMount } from "vue";
+  import Visor from '@/components/visor/Visor.vue'
 
   const misaStore = useMisaStore()
   const swiftConnectionStore = useSwiftConnectionStore()
@@ -122,7 +133,7 @@ import { onBeforeMount } from "vue";
     if(value.texto.length >= 66) altura = "140"
     // if(directe.value) {
     const textoRectangleSize = `1580, ${altura}`
-    // console.log(value.texto.length)
+    console.log(value)
     
     swiftConnectionStore.startTransaction()
     if(value.texto === "" || value.texto === " " || value.color !== '#FFFFFF') {
@@ -167,7 +178,7 @@ import { onBeforeMount } from "vue";
     // if(val == false) {
     //   misaStore.setControl(true)
     // }
-    // console.log(val)
+    console.log(val)
     if(val.directo) {
       actualizarSwift(val)
 
@@ -228,6 +239,17 @@ import { onBeforeMount } from "vue";
 </script>
 
 <style scoped>
+.contenedor-video {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* border: 2px solid white; */
+    background-color: #303030;
+  }
+  .video {
+    margin: 0;
+    padding: 0;
+  }
 
 
 /* template {

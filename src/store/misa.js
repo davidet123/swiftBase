@@ -8,8 +8,8 @@ import db from '../firebase/init.js'
 
 export const useMisaStore = defineStore('misa', {
   state: () => ({
-    // URLWebsocket: 'ws://localhost:8001',
-    URLWebsocket: 'ws://192.168.28.33:8001',
+    URLWebsocket: 'ws://localhost:8001',
+    // URLWebsocket: 'ws://192.168.28.33:8001',
     // URLWebsocket: 'ws://10.200.1.249:8001',
     // URLWebsocket: 'ws://169.254.254.8:8001',
     socket: null,
@@ -345,6 +345,7 @@ export const useMisaStore = defineStore('misa', {
         if (res.hasOwnProperty('textoMisa')) {
           console.log(res)
           this.textoWS = res.textoMisa
+          console.log(this.textoWS)
           // this.wsPartido = res.partido
           // localStorage.setItem('partido', JSON.stringify(res.partido))
         } 
