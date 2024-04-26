@@ -9,6 +9,8 @@ export const usegSheetStore = defineStore('gSheet', {
     valoresMisaGSheet: null,
     gSheetMisaLoading: false,
     listaCrevillent: null,
+    listaGSheet: null,
+    configSimple: null
   }),
   getters: {
     getValoresHoja(state) {
@@ -60,6 +62,65 @@ export const usegSheetStore = defineStore('gSheet', {
       })
       
     }, // fin funcion getLista()
+    getConfigSimple() {
+      const data = JSON.parse(localStorage.getItem('configSimple'))
+      if(data) this.configSimple = data
+    },
+    setConfigSimple(payload) {
+      if(payload) this.configSimple = payload
+    },
+    getGseetData() {
+      this.gSheetLoading = true
+      const apiKey = import.meta.env.VITE_APP_APIKEY
+      const idSheets =  import.meta.env.VITE_APP_IDSHEETS
+      const hoja = this.configSimple.pagina
+      const rango = this.configSimple.rango
+      const values = `${hoja}!${rango}`
+      console.log(values)
+      // const values = `${hoja}!B1:F300`
+      fetch("https://content-sheets.googleapis.com/v4/spreadsheets/" +   idSheets + "/values/" + values + "?access_token="+ apiKey +"&key="+  apiKey)
+      .then((lista)=>{
+        return lista.json()
+      }).then((valores)=>{
+        let tempValores = valores.values.slice()
+        tempValores.shift()
+        console.log(tempValores)
+        const listadodesdeGS = []
+        // const fondos = ["TITULAR", "INFORMACIÓ", "INFORMACIÓ 3", "FIRMA 2 LINIES"]
+        // const fondos = ["DSK_PRINCIPAL"]
+
+        const fondos = []
+        let valorId = 0
+        tempValores.forEach(el => {
+          if (!fondos.includes(el[0])) fondos.push(el[0])
+          console.log(fondos)
+          let id = `Simple-${valorId}`
+          const data = {
+            metodo: el[0],
+            id_metodo: el[1],
+            numero: el[2],
+            texto1: el[3] || "",
+            texto2: el[4] || "",
+            texto3: el[5] || "",
+            label: `${el[0]} - ${el[1]} - ${el[2] || ""} - ${el[3] || ""} - ${el[4] || ""}`,
+            live: false,
+            id
+          }
+          listadodesdeGS.push(data)
+          valorId++
+        })
+
+        this.listaGSheet = listadodesdeGS
+        console.log(this.listaGSheet)
+        // localStorage.setItem('listadoCrevillent', JSON.stringify(this.listaCrevillent))
+        localStorage.setItem('listaGSheet', JSON.stringify(this.listaGSheet))
+        this.gSheetLoading = false
+      }).catch(err=>{
+        console.log(err);
+        this.gSheetLoading = false
+      })
+
+    },
     getListaCrevillent() {
       // id de la hoja de calculo
       // idSheets = '1sbZtJvR5q_1rdDF34sWNaylH-1j_41gSCgEYYZRRIU8';

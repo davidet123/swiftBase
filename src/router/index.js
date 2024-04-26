@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import Test from '../views/Test.vue'
 import Proyecto from '../views/Proyecto.vue'
 import Simple from '../views/simple/Simple.vue'
+import SimpleConfig from '../views/simple/SimpleConfig.vue'
 import Futbol from '../views/futbol/Futbol.vue'
 import FutbolInicio from '../views/futbol/FutbolInicio.vue'
 import EstFutbol from '../views/futbol/EstFutbol.vue'
@@ -50,6 +51,11 @@ const router = createRouter({
       path: '/simple',
       name: 'simple',
       component: Simple
+    },
+    {
+      path: '/simpleconfig',
+      name: 'simpleconfig',
+      component: SimpleConfig
     },
     {
       path: '/futbol',

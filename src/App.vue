@@ -26,7 +26,7 @@
   // Cargar desde firebase
 
   onBeforeMount(async () => {
-    gSheetStore.getListaCrevillent()
+    // gSheetStore.getListaCrevillent()
     // console.log(futbolStore.getPartidos)
     // futbolWebsocket.getLocalStorage()
     // futbolWebsocket.conectarWS()

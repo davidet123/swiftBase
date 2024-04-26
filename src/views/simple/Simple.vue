@@ -13,7 +13,7 @@
       </v-col>
     </v-row>
     <v-row class="mx-2 my-0 px-0">
-      <v-col cols="6" v-for="rotulo in retransmisionCrevillent" :id="rotulo.id" class="my-1 pa-0">
+      <v-col cols="6" v-for="rotulo in retransmisionSimple" :id="rotulo.id" class="my-1 pa-0">
         <BotonSimple 
             :id ="rotulo.id" 
             :nombre="rotulo.nombre" 
@@ -27,13 +27,23 @@
             />
       </v-col>
     </v-row>
-    <v-row v-if="listaCrevillent">
+    <v-row v-if="listaGSheet">
       <v-col class="my-1 pa-0">
         <BotonDesplegable 
-          :lista="listaCrevillent"
+          :lista="listaGSheet"
           @activarDesplegable="activarDesdeLista"
 
         />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col class="text-center">
+        <v-btn @click="reload()" color="error">RECARREGAR RÓTULS</v-btn>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col class="text-center">
+        <v-btn @click="router.push('/simpleconfig')" color="success">CONFIG</v-btn>
       </v-col>
     </v-row>
     <!-- <v-row>
@@ -165,16 +175,24 @@
   import { useSimpleStore } from "../../store/simple"
   import { usegSheetStore } from "../../store/gSheet"
   import { onBeforeMount } from 'vue'
+  import { useRouter } from 'vue-router'
+
+  const router = useRouter()
 
   const swiftConnectionStore = useSwiftConnectionStore()
   const simpleStore = useSimpleStore()
   const gSheetStore = usegSheetStore()
 
 
-  const { retransmisionesSimple, retransmisionCrevillent, listadoBotonesLive } = storeToRefs(simpleStore)
+  const { retransmisionesSimple, retransmisionCrevillent, listadoBotonesLive, retransmisionSimple } = storeToRefs(simpleStore)
   const { rtRemote, graficosLive } = storeToRefs(swiftConnectionStore)
 
-  const { listaCrevillent } = storeToRefs(gSheetStore)
+  
+  
+  const { listaGSheet, configSimple } = storeToRefs(gSheetStore)
+
+
+
 
   const listado = computed(() => {
     return simpleStore.listadoSimple
@@ -189,11 +207,19 @@
   //   console.log(val)
   // }
 
+  simpleStore.getConfigSimple() 
   onBeforeMount(() => {
     // simpleStore.setRetransmisionesSimple()
     // simpleStore.setSimpleLS()
-    simpleStore.cargarLS()
+    gSheetStore.getConfigSimple()
+    gSheetStore.getGseetData()
+    simpleStore.cargarLS() 
   })
+
+  const reload = () => {
+    // gSheetStore.getListaCrevillent()
+    gSheetStore.getGseetData("GFI")
+  }
 
   // SELECCIONADO
   const idSeleccion = ref(null)
@@ -283,18 +309,26 @@
     if(!payload.grafico) return
     console.log(payload)
 
-    const listaNombres = ["BANDA_UNICA", "BANDA_DOBLE_TITULO", "TRES_LINEAS", "DSK"]
+    // const listaNombres = ["BANDA_UNICA", "BANDA_DOBLE_TITULO", "TRES_LINEAS", "DSK"]
+    const listaNombres = ["DSK_PRINCIPAL"]
 
-    const metodo = listaNombres[payload.grafico.fondo]
+
+    // const metodo = listaNombres[payload.grafico.fondo]
+    const metodo = payload.grafico.metodo
+    console.log(metodo)
 
     if (!payload.live) {
       swiftConnectionStore.rtRemote.playGraphic(metodo)
       
-      if (payload.grafico.fondo === "0") {
-        swiftConnectionStore.rtRemote.updateFields(metodo + "::UNA_LTEXT", "String", payload.grafico.texto1)
-      } else if (payload.grafico.fondo === "1") {
-        console.log(payload.grafico.texto2)
-        swiftConnectionStore.rtRemote.updateFields(metodo + "::DOS_LTEXT", "String", payload.grafico.texto2)
+      if (payload.grafico.id_metodo === "0") {
+        // swiftConnectionStore.rtRemote.updateFields(metodo + "::UNA_LTEXT", "String", payload.grafico.texto1)
+        swiftConnectionStore.rtRemote.updateFields(metodo + "::TXT_SUPTEXT", "String", payload.grafico.texto1)
+        swiftConnectionStore.rtRemote.updateFields(metodo + "::TXT_INFTEXT", "String", payload.grafico.texto2)
+      } else if (payload.grafico.id_metodo === "1") {
+        // console.log(payload.grafico.texto2)
+        // swiftConnectionStore.rtRemote.updateFields(metodo + "::DOS_LTEXT", "String", payload.grafico.texto2)
+        swiftConnectionStore.rtRemote.updateFields(metodo + "::TXT_SUPTEXT", "String", payload.grafico.texto1)
+        swiftConnectionStore.rtRemote.updateFields(metodo + "::TXT_INFTEXT", "String", payload.grafico.texto2)
         
       } else if (payload.grafico.fondo === "2") {
         swiftConnectionStore.rtRemote.updateFields(metodo + "::TIT_TRES_LINEASTEXT", "String", payload.grafico.texto1)

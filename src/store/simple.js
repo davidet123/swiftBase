@@ -15,36 +15,38 @@ export const useSimpleStore = defineStore('simpleStore', {
     retransmisionActiva: null,
     retransmisionCrevillent: [
       {numero:0,
-      nombre: "MOSCA_SEMANA_SANTA",
-      id: "MoscaCrev",
+      nombre: "DIRECTE",
+      id: "DirecteGFI",
       live: false
     },
-      {numero:0,
-      nombre: "DIRECTE_LOC",
-      id: "DirecteTorrLoc",
-      live: false
-    },
-      {numero:0,
-      nombre: "DIRECTE_PARROQUIA",
-      id: "DirecteTorrParroquia",
-      live: false
-    },
-      {numero:0,
-      nombre: "DSK_CHUS",
-      id: "DskChusTorr",
-      live: false
-    },
-      {numero:0,
-      nombre: "DSK_CRISTINA",
-      id: "DskCrisTorr",
-      live: false
-    },
-      {numero:0,
-      nombre: "RETORS",
-      id: "RetorsTorr",
-      live: false
-    },
+    
+    //   {numero:0,
+    //   nombre: "DIRECTE_LOC",
+    //   id: "DirecteTorrLoc",
+    //   live: false
+    // },
+    //   {numero:0,
+    //   nombre: "DIRECTE_PARROQUIA",
+    //   id: "DirecteTorrParroquia",
+    //   live: false
+    // },
+    //   {numero:0,
+    //   nombre: "DSK_CHUS",
+    //   id: "DskChusTorr",
+    //   live: false
+    // },
+    //   {numero:0,
+    //   nombre: "DSK_CRISTINA",
+    //   id: "DskCrisTorr",
+    //   live: false
+    // },
+    //   {numero:0,
+    //   nombre: "RETORS",
+    //   id: "RetorsTorr",
+    //   live: false
+    // },
     ],
+    retransmisionSimple: null,
     listaCrevillent: [
       {
         numero: 2,
@@ -73,6 +75,13 @@ export const useSimpleStore = defineStore('simpleStore', {
       if(lista) this.listaCrevillent = lista
       const listadoBotonesLive = JSON.parse(localStorage.getItem('listadoCrevillent')) 
       if(listadoBotonesLive) this.listadoBotonesLive = listadoBotonesLive
+    },
+
+    getConfigSimple() {
+      const lista = JSON.parse(localStorage.getItem('configSimple')) 
+      this.retransmisionSimple = [...lista.elementos]
+      console.log(this.retransmisionSimple)
+
     },
 
     addItemCrevillent(payload) {
