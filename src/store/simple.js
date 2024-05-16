@@ -2,6 +2,10 @@ import { defineStore } from "pinia";
 
 export const useSimpleStore = defineStore('simpleStore', {
   state: () => ({
+    simpleWs: null,
+    connectionState: null,
+    excelData: null,
+    URLWebsocket: 'ws://localhost:8001',
     listadoBotonesLive: [],
     listado: ['DIRECTE', 'RETORS'],
     listadoSimple: [
@@ -70,6 +74,109 @@ export const useSimpleStore = defineStore('simpleStore', {
     getListaRetransmisiones: state => state.retransmisionesSimple
   },
   actions: {
+    conectarSimpleWs() {
+      console.log("conetcaod simple")
+      // Crea una nueva conexión.
+      this.simpleWs = new WebSocket(this.URLWebsocket);
+      // this.actualizarExcel()
+      // let state = document.querySelector(".websocketOff")
+      const self = this
+
+      // console.log(this.socket)
+      
+      // Abre la conexión
+      this.simpleWs.addEventListener('open', function (event) {
+        self.connectionState = event.currentTarget.readyState
+        self.simpleWs.send('Conexión websocket establecida');
+        self.actualizarExcel()
+      })
+      this.simpleWs.addEventListener('close', function(event) {
+        self.connectionState = event.currentTarget.readyState
+        console.log(event)
+        self.valor = 0
+        // incializar_vumetro(0)
+        // state.classList.remove("websocketOn")
+        // state.classList.add("websocketOff")
+      })
+      this.simpleWs.addEventListener('error', function (event) {
+        // incializar_vumetro(0)
+        self.connectionState = event.currentTarget.readyState
+        self.valor = 0
+        self.socket.close()
+      })
+      
+      // Escucha por mensajes
+      this.simpleWs.addEventListener('message', function (event) {
+        // console.log(JSON.parse(event.data))
+
+        const datos = JSON.parse(event.data)
+        
+        // console.log(datos["!ref"])
+        const rango = datos["!ref"]
+
+        // console.log(rango.split(":"))
+
+        const match = rango.split(":")[1].match(/^([A-Za-z]+)([0-9]+)$/)
+
+        const letra = rango.split(":")[1].charAt(0)
+        const fila = parseInt(rango.split(":")[1].substring(1))
+
+        const columna = letra.charCodeAt(0) - 64
+
+        const encabezados = []
+
+        for (let i = 1; i <= columna; i++) {
+          const letraActual = String.fromCharCode(i + 64)
+          encabezados.push(datos[`${letraActual}1`].v)
+        }
+
+        const resultado = []
+
+        for (let i = 2; i <= fila; i++) {
+          const tempRes = {}
+          for (let j = 1; j <= columna; j++) {
+            const letraActual = String.fromCharCode(j + 64)
+            const tempTexto = datos[`${letraActual}${i}`]
+            let texto = ""
+            // console.log(letraActual)
+            // console.log(texto)
+            if(!tempTexto) {
+              texto=""
+            } else {
+              texto = tempTexto.v
+            }
+            // const key = encabezados[j]
+            tempRes[encabezados[j-1]] = texto
+            // if(texto.hasOwnProperty("v")) console.log(texto.v)
+          }
+          resultado.push(tempRes)
+        }
+        self.excelData = resultado
+        console.log(self.excelData)
+        // incializar_vumetro(event.data)
+        // self.valor = parseFloat(event.data)
+        // console.log(JSON.parse(event.data))
+        self.texto = JSON.parse(event.data)
+        // console.log(JSON.parse(event.data))
+        // Añadir valores al array
+        self.dataValue = Math.floor(event.data * self.factorVolumen)
+        if (self.recording) {
+          // chartjsArray.push(dataValue)
+          self.arrayValues.push({x:Date.now(), y: self.dataValue})
+          // localCounter++
+        }
+
+        if (self.valor >= self.maxValue) {
+          self.maxValue = parseFloat(event.data)
+        }
+      
+      });
+
+    },
+    actualizarExcel() {
+      console.log(this.simpleWs)
+      this.simpleWs.send("actualizarExcel")
+    },
     getListaCrevillent() {
       const lista = JSON.parse(localStorage.getItem('listadoCrevillent')) 
       if(lista) this.listaCrevillent = lista

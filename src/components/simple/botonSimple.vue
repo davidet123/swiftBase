@@ -28,7 +28,6 @@
               <v-btn size="x-small" variant="flat" :color="!live ? 'success' : 'error'" @click="insertarGrafico(nuevoNombre)" :disabled="desactivar" >LIVE</v-btn>
             </v-col>
             <v-col cols="6" @click="seleccionar(id, nombre)">
-              {{ rotuloLive }}
               <p v-if="tiempo !== 0">{{ tiempo }}</p>
               <h4>{{ nuevoNombre }} <span :class="cuenta <= 3 ?'red--text' : 'white--text'">{{ tiempo != 0 && cuenta != 0 ? cuenta : "" }}</span> {{ tiempo != 0 && cuenta != 0 ? " segs" : "" }}</h4>
             </v-col>
@@ -210,12 +209,12 @@ watch(() => activarManual.value, val => {
 })
 
 let cargaInicial = false
-watch(() => graficosLive.value, val => {
-  if(val.includes(nombre.value) && !cargaInicial) {
-  live.value = true
-  cargaInicial = true
-  }
-})
+// watch(() => graficosLive.value, val => {
+//   if(val.includes(nombre.value) && !cargaInicial) {
+//   live.value = true
+//   cargaInicial = true
+//   }
+// })
 watch(() => datosCargados.value, val => {
   console.log(val)
 })

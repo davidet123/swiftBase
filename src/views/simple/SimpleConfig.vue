@@ -89,6 +89,10 @@
 
 
 
+  // const pagina = ref(null)
+  // const rango = ref(null)
+
+  // const elementosEstaticos = ref([])
   const pagina = ref(configSimple.value.pagina)
   const rango = ref(configSimple.value.rango)
 

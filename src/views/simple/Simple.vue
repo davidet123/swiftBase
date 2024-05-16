@@ -43,6 +43,11 @@
     </v-row>
     <v-row>
       <v-col class="text-center">
+        <v-btn @click="actualizarExcel" color="success">ACTUALIZAR</v-btn>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col class="text-center">
         <v-btn @click="router.push('/simpleconfig')" color="success">CONFIG</v-btn>
       </v-col>
     </v-row>
@@ -172,6 +177,7 @@
   import { storeToRefs } from "pinia";
 
   import { useSwiftConnectionStore } from "../../store/swiftConnection"
+  // import { useWebsocketStore } from "../../store/websocket"
   import { useSimpleStore } from "../../store/simple"
   import { usegSheetStore } from "../../store/gSheet"
   import { onBeforeMount } from 'vue'
@@ -182,21 +188,30 @@
   const swiftConnectionStore = useSwiftConnectionStore()
   const simpleStore = useSimpleStore()
   const gSheetStore = usegSheetStore()
+  // const websocketStore = useWebsocketStore()
 
 
-  const { retransmisionesSimple, retransmisionCrevillent, listadoBotonesLive, retransmisionSimple } = storeToRefs(simpleStore)
+  const { retransmisionesSimple, retransmisionCrevillent, listadoBotonesLive, retransmisionSimple, excelData, simpleWs } = storeToRefs(simpleStore)
   const { rtRemote, graficosLive } = storeToRefs(swiftConnectionStore)
+  // const { socket, excelData } = storeToRefs(websocketStore)
 
+  console.log(simpleWs.value)
+  // websocketStore.conectarWS()
+  
   
   
   const { listaGSheet, configSimple } = storeToRefs(gSheetStore)
-
-
+  
+  
+  simpleStore.conectarSimpleWs()
+  // simpleStore.actualizarExcel()
 
 
   const listado = computed(() => {
     return simpleStore.listadoSimple
   })
+
+  const actualizarExcel = () => simpleStore.actualizarExcel()
 
   // console.log(rtRemote.value)
 
@@ -215,6 +230,7 @@
     gSheetStore.getGseetData()
     simpleStore.cargarLS() 
   })
+  
 
   const reload = () => {
     // gSheetStore.getListaCrevillent()
@@ -230,7 +246,7 @@
   const seleccionar = data => {
     idSeleccion.value = data.id
     nombreSeleccion.value = data.nombre
-    console.log(idSeleccion.value)
+    // console.log(idSeleccion.value)
   }
 
   document.addEventListener('keyup', e => {
@@ -242,7 +258,7 @@
     if(nombreSeleccion.value) {
       activarManual.value = idSeleccion.value
       // console.log('key')
-      console.log(activarManual.value, idSeleccion.value)
+      // console.log(activarManual.value, idSeleccion.value)
     }
   }
 
@@ -307,7 +323,7 @@
 
   const activarDesdeLista = payload  => {
     if(!payload.grafico) return
-    console.log(payload)
+    // console.log(payload)
 
     // const listaNombres = ["BANDA_UNICA", "BANDA_DOBLE_TITULO", "TRES_LINEAS", "DSK"]
     const listaNombres = ["DSK_PRINCIPAL"]
@@ -315,7 +331,7 @@
 
     // const metodo = listaNombres[payload.grafico.fondo]
     const metodo = payload.grafico.metodo
-    console.log(metodo)
+    // console.log(metodo)
 
     if (!payload.live) {
       swiftConnectionStore.rtRemote.playGraphic(metodo)
@@ -348,7 +364,7 @@
   }
  
   const activarGrafico = payload => {
-    console.log(payload)
+    // console.log(payload)
     if (!payload.live) {
       bringOn(payload)
     } else {
@@ -358,7 +374,7 @@
 
   const bringOn = (payload) => {
     // console.log(swiftConnectionStore.rtRemote)
-    console.log('bringon')
+    // console.log('bringon')
     swiftConnectionStore.rtRemote.playGraphic(payload.nombre)
     if(payload.valor) swiftConnectionStore.rtRemote.updateFields(payload.nombre + "::FONDOSHDR", "Shader", payload.valor)
     swiftConnectionStore.rtRemote.playMethod(payload.nombre + "::bringOn")
@@ -367,7 +383,7 @@
     getStatus()
   }
   const takeOff = (payload) => {
-    console.log(payload.nombre)
+    // console.log(payload.nombre)
     // swiftConnectionStore.rtRemote.playGraphic(payload.nombre)
     swiftConnectionStore.rtRemote.playMethod(payload.nombre + "::takeOff")
     swiftConnectionStore.rtRemote.playGraphic("CLEAR")
@@ -406,6 +422,14 @@
       getStatus()
       swiftConnectionStore.setDatosCargados(true)
     }
+  })
+  watch(() => simpleWs.value, (val) => {
+    console.log(val)
+    if(val) {
+      // websocketStore.actualizarExcel()
+    }
+  }, {
+    deep:true
   })
   // watch(() => graficosLive.value, (val) => {
   //   // if(val) swiftConnectionStore.getStatus("Node", "rootNode||ObjectNode|Name")

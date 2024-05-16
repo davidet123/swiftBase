@@ -76,7 +76,7 @@ export const usegSheetStore = defineStore('gSheet', {
       const hoja = this.configSimple.pagina
       const rango = this.configSimple.rango
       const values = `${hoja}!${rango}`
-      console.log(values)
+      // console.log(values)
       // const values = `${hoja}!B1:F300`
       fetch("https://content-sheets.googleapis.com/v4/spreadsheets/" +   idSheets + "/values/" + values + "?access_token="+ apiKey +"&key="+  apiKey)
       .then((lista)=>{
@@ -84,7 +84,7 @@ export const usegSheetStore = defineStore('gSheet', {
       }).then((valores)=>{
         let tempValores = valores.values.slice()
         tempValores.shift()
-        console.log(tempValores)
+        // console.log(tempValores)
         const listadodesdeGS = []
         // const fondos = ["TITULAR", "INFORMACIÓ", "INFORMACIÓ 3", "FIRMA 2 LINIES"]
         // const fondos = ["DSK_PRINCIPAL"]
@@ -93,7 +93,7 @@ export const usegSheetStore = defineStore('gSheet', {
         let valorId = 0
         tempValores.forEach(el => {
           if (!fondos.includes(el[0])) fondos.push(el[0])
-          console.log(fondos)
+          // console.log(fondos)
           let id = `Simple-${valorId}`
           const data = {
             metodo: el[0],
@@ -111,7 +111,7 @@ export const usegSheetStore = defineStore('gSheet', {
         })
 
         this.listaGSheet = listadodesdeGS
-        console.log(this.listaGSheet)
+        // console.log(this.listaGSheet)
         // localStorage.setItem('listadoCrevillent', JSON.stringify(this.listaCrevillent))
         localStorage.setItem('listaGSheet', JSON.stringify(this.listaGSheet))
         this.gSheetLoading = false

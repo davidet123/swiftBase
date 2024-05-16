@@ -16,6 +16,12 @@
     </v-col>
   </v-row> -->
   <v-row>
+    <v-col cols="12" class="text-center">EXCEL</v-col>
+    <v-col class="text-center">
+      <v-btn @click="actualizarExcel" color="success">ACTUALIZAR</v-btn>
+    </v-col>
+  </v-row>  
+  <v-row>
     <v-col cols="12" class="text-center">DSK ANIMADO</v-col>
   </v-row>  
   <v-row>
@@ -128,7 +134,7 @@
   import { computed } from 'vue';
   import { watch } from 'vue';  
   import { onMounted } from 'vue';
-import { storeToRefs } from 'pinia';
+  import { storeToRefs } from 'pinia';
   // import { createWorker } from 'tesseract.js';
 
   // console.log(createWorker)
@@ -149,6 +155,10 @@ import { storeToRefs } from 'pinia';
 
 
   websocketStore.conectarWS()
+
+  // EXCEL
+
+  const actualizarExcel = () => websocketStore.actualizarExcel()
 
 
 
@@ -274,13 +284,13 @@ import { storeToRefs } from 'pinia';
   const hoja = computed(() => gSheetStore.getValoresHoja)
   // console.log(hoja.value)
   
-  swiftConnectionStore.startConnection()
-  swiftConnectionStore.startVideo()
+  // swiftConnectionStore.startConnection()
+  // swiftConnectionStore.startVideo()
   
   // Prueba websocket
 
 
-  futbolWebsocket.conectarWS()
+  // futbolWebsocket.conectarWS()
   // futbolWebsocket.enviarWS()
   const enviarWS = () => futbolWebsocket.enviarWS({message: "test"})
 

@@ -21,7 +21,8 @@ export const useWebsocketStore = defineStore('websocket', {
     arrayValues: [],
     factorVolumen: 0.7,
     URLWebsocket: 'ws://localhost:8001',
-    texto: null
+    texto: null,
+    excelData: null
   }),
   getters: {
     nivelVumetro (state) {
@@ -89,7 +90,51 @@ export const useWebsocketStore = defineStore('websocket', {
       
       // Escucha por mensajes
       this.socket.addEventListener('message', function (event) {
-        // console.log("mensaje")
+        // console.log(JSON.parse(event.data))
+
+        const datos = JSON.parse(event.data)
+        
+        // console.log(datos["!ref"])
+        const rango = datos["!ref"]
+
+        // console.log(rango.split(":"))
+
+        const match = rango.split(":")[1].match(/^([A-Za-z]+)([0-9]+)$/)
+
+        const letra = rango.split(":")[1].charAt(0)
+        const fila = parseInt(rango.split(":")[1].substring(1))
+
+        const columna = letra.charCodeAt(0) - 64
+
+        const encabezados = []
+
+        for (let i = 1; i <= columna; i++) {
+          const letraActual = String.fromCharCode(i + 64)
+          encabezados.push(datos[`${letraActual}1`].v)
+        }
+
+        const resultado = []
+
+        for (let i = 2; i <= fila; i++) {
+          const tempRes = {}
+          for (let j = 1; j <= columna; j++) {
+            const letraActual = String.fromCharCode(j + 64)
+            const tempTexto = datos[`${letraActual}${i}`]
+            let texto = ""
+            // console.log(letraActual)
+            // console.log(texto)
+            if(!tempTexto) {
+              texto=""
+            } else {
+              texto = tempTexto.v
+            }
+            // const key = encabezados[j]
+            tempRes[encabezados[j-1]] = texto
+            // if(texto.hasOwnProperty("v")) console.log(texto.v)
+          }
+          resultado.push(tempRes)
+        }
+        this.excelData = resultado
         // incializar_vumetro(event.data)
         // self.valor = parseFloat(event.data)
         // console.log(JSON.parse(event.data))
@@ -108,6 +153,10 @@ export const useWebsocketStore = defineStore('websocket', {
         }
       
       });
+    },
+    actualizarExcel() {
+      console.log(this.socket)
+      this.socket.send("actualizarExcel")
     },
     pararWS() {
       // if(this.socket) {
