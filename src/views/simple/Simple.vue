@@ -46,7 +46,7 @@
         <v-btn @click="actualizarExcel" color="success">ACTUALIZAR</v-btn>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row class="mb-4">
       <v-col class="text-center">
         <v-btn @click="router.push('/simpleconfig')" color="success">CONFIG</v-btn>
       </v-col>

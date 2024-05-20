@@ -347,7 +347,6 @@ const limpiarPantalla = () => {
 }
 
 const toDirecte = (val) => {
-  // console.log(textosMisa.length)
   limpiarLive.value = false
 
   
@@ -382,16 +381,11 @@ const toDirecte = (val) => {
   // }
 
   if(next.value !== textosMisa.value.length -1) {
-      // console.log(next.value)
       next.value += val
     } else if (next.value == 0 && val == -1) {
       next.value = 1
       now.value = 0
     }
-
-  // console.log(now.value)
-  // console.log(next.value)
-  // console.log(textoNow.value)
   setLocalStorage()
   misaStore.enviarWS(textoNow.value)
 }
@@ -417,7 +411,6 @@ const fullScreen = () => {
 }
 
 const cargarMisa = id => {
-  // console.log(id)
   misaStore.setMisaCargada(id)
   misaStore.setTextoLive(0)
   // misaStore.actualizarTextoFullScreen({
@@ -430,7 +423,6 @@ const cargarMisa = id => {
   now.value = 0
   next.value = 1
   // misaStore.cargarMisa(id)
-  // console.log(textosMisa.value)
 }
 
 const editarMisa = id => {
@@ -452,7 +444,6 @@ document.addEventListener("keyup", (event) => {
     if (event.key === " ") reenviarDirecte()
     
   }
-  // console.log(event.key)
 });
 
 const setLocalStorage = () => {
@@ -463,7 +454,6 @@ const setLocalStorage = () => {
   const data = JSON.parse(localStorage.getItem('misaData'))
   data.now = now.value
   data.next = next.value
-  // console.log(data)
   localStorage.setItem('misaData', JSON.stringify(data))
 
 }

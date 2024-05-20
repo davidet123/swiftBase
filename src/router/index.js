@@ -25,6 +25,9 @@ import MisaFullScreen from '../views/misa/MisaFullScreen.vue'
 import EditarTextoMisa from '../views/misa/EditarTextoMisa.vue'
 import EditarMisa from '../views/misa/EditarMisa.vue'
 import Misa from '../views/misa/Misa.vue'
+import Pilota from '../views/pilota/Pilota.vue'
+import MenuPilota from '../views/pilota/MenuPilota.vue'
+import PartidaPilota from '../views/pilota/PartidaPilota.vue'
 import Teleprompter from '../views/teleprompter/Teleprompter.vue'
 import Settings from '../views/Settings.vue'
 
@@ -176,7 +179,22 @@ const router = createRouter({
       path: '/settings',
       name: 'settings',
       component: Settings
-    }
+    },
+    {
+      path: '/pilota',
+      name: 'pilota',
+      component: Pilota
+    },
+    {
+      path: '/menupilota',
+      name: 'menupilota',
+      component: MenuPilota
+    },
+    {
+      path: '/partidapilota',
+      name: 'partidapilota',
+      component: PartidaPilota
+    },
   ]
 })
 

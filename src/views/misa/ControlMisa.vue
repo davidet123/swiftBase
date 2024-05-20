@@ -134,18 +134,21 @@
     // if(directe.value) {
     const textoRectangleSize = `1580, ${altura}`
     console.log(value)
+    const metodo = "ROTULACIO_MISA"
+    swiftConnectionStore.rtRemote.playGraphic(metodo)
     
     swiftConnectionStore.startTransaction()
-    if(value.texto === "" || value.texto === " " || value.color !== '#FFFFFF') {
-      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISSA::GRUPO", "Display", "false")
+    // if(value.texto === "" || value.texto === " " || value.color !== '#FFFFFF') {
+    if(value.texto === "" || value.texto === " " ) {
+      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISA::GRUPO", "Display", "false")
     } else {
-      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISSA::textoMisaTEXT", "String", value.texto)
-      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISSA::rectangle2DGEOM", "RectangleSize", textoRectangleSize)
-      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISSA::textoMisaSHDR", "MaterialDiffuse", cambioColor(color))
-      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISSA::GRUPO", "Display", "true")
+      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISA::textoMisaTEXT", "String", value.texto)
+      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISA::rectangle2DGEOM", "RectangleSize", textoRectangleSize)
+      // if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISA::textoMisaSHDR", "MaterialDiffuse", cambioColor(color))
+      if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISA::GRUPO", "Display", "true")
 
     }
-    // if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISSA::textoMisaSombraTEXT", "String", newValue.value.texto)
+    // if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISA::textoMisaSombraTEXT", "String", newValue.value.texto)
     swiftConnectionStore.endTransaction()
     // status = swiftConnectionStore.getStatus("Metho", "Current")
     // console.log(swiftConnectionStore.getStatus("Script", "Current"))
@@ -203,12 +206,12 @@
 //     // console.log(newValue.value)
 //     let status = null
 //     // console.log(swiftConnectionStatus.value)
-//     // swiftConnectionStore.cueGraphic("ROTULACIO_MISSA")
+//     // swiftConnectionStore.cueGraphic("ROTULACIO_MISA")
 //       //   swiftConnectionStore.startTransaction()
 //       //   if(newValue.value.texto === "" || newValue.value.texto === " ") {
-//       //     if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISSA::GRUPO", "Display", "false")
+//       //     if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISA::GRUPO", "Display", "false")
 //       //   } else {
-//       //     if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISSA::GRUPO", "Display", "true")
+//       //     if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISA::GRUPO", "Display", "true")
 //       //   }
 //       //   const color = newValue.value.color == '#FFFFFF' ? '#000000' : '#003099'
 //       //   let altura = "80"
@@ -217,10 +220,10 @@
 //       //   const textoRectangleSize = `1580, ${altura}`
 //       //   // console.log(textoFullScreen)
 
-//       //   if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISSA::rectangle2DGEOM", "RectangleSize", textoRectangleSize)
-//       //   if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISSA::textoMisaTEXT", "String", newValue.value.texto)
-//       //   if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISSA::textoMisaSHDR", "MaterialDiffuse", cambioColor(color))
-//       //   // if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISSA::textoMisaSombraTEXT", "String", newValue.value.texto)
+//       //   if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISA::rectangle2DGEOM", "RectangleSize", textoRectangleSize)
+//       //   if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISA::textoMisaTEXT", "String", newValue.value.texto)
+//       //   if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISA::textoMisaSHDR", "MaterialDiffuse", cambioColor(color))
+//       //   // if(swiftConnectionStatus.value == 1) swiftConnectionStore.rtRemote.updateFields("ROTULACIO_MISA::textoMisaSombraTEXT", "String", newValue.value.texto)
 //       //   swiftConnectionStore.endTransaction()
 //       //   // status = swiftConnectionStore.getStatus("Metho", "Current")
 //       //   console.log(swiftConnectionStore.getStatus("Script", "Current"))

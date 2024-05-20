@@ -15,7 +15,9 @@ export default defineConfig({
       autoImport: true,
     }),
   ],
-  define: { 'process.env': {} },
+  define: { 'process.env': {},  
+    __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'true'
+    },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
