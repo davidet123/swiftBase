@@ -30,6 +30,7 @@ import MenuPilota from '../views/pilota/MenuPilota.vue'
 import PartidaPilota from '../views/pilota/PartidaPilota.vue'
 import Teleprompter from '../views/teleprompter/Teleprompter.vue'
 import Settings from '../views/Settings.vue'
+import Retransmision from '../views/retransmision/Retransmision.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -194,6 +195,11 @@ const router = createRouter({
       path: '/partidapilota',
       name: 'partidapilota',
       component: PartidaPilota
+    },
+    {
+      path: '/retransmision',
+      name: 'retransmision',
+      component: Retransmision
     },
   ]
 })

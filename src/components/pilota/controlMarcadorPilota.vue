@@ -73,7 +73,6 @@
   }
 
   document.addEventListener("keydown", (event) => {
-  console.log(event.getModifierState("Shift"))
   if(event.getModifierState("Shift")) console.log(event.key)
 });
 
