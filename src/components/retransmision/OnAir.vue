@@ -1,36 +1,45 @@
 <template>
   <div class="cajaOnAir">
-    <div><h4>F1</h4></div>
-    <div><h4>MOSCA_SEMANA_SANTA</h4></div>
-    <div><h4>1</h4></div>
-
+    <div class="tecla"><p>F1</p></div>
+    <div class="titulo"><h4>{{ titulo }}</h4></div>
+    <div class="orden"><p>{{ orden + 1 }}</p></div>
   </div>
-  <!-- <v-row class="cajaOnAir pa-0 ma-0">
-    <v-col cols="12">
-      <v-row class="ma-0 pa-0"><h4>F1</h4></v-row>
-      <v-row class="ma-0 pa-0"><h4>MOSCA_SEMANA_SANTA cfdsafad</h4></v-row>
-      <v-row class="ma-0 pa-0"><h4>1</h4></v-row>
-
-    </v-col>
-  </v-row> -->
-
 </template>
 
 <script setup>
 
+import { toRefs } from 'vue';
+
+const props = defineProps(["titulo", "orden"])
+
+const { titulo, orden } = toRefs(props)
+
 </script>
 
 <style scoped>
-  h4 {
+  p {
     font-size: 0.8vw;
+    font-weight: bold;
   }
   .cajaOnAir {
     height: 100%;
     width: 150px;
     padding: 5px;
     background-color: red;
-    border: 2px solid rgb(255, 196, 196)
-    
+    border: 2px solid rgb(255, 196, 196);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;    
+    color: #000;
   }
+
+  .orden {
+    padding: 2px;
+    display: flex;
+    border: 1px solid black;
+    justify-content: center;
+  }
+
+
 
 </style>

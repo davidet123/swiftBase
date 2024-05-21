@@ -1,12 +1,11 @@
 <template>
   <div id="retransmision">
     <v-row id="onair">
-        <OnAir />
-        {{ onair }}
+        <OnAir v-for="( titulo, index) in onair" :key="index" :titulo="titulo" :orden="index"/>
     </v-row>
     
     <v-row id="secciones">
-      <v-col><h4>SECCIONES</h4></v-col>
+      <Secciones v-for="(seccion, index) in secciones" :key="index" :seccion="seccion" :orden="index"/>
     </v-row>
     <v-row class="ma-0 pa-0" id="seccion-media">
       <v-col id="listado">
@@ -44,11 +43,12 @@
 
   import VisorFlex from '@/components/visor/VisorFlex.vue'
   import OnAir from '@/components/retransmision/OnAir.vue'
+  import Secciones from '@/components/retransmision/Secciones.vue'
 
   const router = useRouter()
 
   const retransmisionStore = useRetransmisionStore()
-  const { onair } = storeToRefs(retransmisionStore)
+  const { onair, secciones } = storeToRefs(retransmisionStore)
 
   // const fondoVisor = () => {
   //   return 'background-color: #ff0000'
@@ -79,9 +79,18 @@
     padding: 0;
   }
   
-  #onair, #secciones, #graficos {
+  #onair, #graficos {
     width: 100%;
-    height: 10%;
+    height: 12.5%;
+    border: 1px solid white;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    align-items: start;
+  }
+   #secciones {
+    width: 100%;
+    height: 5%;
     border: 1px solid white;
     margin: 0;
     padding: 0;
