@@ -5,11 +5,16 @@
     </v-row>
     
     <v-row id="secciones">
-      <Secciones v-for="(seccion, index) in secciones" :key="index" :seccion="seccion" :orden="index"/>
+      <Secciones v-for="(seccion, index) in seccionesOrdenadas" :key="index" :seccion="seccion" :orden="index" :seccionActiva = "seccionActiva"/>
     </v-row>
     <v-row class="ma-0 pa-0" id="seccion-media">
       <v-col id="listado">
-        <h4>Listado</h4>
+        <ListadoRotulos 
+          @drop="onDrop($event)"
+          @dragenter.prevent
+          @dragover.prevent
+          :seccionActiva="seccionActiva"
+          :listaRotulos="listaRotulos"/>
       </v-col>
       <v-col id="controles">
         <v-row id="visor" class="ma-0 pa-0">
@@ -27,7 +32,14 @@
       </v-col>
   
     </v-row>
-    <v-row id="graficos">
+    <v-row id="seccionGraficos">
+      <Graficos 
+        @evento="getEvento"
+        class="graficoSeleccionado" v-for="(grafico, index) in listaGraficos" 
+        :key="index" 
+        :grafico="grafico" 
+        :orden="index"
+      />
   
     </v-row>
   </div>
@@ -40,25 +52,56 @@
   import { useRetransmisionStore } from "../../store/retransmision" 
   import { storeToRefs } from "pinia"
   import { useRouter } from 'vue-router'
-
+  
   import VisorFlex from '@/components/visor/VisorFlex.vue'
   import OnAir from '@/components/retransmision/OnAir.vue'
   import Secciones from '@/components/retransmision/Secciones.vue'
+  import Graficos from '@/components/retransmision/Graficos.vue'
+  import ListadoRotulos from '@/components/retransmision/ListadoRotulos.vue'
 
   const router = useRouter()
 
   const retransmisionStore = useRetransmisionStore()
-  const { onair, secciones } = storeToRefs(retransmisionStore)
+  const { onair, secciones, listaGraficos, seccionActiva, listaRotulos } = storeToRefs(retransmisionStore)
 
-  // const fondoVisor = () => {
-  //   return 'background-color: #ff0000'
-  // }
+  
+  const seccionesOrdenadas = secciones.value.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0))
+  
+  const live = false
 
   const fondoVisor = computed(() => {
-    return {
-      'background-color': '#ff0000'
+    if(live) {
+      return {
+        'background-color': '#ff0000'
+      }
+    } else {
+      return {
+        'background-color': '#303030'
+      }
     }
   })
+  let evento = null
+
+  const onDrop = (event) => {
+    const item = event.dataTransfer.getData('item')
+    console.log(evento)
+    const rotulo = {
+      id: `r${listaRotulos.value.length + 1}`,
+      numero: `${listaRotulos.value.length + 1}`,
+      titulo: evento.titulo,
+      grafico: evento.id,
+      seccion: seccionActiva.value
+    }
+    listaRotulos.value.push(rotulo)
+  }
+
+  const getEvento = item => {
+    // console.log(item)
+    evento = item
+  }
+
+  
+
 
 </script>
 
@@ -79,7 +122,7 @@
     padding: 0;
   }
   
-  #onair, #graficos {
+  #onair, #seccionGraficos {
     width: 100%;
     height: 12.5%;
     border: 1px solid white;

@@ -2,12 +2,18 @@
   <div  
     v-if="seccion.titulo !== 'AÑADIR'" 
     class="cajaSeccion" 
-    :style="seccion.activo ? 'background-color: #024f64' : 'background-color: #686867'"
+    :style="colorSeccion"
     @click="activarSeccion(seccion.id)"
   >
     <div class="orden" :style="seccion.elementoLive ? 'background-color: #ff0000' : 'background-color: #686867'">{{ orden +1 }}</div>
     <div class="contenido" >
       {{ seccion.titulo }}
+    </div>
+    <div>
+      <v-icon
+        icon="mdi-menu"
+        @click="editarSeccion(seccion.titulo)"
+      ></v-icon>
     </div>
 
   </div>
@@ -15,22 +21,74 @@
     <h1>+</h1>
   </div>
 
+  <div>
+    <v-dialog
+      v-model="dialog"
+      width="auto"
+    > 
+    <v-card
+      max-width="500px"
+    >
+      <v-card-title>
+        <h4>Añadir seccion</h4>
+      </v-card-title>
+      <v-card-text>
+        {{ nombreSeccion }}
+        <v-text-field
+          v-model="nombreSeccion"
+        ></v-text-field>
+        <v-btn @click="aceptar()" color="error">ACEPTAR</v-btn>
+        <v-btn @click="dialog=false" color="primary">CANCELAR</v-btn>
+      </v-card-text>
+    </v-card>
+
+    </v-dialog>
+  </div>
+
 </template>
 
 <script setup>
 
-import { toRefs } from 'vue';
+import { computed, ref, toRefs } from 'vue';
 
-const props = defineProps(["seccion", "orden"])
+import { useRetransmisionStore } from '@/store/retransmision';
 
-const { seccion, orden } = toRefs(props)
+const retransmisionStore = useRetransmisionStore()
+
+const props = defineProps(["seccion", "orden", "seccionActiva"])
+
+const { seccion, orden, seccionActiva } = toRefs(props)
+
+const colorSeccion = computed(() => seccion.value.id === seccionActiva.value ? {'background-color': '#024f64'} : {'background-color': '#686867'} )
+
+const activarSeccion = id => retransmisionStore.setSeccionActiva(id)
+// const añadirSeccion = () => retransmisionStore.addSeccion()
+const añadirSeccion = () => dialog.value = true
 
 
-const activarSeccion = id => console.log(seccion.value)
+const dialog = ref(false)
+const nombreSeccion = ref(null)
+let editar = false
 
-const añadirSeccion = () => {
+const editarSeccion = (titulo) => {
+  dialog.value = true
+  editar = true
+  nombreSeccion.value = titulo
   console.log(seccion.value)
+  
+  seccion.value.titulo = nombreSeccion.value
+  console.log(seccion.value)
+
+  
 }
+const aceptar = () => { 
+  if(!editar) retransmisionStore.addSeccion(nombreSeccion.value)
+  // seccion.value.titulo = nombreSeccion.value
+  dialog.value = false
+  editar = false
+
+}
+
 
 </script>
 
@@ -72,4 +130,16 @@ const añadirSeccion = () => {
     border: 1px solid white;
     cursor: pointer;
   }
+
+  /* .menu {
+    
+  }
+
+  .menu span {
+    width: 35px;
+    height: 5px;
+    background-color: white;
+    margin: 6px 0;
+
+  } */
 </style>
