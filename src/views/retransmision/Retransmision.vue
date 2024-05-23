@@ -23,9 +23,11 @@
             <VisorFlex />
           </div>
         </v-row>
-        <v-row id="control" class="ma-0 pa-0">
+        <v-row id="ventanaControl" class="ma-0 pa-0">
           <v-col>
-            <h4>Control</h4>
+            <Control
+              :rotuloActivo="rotuloActivo"
+            />
   
           </v-col>
         </v-row>
@@ -50,6 +52,7 @@
 <script setup>
   import { computed, watch } from "vue"
   import { useRetransmisionStore } from "../../store/retransmision" 
+  import { useSwiftConnectionStore } from "../../store/swiftConnection"
   import { storeToRefs } from "pinia"
   import { useRouter } from 'vue-router'
   
@@ -58,12 +61,16 @@
   import Secciones from '@/components/retransmision/Secciones.vue'
   import Graficos from '@/components/retransmision/Graficos.vue'
   import ListadoRotulos from '@/components/retransmision/ListadoRotulos.vue'
+  import Control from '@/components/retransmision/Control.vue'
 
   const router = useRouter()
 
-  const retransmisionStore = useRetransmisionStore()
-  const { onair, secciones, listaGraficos, seccionActiva, listaRotulos } = storeToRefs(retransmisionStore)
+  const swiftConnectionStore = useSwiftConnectionStore()
 
+  const retransmisionStore = useRetransmisionStore()
+  const { onair, secciones, listaGraficos, seccionActiva, listaRotulos, rotuloActivo } = storeToRefs(retransmisionStore)
+
+  swiftConnectionStore.startConnection()
   
   const seccionesOrdenadas = secciones.value.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0))
   
@@ -85,12 +92,27 @@
   const onDrop = (event) => {
     const item = event.dataTransfer.getData('item')
     console.log(evento)
+
+    const contenido = []
+
+    for (let i = 1; i<=evento.lineasTexto; i++) {
+      const temp = {}
+      temp.nombre = `Linea${i}`
+      temp.valor = null
+      console.log(temp)
+      contenido.push(temp)
+      // contenido[`texto${i}`] = null
+    }
     const rotulo = {
       id: `r${listaRotulos.value.length + 1}`,
       numero: `${listaRotulos.value.length + 1}`,
       titulo: evento.titulo,
       grafico: evento.id,
-      seccion: seccionActiva.value
+      seccion: seccionActiva.value,
+      contenido,
+      lineasTexto: evento.lineasTexto,
+      desplegable: evento.desplegable,
+      live: false
     }
     listaRotulos.value.push(rotulo)
   }
@@ -153,7 +175,7 @@
     
   }
 
-  #visor, #control {
+  #visor, #ventanaControl {
     width: 100%;
     height: 50%;
     border: 1px solid white;

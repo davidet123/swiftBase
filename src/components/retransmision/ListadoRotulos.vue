@@ -7,6 +7,8 @@
     > -->
   <div 
     class="fondoListado"
+    id="fondo"
+    @click="desactivarRotuloActivo($event.target.id)"
     >
     <div v-for="rotulo in rotulos" :keyu="rotulo.id">
       <RotuloIndividual :rotulo="rotulo"/>
@@ -39,6 +41,28 @@
   const rotulos = computed(() => listaRotulos.value.filter(el => el.seccion === seccionActiva.value))
 
   // const limpiarRotuloActivo = () => retransmisionStore.setRotuloActivo(null)
+
+  const desactivarRotuloActivo = id => {
+    if (id === "fondo") retransmisionStore.setRotuloActivo(null)
+  }
+
+
+  const onAir = (tecla) => {
+    switch(tecla) {
+      case "1": 
+        console.log('Tecla 11')
+        break
+
+      default:
+        console.log(tecla)
+        break;
+    }
+  }
+
+  document.addEventListener('keyup', e => {
+    onAir(e.key.toUpperCase())
+    // console.log(e.key.toUpperCase())
+  })
 </script>
 
 <style scoped>
