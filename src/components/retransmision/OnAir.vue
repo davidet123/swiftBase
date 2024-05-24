@@ -1,7 +1,7 @@
 <template>
   <div class="cajaOnAir">
-    <div class="tecla"><p>F1</p></div>
-    <div class="titulo"><h4>{{ titulo }}</h4></div>
+    <div class="tecla"><p>{{ rotuloOnAir.tecla }}</p></div>
+    <div class="titulo"><h4>{{ rotuloOnAir.titulo }}</h4></div>
     <div class="orden"><p>{{ orden + 1 }}</p></div>
   </div>
 </template>
@@ -10,9 +10,9 @@
 
 import { toRefs } from 'vue';
 
-const props = defineProps(["titulo", "orden"])
+const props = defineProps(["rotuloOnAir", "orden"])
 
-const { titulo, orden } = toRefs(props)
+const { rotuloOnAir, orden } = toRefs(props)
 
 </script>
 

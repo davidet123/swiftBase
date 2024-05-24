@@ -1,7 +1,7 @@
 <template>
   <div id="retransmision">
-    <v-row id="onair">
-        <OnAir v-for="( titulo, index) in onair" :key="index" :titulo="titulo" :orden="index"/>
+    <v-row id="onAir">
+        <OnAir v-for="(rotuloOnAir, index) in onAir" :key="index" :rotuloOnAir="rotuloOnAir" :orden="index"/>
     </v-row>
     
     <v-row id="secciones">
@@ -68,7 +68,7 @@
   const swiftConnectionStore = useSwiftConnectionStore()
 
   const retransmisionStore = useRetransmisionStore()
-  const { onair, secciones, listaGraficos, seccionActiva, listaRotulos, rotuloActivo } = storeToRefs(retransmisionStore)
+  const { onAir, secciones, listaGraficos, seccionActiva, listaRotulos, rotuloActivo } = storeToRefs(retransmisionStore)
 
   swiftConnectionStore.startConnection()
   
@@ -91,7 +91,6 @@
 
   const onDrop = (event) => {
     const item = event.dataTransfer.getData('item')
-    console.log(evento)
 
     const contenido = []
 
@@ -144,7 +143,7 @@
     padding: 0;
   }
   
-  #onair, #seccionGraficos {
+  #onAir, #seccionGraficos {
     width: 100%;
     height: 12.5%;
     border: 1px solid white;

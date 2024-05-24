@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 
 export const useRetransmisionStore = defineStore('retransmisionStore', {
   state: () => ({
-    onair: ["MOSCA", "DIRECTE"],
+    onAir: [],
     listaRotulos: [
       // {
       //   id: 'r01',
@@ -71,24 +71,24 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       },
     ],
     secciones: [
-      {
-        id:'s01',
-        activo: false,
-        titulo: "INICIO",
-        elementoLive: true
-      },
-      {
-        id:'s02',
-        activo: true,
-        titulo: "LISTADO",
-        elementoLive: false
-      },
-      {
-        id:'s03',
-        activo: true,
-        titulo: "COPY",
-        elementoLive: false
-      },
+      // {
+      //   id:'s01',
+      //   activo: false,
+      //   titulo: "INICIO",
+      //   elementoLive: true
+      // },
+      // {
+      //   id:'s02',
+      //   activo: true,
+      //   titulo: "LISTADO",
+      //   elementoLive: false
+      // },
+      // {
+      //   id:'s03',
+      //   activo: true,
+      //   titulo: "COPY",
+      //   elementoLive: false
+      // },
       {
       id:'splus',
       activo: false,
@@ -115,13 +115,38 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
         id:`s${this.secciones.length}`,
         activo: false,
         titulo,
-        elementoLive: false
+        elementoLive: true
       }
       const index = this.secciones.length -1
       this.secciones.splice(index, 0,item)
     },
     setRotuloActivo (payload) {
       this.rotuloActivo = payload
+    },
+    eliminarRotulo (id) {
+      // console.log(payload)
+      console.log(this.listaRotulos)
+      const temp = this.listaRotulos.filter(el =>  el.id !== id)
+      this.listaRotulos = temp
+      
+    },
+    duplicarRotulo (payload) {
+      console.log(payload)
+      const nuevoRotulo = JSON.parse(JSON.stringify(payload))
+      nuevoRotulo.id = this.crearID()
+      this.listaRotulos.push(nuevoRotulo)
+    },
+    crearID() {
+      let fin = false
+      const ids = this.listaRotulos.map(el => el.id)
+      let indice = 1
+      let nuevaId
+      while(!fin) {
+        nuevaId = `r${indice}`
+        if(!ids.includes(nuevaId)) fin = true
+        indice++
+      }
+      return nuevaId
     },
     setDesplagableElegido (payload) {
       this.desplegableElegido = payload
@@ -179,6 +204,9 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       })
 
     },
+    addOnAir (payload) {
+      this.onAir.push(payload)
+    }
   }
 
 })

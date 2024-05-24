@@ -20,6 +20,7 @@
           <v-btn to="/vumetro">VUMETRO</v-btn>
           <v-btn to="/simple">GRAFISME SIMPLE</v-btn>
           <v-btn to="/menumisa">MISA</v-btn>
+          <v-btn to="/retransmision">RETRANSMISION</v-btn>
           <!-- <v-btn to="/controlmisa">CONTROL MISA</v-btn> -->
           <v-btn to="/test">TEST</v-btn>
         </v-col>

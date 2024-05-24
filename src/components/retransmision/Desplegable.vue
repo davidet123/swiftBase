@@ -35,7 +35,7 @@
 
   watch(() => numGraficoSeleccionado.value, val => {
     console.log(listaGSheet.value)
-    const datos = listaGSheet.value.find(el => el.numero = val)
+    const datos = listaGSheet.value.find(el => el.numero == val)
     retransmisionStore.setDesplagableElegido(datos)
   })
 </script>

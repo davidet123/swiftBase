@@ -50,7 +50,7 @@ actions: {
     const rtConnection1 = new RTConnection(this.URLSwift, 5, 2);
     const self = this
     rtConnection1.onOpen = function() {
-      console.log(this.graficosLive)
+      // console.log(this.graficosLive)
       trace("Connection opened");
       self.rtRemote = new RTRemote(rtConnection1, "remote");
       // self.rtRemote.getStatus("Project","Current")

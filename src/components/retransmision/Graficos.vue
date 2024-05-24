@@ -22,7 +22,6 @@
     event.dataTransfer.dropEffect = 'move'
     event.dataTransfer.eventAllowed = 'copy'
     event.dataTransfer.setData = ('item', item)
-    console.log(item)
     emit("evento", item)
   }
 
