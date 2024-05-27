@@ -33,7 +33,7 @@
 <script setup>
 
   import { computed, toRefs, watch } from 'vue';
-  import { useRetransmisionStore } from '@/store/retransmision';
+  import { useRetransmisionStore } from '@/store/retransmision'
   import { ref } from 'vue';
   import Desplegable from '@/components/retransmision/Desplegable.vue'
 

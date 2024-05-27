@@ -6,24 +6,25 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
   state: () => ({
     onAir: [],
     listaRotulos: [
-      // {
-      //   id: 'r01',
-      //   numero: 1,
-      //   titulo: 'FIJOS',
-      //   grafico: 'g01',
-      //   seccion: 's01',
-      //   contenido: [
-      //     {nombre: 'Linea1', contenido: null},
-      //     {nombre: 'Linea2', contenido: null},
-      //     {nombre: 'Linea3', contenido: null},
-      //   ],
-      //   lineasTexto: 0,
-      //   desplegable: false,
+      {
+        id: 'r01',
+        numero: 1,
+        titulo: 'FIJOS',
+        grafico: 'g01',
+        seccion: 's01',
+        contenido: [
+          {nombre: 'Linea1', contenido: null},
+          {nombre: 'Linea2', contenido: null},
+          {nombre: 'Linea3', contenido: null},
+        ],
+        lineasTexto: 0,
+        desplegable: false,
         
-      // },
+      },
     ],
     desplegableElegido: null,
     rotuloActivo: 'null',
+    rotuloADesactivar: null,
     control: [],
     listaGraficos: [
       {
@@ -32,51 +33,86 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
         clase: "MOVIE",
         contenido: null,
         lineasTexto: 0,
-        desplegable: false
+        desplegable: false,
+        opciones: {
+          nombreDesplegable: null,
+          rangoDesplegable: null
+        }
       },
+      // {
+      //   id:'g02',
+      //   titulo: "1 LINEA",
+      //   clase: "DSK",
+      //   lineasTexto: 1,
+      //   desplegable: false,
+      //   opciones: {
+      //     nombreDesplegable: null,
+      //     rangoDesplegable: null
+      //   }
+      // },
+      // {
+      //   id:'g03',
+      //   titulo: "2 LINEA",
+      //   clase: "DSK",
+      //   lineasTexto: 1,
+      //   desplegable: false,
+      //   opciones: {
+      //     nombreDesplegable: null,
+      //     rangoDesplegable: null
+      //   }
+      // },
+      // {
+      //   id:'g04',
+      //   titulo: "2 LINEA TITULAR",
+      //   clase: "DSK",
+      //   lineasTexto: 2,
+      //   desplegable: false,
+      //   opciones: {
+      //     nombreDesplegable: null,
+      //     rangoDesplegable: null
+      //   }
+      // },
+      // {
+      //   id:'g05',
+      //   titulo: "3 LINEA",
+      //   clase: "DSK",
+      //   lineasTexto: 3,
+      //   desplegable: false,
+      //   opciones: {
+      //     nombreDesplegable: null,
+      //     rangoDesplegable: null
+      //   }
+      // },
+      // {
+      //   id:'g06',
+      //   titulo: "LISTA",
+      //   clase: "DESPLEGABLE",
+      //   lineasTexto: 0,
+      //   desplegable: true,
+      //   opciones: {
+      //     nombreDesplegable: null,
+      //     rangoDesplegable: null
+      //   }
+      // },
       {
-        id:'g02',
-        titulo: "1 LINEA",
-        clase: "DSK",
-        lineasTexto: 1,
-        desplegable: false
-      },
-      {
-        id:'g03',
-        titulo: "2 LINEA",
-        clase: "DSK",
-        lineasTexto: 1,
-        desplegable: false
-      },
-      {
-        id:'g04',
-        titulo: "2 LINEA TITULAR",
-        clase: "DSK",
-        lineasTexto: 2,
-        desplegable: false
-      },
-      {
-        id:'g05',
-        titulo: "3 LINEA",
-        clase: "DSK",
-        lineasTexto: 3,
-        desplegable: false
-      },
-      {
-        id:'g06',
-        titulo: "LISTA",
-        clase: "DESPLEGABLE",
+        id:'gAdd',
+        titulo: "+",
+        clase: "ADD",
         lineasTexto: 0,
-        desplegable: true
+        desplegable: false,
+        opciones: {
+          nombreDesplegable: null,
+          rangoDesplegable: null
+        }
       },
     ],
     secciones: [
-      // {
-      //   id:'s01',
-      //   activo: false,
-      //   titulo: "INICIO",
-      //   elementoLive: true
-      // },
+      {
+        id:'s01',
+        activo: false,
+        titulo: "INICIO",
+        elementoLive: 0
+      },
       // {
       //   id:'s02',
       //   activo: true,
@@ -97,7 +133,7 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       },
       
     ],
-    seccionActiva: 's01',
+    seccionActiva: null,
     hoja: "CREVILLENT",
     rango: 'A1:F300',
     listaGSheet: null
@@ -111,15 +147,29 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       this.seccionActiva = payload
     },
     addSeccion (titulo) {
+      let id = `s${this.secciones.length}`
       const item = {
-        id:`s${this.secciones.length}`,
+        id,
         activo: false,
         titulo,
-        elementoLive: true
+        elementoLive: 0
       }
       const index = this.secciones.length -1
       this.secciones.splice(index, 0,item)
+      this.seccionActiva = id
     },
+    addLiveToSeccion (seccion, valor) {
+      const temp = this.secciones.find(sec => sec.id === seccion)
+      temp.elementoLive += valor
+    },
+    addGrafico (payload) {
+      let id = `g${this.listaGraficos.length}`
+      payload.id = id
+      const index = this.listaGraficos.length -1
+      this.listaGraficos.splice(index, 0,payload)
+      console.log(this.listaGraficos)
+    },
+
     setRotuloActivo (payload) {
       this.rotuloActivo = payload
     },
@@ -205,7 +255,15 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
 
     },
     addOnAir (payload) {
+      // const temp = [...this.onAir]
+      // temp.push(payload)
+      // this.onAir = [...temp]
       this.onAir.push(payload)
+    },
+    removeOnAir (payload) {
+      // console.log(payload)
+      this.rotuloADesactivar = payload.id
+      this.onAir = this.onAir.filter(el => el.tecla !== payload.tecla)
     }
   }
 

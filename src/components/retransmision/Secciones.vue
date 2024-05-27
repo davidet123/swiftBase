@@ -5,7 +5,8 @@
     :style="colorSeccion"
     @click="activarSeccion(seccion.id)"
   >
-    <div class="orden" :style="seccion.elementoLive ? 'background-color: #ff0000' : 'background-color: #686867'">{{ orden +1 }}</div>
+    <div class="orden"
+      :style="seccion.elementoLive >= 1 ? 'background-color: #ff0000' : 'background-color: #686867'">{{ orden +1 }}</div>
     <div class="contenido" >
       {{ seccion.titulo }}
     </div>
@@ -30,10 +31,10 @@
       max-width="500px"
     >
       <v-card-title>
-        <h4>Añadir seccion</h4>
+
+        <h4>{{ !editar ? 'Añadir seccion' : 'Editar Seccion'}}</h4>
       </v-card-title>
       <v-card-text>
-        {{ nombreSeccion }}
         <v-text-field
           v-model="nombreSeccion"
         ></v-text-field>
@@ -73,11 +74,12 @@ let editar = false
 const editarSeccion = (titulo) => {
   dialog.value = true
   editar = true
-  nombreSeccion.value = titulo
-  console.log(seccion.value)
+  // retransmisionStore.actualizarSeccion()
+  // nombreSeccion.value = titulo
+  // console.log(seccion.value)
   
-  seccion.value.titulo = nombreSeccion.value
-  console.log(seccion.value)
+  // seccion.value.titulo = nombreSeccion.value
+  // console.log(seccion.value)
 
   
 }

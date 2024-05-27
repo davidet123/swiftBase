@@ -1,33 +1,38 @@
 <template>
-  <div class="rotulo" @click="seleccionarRotulo($event.target.className)" :style="rotuloActivado">
-    <div class="textoRotulo">
-      <div id="titulo">{{ rotulo.titulo}}</div>
-      <div id="contenido">
-        <span class="textoIndividual" v-for="texto in rotulo.contenido" :key="texto.nombre">
-          {{ texto.valor }}
-        </span>
+  <div class="rotulo" :style="rotuloActivado">
+    <div class="activo" :style="rotuloDirecto"></div>
+    <div class="contenido" @click="seleccionarRotulo($event.target.className)">
+
+      <div class="textoRotulo">
+        <div id="titulo">
+          {{ rotulo.titulo}}</div>
+        <div id="contenido">
+          <span class="textoIndividual" v-for="texto in rotulo.contenido" :key="texto.nombre">
+            {{ texto.valor }}
+          </span>
+        </div>
       </div>
-    </div>
-    <div id="actions">
-      <div id="editar">
-        <v-icon
-          icon="mdi-application-edit-outline"
-          @click="editarRotulo()"
-        ></v-icon>
+      <div id="actions">
+        <div id="editar">
+          <v-icon
+            icon="mdi-application-edit-outline"
+            @click="editarRotulo()"
+          ></v-icon>
+        </div>
+        <div id="duplicar">
+          <v-icon
+            icon="mdi-content-duplicate"
+            @click="duplicarRotulo()"
+          ></v-icon>
+        </div>
+        <div id="eliminar">
+          <v-icon
+            icon="mdi-trash-can-outline"
+            @click="eliminarRotulo()"
+          ></v-icon>
+        </div>
+        <!-- <v-btn id="botonLive" :color="!rotulo.live ? 'success' : 'error'" size="x-small"  @click="activarRotulo()">LIVE</v-btn> -->
       </div>
-      <div id="duplicar">
-        <v-icon
-          icon="mdi-content-duplicate"
-          @click="duplicarRotulo()"
-        ></v-icon>
-      </div>
-      <div id="eliminar">
-        <v-icon
-          icon="mdi-trash-can-outline"
-          @click="eliminarRotulo()"
-        ></v-icon>
-      </div>
-      <!-- <v-btn id="botonLive" :color="!rotulo.live ? 'success' : 'error'" size="x-small"  @click="activarRotulo()">LIVE</v-btn> -->
     </div>
 
   </div>
@@ -47,27 +52,30 @@
   const retransmisionStore = useRetransmisionStore()
   const swiftConnectionStore = useSwiftConnectionStore()
 
-  const { rotuloActivo, desplegableElegido, onAir } = storeToRefs(retransmisionStore)
+  const { rotuloActivo, desplegableElegido, onAir, seccionActiva, rotuloADesactivar } = storeToRefs(retransmisionStore)
 
   const props = defineProps(["rotulo", "rotuloLive"])
 
   const { rotulo, rotuloLive } = toRefs(props)
 
   const seleccionarRotulo = target => {
-    console.log(rotulo.value.id)
-    if(target === "rotulo") retransmisionStore.setRotuloActivo(rotulo.value.id)
+    if(target === "contenido") retransmisionStore.setRotuloActivo(rotulo.value.id)
   }
 
   const rotuloActivado = computed(() => rotulo.value.id === rotuloActivo.value ? {'background-color': '#024f64'} : {'background-color': '#686867'})
 
+ 
+  const  rotuloDirecto = computed(() => rotulo.value.live ? {'background-color': '#ff0000'} : {'background-color': rotuloActivado.value['background-color']})
   // const live = ref(false)
 
   const activarRotulo = () => {
     swiftConnectionStore.rtRemote.playGraphic(rotulo.value.titulo)
     if(!rotulo.value.live) {
       swiftConnectionStore.rtRemote.playMethod(rotulo.value.titulo + "::bringOn")
+      retransmisionStore.addLiveToSeccion(seccionActiva.value, 1)
     } else {
       swiftConnectionStore.rtRemote.playMethod(rotulo.value.titulo + "::takeOff")
+      retransmisionStore.addLiveToSeccion(seccionActiva.value, -1)
     }
     rotulo.value.live = !rotulo.value.live
   }
@@ -83,18 +91,20 @@
   
   
   watch(() => desplegableElegido.value, val => {
-    console.log(val)
+    // console.log(val)
   })
   watch(() => rotuloLive.value, val => {
+    console.log(val)
     if(val === rotulo.value.id) activarRotulo()
     emit("setLive", null)
   })
 
-  watch(() => onAir.value, val => {
-    const checkLive = val.find(el => el.id === rotulo.value.id)
-    if(checkLive) activarRotulo()
+  // watch(() => rotuloADesactivar.value, val=> {
+  //   // console.log(val)
 
-  },{deep: true})
+  //   if (val === rotulo.value.id) activarRotulo()
+
+  // })
 
   
 
@@ -107,13 +117,26 @@
     background-color: rgb(55, 55, 55);
     border: 1px solid white;
     margin: 5px 0;
-    padding: 0 10px;
+    /* padding: 0 10px; */
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     
     
   }
+  .contenido {
+    display: flex;
+    width: 100%;
+    padding-left: 10px;
+    justify-content: space-between;
+  }
+
+  .activo {
+    height: 100%;
+    width: 30px;
+    /* background-color: red; */
+  }
+
   .textoRotulo {
     display: flex;
     flex-direction: column;

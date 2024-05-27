@@ -90,6 +90,7 @@
   let evento = null
 
   const onDrop = (event) => {
+    if(!seccionActiva.value ) return
     const item = event.dataTransfer.getData('item')
 
     const contenido = []
@@ -98,7 +99,6 @@
       const temp = {}
       temp.nombre = `Linea${i}`
       temp.valor = null
-      console.log(temp)
       contenido.push(temp)
       // contenido[`texto${i}`] = null
     }
@@ -117,7 +117,6 @@
   }
 
   const getEvento = item => {
-    // console.log(item)
     evento = item
   }
 
@@ -172,6 +171,7 @@
     display: flex;
     flex-direction: column;
     
+    
   }
 
   #visor, #ventanaControl {
@@ -183,6 +183,7 @@
     position: relative;
     margin: 0 auto;
     display: flex;
+    overflow-y: auto;
   }
 
   #interior-visor {
