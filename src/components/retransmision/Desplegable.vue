@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-  import { ref, watch } from "vue"
+  import { ref, toRefs, watch } from "vue"
   import { useRetransmisionStore } from '@/store/retransmision'
 
 
@@ -22,6 +22,9 @@
   import { storeToRefs } from 'pinia';
   
   const retransmisionStore = useRetransmisionStore()  
+  const props = defineProps(["rotulo"])
+
+  const { rotulo } = toRefs(props)
 
   
   
@@ -31,6 +34,7 @@
   // if(!listaGSheet.value) retransmisionStore.getData()
   
   const numGraficoSeleccionado = ref(null)
+  console.log(rotulo.value)
 
 
   watch(() => numGraficoSeleccionado.value, val => {

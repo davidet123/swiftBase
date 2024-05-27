@@ -42,6 +42,19 @@
               ></v-text-field> 
             </v-col>
           </v-row>
+          <v-row>
+            <v-col cols="12">
+              <h3>Campos Swift</h3>
+              <v-row>
+                <v-col cols="4" v-for="nombre in nombreCampoSwift" :key="nombre.id">
+                  <v-text-field
+                  label="Nombre swift"
+                  v-model="nombre.nombreSwift"
+                ></v-text-field>  
+                </v-col>
+              </v-row>
+            </v-col>
+          </v-row>
           <v-row v-if="desplegable">
             <v-col cols="6" class=text-center>
               <v-text-field
@@ -82,7 +95,7 @@
 
 <script setup>
 
-  import { computed, ref, toRefs } from 'vue'
+  import { computed, ref, toRefs, watch } from 'vue'
   import { useRetransmisionStore } from '@/store/retransmision'
 
   const retransmisionStore = useRetransmisionStore()
@@ -105,6 +118,7 @@
   const desplegable = ref(false)
   const nombreDesplegable = ref(null)
   const rangoDesplegable = ref(null)
+  const nombreCampoSwift = ref([])
 
   const startDrag = (event, item) => {
     event.dataTransfer.dropEffect = 'move'
@@ -118,6 +132,7 @@
   }
 
   const aceptar = () => {
+
     const nuevoGrafico = {
       titulo: nombreGrafico.value,
       clase: claseGrafico.value,
@@ -126,11 +141,21 @@
       opciones: {
         nombreDesplegable: nombreDesplegable.value,
         rangoDesplegable: rangoDesplegable.value
-      }
+      },
+      nombreCampoSwift: nombreCampoSwift.value
     }
     retransmisionStore.addGrafico(nuevoGrafico)
     dialog.value = false
   }
+
+  watch(() => lineasTexto.value, val => {
+    nombreCampoSwift.value = []
+    for(let i = 1; i <= val; i++) {
+      const data = {id: i-1, nombreSwift: null}
+      nombreCampoSwift.value.push(data)
+
+    }
+  })
 
 </script>
 

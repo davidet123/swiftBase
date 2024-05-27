@@ -26,6 +26,7 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
     rotuloActivo: 'null',
     rotuloADesactivar: null,
     control: [],
+    edit: false,
     listaGraficos: [
       {
         id:'g01',
@@ -142,7 +143,9 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
 
   },
   actions: {
-
+    setEdit(valor) {
+      this.edit = valor
+    },
     setSeccionActiva (payload) {
       this.seccionActiva = payload
     },
@@ -167,7 +170,7 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       payload.id = id
       const index = this.listaGraficos.length -1
       this.listaGraficos.splice(index, 0,payload)
-      console.log(this.listaGraficos)
+      // console.log(this.listaGraficos)
     },
 
     setRotuloActivo (payload) {

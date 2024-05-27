@@ -92,12 +92,11 @@
   const onDrop = (event) => {
     if(!seccionActiva.value ) return
     const item = event.dataTransfer.getData('item')
-
     const contenido = []
 
     for (let i = 1; i<=evento.lineasTexto; i++) {
       const temp = {}
-      temp.nombre = `Linea${i}`
+      temp.nombreSwift = evento.nombreCampoSwift[i-1].nombreSwift
       temp.valor = null
       contenido.push(temp)
       // contenido[`texto${i}`] = null
@@ -111,7 +110,8 @@
       contenido,
       lineasTexto: evento.lineasTexto,
       desplegable: evento.desplegable,
-      live: false
+      live: false,
+
     }
     listaRotulos.value.push(rotulo)
   }

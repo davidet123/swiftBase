@@ -7,6 +7,7 @@
         v-model="rotulo.titulo"
         label="Título grafico"
         density="compact"
+        @update:focused="foco($event)"
       ></v-text-field>
     </div>
     <div id="contenidoRotulo" v-if="rotulo">
@@ -14,13 +15,14 @@
         <!-- <input :value="texto.valor" :placeholder="texto.nombre" class="inputConfig" > -->
         <v-text-field
         v-model="texto.valor"
-        :label=texto.nombre
+        :label=texto.nombreSwift
         density="compact"
+        @update:focused="foco($event)"
       ></v-text-field>
 
       </div>
       <div id="contenidoDesplegable" v-if="rotulo.desplegable">
-        <Desplegable />
+        <Desplegable :rotulo="rotulo" />
       </div>
       <div id="controlActions">
         <v-btn size="x-small" color="error">ACEPTAR</v-btn>
@@ -48,6 +50,10 @@
   const { rotuloActivo } = toRefs(props)
 
   const rotulo = computed(() => retransmisionStore.listaRotulos.find(el => el.id === rotuloActivo.value))
+
+  const foco = e => retransmisionStore.setEdit(e)
+
+  // watch(() => foco.value, val => console.log(val))
 
 
 </script>

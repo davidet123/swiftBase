@@ -33,7 +33,7 @@
 
   const retransmisionStore = useRetransmisionStore()
 
-  const { rotuloActivo, onAir } = storeToRefs(retransmisionStore)
+  const { rotuloActivo, onAir, edit } = storeToRefs(retransmisionStore)
 
   
 
@@ -75,6 +75,7 @@
   })
 
   document.onkeydown = e => {
+    if(edit.value) return
     if(e.getModifierState("Control")) ctrl = true
     if(teclasFuncion.includes(e.key)) {
       console.log(checkTeclaFuncion(e.key) && ctrl)

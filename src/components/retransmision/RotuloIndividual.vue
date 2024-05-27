@@ -1,9 +1,10 @@
 <template>
   <div class="rotulo" :style="rotuloActivado">
     <div class="activo" :style="rotuloDirecto"></div>
-    <div class="contenido" @click="seleccionarRotulo($event.target.className)">
+    <div class="contenido" @click="seleccionarRotulo($event)">
+    <!-- <div class="contenido" @click="seleccionarRotulo($event.target.className)"> -->
 
-      <div class="textoRotulo">
+      <div class="textoRotulo" @click="seleccionarRotulo($event)">
         <div id="titulo">
           {{ rotulo.titulo}}</div>
         <div id="contenido">
@@ -59,7 +60,10 @@
   const { rotulo, rotuloLive } = toRefs(props)
 
   const seleccionarRotulo = target => {
-    if(target === "contenido") retransmisionStore.setRotuloActivo(rotulo.value.id)
+    // console.log(target.target.parentElement)
+    // if(target === "contenido") retransmisionStore.setRotuloActivo(rotulo.value.id)
+    retransmisionStore.setRotuloActivo(rotulo.value.id)
+
   }
 
   const rotuloActivado = computed(() => rotulo.value.id === rotuloActivo.value ? {'background-color': '#024f64'} : {'background-color': '#686867'})
@@ -71,6 +75,11 @@
   const activarRotulo = () => {
     swiftConnectionStore.rtRemote.playGraphic(rotulo.value.titulo)
     if(!rotulo.value.live) {
+      console.log(rotulo.value)
+      for(let nombre in rotulo.value.contenido) {
+        swiftConnectionStore.rtRemote.updateFields(rotulo.value.titulo + "::" + rotulo.value.contenido[nombre].nombreSwift + "TEXT", "String", rotulo.value.contenido[nombre].valor)
+        console.log(nombre)
+      }
       swiftConnectionStore.rtRemote.playMethod(rotulo.value.titulo + "::bringOn")
       retransmisionStore.addLiveToSeccion(seccionActiva.value, 1)
     } else {
