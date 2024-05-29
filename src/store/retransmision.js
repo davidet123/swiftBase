@@ -28,21 +28,22 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
     rotuloADesactivar: null,
     control: [],
     edit: false,
+    camposSwift: null,
     listaGraficos: [
-      {
-        id:'g01',
-        titulo: "DIRECTE",
-        nombre: "Grafico1",
-        clase: "MOVIE",
-        contenido: null,
-        lineasTexto: 0,
-        desplegable: false,
-        datosGSheet: {
-          hoja: null,
-          rango: null,
-          graficos: []
-        }
-      },
+      // {
+      //   id:'g01',
+      //   titulo: "DIRECTE",
+      //   nombre: "Grafico1",
+      //   clase: "MOVIE",
+      //   contenido: null,
+      //   lineasTexto: 0,
+      //   desplegable: false,
+      //   datosGSheet: {
+      //     hoja: null,
+      //     rango: null,
+      //     graficos: []
+      //   }
+      // },
       {
         id:'g02',
         titulo: "LISTA",
@@ -52,25 +53,25 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
         lineasTexto: 0,
         desplegable: true,
         datosGSheet: {
-          hoja: 'GFI',
-          rango: 'A1:F30',
+          hoja: 'CREVILLENT_OK',
+          rango: 'A1:F100',
           graficos: []
         }
       },
       {
-        "titulo": "DSK_PRINCIPAL",
-        "nombre": "DSK_PRINCIPAL",
+        "titulo": "BANDA_UNICA",
+        "nombre": "BANDA_UNICA",
         "clase": "DSK",
-        "lineasTexto": "2",
+        "lineasTexto": "1",
         "desplegable": false,
         "nombreCampoSwift": [
             {
                 "id": 0,
-                "nombreSwift": "TXT_SUP"
+                "nombreSwift": "TITULAR"
             },
             {
                 "id": 1,
-                "nombreSwift": "TXT_INF"
+                "nombreSwift": "TEXTO2"
             }
         ],
         "datosGSheet": {
@@ -247,28 +248,23 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       return nuevaId
     },
     setDesplagableElegido (datos, idRotulo) {
+      // console.log(datos)
       
 
       const grafico = this.listaGraficos.find(el => el.titulo === datos.grafico)
       const rotulo = this.listaRotulos.find(el => el.id === idRotulo)
       rotulo.lineasTexto = grafico.lineasTexto
-      rotulo.contenido = []
+      rotulo.contenido = datos.contenido
       rotulo.titulo = datos.grafico
+      console.log(rotulo) 
 
-      console.log(grafico) 
-      for (let i = 1; i <= rotulo.lineasTexto; i++) {
-        rotulo.contenido.push({
-          nombreSwift: grafico.nombreCampoSwift[i-1].nombreSwift,
-          valor: datos[`texto${i}`]
-        })
+      // for (let i = 1; i <= rotulo.lineasTexto; i++) {
+      //   rotulo.contenido.push({
+      //     nombreSwift: grafico.nombreCampoSwift[i-1].nombreSwift,
+      //     valor: datos[`texto${i}`]
+      //   })
         
-      }
-
-
-
-
-
-
+      // }
       // this.desplegableElegido = payload
       // console.log(this.desplegableElegido)
     },
@@ -286,11 +282,19 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
         return lista.json()
       }).then((valores)=>{
         let tempValores = valores.values.slice()
-        tempValores.shift()
+        const encabezados = tempValores.shift()
+        this.camposSwift = encabezados
+        console.log(encabezados)
         // console.log(tempValores)
         const listadodesdeGS = []
         // const fondos = ["TITULAR", "INFORMACIÓ", "INFORMACIÓ 3", "FIRMA 2 LINIES"]
         // const fondos = ["DSK_PRINCIPAL"]
+        // const contenido = []
+        // const temp = {}
+        // for(let i = 3; i<= 5; i++) {
+        //   temp[encabezados[i]] = null
+        // }
+        // contenido.push(temp)
 
         const fondos = []
         let valorId = 0
@@ -302,19 +306,24 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
             grafico: el[0],
             id_grafico: el[1],
             numero: el[2],
-            texto1: el[3] || "",
-            texto2: el[4] || "",
-            texto3: el[5] || "",
+            // texto1: el[3] || "",
+            // texto2: el[4] || "",
+            // texto3: el[5] || "",
             label: `${el[0]} - ${el[1]} - ${el[2] || ""} - ${el[3] || ""} - ${el[4] || ""}`,
             live: false,
-            id
+            id,
+            contenido: {}
           }
+          const tempContenido = {}
+          data.contenido[encabezados[3]] = el[3] || ""
+          data.contenido[encabezados[4]] = el[4] || ""
+          data.contenido[encabezados[5]] = el[5] || ""
           listadodesdeGS.push(data)
           valorId++
         })
 
         this.listaGSheet = listadodesdeGS
-        // console.log(this.listaGSheet)
+        console.log(this.listaGSheet)
         // localStorage.setItem('listadoCrevillent', JSON.stringify(this.listaCrevillent))
         // localStorage.setItem('listaGSheet', JSON.stringify(this.listaGSheet))
         // this.gSheetLoading = false

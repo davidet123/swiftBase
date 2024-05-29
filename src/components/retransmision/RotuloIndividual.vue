@@ -75,7 +75,7 @@
   // const live = ref(false)
 
   const activarRotulo = () => {
-    // console.log(rotulo.value)
+    console.log(rotulo.value)
     let rotuloParaSwift = null
     let grafico = null
     grafico = rotulo.value.lineasTexto === 0 ? rotulo.value.nombre : rotulo.value.titulo

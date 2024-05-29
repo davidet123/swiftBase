@@ -92,6 +92,7 @@
         console.log(onAir.value)
         // rotuloLive.value = rotuloActivo.value
         retransmisionStore.setRotuloLive(rotuloActivo.value)
+        console.log(rotuloActivo.value)
       } else if(checkTeclaFuncion(e.key) && ctrl) {
         console.log("Eliminar onair")
         const desactivar = onAir.value.find(el => el.tecla === e.key)
