@@ -11,7 +11,7 @@
     @click="desactivarRotuloActivo($event.target.id)"
     >
     <div v-for="rotulo in rotulos" :key="rotulo.id">
-      <RotuloIndividual :rotulo="rotulo" :rotuloLive="rotuloLive" @setLive="setLive()"/>
+      <RotuloIndividual :rotulo="rotulo" @setLive="setLive()"/>
     </div>
     <!-- <div>
 
@@ -78,23 +78,34 @@
     if(edit.value) return
     if(e.getModifierState("Control")) ctrl = true
     if(teclasFuncion.includes(e.key)) {
-      console.log(checkTeclaFuncion(e.key) && ctrl)
-      if(!rotuloActivo.value) return
       e.preventDefault()
-
-      const temp = listaRotulos.value.find(el => el.id === rotuloActivo.value)
-      const data = {
-        titulo: temp.titulo,
-        tecla: e.key,
-        id: temp.id
-      }
       if(!checkTeclaFuncion(e.key) && !ctrl) {
+        if(!rotuloActivo.value) return
+        
+        const temp = listaRotulos.value.find(el => el.id === rotuloActivo.value)
+        const data = {
+          titulo: temp.titulo,
+          tecla: e.key,
+          id: temp.id
+        }
         retransmisionStore.addOnAir(data)
-        rotuloLive.value = rotuloActivo.value
+        console.log(onAir.value)
+        // rotuloLive.value = rotuloActivo.value
+        retransmisionStore.setRotuloLive(rotuloActivo.value)
       } else if(checkTeclaFuncion(e.key) && ctrl) {
         console.log("Eliminar onair")
-        rotuloLive.value = rotuloActivo.value
-        retransmisionStore.removeOnAir(data)
+        const desactivar = onAir.value.find(el => el.tecla === e.key)
+        const data = {
+          titulo: desactivar.titulo,
+          tecla: e.key,
+          id: desactivar.id
+        }
+        // console.log(desactivar)
+        
+        // rotuloLive.value = rotuloActivo.value
+        retransmisionStore.setRotuloLive(desactivar.id)
+
+        retransmisionStore.removeOnAir(desactivar)
       }
       
       
@@ -107,7 +118,8 @@
     if(e.key === " ") {
       // console.log(onAir.value)
       // console.log(checkOnAir(rotuloActivo.value) )
-      if(!checkOnAir()) rotuloLive.value = rotuloActivo.value
+      // if(!checkOnAir()) rotuloLive.value = rotuloActivo.value 
+      if(!checkOnAir()) retransmisionStore.setRotuloLive(rotuloActivo.value)
     }
     // rotuloLive.value = null
   }

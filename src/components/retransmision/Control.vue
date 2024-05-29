@@ -2,9 +2,10 @@
 
   <div id="control">
     <div id="configRotulo" v-if="rotulo">
+      <p>{{ rotulo.titulo }}</p>
       <!-- <input :value="rotulo.titulo" placeholder="Titulo grafico" class="inputConfig" > -->
       <v-text-field
-        v-model="rotulo.titulo"
+        v-model="rotulo.nombre"
         label="Título grafico"
         density="compact"
         @update:focused="foco($event)"

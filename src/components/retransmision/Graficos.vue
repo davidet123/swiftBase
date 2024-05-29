@@ -56,18 +56,32 @@
             </v-col>
           </v-row>
           <v-row v-if="desplegable">
-            <v-col cols="6" class=text-center>
-              <v-text-field
-              label="Nombre hoja gSheet"
-              v-model="nombreDesplegable"
-            ></v-text-field>
+            <v-col cols=12>
+              <v-row>
+                <v-col cols="6" class=text-center>
+                  <v-text-field
+                  label="Nombre hoja gSheet"
+                  v-model="datosGSheet.hoja"
+                ></v-text-field>
+                </v-col>
+                <v-col cols="6" class=text-center>
+                  <v-text-field
+                  label="Rango desplegable"
+                  v-model="datosGSheet.rango"
+                ></v-text-field>
+                </v-col>
+              </v-row>
             </v-col>
-            <v-col cols="6" class=text-center>
-              <v-text-field
-              label="Rango desplegable"
-              v-model="rangoDesplegable"
-            ></v-text-field>
-            </v-col>
+            <v-row>
+              <v-col cols="4" v-for="grafico in listadoGraficos" :key="grafico.id">
+                <v-checkbox
+                  :label="grafico.titulo"
+                  v-model="datosGSheet.graficos"
+                  :value="grafico.id"
+                ></v-checkbox>
+              </v-col>
+              {{ datosGSheet.graficos }}
+            </v-row>
           </v-row>
           <v-row>
             <v-col cols="4" class="text-center ma-0 pa-0">
@@ -97,6 +111,7 @@
 
   import { computed, ref, toRefs, watch } from 'vue'
   import { useRetransmisionStore } from '@/store/retransmision'
+import { storeToRefs } from 'pinia';
 
   const retransmisionStore = useRetransmisionStore()
 
@@ -105,6 +120,14 @@
   const emit = defineEmits(["evento"])
 
   const { grafico, orden } = toRefs(props)
+
+  const { listaGraficos } = storeToRefs(retransmisionStore)
+
+  const listadoGraficos = computed(() => {
+    const lista = [...listaGraficos.value]
+    lista.pop()
+    return lista
+  })
 
   const add = computed(() => grafico.value.clase === 'ADD')
 
@@ -116,9 +139,14 @@
   const claseGrafico = ref(null)
   const lineasTexto = ref(0)
   const desplegable = ref(false)
-  const nombreDesplegable = ref(null)
-  const rangoDesplegable = ref(null)
   const nombreCampoSwift = ref([])
+  const datosGSheet = ref({
+    hoja: null,
+    rango: null,
+    graficos: []
+
+  })
+
 
   const startDrag = (event, item) => {
     event.dataTransfer.dropEffect = 'move'
@@ -132,17 +160,17 @@
   }
 
   const aceptar = () => {
+    // const graficoSwift = lineasTexto === 0 ? titulo : nombre
 
     const nuevoGrafico = {
+      // graficoSwift,
       titulo: nombreGrafico.value,
+      nombre: nombreGrafico.value,
       clase: claseGrafico.value,
       lineasTexto: lineasTexto.value,
       desplegable: desplegable.value,
-      opciones: {
-        nombreDesplegable: nombreDesplegable.value,
-        rangoDesplegable: rangoDesplegable.value
-      },
-      nombreCampoSwift: nombreCampoSwift.value
+      nombreCampoSwift: nombreCampoSwift.value,
+      datosGSheet: datosGSheet.value
     }
     retransmisionStore.addGrafico(nuevoGrafico)
     dialog.value = false

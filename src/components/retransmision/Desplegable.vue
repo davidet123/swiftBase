@@ -29,17 +29,21 @@
   
   
   const { listaGSheet } = storeToRefs(retransmisionStore)
-  retransmisionStore.getData()
+  const hoja = rotulo.value.datosGSheet.hoja
+  const rango = rotulo.value.datosGSheet.rango
+  // console.log(hoja, rango)
+  retransmisionStore.getData(hoja, rango)
 
   // if(!listaGSheet.value) retransmisionStore.getData()
   
   const numGraficoSeleccionado = ref(null)
-  console.log(rotulo.value)
+  // console.log(rotulo.value)
 
 
   watch(() => numGraficoSeleccionado.value, val => {
     const datos = listaGSheet.value.find(el => el.numero == val)
-    retransmisionStore.setDesplagableElegido(datos)
+    retransmisionStore.setDesplagableElegido(datos, rotulo.value.id)
+    console.log(rotulo.value)
   })
 </script>
 

@@ -101,9 +101,12 @@
       contenido.push(temp)
       // contenido[`texto${i}`] = null
     }
+
+    console.log(evento)
     const rotulo = {
       id: `r${listaRotulos.value.length + 1}`,
       numero: `${listaRotulos.value.length + 1}`,
+      nombre: null,
       titulo: evento.titulo,
       grafico: evento.id,
       seccion: seccionActiva.value,
@@ -111,6 +114,8 @@
       lineasTexto: evento.lineasTexto,
       desplegable: evento.desplegable,
       live: false,
+      datosGSheet: evento.datosGSheet,
+      // graficoSwift: evento.graficoSwift
 
     }
     listaRotulos.value.push(rotulo)
