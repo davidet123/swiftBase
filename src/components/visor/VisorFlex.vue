@@ -1,6 +1,6 @@
 <template>
-  <div class="contenedor-video">
-    <video id="myVideoId" autoplay muted playsinline/>
+  <div class="contenedorFlexVideo" :style="colorLive">
+    <video class="visorFlex" id="myVideoId" width="540" height="304" autoplay muted playsinline/>
 
   </div>
   <!-- <v-col cols="12" class="contenedor-video">
@@ -14,33 +14,57 @@
 
 <script setup>
 
+  import { storeToRefs } from "pinia";
+  import { computed } from "vue";
   import { useSwiftConnectionStore } from "../../store/swiftConnection"
+  import { useRetransmisionStore } from "../../store/retransmision" 
 
   const swiftConnectionStore = useSwiftConnectionStore()
+  const retransmisionStore = useRetransmisionStore()
+  const { rotuloActivo, listaRotulosLive } = storeToRefs(retransmisionStore)
 
   swiftConnectionStore.startVideo()
 
+  const colorLive = computed(() => {
+    let color
+    if(listaRotulosLive.value.includes(rotuloActivo.value) ) {
+      color =  {'background-color': '#ff0000 !important' }
+    } else {
+      color = {'background-color': '#303030'}
+    }
+    return color
+  })
+
 </script>
 
-<style>
-  /* .contenedor-video {
+<style scoped>
+  .contenedorFlexVideo {
     display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    /* display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     width: 100%;
     background-color: #303030;
-    padding-top: 56.25%;
-  } */
-  video {
-    margin: 0;
-    position: absolute;
-    top: 0;
-    height: 100%;
-    object-fit: cover;
-    
+    padding-top: 56.25%; */
   }
-  #myVideoId {
+  /* video {
+    width: 80%; */
+
+    /* margin: 0 auto; */
+    /* position: absolute; */
+    /* top: 0; */
+    /* height: 100%; */
+    /* object-fit: cover; */
+    
+  /* } */
+  .visorFlex {
+    /* height: 100%; */
+    /* padding-top: 56.25%; */
     border: 1px solid white;
   }
 </style>

@@ -24,6 +24,9 @@
       <div id="contenidoDesplegable" v-if="rotulo.desplegable">
         <Desplegable :rotulo="rotulo" />
       </div>
+      <div class="error" v-if="error">
+        <h3>{{ error }}</h3>
+      </div>
       <div id="controlActions">
         <v-btn size="x-small" color="error">ACEPTAR</v-btn>
       </div>
@@ -38,10 +41,12 @@
   import { useRetransmisionStore } from '@/store/retransmision'
   import { ref } from 'vue';
   import Desplegable from '@/components/retransmision/Desplegable.vue'
+  import { storeToRefs } from 'pinia'
 
 
   
   const retransmisionStore = useRetransmisionStore()
+  const { error } = storeToRefs(retransmisionStore)
 
   const props = defineProps(["rotuloActivo"])
 
@@ -53,9 +58,6 @@
 
   const foco = e => retransmisionStore.setEdit(e)
 
-  // const contenidoRotulo = computed(() => rotulo.value.contenido)
-
-  // watch(() => foco.value, val => console.log(val))
 
 
 </script>
@@ -69,6 +71,13 @@
   color: white;
   padding: 0 5px;
   margin: 5px 0;
+}
+
+.error {
+  width: 100%;
+  color: red;
+  display: flex;
+  justify-content: center;
 }
 
 </style>

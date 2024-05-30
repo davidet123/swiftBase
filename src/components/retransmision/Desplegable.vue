@@ -32,7 +32,7 @@
   const { listaGSheet, desplegableElegido } = storeToRefs(retransmisionStore)
   const hoja = rotulo.value.datosGSheet.hoja
   const rango = rotulo.value.datosGSheet.rango
-  // console.log(hoja, rango)
+  
   retransmisionStore.getData(hoja, rango)
 
   // if(!listaGSheet.value) retransmisionStore.getData()

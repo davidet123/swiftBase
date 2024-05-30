@@ -93,17 +93,10 @@
     if(!seccionActiva.value ) return
     const item = event.dataTransfer.getData('item')
     let contenido = {}
-
-    console.log(evento)
     const temp = {}
     for (let i = 1; i<=evento.lineasTexto; i++) {
       // const temp = []
       temp[evento.nombreCampoSwift[i-1].nombreSwift] = null
-
-      // temp.nombreSwift = evento.nombreCampoSwift[i-1].nombreSwift
-      // temp.valor = null
-      // contenido[`texto${i}`] = null
-      // console.log(evento.nombreCampoSwift[i-1].nombreSwift)
     }
     contenido = {...temp}
 
@@ -197,6 +190,10 @@
 
   #interior-visor {
     width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     /* background-color: #303030; */
   }
 

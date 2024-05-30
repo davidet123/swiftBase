@@ -84,42 +84,26 @@
         
         const temp = listaRotulos.value.find(el => el.id === rotuloActivo.value)
         const data = {
-          titulo: temp.titulo,
+          titulo: temp.nombre,
           tecla: e.key,
           id: temp.id
         }
         retransmisionStore.addOnAir(data)
-        console.log(onAir.value)
-        // rotuloLive.value = rotuloActivo.value
         retransmisionStore.setRotuloLive(rotuloActivo.value)
-        console.log(rotuloActivo.value)
       } else if(checkTeclaFuncion(e.key) && ctrl) {
-        console.log("Eliminar onair")
         const desactivar = onAir.value.find(el => el.tecla === e.key)
         const data = {
           titulo: desactivar.titulo,
           tecla: e.key,
           id: desactivar.id
         }
-        // console.log(desactivar)
-        
-        // rotuloLive.value = rotuloActivo.value
         retransmisionStore.setRotuloLive(desactivar.id)
 
         retransmisionStore.removeOnAir(desactivar)
-      }
-      
-      
-      
-      
-      
-      
+      }      
     }
     
     if(e.key === " ") {
-      // console.log(onAir.value)
-      // console.log(checkOnAir(rotuloActivo.value) )
-      // if(!checkOnAir()) rotuloLive.value = rotuloActivo.value 
       if(!checkOnAir()) retransmisionStore.setRotuloLive(rotuloActivo.value)
     }
     // rotuloLive.value = null

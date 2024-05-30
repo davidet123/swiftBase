@@ -4,6 +4,7 @@ import { defineStore } from 'pinia'
 
 export const useRetransmisionStore = defineStore('retransmisionStore', {
   state: () => ({
+    error: null,
     onAir: [],
     listaRotulos: [
       // {
@@ -25,6 +26,7 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
     desplegableElegido: null,
     rotuloActivo: 'null',
     rotuloLive: null,
+    listaRotulosLive: [],
     rotuloADesactivar: null,
     control: [],
     edit: false,
@@ -55,8 +57,10 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
         datosGSheet: {
           hoja: 'CREVILLENT_OK',
           rango: 'A1:F100',
-          graficos: []
-        }
+          graficos: [],
+          elegido: null
+        },
+        nombreCampoSwift: []
       },
       {
         "titulo": "BANDA_UNICA",
@@ -77,33 +81,35 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
         "datosGSheet": {
             "hoja": null,
             "rango": null,
-            "graficos": []
+            "graficos": [],
+            elegido: null
         },
         "id": "g3"
       },
-      {
-        "titulo": "BANDA_DOBLE",
-        "nombre": "BANDA_DOBLE",
-        "clase": "DSK",
-        "lineasTexto": "1",
-        "desplegable": false,
-        "nombreCampoSwift": [
-            {
-                "id": 0,
-                "nombreSwift": "TITULAR"
-            },
-            {
-                "id": 1,
-                "nombreSwift": "TEXTO2"
-            }
-        ],
-        "datosGSheet": {
-            "hoja": null,
-            "rango": null,
-            "graficos": []
-        },
-        "id": "g3"
-      },
+      // {
+      //   "titulo": "BANDA_DOBLE",
+      //   "nombre": "BANDA_DOBLE",
+      //   "clase": "DSK",
+      //   "lineasTexto": "1",
+      //   "desplegable": false,
+      //   "nombreCampoSwift": [
+      //       {
+      //           "id": 0,
+      //           "nombreSwift": "TITULAR"
+      //       },
+      //       {
+      //           "id": 1,
+      //           "nombreSwift": "TEXTO2"
+      //       }
+      //   ],
+      //   "datosGSheet": {
+      //       "hoja": null,
+      //       "rango": null,
+      //       "graficos": [],
+      //       elegido: null
+      //   },
+      //   "id": "g3"
+      // },
       // {
       //   id:'g02',
       //   titulo: "1 LINEA",
@@ -234,7 +240,6 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       payload.id = id
       const index = this.listaGraficos.length -1
       this.listaGraficos.splice(index, 0,payload)
-      // console.log(this.listaGraficos)
     },
 
     setRotuloActivo (payload) {
@@ -243,19 +248,24 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
     setRotuloLive (payload) {
       this.rotuloLive = payload
     },
+    editListaRotulosLive(id, live) {
+      if(!live) {
+        if(!this.listaRotulosLive.includes(id)) {
+          this.listaRotulosLive.push(id)
+        }
+      } else if (live) {
+        this.listaRotulosLive = this.listaRotulosLive.filter(el=> el !== id)
+      }
+    },
     eliminarRotulo (id) {
-      // console.log(payload)
-      console.log(this.listaRotulos)
       const temp = this.listaRotulos.filter(el =>  el.id !== id)
       this.listaRotulos = temp
       this.rotuloLive = null
       
     },
     duplicarRotulo (payload) {
-      console.log(payload)
       const nuevoRotulo = JSON.parse(JSON.stringify(payload))
       nuevoRotulo.id = this.crearID()
-      console.log(nuevoRotulo.id)
       this.listaRotulos.push(nuevoRotulo)
     },
     crearID() {
@@ -271,60 +281,39 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       return nuevaId
     },
     setDesplagableElegido (datos, idRotulo, desplegableElegido) {
-      // console.log(datos)
       
 
       const grafico = this.listaGraficos.find(el => el.titulo === datos.grafico)
+      if(!grafico) {
+        this.error = "NO EXISTE EL GRAFICO " + datos.grafico
+        this.desplegableElegido = null
+        return
+      }
       const rotulo = this.listaRotulos.find(el => el.id === idRotulo)
-      // console.log(grafico) 
       rotulo.lineasTexto = grafico.lineasTexto
       rotulo.contenido = datos.contenido
       rotulo.titulo = datos.grafico
-      console.log(rotulo)
 
-      // for (let i = 1; i <= rotulo.lineasTexto; i++) {
-      //   rotulo.contenido.push({
-      //     nombreSwift: grafico.nombreCampoSwift[i-1].nombreSwift,
-      //     valor: datos[`texto${i}`]
-      //   })
-        
-      // }
       this.desplegableElegido = desplegableElegido
-      console.log(this.desplegableElegido)
+      this.error = null
     },
     getData(hoja, rango) {
       // this.gSheetLoading = true
       const apiKey = import.meta.env.VITE_APP_APIKEY
       const idSheets =  import.meta.env.VITE_APP_IDSHEETS
-      // const hoja = this.hoja
-      // const rango = this.rango
       const values = `${hoja}!${rango}`
-      // console.log(values)
-      // const values = `${hoja}!A1:F300`
       fetch("https://content-sheets.googleapis.com/v4/spreadsheets/" +   idSheets + "/values/" + values + "?access_token="+ apiKey +"&key="+  apiKey)
       .then((lista)=>{
         return lista.json()
       }).then((valores)=>{
         let tempValores = valores.values.slice()
         const encabezados = tempValores.shift()
-        this.camposSwift = encabezados
-        // console.log(encabezados)
-        // console.log(tempValores)
         const listadodesdeGS = []
-        // const fondos = ["TITULAR", "INFORMACIÓ", "INFORMACIÓ 3", "FIRMA 2 LINIES"]
-        // const fondos = ["DSK_PRINCIPAL"]
-        // const contenido = []
-        // const temp = {}
-        // for(let i = 3; i<= 5; i++) {
-        //   temp[encabezados[i]] = null
-        // }
-        // contenido.push(temp)
 
         const fondos = []
         let valorId = 0
         tempValores.forEach(el => {
           if (!fondos.includes(el[0])) fondos.push(el[0])
-          // console.log(el)
           let id = `Simple-${valorId}`
           const data = {
             grafico: el[0],
@@ -347,7 +336,6 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
         })
 
         this.listaGSheet = listadodesdeGS
-        // console.log(this.listaGSheet)
         // localStorage.setItem('listadoCrevillent', JSON.stringify(this.listaCrevillent))
         // localStorage.setItem('listaGSheet', JSON.stringify(this.listaGSheet))
         // this.gSheetLoading = false
@@ -364,7 +352,6 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       this.onAir.push(payload)
     },
     removeOnAir (payload) {
-      // console.log(payload)
       this.rotuloADesactivar = payload.id
       this.onAir = this.onAir.filter(el => el.tecla !== payload.tecla)
     }

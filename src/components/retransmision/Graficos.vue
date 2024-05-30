@@ -1,5 +1,5 @@
 <template>
-  <div class="contenedor">
+  <div class="contenedor" @dblclick="editarGrafico">
     <div v-if="!add" class="contenedorGraficos" draggable="true" @dragstart="startDrag($event, grafico)">
       <div class="numero">{{ orden + 1 }}</div>
       <div id="texto"><p>{{ grafico.titulo}}</p></div>
@@ -72,7 +72,7 @@
                 </v-col>
               </v-row>
             </v-col>
-            <v-row>
+            <!-- <v-row>
               <v-col cols="4" v-for="grafico in listadoGraficos" :key="grafico.id">
                 <v-checkbox
                   :label="grafico.titulo"
@@ -81,7 +81,7 @@
                 ></v-checkbox>
               </v-col>
               {{ datosGSheet.graficos }}
-            </v-row>
+            </v-row> -->
           </v-row>
           <v-row>
             <v-col cols="4" class="text-center ma-0 pa-0">
@@ -135,18 +135,21 @@ import { storeToRefs } from 'pinia';
 
   const editar = ref(false)
 
-  const nombreGrafico = ref(null)
-  const claseGrafico = ref(null)
-  const lineasTexto = ref(0)
-  const desplegable = ref(false)
-  const nombreCampoSwift = ref([])
-  const datosGSheet = ref({
+  const nombreGrafico = ref(grafico.value.nombre || null)
+  const claseGrafico = ref(grafico.value.clase || null)
+  const lineasTexto = ref(grafico.value.lineasTexto || 0)
+  const desplegable = ref(grafico.value.desplegable || false)
+  const nombreCampoSwift = ref(grafico.value.nombreCampoSwift || [])
+  const datosGSheet = ref(grafico.value.datosGSheet || 
+    {
     hoja: null,
     rango: null,
-    graficos: []
+    graficos: [],
+    elegido: null
 
   })
 
+  
 
   const startDrag = (event, item) => {
     event.dataTransfer.dropEffect = 'move'
@@ -174,6 +177,14 @@ import { storeToRefs } from 'pinia';
     }
     retransmisionStore.addGrafico(nuevoGrafico)
     dialog.value = false
+  }
+
+  const editarGrafico = () => {
+    if(grafico.value.clase === "ADD") return
+
+
+
+    dialog.value = true
   }
 
   watch(() => lineasTexto.value, val => {
