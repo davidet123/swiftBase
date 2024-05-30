@@ -1,9 +1,13 @@
+import Retransmision from '@/views/retransmision/Retransmision.vue'
 import { defineStore } from 'pinia'
 
 
 
 export const useRetransmisionStore = defineStore('retransmisionStore', {
   state: () => ({
+    guardado: true,
+    listadoRetransmisiones: [],
+    nombreRetransmision: "Test retrans",
     error: null,
     onAir: [],
     listaRotulos: [
@@ -205,8 +209,6 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       
     ],
     seccionActiva: 's01',
-    hoja: "CREVILLENT",
-    rango: 'A1:F300',
     listaGSheet: null
   }),
   getters: {
@@ -215,6 +217,7 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
   actions: {
     setEdit(valor) {
       this.edit = valor
+      this.guardado = false
     },
     setSeccionActiva (payload) {
       this.seccionActiva = payload
@@ -230,16 +233,19 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       const index = this.secciones.length -1
       this.secciones.splice(index, 0,item)
       this.seccionActiva = id
+      this.guardado = false
     },
     addLiveToSeccion (seccion, valor) {
       const temp = this.secciones.find(sec => sec.id === seccion)
       temp.elementoLive += valor
+      this.guardado = false
     },
     addGrafico (payload) {
       let id = `g${this.listaGraficos.length}`
       payload.id = id
       const index = this.listaGraficos.length -1
       this.listaGraficos.splice(index, 0,payload)
+      this.guardado = false
     },
 
     setRotuloActivo (payload) {
@@ -247,6 +253,7 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
     },
     setRotuloLive (payload) {
       this.rotuloLive = payload
+      this.guardado = false
     },
     editListaRotulosLive(id, live) {
       if(!live) {
@@ -256,17 +263,20 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       } else if (live) {
         this.listaRotulosLive = this.listaRotulosLive.filter(el=> el !== id)
       }
+      this.guardado = false
     },
     eliminarRotulo (id) {
       const temp = this.listaRotulos.filter(el =>  el.id !== id)
       this.listaRotulos = temp
       this.rotuloLive = null
+      this.guardado = false
       
     },
     duplicarRotulo (payload) {
       const nuevoRotulo = JSON.parse(JSON.stringify(payload))
       nuevoRotulo.id = this.crearID()
       this.listaRotulos.push(nuevoRotulo)
+      this.guardado = false
     },
     crearID() {
       let fin = false
@@ -296,6 +306,7 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
 
       this.desplegableElegido = desplegableElegido
       this.error = null
+      this.guardado = false
     },
     getData(hoja, rango) {
       // this.gSheetLoading = true
@@ -350,10 +361,81 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       // temp.push(payload)
       // this.onAir = [...temp]
       this.onAir.push(payload)
+      this.guardado = false
     },
     removeOnAir (payload) {
       this.rotuloADesactivar = payload.id
       this.onAir = this.onAir.filter(el => el.tecla !== payload.tecla)
+      this.guardado = false
+    },
+
+    cargarRetransmisiones() {
+      const listadoRetransmisiones = JSON.parse(localStorage.getItem('listadoRetransmisiones')) 
+      if(listadoRetransmisiones) this.listadoRetransmisiones = listadoRetransmisiones
+    },
+    guardarRetransmision() {
+      const buscarRetrans = this.listadoRetransmisiones.find(el => el.nombreRetransmision === this.nombreRetransmision)
+      
+      
+      let retransmision = {
+        nombreRetransmision: this.nombreRetransmision,
+        idRetransmision: Date.now(),
+        error: this.error,
+        onAir: this.onAir,
+        listaRotulos: this.listaRotulos,
+        desplegableElegido: this.desplegableElegido,
+        rotuloActivo: this.rotuloActivo,
+        rotuloLive: this.rotuloLive,
+        listaRotulosLive: this.listaRotulosLive,
+        rotuloADesactivar: this.rotuloADesactivar,
+        control: this.control,
+        edit: this.edit,
+        camposSwift: this.camposSwift,
+        listaGraficos: this.listaGraficos,
+        secciones: this.secciones,
+        seccionActiva: this.seccionActiva,
+        listaGSheet: this.listaGSheet
+
+      }
+      
+      if(!buscarRetrans) {
+        this.listadoRetransmisiones.push(retransmision)
+        this.idRetransmision = retransmision.idRetransmision
+
+      } else {
+        retransmision.idRetransmision = this.idRetransmision
+      }
+      console.log(this.listadoRetransmisiones)
+      this.guardado = true
+
+      localStorage.setItem('listadoRetransmisiones', JSON.stringify(this.listadoRetransmisiones))
+    },
+    cargarRetransmision(id) {
+      console.log(id)
+      const retransmision = this.listadoRetransmisiones.find(el => el.idRetransmision === id)
+      if(retransmision) {
+
+        this.nombreRetransmision = retransmision.nombreRetransmision
+        this.idRetransmision = retransmision.idRetransmision
+        this.error = retransmision.error
+        this.onAir = retransmision.onAir
+        this.listaRotulos = retransmision.listaRotulos
+        this.desplegableElegido = retransmision.desplegableElegido
+        this.rotuloActivo = retransmision.rotuloActivo
+        this.rotuloLive = retransmision.rotuloLive
+        this.listaRotulosLive = retransmision.listaRotulosLive
+        this.rotuloADesactivar = retransmision.rotuloADesactivar
+        this.control = retransmision.control
+        this.edit = retransmision.edit
+        this.camposSwift = retransmision.camposSwift
+        this.listaGraficos = retransmision.listaGraficos
+        this.secciones = retransmision.secciones
+        this.seccionActiva = retransmision.seccionActiva
+        this.listaGSheet = retransmision.listaGSheet
+
+      }
+
+      console.log(retransmision)
     }
   }
 

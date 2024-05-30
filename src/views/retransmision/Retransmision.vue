@@ -1,5 +1,8 @@
 <template>
   <div id="retransmision">
+    <v-row id="comandos">
+      <Comandos />
+    </v-row>
     <v-row id="onAir">
         <OnAir v-for="(rotuloOnAir, index) in onAir" :key="index" :rotuloOnAir="rotuloOnAir" :orden="index"/>
     </v-row>
@@ -54,7 +57,7 @@
   import { useRetransmisionStore } from "../../store/retransmision" 
   import { useSwiftConnectionStore } from "../../store/swiftConnection"
   import { storeToRefs } from "pinia"
-  import { useRouter } from 'vue-router'
+  
   
   import VisorFlex from '@/components/visor/VisorFlex.vue'
   import OnAir from '@/components/retransmision/OnAir.vue'
@@ -62,8 +65,8 @@
   import Graficos from '@/components/retransmision/Graficos.vue'
   import ListadoRotulos from '@/components/retransmision/ListadoRotulos.vue'
   import Control from '@/components/retransmision/Control.vue'
+  import Comandos from '@/components/retransmision/Comandos.vue'
 
-  const router = useRouter()
 
   const swiftConnectionStore = useSwiftConnectionStore()
 
@@ -71,6 +74,7 @@
   const { onAir, secciones, listaGraficos, seccionActiva, listaRotulos, rotuloActivo } = storeToRefs(retransmisionStore)
 
   swiftConnectionStore.startConnection()
+  retransmisionStore.cargarRetransmisiones()
   
   const seccionesOrdenadas = secciones.value.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0))
   
@@ -137,9 +141,17 @@
     
 
   }
+
+  #comandos {
+    width: 100%;
+    height: 2%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
   #seccion-media {
     width: 100%;
-    height: 70%;
+    height: 68%;
     margin: 0;
     padding: 0;
   }

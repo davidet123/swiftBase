@@ -75,6 +75,7 @@
   })
 
   document.onkeydown = e => {
+    
     if(edit.value) return
     if(e.getModifierState("Control")) ctrl = true
     if(teclasFuncion.includes(e.key)) {
@@ -100,9 +101,13 @@
         retransmisionStore.setRotuloLive(desactivar.id)
 
         retransmisionStore.removeOnAir(desactivar)
-      }      
+      } 
     }
     
+    if(e.key === "s" && ctrl) {
+      e.preventDefault()
+      retransmisionStore.guardarRetransmision()
+    }  
     if(e.key === " ") {
       if(!checkOnAir()) retransmisionStore.setRotuloLive(rotuloActivo.value)
     }
