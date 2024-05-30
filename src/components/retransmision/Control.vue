@@ -12,11 +12,10 @@
       ></v-text-field>
     </div>
     <div id="contenidoRotulo" v-if="rotulo">
-      <div v-if="!rotulo.desplegable" v-for="(texto, index) in rotulo.contenido" :key="index">
-        <!-- <input :value="texto.valor" :placeholder="texto.nombre" class="inputConfig" > -->
+      <div v-if="!rotulo.desplegable" v-for="(value, key) in rotulo.contenido" :key="key">
         <v-text-field
-        v-model="texto.valor"
-        :label=texto.nombreSwift
+        v-model="rotulo.contenido[key]"
+        :label=key
         density="compact"
         @update:focused="foco($event)"
       ></v-text-field>
@@ -53,6 +52,8 @@
   const rotulo = computed(() => retransmisionStore.listaRotulos.find(el => el.id === rotuloActivo.value))
 
   const foco = e => retransmisionStore.setEdit(e)
+
+  // const contenidoRotulo = computed(() => rotulo.value.contenido)
 
   // watch(() => foco.value, val => console.log(val))
 

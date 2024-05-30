@@ -81,6 +81,29 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
         },
         "id": "g3"
       },
+      {
+        "titulo": "BANDA_DOBLE",
+        "nombre": "BANDA_DOBLE",
+        "clase": "DSK",
+        "lineasTexto": "1",
+        "desplegable": false,
+        "nombreCampoSwift": [
+            {
+                "id": 0,
+                "nombreSwift": "TITULAR"
+            },
+            {
+                "id": 1,
+                "nombreSwift": "TEXTO2"
+            }
+        ],
+        "datosGSheet": {
+            "hoja": null,
+            "rango": null,
+            "graficos": []
+        },
+        "id": "g3"
+      },
       // {
       //   id:'g02',
       //   titulo: "1 LINEA",
@@ -247,16 +270,17 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       }
       return nuevaId
     },
-    setDesplagableElegido (datos, idRotulo) {
+    setDesplagableElegido (datos, idRotulo, desplegableElegido) {
       // console.log(datos)
       
 
       const grafico = this.listaGraficos.find(el => el.titulo === datos.grafico)
       const rotulo = this.listaRotulos.find(el => el.id === idRotulo)
+      // console.log(grafico) 
       rotulo.lineasTexto = grafico.lineasTexto
       rotulo.contenido = datos.contenido
       rotulo.titulo = datos.grafico
-      console.log(rotulo) 
+      console.log(rotulo)
 
       // for (let i = 1; i <= rotulo.lineasTexto; i++) {
       //   rotulo.contenido.push({
@@ -265,8 +289,8 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       //   })
         
       // }
-      // this.desplegableElegido = payload
-      // console.log(this.desplegableElegido)
+      this.desplegableElegido = desplegableElegido
+      console.log(this.desplegableElegido)
     },
     getData(hoja, rango) {
       // this.gSheetLoading = true
@@ -284,7 +308,7 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
         let tempValores = valores.values.slice()
         const encabezados = tempValores.shift()
         this.camposSwift = encabezados
-        console.log(encabezados)
+        // console.log(encabezados)
         // console.log(tempValores)
         const listadodesdeGS = []
         // const fondos = ["TITULAR", "INFORMACIÓ", "INFORMACIÓ 3", "FIRMA 2 LINIES"]
@@ -309,7 +333,7 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
             // texto1: el[3] || "",
             // texto2: el[4] || "",
             // texto3: el[5] || "",
-            label: `${el[0]} - ${el[1]} - ${el[2] || ""} - ${el[3] || ""} - ${el[4] || ""}`,
+            label: `${el[2] || ""} - ${el[3] || ""} - ${el[4] || ""}`,
             live: false,
             id,
             contenido: {}
@@ -323,7 +347,7 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
         })
 
         this.listaGSheet = listadodesdeGS
-        console.log(this.listaGSheet)
+        // console.log(this.listaGSheet)
         // localStorage.setItem('listadoCrevillent', JSON.stringify(this.listaCrevillent))
         // localStorage.setItem('listaGSheet', JSON.stringify(this.listaGSheet))
         // this.gSheetLoading = false

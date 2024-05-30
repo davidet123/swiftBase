@@ -1,5 +1,6 @@
 <template>
   <div id="listaDesplegable" v-if="listaGSheet">
+    <!-- CUADRO DE TEXTO PARA BUSCAR ROTULO AQUI!! -->
     <v-select
       label="Grafico"
       :items="listaGSheet"
@@ -28,7 +29,7 @@
 
   
   
-  const { listaGSheet } = storeToRefs(retransmisionStore)
+  const { listaGSheet, desplegableElegido } = storeToRefs(retransmisionStore)
   const hoja = rotulo.value.datosGSheet.hoja
   const rango = rotulo.value.datosGSheet.rango
   // console.log(hoja, rango)
@@ -36,14 +37,12 @@
 
   // if(!listaGSheet.value) retransmisionStore.getData()
   
-  const numGraficoSeleccionado = ref(null)
-  // console.log(rotulo.value)
+  const numGraficoSeleccionado = ref(desplegableElegido.value)
 
 
   watch(() => numGraficoSeleccionado.value, val => {
     const datos = listaGSheet.value.find(el => el.numero == val)
-    retransmisionStore.setDesplagableElegido(datos, rotulo.value.id)
-    console.log(datos)
+    retransmisionStore.setDesplagableElegido(datos, rotulo.value.id, val)
   })
 </script>
 

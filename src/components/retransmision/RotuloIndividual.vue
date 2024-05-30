@@ -8,8 +8,8 @@
         <div id="titulo">
           {{ rotulo.nombre}}</div>
         <div id="contenido">
-          <span class="textoIndividual" v-for="texto in rotulo.contenido" :key="texto.nombre">
-            {{ texto.valor }}
+          <span class="textoIndividual" v-for="(value, key) in rotulo.contenido" :key="key">
+            {{ value }}
           </span>
         </div>
       </div>
@@ -84,8 +84,9 @@
       console.log(grafico)
     swiftConnectionStore.rtRemote.playGraphic(grafico)
     if(!rotulo.value.live) {
-      for(let nombre in rotulo.value.contenido) {
-        swiftConnectionStore.rtRemote.updateFields(grafico + "::" + rotulo.value.contenido[nombre].nombreSwift + "TEXT", "String", rotulo.value.contenido[nombre].valor)
+      for(let campo in rotulo.value.contenido) {
+        console.log(grafico + "::" + campo + "TEXT", "String", rotulo.value.contenido[campo])
+        swiftConnectionStore.rtRemote.updateFields(grafico + "::" + campo + "TEXT", "String", rotulo.value.contenido[campo])
       }
       swiftConnectionStore.rtRemote.playMethod(grafico + "::bringOn")
       retransmisionStore.addLiveToSeccion(seccionActiva.value, 1)
