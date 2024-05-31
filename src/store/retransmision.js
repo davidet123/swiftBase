@@ -7,7 +7,7 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
   state: () => ({
     guardado: true,
     listadoRetransmisiones: [],
-    nombreRetransmision: "Test retrans",
+    nombreRetransmision: "Test retrans1",
     error: null,
     onAir: [],
     listaRotulos: [
@@ -215,6 +215,9 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
 
   },
   actions: {
+    setGuardado (valor) {
+      this.guardado = valor
+    },
     setEdit(valor) {
       this.edit = valor
       this.guardado = false
@@ -436,6 +439,20 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       }
 
       console.log(retransmision)
+    },
+    eliminarRetransmision (id) {
+      // const retransmision = this.listadoRetransmisiones.find(el => el.idRetransmision === id)
+      // if(retransmision) {
+      //   console.log(retransmision.idRetransmision == id) 
+      // }
+      console.log(this.listadoRetransmisiones)
+      this.listadoRetransmisiones = this.listadoRetransmisiones.filter(el => el.idRetransmision !== id)
+      localStorage.setItem('listadoRetransmisiones', JSON.stringify(this.listadoRetransmisiones))
+
+    },
+    crearRetransmision (nombre) {
+      this.nombreRetransmision = nombre
+      this.guardado = false
     }
   }
 

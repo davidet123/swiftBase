@@ -1,7 +1,7 @@
 <template>
   <div id="fondoComandos">
     <div id="textoComandos">
-      <p>{{ textoComando }} {{ guardado }}</p>
+      <p>{{ textoComando }}</p>
       <span v-if="!guardado">
         <v-icon
             icon="mdi-circle-small"
@@ -15,7 +15,12 @@
           icon="mdi-home-outline"
           size="x-small"
           @click="inicio()"
-        ></v-icon>
+        >
+        <v-tooltip
+          activator="parent"
+          location="bottom"
+        >HOME</v-tooltip>
+      </v-icon>
       </div>
       <div class="icono">
         <v-icon

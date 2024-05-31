@@ -136,7 +136,7 @@ import { storeToRefs } from 'pinia';
   const editar = ref(false)
 
   const nombreGrafico = ref(grafico.value.nombre || null)
-  const claseGrafico = ref(grafico.value.clase || null)
+  const claseGrafico = ref(grafico.value.clase === "ADD" ? null : grafico.value.clase || null)
   const lineasTexto = ref(grafico.value.lineasTexto || 0)
   const desplegable = ref(grafico.value.desplegable || false)
   const nombreCampoSwift = ref(grafico.value.nombreCampoSwift || [])

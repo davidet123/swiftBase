@@ -120,6 +120,7 @@
 
     }
     listaRotulos.value.push(rotulo)
+    retransmisionStore.setGuardado(false)
   }
 
   const getEvento = item => {
@@ -151,6 +152,8 @@
   }
   #seccion-media {
     width: 100%;
+    
+    max-height: 650px;
     height: 68%;
     margin: 0;
     padding: 0;
@@ -175,7 +178,8 @@
     align-items: start;
   }
 
-  #listado, #controles {
+  
+  #listado {
     width: 50%;
     height: 100%;
     margin: 0;
@@ -183,12 +187,32 @@
     border: 1px solid white;
     position: relative;
     display: flex;
-    flex-direction: column;
-    
+    flex-direction: column;   
+    overflow-y: auto;
     
   }
-
-  #visor, #ventanaControl {
+  #controles {
+    width: 50%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 1px solid white;
+    position: relative;
+    display: flex;
+    flex-direction: column;   
+    
+  }
+  #visor {
+    width: 100%;
+    height: 50%;
+    border: 1px solid white;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    margin: 0 auto;
+    display: flex;
+  }
+  #ventanaControl {
     width: 100%;
     height: 50%;
     border: 1px solid white;
