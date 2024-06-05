@@ -7,6 +7,7 @@
       v-model="numGraficoSeleccionado"
       item-title="label"
       item-value="numero"
+      :active="desplegableActivo"
     >
     </v-select>
   </div>
@@ -32,6 +33,8 @@
   const { listaGSheet, desplegableElegido } = storeToRefs(retransmisionStore)
   const hoja = rotulo.value.datosGSheet.hoja
   const rango = rotulo.value.datosGSheet.rango
+
+  const desplegableActivo = ref(false)
   
   retransmisionStore.getData(hoja, rango)
 
@@ -43,6 +46,7 @@
   watch(() => numGraficoSeleccionado.value, val => {
     const datos = listaGSheet.value.find(el => el.numero == val)
     retransmisionStore.setDesplagableElegido(datos, rotulo.value.id, val)
+    desplegableActivo.value = false
   })
 </script>
 

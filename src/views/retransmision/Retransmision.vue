@@ -71,10 +71,16 @@
   const swiftConnectionStore = useSwiftConnectionStore()
 
   const retransmisionStore = useRetransmisionStore()
-  const { onAir, secciones, listaGraficos, seccionActiva, listaRotulos, rotuloActivo } = storeToRefs(retransmisionStore)
+  const { onAir, secciones, listaGraficos, seccionActiva, listaRotulos, rotuloActivo, retransmisionActiva } = storeToRefs(retransmisionStore)
 
   swiftConnectionStore.startConnection()
   retransmisionStore.cargarRetransmisiones()
+
+  if(!retransmisionActiva.value) retransmisionActiva.value = JSON.parse(localStorage.getItem('retransmisionActiva'))
+  retransmisionStore.cargarRetransmisiones()
+  retransmisionStore.cargarRetransmision(retransmisionActiva.value)
+
+
   
   const seccionesOrdenadas = secciones.value.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0))
   
@@ -126,6 +132,12 @@
   const getEvento = item => {
     evento = item
   }
+
+  watch(() => retransmisionActiva.value, val => {
+    console.log(val)
+    e.preventDefault()
+    e.returnValue = ''
+  })
 
   
 

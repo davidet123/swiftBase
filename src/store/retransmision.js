@@ -5,6 +5,7 @@ import { defineStore } from 'pinia'
 
 export const useRetransmisionStore = defineStore('retransmisionStore', {
   state: () => ({
+    retransmisionActiva: null,
     guardado: true,
     listadoRetransmisiones: [],
     nombreRetransmision: "Test retrans1",
@@ -50,46 +51,46 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       //     graficos: []
       //   }
       // },
-      {
-        id:'g02',
-        titulo: "LISTA",
-        nombre: "LISTA",
-        clase: "LISTA",
-        contenido: null,
-        lineasTexto: 0,
-        desplegable: true,
-        datosGSheet: {
-          hoja: 'CREVILLENT_OK',
-          rango: 'A1:F100',
-          graficos: [],
-          elegido: null
-        },
-        nombreCampoSwift: []
-      },
-      {
-        "titulo": "BANDA_UNICA",
-        "nombre": "BANDA_UNICA",
-        "clase": "DSK",
-        "lineasTexto": "1",
-        "desplegable": false,
-        "nombreCampoSwift": [
-            {
-                "id": 0,
-                "nombreSwift": "TITULAR"
-            },
-            {
-                "id": 1,
-                "nombreSwift": "TEXTO2"
-            }
-        ],
-        "datosGSheet": {
-            "hoja": null,
-            "rango": null,
-            "graficos": [],
-            elegido: null
-        },
-        "id": "g3"
-      },
+      // {
+      //   id:'g02',
+      //   titulo: "LISTA",
+      //   nombre: "LISTA",
+      //   clase: "LISTA",
+      //   contenido: null,
+      //   lineasTexto: 0,
+      //   desplegable: true,
+      //   datosGSheet: {
+      //     hoja: 'CREVILLENT_OK',
+      //     rango: 'A1:F100',
+      //     graficos: [],
+      //     elegido: null
+      //   },
+      //   nombreCampoSwift: []
+      // },
+      // {
+      //   "titulo": "BANDA_UNICA",
+      //   "nombre": "BANDA_UNICA",
+      //   "clase": "DSK",
+      //   "lineasTexto": "1",
+      //   "desplegable": false,
+      //   "nombreCampoSwift": [
+      //       {
+      //           "id": 0,
+      //           "nombreSwift": "TITULAR"
+      //       },
+      //       {
+      //           "id": 1,
+      //           "nombreSwift": "TEXTO2"
+      //       }
+      //   ],
+      //   "datosGSheet": {
+      //       "hoja": null,
+      //       "rango": null,
+      //       "graficos": [],
+      //       elegido: null
+      //   },
+      //   "id": "g3"
+      // },
       // {
       //   "titulo": "BANDA_DOBLE",
       //   "nombre": "BANDA_DOBLE",
@@ -377,12 +378,12 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       if(listadoRetransmisiones) this.listadoRetransmisiones = listadoRetransmisiones
     },
     guardarRetransmision() {
-      const buscarRetrans = this.listadoRetransmisiones.find(el => el.nombreRetransmision === this.nombreRetransmision)
+      let buscarRetrans = this.listadoRetransmisiones.find(el => el.nombreRetransmision === this.nombreRetransmision)
       
       
       let retransmision = {
+        idRetransmision: this.idRetransmision,
         nombreRetransmision: this.nombreRetransmision,
-        idRetransmision: Date.now(),
         error: this.error,
         onAir: this.onAir,
         listaRotulos: this.listaRotulos,
@@ -398,24 +399,46 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
         secciones: this.secciones,
         seccionActiva: this.seccionActiva,
         listaGSheet: this.listaGSheet
-
+        
       }
-      
+      console.log(retransmision)
+
       if(!buscarRetrans) {
         this.listadoRetransmisiones.push(retransmision)
-        this.idRetransmision = retransmision.idRetransmision
 
       } else {
-        retransmision.idRetransmision = this.idRetransmision
+        buscarRetrans.idRetransmision = this.idRetransmision
+        buscarRetrans.nombreRetransmision = this.nombreRetransmision,
+        buscarRetrans.error = this.error,
+        buscarRetrans.onAir = this.onAir,
+        buscarRetrans.listaRotulos = this.listaRotulos,
+        buscarRetrans.desplegableElegido = this.desplegableElegido,
+        buscarRetrans.rotuloActivo = this.rotuloActivo,
+        buscarRetrans.rotuloLive = this.rotuloLive,
+        buscarRetrans.listaRotulosLive = this.listaRotulosLive,
+        buscarRetrans.rotuloADesactivar = this.rotuloADesactivar,
+        buscarRetrans.control = this.control,
+        buscarRetrans.edit = this.edit,
+        buscarRetrans.camposSwift = this.camposSwift,
+        buscarRetrans.listaGraficos = this.listaGraficos,
+        buscarRetrans.secciones = this.secciones,
+        buscarRetrans.seccionActiva = this.seccionActiva,
+        buscarRetrans.listaGSheet = this.listaGSheet
+
+        // console.log(buscarRetrans)
       }
-      console.log(this.listadoRetransmisiones)
       this.guardado = true
 
       localStorage.setItem('listadoRetransmisiones', JSON.stringify(this.listadoRetransmisiones))
+      localStorage.setItem('retransmisionActiva', JSON.stringify(this.retransmisionActiva))
     },
     cargarRetransmision(id) {
+      console.log(this.listadoRetransmisiones)
       console.log(id)
-      const retransmision = this.listadoRetransmisiones.find(el => el.idRetransmision === id)
+      const retransmision = this.listadoRetransmisiones.find(el => {
+        console.log(el.idRetransmision,  id)
+        return el.idRetransmision === id
+      })
       if(retransmision) {
 
         this.nombreRetransmision = retransmision.nombreRetransmision
@@ -435,8 +458,10 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
         this.secciones = retransmision.secciones
         this.seccionActiva = retransmision.seccionActiva
         this.listaGSheet = retransmision.listaGSheet
+        this.retransmisionActiva = id
 
       }
+      
 
       console.log(retransmision)
     },
@@ -453,6 +478,9 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
     crearRetransmision (nombre) {
       this.nombreRetransmision = nombre
       this.guardado = false
+      this.retransmisionActiva = Date.now()
+      this.idRetransmision = this.retransmisionActiva
+      this.guardarRetransmision()
     }
   }
 

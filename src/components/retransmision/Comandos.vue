@@ -1,7 +1,7 @@
 <template>
   <div id="fondoComandos">
     <div id="textoComandos">
-      <p>{{ textoComando }}</p>
+      <p>{{ textoComando }} - {{retransmisionActiva}}</p>
       <span v-if="!guardado">
         <v-icon
             icon="mdi-circle-small"
@@ -50,7 +50,7 @@
 
   const retransmisionStore = useRetransmisionStore()
 
-  const { nombreRetransmision, guardado } = storeToRefs(retransmisionStore)
+  const { nombreRetransmision, guardado, retransmisionActiva } = storeToRefs(retransmisionStore)
 
   const inicio = () => router.push("/menuretransmision")
 
