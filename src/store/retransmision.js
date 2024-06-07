@@ -259,7 +259,7 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
     },
 
     setRotuloActivo (payload) {
-      console.log("setrotuloactivo")
+      // console.log("setrotuloactivo")
       this.rotuloActivo = payload
     },
     setRotuloLive (payload) {
@@ -289,8 +289,8 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       this.listaRotulos.push(nuevoRotulo)
       this.setRotuloActivo(nuevoRotulo.id)
       this.guardado = false
-      console.log(this.rotuloActivo)
-      console.log(this.listaRotulos)
+      // console.log(this.rotuloActivo)
+      // console.log(this.listaRotulos)
     },
     crearID() {
       let fin = false
@@ -322,70 +322,27 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       this.error = null
       this.guardado = false
     },
-    getData(hoja, rango) {
-      // this.gSheetLoading = true
-      const apiKey = import.meta.env.VITE_APP_APIKEY
-      const idSheets =  import.meta.env.VITE_APP_IDSHEETS
-      const values = `${hoja}!${rango}`
-      fetch("https://content-sheets.googleapis.com/v4/spreadsheets/" +   idSheets + "/values/" + values + "?access_token="+ apiKey +"&key="+  apiKey)
-      .then((lista)=>{
-        return lista.json()
-      }).then((valores)=>{
-        let tempValores = valores.values.slice()
-        const encabezados = tempValores.shift()
-        const listadodesdeGS = []
 
-        const fondos = []
-        let valorId = 0
-        tempValores.forEach(el => {
-          if (!fondos.includes(el[0])) fondos.push(el[0])
-          let id = `Simple-${valorId}`
-          const data = {
-            grafico: el[0],
-            id_grafico: el[1],
-            numero: el[2],
-            // texto1: el[3] || "",
-            // texto2: el[4] || "",
-            // texto3: el[5] || "",
-            label: `${el[2] || ""} - ${el[3] || ""} - ${el[4] || ""}`,
-            live: false,
-            id,
-            contenido: {}
-          }
-          const tempContenido = {}
-          data.contenido[encabezados[3]] = el[3] || ""
-          data.contenido[encabezados[4]] = el[4] || ""
-          data.contenido[encabezados[5]] = el[5] || ""
-          listadodesdeGS.push(data)
-          valorId++
-        })
-        console.log(listadodesdeGS[0])
-
-        this.listaGSheet = listadodesdeGS
-        // localStorage.setItem('listadoCrevillent', JSON.stringify(this.listaCrevillent))
-        // localStorage.setItem('listaGSheet', JSON.stringify(this.listaGSheet))
-        // this.gSheetLoading = false
-      }).catch(err=>{
-        console.log(err);
-        this.gSheetLoading = false
-      })
-
-    },
-    async getDataExcel (pagina) {
-      try {
-        const res = await fetch(`http://localhost:8500/excel/${pagina.toUpperCase()}`)
+    async getData(url) {
+      // try {
+        const res = await fetch(url)
         const data = await res.json()
-        const encabezados = data.shift()
+        let tempValores = data
+        if(!data.length) {
+          tempValores = data.values.slice()
+          }
+        const encabezados = tempValores.shift()
+        // console.log(tempValores)
         const fondos = []
         let valorId = 0
         const listado = []
         
         
-        if(Array.isArray(data)) {
-          data.forEach(el => {
+        if(Array.isArray(tempValores)) {
+          tempValores.forEach(el => {
             if (!fondos.includes(el[0])) fondos.push(el[0])
             let id = `Simple-${valorId}`
-            const data = {
+            const nuevoElemento = {
               grafico: el[0],
               id_grafico: el[1],
               numero: el[2],
@@ -398,16 +355,22 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
               contenido: {}
             }
             const tempContenido = {}
-            data.contenido[encabezados[3]] = el[3] || ""
-            data.contenido[encabezados[4]] = el[4] || ""
-            data.contenido[encabezados[5]] = el[5] || ""
-            listado.push(data)
+            nuevoElemento.contenido[encabezados[3]] = el[3] || ""
+            nuevoElemento.contenido[encabezados[4]] = el[4] || ""
+            nuevoElemento.contenido[encabezados[5]] = el[5] || ""
+            listado.push(nuevoElemento)
             valorId++
           })
-          console.log(listado[0])
+
+
+
+          // console.log(listado)
+
+          return listado
+          
 
           
-          this.listaGSheet = listado
+          // this.listaGSheet = listado
           // errorText.value = null
           // datos.value = data
           // encabezados.value = datos.value.shift()
@@ -419,15 +382,44 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
           
         }
 
+      // } catch (error) {
+      //   console.log(error)
+
+      // }
+
+    },
+
+
+
+    async getDataGS(hoja, rango) {
+      // this.gSheetLoading = true
+      const apiKey = import.meta.env.VITE_APP_APIKEY
+      const idSheets =  import.meta.env.VITE_APP_IDSHEETS
+      const values = `${hoja}!${rango}`
+      const url = "https://content-sheets.googleapis.com/v4/spreadsheets/" +   idSheets + "/values/" + values + "?access_token="+ apiKey +"&key="+  apiKey
+      // console.log(url)
+      try {
+        const res = await this.getData(url)
+        this.listaGSheet = res
+
       } catch (error) {
-        // encabezados.value = null
-        // datos.value = null
-        // errorText.value = error
-        // parar()
-        console.log(error)
+        console.log(err);
+        this.gSheetLoading = false
 
       }
-      
+    },
+    async getDataExcel (pagina) {
+      const url = `http://localhost:8500/excel/${pagina.toUpperCase()}`
+
+      try {
+        const res = await this.getData(url)
+        this.listaGSheet = res
+
+      } catch (error) {
+        console.log(err);
+        this.gSheetLoading = false
+
+      }      
 
     },
     addOnAir (payload) {

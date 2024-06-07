@@ -128,7 +128,7 @@
     }
     listaRotulos.value.push(rotulo)
     retransmisionStore.setGuardado(false)
-    console.log(evento)
+    // console.log(evento)
   }
 
   const getEvento = item => {
@@ -136,7 +136,7 @@
   }
 
   watch(() => retransmisionActiva.value, val => {
-    console.log(val)
+    // console.log(val)
     e.preventDefault()
     e.returnValue = ''
   })

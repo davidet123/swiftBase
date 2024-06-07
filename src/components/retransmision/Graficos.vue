@@ -71,6 +71,18 @@
                   :value="tipo"
                 ></v-checkbox>
               </v-col>
+              <v-col cols="3">
+                <v-text-field
+                  label="Nº columnas"
+                  v-model="datosDesplegable.columnas"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="3">
+                <v-text-field
+                  label="Nº filas"
+                  v-model="datosDesplegable.filas"
+                ></v-text-field>
+              </v-col>
             </v-row>
             <v-col cols=12 v-if="datosDesplegable.tipo === 'gSheet'">
               <v-row>
@@ -80,12 +92,12 @@
                   v-model="datosDesplegable.hoja"
                 ></v-text-field>
                 </v-col>
-                <v-col cols="6" class=text-center>
+                <!-- <v-col cols="6" class=text-center>
                   <v-text-field
                   label="Rango desplegable"
                   v-model="datosDesplegable.rango"
                 ></v-text-field>
-                </v-col>
+                </v-col> -->
               </v-row>
             </v-col>
             <v-col cols=12 v-if="datosDesplegable.tipo === 'EXCEL'">
@@ -169,11 +181,14 @@
     rango: null,
     graficos: [],
     elegido: null,
-    tipo: null
+    tipo: null,
+    filas: null,
+    columnas: null
 
   })
   const tipoDesplegable = ref(['gSheet','EXCEL'])
   const tipoDesplegableElegido = ref(grafico.value.tipoDesplegableElegido || null)
+
 
   
 
@@ -194,8 +209,23 @@
     dialog.value = false
   }
 
+  const numeroAColumna = n => {
+    let result = '';
+    while (n > 0) {
+        let remainder = (n - 1) % 26;
+        result = String.fromCharCode(65 + remainder) + result;
+        n = Math.floor((n - 1) / 26);
+    }
+    return result;
+
+  }
+
   const aceptar = () => {
     // const graficoSwift = lineasTexto === 0 ? titulo : nombre
+    const fila = datosDesplegable.value.filas
+    const col = numeroAColumna(datosDesplegable.value.columnas)
+    const rango = `A1:${col}${fila}`
+    console.log(rango)
     if(!editar.value) {
 
       const nuevoGrafico = {
@@ -209,6 +239,7 @@
         datosDesplegable: datosDesplegable.value,
         tipoDesplegableElegido: tipoDesplegableElegido.value
       }
+      nuevoGrafico.datosDesplegable.rango = rango
       retransmisionStore.addGrafico(nuevoGrafico)
     } else {
       grafico.value.titulo = nombreGrafico.value
@@ -218,7 +249,9 @@
       grafico.value.desplegable = desplegable.value
       grafico.value.nombreCampoSwift = nombreCampoSwift.value
       grafico.value.datosDesplegable = datosDesplegable.value
+      grafico.value.datosDesplegable.rango = rango
       grafico.tipoDesplegableElegido = tipoDesplegableElegido.value
+
       console.log(tipoDesplegableElegido.value)
     }
 

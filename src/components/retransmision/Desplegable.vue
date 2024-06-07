@@ -37,7 +37,7 @@
   const desplegableActivo = ref(false)
   if(rotulo.value.datosDesplegable.tipo === 'gSheet') {
 
-    retransmisionStore.getData(hoja, rango)
+    retransmisionStore.getDataGS(hoja, rango)
   } else if (rotulo.value.datosDesplegable.tipo === 'EXCEL'){
     retransmisionStore.getDataExcel(hoja)
   }
