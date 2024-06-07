@@ -60,8 +60,8 @@
 
   const { rotulo } = toRefs(props)
 
-  const seleccionarRotulo = target => {
-    retransmisionStore.setRotuloActivo(rotulo.value.id)
+  const seleccionarRotulo = (e) => {
+    if(e.target.nodeName !== 'I') retransmisionStore.setRotuloActivo(rotulo.value.id)
 
   }
 
@@ -100,11 +100,13 @@
 
   const id = computed(() => rotulo.value.id)
 
+
   
   
   
   watch(() => desplegableElegido.value, val => {
   })
+
 
   watch(() => rotuloLive.value, val => {
     if(val === id.value) {

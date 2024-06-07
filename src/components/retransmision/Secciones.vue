@@ -75,7 +75,7 @@ const editarSeccion = (titulo) => {
   dialog.value = true
   editar = true
   // retransmisionStore.actualizarSeccion()
-  // nombreSeccion.value = titulo
+  nombreSeccion.value = titulo
   // console.log(seccion.value)
   
   // seccion.value.titulo = nombreSeccion.value
@@ -84,8 +84,13 @@ const editarSeccion = (titulo) => {
   
 }
 const aceptar = () => { 
-  if(!editar) retransmisionStore.addSeccion(nombreSeccion.value)
-  // seccion.value.titulo = nombreSeccion.value
+  if(!editar) {
+    retransmisionStore.addSeccion(nombreSeccion.value)
+  } else {
+    
+    seccion.value.titulo = nombreSeccion.value
+  }
+
   dialog.value = false
   editar = false
 

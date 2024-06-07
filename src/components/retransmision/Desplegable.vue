@@ -31,12 +31,17 @@
   
   
   const { listaGSheet, desplegableElegido } = storeToRefs(retransmisionStore)
-  const hoja = rotulo.value.datosGSheet.hoja
-  const rango = rotulo.value.datosGSheet.rango
+  const hoja = rotulo.value.datosDesplegable.hoja
+  const rango = rotulo.value.datosDesplegable.rango
 
   const desplegableActivo = ref(false)
+  if(rotulo.value.datosDesplegable.tipo === 'gSheet') {
+
+    retransmisionStore.getData(hoja, rango)
+  } else if (rotulo.value.datosDesplegable.tipo === 'EXCEL'){
+    retransmisionStore.getDataExcel(hoja)
+  }
   
-  retransmisionStore.getData(hoja, rango)
 
   // if(!listaGSheet.value) retransmisionStore.getData()
   

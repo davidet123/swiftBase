@@ -29,7 +29,7 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       // },
     ],
     desplegableElegido: null,
-    rotuloActivo: 'null',
+    rotuloActivo: null,
     rotuloLive: null,
     listaRotulosLive: [],
     rotuloADesactivar: null,
@@ -251,8 +251,15 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       this.listaGraficos.splice(index, 0,payload)
       this.guardado = false
     },
+    eliminarGrafico (id) {
+      const temp = this.listaGraficos.filter(el =>  el.id !== id)
+      this.listaGraficos = temp
+      this.guardado = false
+      
+    },
 
     setRotuloActivo (payload) {
+      console.log("setrotuloactivo")
       this.rotuloActivo = payload
     },
     setRotuloLive (payload) {
@@ -280,7 +287,10 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       const nuevoRotulo = JSON.parse(JSON.stringify(payload))
       nuevoRotulo.id = this.crearID()
       this.listaRotulos.push(nuevoRotulo)
+      this.setRotuloActivo(nuevoRotulo.id)
       this.guardado = false
+      console.log(this.rotuloActivo)
+      console.log(this.listaRotulos)
     },
     crearID() {
       let fin = false
@@ -349,6 +359,7 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
           listadodesdeGS.push(data)
           valorId++
         })
+        console.log(listadodesdeGS[0])
 
         this.listaGSheet = listadodesdeGS
         // localStorage.setItem('listadoCrevillent', JSON.stringify(this.listaCrevillent))
@@ -358,6 +369,65 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
         console.log(err);
         this.gSheetLoading = false
       })
+
+    },
+    async getDataExcel (pagina) {
+      try {
+        const res = await fetch(`http://localhost:8500/excel/${pagina.toUpperCase()}`)
+        const data = await res.json()
+        const encabezados = data.shift()
+        const fondos = []
+        let valorId = 0
+        const listado = []
+        
+        
+        if(Array.isArray(data)) {
+          data.forEach(el => {
+            if (!fondos.includes(el[0])) fondos.push(el[0])
+            let id = `Simple-${valorId}`
+            const data = {
+              grafico: el[0],
+              id_grafico: el[1],
+              numero: el[2],
+              // texto1: el[3] || "",
+              // texto2: el[4] || "",
+              // texto3: el[5] || "",
+              label: `${el[2] || ""} - ${el[3] || ""} - ${el[4] || ""}`,
+              live: false,
+              id,
+              contenido: {}
+            }
+            const tempContenido = {}
+            data.contenido[encabezados[3]] = el[3] || ""
+            data.contenido[encabezados[4]] = el[4] || ""
+            data.contenido[encabezados[5]] = el[5] || ""
+            listado.push(data)
+            valorId++
+          })
+          console.log(listado[0])
+
+          
+          this.listaGSheet = listado
+          // errorText.value = null
+          // datos.value = data
+          // encabezados.value = datos.value.shift()
+        } else {
+          // encabezados.value = null
+          // datos.value = null
+          // errorText.value = data.error
+          // parar()
+          
+        }
+
+      } catch (error) {
+        // encabezados.value = null
+        // datos.value = null
+        // errorText.value = error
+        // parar()
+        console.log(error)
+
+      }
+      
 
     },
     addOnAir (payload) {
@@ -401,7 +471,7 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
         listaGSheet: this.listaGSheet
         
       }
-      console.log(retransmision)
+      // console.log(retransmision)
 
       if(!buscarRetrans) {
         this.listadoRetransmisiones.push(retransmision)
@@ -433,10 +503,10 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       localStorage.setItem('retransmisionActiva', JSON.stringify(this.retransmisionActiva))
     },
     cargarRetransmision(id) {
-      console.log(this.listadoRetransmisiones)
-      console.log(id)
+      // console.log(this.listadoRetransmisiones)
+      // console.log(id)
       const retransmision = this.listadoRetransmisiones.find(el => {
-        console.log(el.idRetransmision,  id)
+        // console.log(el.idRetransmision,  id)
         return el.idRetransmision === id
       })
       if(retransmision) {
@@ -463,23 +533,64 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       }
       
 
-      console.log(retransmision)
+      // console.log(retransmision)
     },
     eliminarRetransmision (id) {
       // const retransmision = this.listadoRetransmisiones.find(el => el.idRetransmision === id)
       // if(retransmision) {
       //   console.log(retransmision.idRetransmision == id) 
       // }
-      console.log(this.listadoRetransmisiones)
+      // console.log(this.listadoRetransmisiones)
       this.listadoRetransmisiones = this.listadoRetransmisiones.filter(el => el.idRetransmision !== id)
       localStorage.setItem('listadoRetransmisiones', JSON.stringify(this.listadoRetransmisiones))
 
     },
     crearRetransmision (nombre) {
-      this.nombreRetransmision = nombre
       this.guardado = false
       this.retransmisionActiva = Date.now()
       this.idRetransmision = this.retransmisionActiva
+
+      this.nombreRetransmision = nombre
+
+      this.error = null
+      this.onAir = []
+      this.listaRotulos = []
+      this.desplegableElegido = null
+      this.rotuloActivo = null
+      this.rotuloLive = null
+      this.listaRotulosLive = []
+      this.rotuloADesactivar = null
+      this.control = []
+      this.edit = false
+      this.camposSwift = null
+      this.listaGraficos = [{
+        id:'gAdd',
+        titulo: "+",
+        clase: "ADD",
+        lineasTexto: 0,
+        desplegable: false,
+        opciones: {
+          nombreDesplegable: null,
+          rangoDesplegable: null
+        }
+      }]
+      this.secciones = [
+        {
+          id:'s01',
+          activo: false,
+          titulo: "INICIO",
+          elementoLive: 0
+        },
+        {
+        id:'splus',
+        activo: false,
+        titulo: "AÑADIR",
+        elementoLive: false
+        },
+      ]
+      this.seccionActiva = 's01'
+      this.listaGSheet = null
+      
       this.guardarRetransmision()
     }
   }

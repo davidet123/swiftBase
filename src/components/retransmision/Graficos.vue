@@ -43,7 +43,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="12">
+            <v-col cols="12" v-if="!desplegable">
               <h3>Campos Swift</h3>
               <v-row>
                 <v-col cols="4" v-for="nombre in nombreCampoSwift" :key="nombre.id">
@@ -55,33 +55,55 @@
               </v-row>
             </v-col>
           </v-row>
+
+          <!-- DESPLEGABLE -->
+
           <v-row v-if="desplegable">
-            <v-col cols=12>
+            <v-row>
+              <v-col cols="12">
+                <h4>Tipo desplegable</h4>
+                {{  datosDesplegable.tipo }}
+              </v-col>
+              <v-col cols="2" v-for="tipo in tipoDesplegable" :key="tipo">
+                <v-checkbox
+                  :label="tipo"
+                  v-model="datosDesplegable.tipo"
+                  :value="tipo"
+                ></v-checkbox>
+              </v-col>
+            </v-row>
+            <v-col cols=12 v-if="datosDesplegable.tipo === 'gSheet'">
               <v-row>
                 <v-col cols="6" class=text-center>
                   <v-text-field
                   label="Nombre hoja gSheet"
-                  v-model="datosGSheet.hoja"
+                  v-model="datosDesplegable.hoja"
                 ></v-text-field>
                 </v-col>
                 <v-col cols="6" class=text-center>
                   <v-text-field
                   label="Rango desplegable"
-                  v-model="datosGSheet.rango"
+                  v-model="datosDesplegable.rango"
                 ></v-text-field>
                 </v-col>
               </v-row>
             </v-col>
-            <!-- <v-row>
-              <v-col cols="4" v-for="grafico in listadoGraficos" :key="grafico.id">
-                <v-checkbox
-                  :label="grafico.titulo"
-                  v-model="datosGSheet.graficos"
-                  :value="grafico.id"
-                ></v-checkbox>
-              </v-col>
-              {{ datosGSheet.graficos }}
-            </v-row> -->
+            <v-col cols=12 v-if="datosDesplegable.tipo === 'EXCEL'">
+              <v-row>
+                <v-col cols="6" class=text-center>
+                  <v-text-field
+                  label="Nombre hoja EXCEL"
+                  v-model="datosDesplegable.hoja"
+                ></v-text-field>
+                </v-col>
+                <!-- <v-col cols="6" class=text-center>
+                  <v-text-field
+                  label="Rango desplegable"
+                  v-model="datosDesplegable.rango"
+                ></v-text-field>
+                </v-col> -->
+              </v-row>
+            </v-col>
           </v-row>
           <v-row>
             <v-col cols="4" class="text-center ma-0 pa-0">
@@ -94,8 +116,9 @@
           <v-row>
             <v-col class="text-center">
 
-              <v-btn @click="aceptar()" color="error" size="small">ACEPTAR</v-btn>
+              <v-btn @click="aceptar()" color="success" size="small">ACEPTAR</v-btn>
               <v-btn @click="dialog=false" color="primary" size="small">CANCELAR</v-btn>
+              <v-btn @click="eliminarGrafico(grafico.id)" color="error" size="small">ELIMINAR</v-btn>
             </v-col>
           </v-row>
           
@@ -111,7 +134,7 @@
 
   import { computed, ref, toRefs, watch } from 'vue'
   import { useRetransmisionStore } from '@/store/retransmision'
-import { storeToRefs } from 'pinia';
+  import { storeToRefs } from 'pinia';
 
   const retransmisionStore = useRetransmisionStore()
 
@@ -136,18 +159,21 @@ import { storeToRefs } from 'pinia';
   const editar = ref(false)
 
   const nombreGrafico = ref(grafico.value.nombre || null)
-  const claseGrafico = ref(grafico.value.clase === "ADD" ? null : grafico.value.clase || null)
+  const claseGrafico = ref(grafico.value.clase|| null)
   const lineasTexto = ref(grafico.value.lineasTexto || 0)
   const desplegable = ref(grafico.value.desplegable || false)
   const nombreCampoSwift = ref(grafico.value.nombreCampoSwift || [])
-  const datosGSheet = ref(grafico.value.datosGSheet || 
+  const datosDesplegable = ref(grafico.value.datosDesplegable || 
     {
     hoja: null,
     rango: null,
     graficos: [],
-    elegido: null
+    elegido: null,
+    tipo: null
 
   })
+  const tipoDesplegable = ref(['gSheet','EXCEL'])
+  const tipoDesplegableElegido = ref(grafico.value.tipoDesplegableElegido || null)
 
   
 
@@ -159,28 +185,52 @@ import { storeToRefs } from 'pinia';
   }
 
   const addGrafico = () => {
+    claseGrafico.value = null
     dialog.value = true
+  }
+
+  const eliminarGrafico = id => {
+    retransmisionStore.eliminarGrafico(id)
+    dialog.value = false
   }
 
   const aceptar = () => {
     // const graficoSwift = lineasTexto === 0 ? titulo : nombre
+    if(!editar.value) {
 
-    const nuevoGrafico = {
-      // graficoSwift,
-      titulo: nombreGrafico.value,
-      nombre: nombreGrafico.value,
-      clase: claseGrafico.value,
-      lineasTexto: lineasTexto.value,
-      desplegable: desplegable.value,
-      nombreCampoSwift: nombreCampoSwift.value,
-      datosGSheet: datosGSheet.value
+      const nuevoGrafico = {
+        // graficoSwift,
+        titulo: nombreGrafico.value,
+        nombre: nombreGrafico.value,
+        clase: claseGrafico.value,
+        lineasTexto: lineasTexto.value,
+        desplegable: desplegable.value,
+        nombreCampoSwift: nombreCampoSwift.value,
+        datosDesplegable: datosDesplegable.value,
+        tipoDesplegableElegido: tipoDesplegableElegido.value
+      }
+      retransmisionStore.addGrafico(nuevoGrafico)
+    } else {
+      grafico.value.titulo = nombreGrafico.value
+      grafico.value.nombre = nombreGrafico.value
+      grafico.value.clase = claseGrafico.value
+      grafico.value.lineasTexto = lineasTexto.value
+      grafico.value.desplegable = desplegable.value
+      grafico.value.nombreCampoSwift = nombreCampoSwift.value
+      grafico.value.datosDesplegable = datosDesplegable.value
+      grafico.tipoDesplegableElegido = tipoDesplegableElegido.value
+      console.log(tipoDesplegableElegido.value)
     }
-    retransmisionStore.addGrafico(nuevoGrafico)
+
     dialog.value = false
+    editar.value = false
+    console.log(grafico.value)
   }
 
   const editarGrafico = () => {
+    editar.value = true
     if(grafico.value.clase === "ADD") return
+    console.log(grafico.value)
 
 
 

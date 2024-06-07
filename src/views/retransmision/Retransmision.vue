@@ -121,12 +121,14 @@
       lineasTexto: evento.lineasTexto,
       desplegable: evento.desplegable,
       live: false,
-      datosGSheet: evento.datosGSheet,
+      datosDesplegable: evento.datosDesplegable,
+      tipoDesplegableElegido: evento.tipoDesplegableElegido
       // graficoSwift: evento.graficoSwift
 
     }
     listaRotulos.value.push(rotulo)
     retransmisionStore.setGuardado(false)
+    console.log(evento)
   }
 
   const getEvento = item => {

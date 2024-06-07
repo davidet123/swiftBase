@@ -10,8 +10,10 @@
     id="fondo"
     @click="desactivarRotuloActivo($event.target.id)"
     >
-    <div v-for="rotulo in rotulos" :key="rotulo.id">
-      <RotuloIndividual :rotulo="rotulo" @setLive="setLive()"/>
+    <div v-for="rotulo in listaRotulos" :key="rotulo.id">
+      <span v-show="rotulo.seccion === seccionActiva">
+        <RotuloIndividual :rotulo="rotulo" @setLive="setLive()"/>
+      </span>
     </div>
     <!-- <div>
 
@@ -93,6 +95,7 @@
         retransmisionStore.setRotuloLive(rotuloActivo.value)
       } else if(checkTeclaFuncion(e.key) && ctrl) {
         const desactivar = onAir.value.find(el => el.tecla === e.key)
+        console.log(desactivar)
         const data = {
           titulo: desactivar.titulo,
           tecla: e.key,
