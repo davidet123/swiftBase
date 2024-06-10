@@ -5,6 +5,8 @@ import { defineStore } from 'pinia'
 
 export const useRetransmisionStore = defineStore('retransmisionStore', {
   state: () => ({
+    dragGrafico: false,
+    dragRotulo: false,
     retransmisionActiva: null,
     guardado: true,
     listadoRetransmisiones: [],
@@ -218,6 +220,14 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
 
   },
   actions: {
+    setDragGrafico (valor) {
+      this.dragGrafico = valor
+      this.guardado = false
+    },
+    setDragRotulo (valor) {
+      this.dragRotulo = valor
+      this.guardado = false
+    },
     setGuardado (valor) {
       this.guardado = valor
     },
@@ -287,12 +297,15 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
     },
     duplicarRotulo (payload) {
       const nuevoRotulo = JSON.parse(JSON.stringify(payload))
+      const numero = this.listaRotulos.length + 1
+      nuevoRotulo.numero = numero
+      console.log(nuevoRotulo)
       nuevoRotulo.id = this.crearID()
       this.listaRotulos.push(nuevoRotulo)
       this.setRotuloActivo(nuevoRotulo.id)
       this.guardado = false
       // console.log(this.rotuloActivo)
-      // console.log(this.listaRotulos)
+      console.log(this.listaRotulos)
     },
     crearID() {
       let fin = false

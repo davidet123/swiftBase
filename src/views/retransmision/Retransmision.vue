@@ -71,7 +71,7 @@
   const swiftConnectionStore = useSwiftConnectionStore()
 
   const retransmisionStore = useRetransmisionStore()
-  const { onAir, secciones, listaGraficos, seccionActiva, listaRotulos, rotuloActivo, retransmisionActiva } = storeToRefs(retransmisionStore)
+  const { onAir, secciones, listaGraficos, seccionActiva, listaRotulos, rotuloActivo, retransmisionActiva, dragGrafico } = storeToRefs(retransmisionStore)
 
   swiftConnectionStore.startConnection()
   retransmisionStore.cargarRetransmisiones()
@@ -100,6 +100,7 @@
   let evento = null
 
   const onDrop = (event) => {
+    if(!dragGrafico.value) return
     if(!seccionActiva.value ) return
     const item = event.dataTransfer.getData('item')
     let contenido = {}
@@ -112,7 +113,7 @@
 
     const rotulo = {
       id: `r${listaRotulos.value.length + 1}`,
-      numero: `${listaRotulos.value.length + 1}`,
+      numero: parseInt(`${listaRotulos.value.length + 1}`),
       nombre: evento.nombre,
       titulo: evento.titulo,
       grafico: evento.id,
@@ -129,6 +130,7 @@
     }
     listaRotulos.value.push(rotulo)
     retransmisionStore.setGuardado(false)
+    retransmisionStore.setDragGrafico(false)
     // console.log(evento)
   }
 

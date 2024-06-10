@@ -193,6 +193,7 @@
   
 
   const startDrag = (event, item) => {
+    retransmisionStore.setDragGrafico(true)
     event.dataTransfer.dropEffect = 'move'
     event.dataTransfer.eventAllowed = 'copy'
     event.dataTransfer.setData = ('item', item)

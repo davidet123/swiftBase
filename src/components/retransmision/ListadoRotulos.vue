@@ -10,9 +10,14 @@
     id="fondo"
     @click="desactivarRotuloActivo($event.target.id)"
     >
-    <div v-for="rotulo in listaRotulos" :key="rotulo.id">
+    <div v-for="(rotulo, index) in listaRotulos" :key="rotulo.id">
       <span v-show="rotulo.seccion === seccionActiva">
-        <RotuloIndividual :rotulo="rotulo" @setLive="setLive()"/>
+        <RotuloIndividual 
+        :rotulo="rotulo" @setLive="setLive()"
+        draggable="true"
+        @dragstart="dragStart(index)"
+        @dragover.prevent
+        @drop="drop(index)"/>
       </span>
     </div>
     <!-- <div>
@@ -35,7 +40,7 @@
 
   const retransmisionStore = useRetransmisionStore()
 
-  const { rotuloActivo, onAir, edit } = storeToRefs(retransmisionStore)
+  const { rotuloActivo, onAir, edit, dragRotulo } = storeToRefs(retransmisionStore)
 
   
 
@@ -69,6 +74,24 @@
 
 
   }
+
+  let dragItem = null
+
+
+  const dragStart = index => {
+
+    retransmisionStore.setDragRotulo(true)
+    dragItem = index
+  }
+  const drop = index => {
+    if(!dragRotulo.value) return
+    
+    const lista = listaRotulos.value
+    const item = lista[dragItem]
+    lista.splice(dragItem, 1)
+    lista.splice(index, 0, item)
+    retransmisionStore.setDragRotulo(false)
+  }
   
   const teclasFuncion = ["F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12"]
 
@@ -95,7 +118,6 @@
         retransmisionStore.setRotuloLive(rotuloActivo.value)
       } else if(checkTeclaFuncion(e.key) && ctrl) {
         const desactivar = onAir.value.find(el => el.tecla === e.key)
-        console.log(desactivar)
         const data = {
           titulo: desactivar.titulo,
           tecla: e.key,
@@ -116,6 +138,8 @@
     }
     // rotuloLive.value = null
   }
+
+  console.log(listaRotulos.value)
 </script>
 
 <style scoped>
