@@ -122,7 +122,8 @@
       desplegable: evento.desplegable,
       live: false,
       datosDesplegable: evento.datosDesplegable,
-      tipoDesplegableElegido: evento.tipoDesplegableElegido
+      tipoDesplegableElegido: evento.tipoDesplegableElegido,
+      numeroDesplegable: null
       // graficoSwift: evento.graficoSwift
 
     }

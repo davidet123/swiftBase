@@ -5,10 +5,10 @@
     <!-- <div class="contenido" @click="seleccionarRotulo($event.target.className)"> -->
 
       <div class="textoRotulo" @click="seleccionarRotulo($event)">
-        <div id="titulo">
-          {{ rotulo.nombre}}</div>
+        <!-- {{ rotuloDesplegable }} -->
+        <div id="titulo">{{ rotulo.nombre}}</div>
         <div id="contenido">
-          <span v-if="rotulo.desplegable && desplegableElegido"> {{  desplegableElegido }} - </span>
+          <span v-if="rotulo.desplegable"> {{ numRotuloDesplegable }}</span>
           <span class="textoIndividual" v-for="(value, key) in rotulo.contenido" :key="key">
              {{ value }}
           </span>
@@ -54,7 +54,7 @@
   const retransmisionStore = useRetransmisionStore()
   const swiftConnectionStore = useSwiftConnectionStore()
 
-  const { rotuloActivo, desplegableElegido, onAir, seccionActiva, listaGraficos, rotuloLive } = storeToRefs(retransmisionStore)
+  const { rotuloActivo, desplegableElegido, rotuloDesplegable, seccionActiva, listaGraficos, rotuloLive } = storeToRefs(retransmisionStore)
 
   const props = defineProps(["rotulo"])
 
@@ -64,6 +64,8 @@
     if(e.target.nodeName !== 'I') retransmisionStore.setRotuloActivo(rotulo.value.id)
 
   }
+
+  const numRotuloDesplegable = computed(() => rotulo.value.numeroDesplegable ? rotulo.value.numeroDesplegable + " - " : "")
 
   const rotuloActivado = computed(() => rotulo.value.id === rotuloActivo.value ? {'background-color': '#024f64'} : {'background-color': '#686867'})
 
@@ -104,8 +106,8 @@
   
   
   
-  watch(() => desplegableElegido.value, val => {
-  })
+  // watch(() => desplegableElegido.value, val => {
+  // })
 
 
   watch(() => rotuloLive.value, val => {

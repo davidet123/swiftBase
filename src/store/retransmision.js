@@ -28,7 +28,9 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
         
       // },
     ],
-    desplegableElegido: null,
+    desplegableElegido: null, // NUMERO ROTULO ELEGIDO EN EL DESPLEGABLE
+    rotuloDesplegable: null, // NUMERO E ID ROTULO ELEGIDO EN EL DESPLEGABLE
+  
     rotuloActivo: null,
     rotuloLive: null,
     listaRotulosLive: [],
@@ -305,7 +307,7 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       return nuevaId
     },
     setDesplagableElegido (datos, idRotulo, desplegableElegido) {
-      
+      console.log(idRotulo)
 
       const grafico = this.listaGraficos.find(el => el.titulo === datos.grafico)
       if(!grafico) {
@@ -317,8 +319,11 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       rotulo.lineasTexto = grafico.lineasTexto
       rotulo.contenido = datos.contenido
       rotulo.titulo = datos.grafico
+      rotulo.numeroDesplegable = desplegableElegido
 
       this.desplegableElegido = desplegableElegido
+      this.rotuloDesplegable = {idRotulo, desplegableElegido}
+
       this.error = null
       this.guardado = false
     },
