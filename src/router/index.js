@@ -32,6 +32,12 @@ import Teleprompter from '../views/teleprompter/Teleprompter.vue'
 import Settings from '../views/Settings.vue'
 import Retransmision from '../views/retransmision/Retransmision.vue'
 import MenuRetransmision from '../views/retransmision/MenuRetransmision.vue'
+import EstTenis from '../views/tenis/EstTenis.vue'
+import MenuTenis from '../views/tenis/MenuTenis.vue'
+import NuevaCompeticionTenis from '../views/tenis/NuevaCompeticionTenis.vue'
+import NuevoJugadorTenis from '../views/tenis/NuevoJugadorTenis.vue'
+import NuevoPartidoTenis from '../views/tenis/NuevoPartidoTenis.vue'
+import PartidoTenis from '../views/tenis/PartidoTenis.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -206,6 +212,36 @@ const router = createRouter({
       path: '/menuretransmision',
       name: 'menuretransmision',
       component: MenuRetransmision
+    },
+    {
+      path: '/esttenis',
+      name: 'esttenis',
+      component: EstTenis
+    },
+    {
+      path: '/menutenis',
+      name: 'menutenis',
+      component: MenuTenis
+    },
+    {
+      path: '/nuevacompeticiontenis',
+      name: 'nuevacompeticiontenis',
+      component: NuevaCompeticionTenis
+    },
+    {
+      path: '/nuevojugadortenis',
+      name: 'nuevojugadortenis',
+      component: NuevoJugadorTenis
+    },
+    {
+      path: '/nuevopartidotenis',
+      name: 'nuevopartidotenis',
+      component: NuevoPartidoTenis
+    },
+    {
+      path: '/partidotenis',
+      name: 'partidotenis',
+      component: PartidoTenis
     },
   ]
 })

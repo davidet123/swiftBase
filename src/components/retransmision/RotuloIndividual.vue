@@ -75,7 +75,7 @@
 
   const activarRotulo = () => {
     let grafico = null
-    grafico = rotulo.value.lineasTexto === 0 ? rotulo.value.nombre : rotulo.value.titulo
+    grafico = parseInt(rotulo.value.lineasTexto) === 0 ? rotulo.value.nombre : rotulo.value.titulo
     swiftConnectionStore.rtRemote.playGraphic(grafico)
     if(!rotulo.value.live) {
 

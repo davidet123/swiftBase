@@ -17,6 +17,7 @@
         <v-col class="text-center">
           <v-btn @click="cargarFutbol" class="botonFutbol">FUTBOL</v-btn>
           <v-btn to="/basket">BASKET</v-btn>
+          <v-btn to="/menutenis">TENIS</v-btn>
           <v-btn to="/vumetro">VUMETRO</v-btn>
           <v-btn to="/simple">GRAFISME SIMPLE</v-btn>
           <v-btn to="/menumisa">MISA</v-btn>
