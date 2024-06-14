@@ -25,7 +25,8 @@ export const useTenisStore = defineStore('tenisstore', {
       marcador_partido: [],
       jugadores_por_equipo: 1,
       acabado: false,
-      set_en_juego: 1
+      set_en_juego: 1,
+      saque: null
     },
     marcador: { //PLANTILLA MARCADORES
       num_set: null,
@@ -70,6 +71,7 @@ export const useTenisStore = defineStore('tenisstore', {
    
   }),
   getters: {
+    
 
   },
   actions: {
@@ -107,8 +109,6 @@ export const useTenisStore = defineStore('tenisstore', {
       this.jugador.peso = null
     },
     crearPartidoTenis(payload) {
-      
-      
       let partido = this.partidos.find(el => el.id_partido_tenis === payload.id_partido_tenis)
       console.log(payload.id_partido_tenis)
       if (!partido) {
@@ -124,6 +124,11 @@ export const useTenisStore = defineStore('tenisstore', {
         this.partido_en_juego = id
         localStorage.setItem('partidoTenisEnJuego', JSON.stringify(this.partido_en_juego))
       }
+
+    },
+    setEquipoAlSaque (equipo) {
+      const partido = this.partidos.find(el => el.id_partido_tenis === this.partido_en_juego)
+      partido.saque = equipo
 
     }
     

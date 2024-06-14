@@ -3,8 +3,14 @@
     <div id="superior">
       <div class="titulos">
         <div class="competicion borde"><p>{{ competicion}}</p></div>
-        <div class="jugador borde">Jugador1</div>
-        <div class="jugador borde">jugador2</div>
+        <div class="jugador borde">
+          <div class="nombreJugador">Jugador1</div>
+          <div class="saque" v-show="equipoAlSaque === 'local'"><v-icon>mdi-circle-medium</v-icon></div>
+        </div>
+        <div class="jugador borde">
+          <div class="nombreJugador">Jugador2</div>
+          <div class="saque" v-show="equipoAlSaque === 'visitante'"><v-icon>mdi-circle-medium</v-icon></div>
+        </div>
   
       </div>
       <div class="resultados">
@@ -30,7 +36,7 @@
     </div>
     <div id="inferior">
       <div class="tiempo">
-        <p>{{ tiempoTotal }}</p>
+        <p>{{ equipoAlSaque }}</p>
       </div>
     </div>
   </div>
@@ -41,9 +47,9 @@
   import { computed, toRefs } from 'vue'
 
 
-  const props = defineProps(["marcador", "competicion"])
+  const props = defineProps(["marcador", "competicion", "equipoAlSaque"])
 
-  const { marcador } = toRefs(props)
+  const { marcador, equipoAlSaque } = toRefs(props)
 
 
   const anchoJuego = computed(() => {
@@ -118,6 +124,10 @@
     align-items: center;
     color: black;
     }
+  .jugador {
+    display: flex;
+    justify-content: space-between;
+  }
 
   .juego {
     height: 100%;

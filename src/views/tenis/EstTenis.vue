@@ -1,47 +1,97 @@
 <template>
   <v-row>
     <v-col>
-      <MarcadorTenis :marcador = "marcador" :competicion="competicion"/>
+      <MarcadorTenis :marcador = "marcador" :competicion="competicion" :equipoAlSaque = "equipoAlSaque"/>
     </v-col>
   </v-row>
   <v-row>
-    <v-col class="text-center" cols="12">
-      <h4>Set en juego: {{ setEnJuego }}</h4>
-      tiempo {{ tiempo }}
-    </v-col>
-    <v-col class="text-center">
-      <v-btn size="x-small" color="success" @click="iniciarCrono()">INICIAR CRONO</v-btn>
-      <v-btn size="x-small" color="error" @click="pararCrono()">PARAR CRONO</v-btn>
-    </v-col>
-  </v-row>
-  <v-row>
-    <v-col cols="2" offset="4">
+    <v-col class="text-center bordeBlanco" cols="4">
       <v-row>
-        <v-col class="text-center" cols="12">Local</v-col>
-        <v-col class="text-center" cols="12">{{ puntoATexto('local') }}</v-col>
-        <!-- <v-col class="text-center" cols="12">{{ puntoStr[marcador[setEnJuego-1].puntos_local] }}</v-col> -->
-      </v-row>
-      <v-row>
-        <v-col cols="6" class="text-right"><v-btn size="x-small" color="success" @click="punto('local', 1)">+</v-btn></v-col>
-        <v-col cols="6" class="text-left"><v-btn size="x-small" color="error" @click="punto('local', -1)">-</v-btn></v-col>
+        <v-col class="text-center" cols="12">
+          <h4>Set en juego: {{ setEnJuego }}</h4>
+          tiempo {{ tiempo }}
+        </v-col>
+        <v-col class="text-center">
+          <v-btn size="x-small" color="success" @click="iniciarCrono()">INICIAR CRONO</v-btn>
+          <v-btn size="x-small" color="error" @click="pararCrono()">PARAR CRONO</v-btn>
+        </v-col>
       </v-row>
     </v-col>
-    <v-col cols="2">
+    <v-col cols="4" class="bordeBlanco">
       <v-row>
-        <v-col class="text-center">Visitante</v-col>
-        <v-col class="text-center" cols="12">{{ puntoATexto('visitante') }}</v-col>
+        <v-col cols="12" class="text-center">SERVCIO</v-col>
+        <v-col cols="12" class="text-center">
+          <v-btn size="x-small" color="success" @click="setEquipoAlSaque('local')">LOCAL</v-btn>
+          <v-btn size="x-small" color="success" @click="setEquipoAlSaque('visitante')">VISITANTE</v-btn>
+        </v-col>
       </v-row>
-      <v-row>
-        <v-col cols="6" class="text-right"><v-btn size="x-small" color="success" @click="punto('visitante', 1)">+</v-btn></v-col>
-        <v-col cols="6" class="text-left"><v-btn size="x-small" color="error" @click="punto('visitante', -1)">-</v-btn></v-col>
-      </v-row>
-    </v-col>
-  </v-row>
-  <v-row>
-    <!-- {{ jugadores }} -->
-    {{marcador }}
 
+    </v-col>
+    <v-col cols="4" class="bordeBlanco">
+      <v-row>
+        <v-col cols="12" class="text-center">MARCADOR</v-col>
+        <v-col cols="6">
+          <v-row>
+            <v-col class="text-center" cols="12">Local</v-col>
+            <v-col class="text-center" cols="12">{{ puntoATexto('local') }}</v-col>
+            <!-- <v-col class="text-center" cols="12">{{ puntoStr[marcador[setEnJuego-1].puntos_local] }}</v-col> -->
+          </v-row>
+          <v-row>
+            <v-col cols="6" class="text-right"><v-btn size="x-small" color="success" @click="punto('local', 1)">+</v-btn></v-col>
+            <v-col cols="6" class="text-left"><v-btn size="x-small" color="error" @click="punto('local', -1)">-</v-btn></v-col>
+          </v-row>
+        </v-col>
+        <v-col cols="6">
+          <v-row>
+            <v-col class="text-center">Visitante</v-col>
+            <v-col class="text-center" cols="12">{{ puntoATexto('visitante') }}</v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="6" class="text-right"><v-btn size="x-small" color="success" @click="punto('visitante', 1)">+</v-btn></v-col>
+            <v-col cols="6" class="text-left"><v-btn size="x-small" color="error" @click="punto('visitante', -1)">-</v-btn></v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+
+    </v-col>
   </v-row>
+  <!-- jugadores  -->
+
+  <v-row>
+    <v-col v-for="(jugador, index) in jugadores" :key="jugador.id_jugador">
+
+      <JugadorTenis :jugador="jugador" :indice="index" />
+    </v-col>
+  </v-row>
+  <!-- <v-row v-for="est in camposEstadistica" :key="est" class="ma-0 pa-0">
+    {{ jugadores }}
+    <v-col cols="1" offset="4"> 
+      <v-row>
+        <v-col cols="12" class="text-center">
+          0
+        </v-col>
+        <v-col class="text-center">
+          <v-btn size="x-small" color="success">+</v-btn>
+          <v-btn size="x-small" color="error">-</v-btn>
+        </v-col>
+      </v-row>
+
+    </v-col>
+    <v-col cols="2" class="text-center">
+      {{ est}}
+    </v-col>
+    <v-col cols="1">
+      <v-row>
+        <v-col cols="12" class="text-center">
+          0
+        </v-col>
+        <v-col class="text-center">
+          <v-btn size="x-small" color="success">+</v-btn>
+          <v-btn size="x-small" color="error">-</v-btn>
+        </v-col>
+      </v-row>
+    </v-col>
+  </v-row> -->
 
   
 
@@ -55,6 +105,7 @@
   import { useTenisStore } from "@/store/tenis"
 
   import MarcadorTenis from "@/components/tenis/MarcadorTenis.vue"
+  import JugadorTenis from "@/components/tenis/JugadorTenis.vue"
 
   const tenisStore = useTenisStore()
 
@@ -70,9 +121,14 @@
   const setEnJuego = computed(() => parseInt(partido.value.set_en_juego))
 
   const puntoStr = ["0", "15", "30", "40", 'AD']
+  const camposEstadistica = ["ACE", "DOBLE FALTA", "GANADORES", "ERRORES", "BREAKS", "PUNTOS"]
 
   let tiempo = ref(0)
   let temporizador
+
+  const setEquipoAlSaque = equipo => {
+    tenisStore.setEquipoAlSaque(equipo)
+  }
 
   const iniciarCrono = () => {
     temporizador = setInterval(() => {
@@ -85,6 +141,8 @@
     tiempo.value = 0
   }
 
+  const equipoAlSaque = computed(() => partido.value.saque)
+
 
   const puntoATexto = equipo => {
     if(partido.value.acabado) return
@@ -94,8 +152,11 @@
     return set[`puntos_${equipo}`]
   }
 
+  const cambioDeSaque = () => partido.value.saque === 'local' ? partido.value.saque = 'visitante' : partido.value.saque = 'local'
+
 
   const punto = (equipo, val) => {
+    console.log(partido.value.saque)
     if(partido.value.acabado) return
     if(tiempo.value === 0) iniciarCrono()
     const set = marcador.value.find(el => el.num_set === setEnJuego.value)
@@ -134,6 +195,8 @@
           set.tiempo_set = tiempo.value
           pararCrono()
           partido.value.set_en_juego += 1
+          
+          cambioDeSaque()
           return
         }
         if(set[`juegos_${equipo}`] === 6 && set[`juegos_${oponente}`] === 6) {
@@ -143,12 +206,14 @@
           set.tiempo_set = tiempo.value
           pararCrono()
           partido.value.set_en_juego += 1
+          cambioDeSaque()
           return
         }
         if(set[`juegos_${oponente}`] === 8) {
           set.tiempo_set = tiempo.value
           pararCrono()
           partido.value.set_en_juego += 1
+          cambioDeSaque()
         }
   
       }
@@ -165,6 +230,7 @@
           set.tiempo_set = tiempo.value
           pararCrono()
           partido.value.set_en_juego += 1
+          cambioDeSaque()
           
         }
 
@@ -189,5 +255,9 @@
 </script>
 
 <style scoped>
+
+  .bordeBlanco {
+    border: 1px solid white;
+  }
 
 </style>
