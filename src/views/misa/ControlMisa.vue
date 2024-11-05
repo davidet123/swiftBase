@@ -36,8 +36,8 @@
       <p v-if="!fullScreenLS"><v-icon size="large" color="red" icon="mdi-circle-medium"></v-icon>Pagina full screen sense obrir</p>
       <p v-if="fullScreenLS == 1"><v-icon size="large" color="green" icon="mdi-circle-medium"></v-icon>Pagina full screen oberta</p>
       <br>
-      {{ misaStore.getSocketStatus }}
-      {{ socket }}
+      <!-- {{ misaStore.getSocketStatus }}
+      {{ socket }} -->
       <!-- <p v-if="cargandoMisa || gSheetMisaLoading"><v-icon size="large" color="red" icon="mdi-circle-medium"></v-icon>Carregant dades missa...</p>
       <p v-else><v-icon size="large" color="green" icon="mdi-circle-medium"></v-icon>Dades carregades</p> -->
     </v-col>

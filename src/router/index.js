@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Test from '../views/Test.vue'
+import TestWS from '../views/TestWS.vue'
 import Proyecto from '../views/Proyecto.vue'
 import Simple from '../views/simple/Simple.vue'
 import SimpleConfig from '../views/simple/SimpleConfig.vue'
@@ -38,6 +39,9 @@ import NuevaCompeticionTenis from '../views/tenis/NuevaCompeticionTenis.vue'
 import NuevoJugadorTenis from '../views/tenis/NuevoJugadorTenis.vue'
 import NuevoPartidoTenis from '../views/tenis/NuevoPartidoTenis.vue'
 import PartidoTenis from '../views/tenis/PartidoTenis.vue'
+import MenuBalonmano from '../views/balonmano/MenuBalonmano.vue'
+import AddPartidoBalonmano from '../views/balonmano/AddPartidoBalonmano.vue'
+import EstBalonmano from '../views/balonmano/EstBalonmano.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -57,6 +61,11 @@ const router = createRouter({
       path: '/test',
       name: 'test',
       component: Test
+    },
+    {
+      path: '/testws',
+      name: 'testws',
+      component: TestWS
     },
     {
       path: '/simple',
@@ -242,6 +251,21 @@ const router = createRouter({
       path: '/partidotenis',
       name: 'partidotenis',
       component: PartidoTenis
+    },
+    {
+      path: '/menubalonmano',
+      name: 'menubalonmano',
+      component: MenuBalonmano
+    },
+    {
+      path: '/addpartidobalonmano',
+      name: 'addpartidobalonmano',
+      component: AddPartidoBalonmano
+    },
+    {
+      path: '/estbalonmano',
+      name: 'estbalonmano',
+      component: EstBalonmano
     },
   ]
 })

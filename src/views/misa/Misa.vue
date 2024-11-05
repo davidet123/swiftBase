@@ -350,7 +350,7 @@ const toDirecte = (val) => {
   limpiarLive.value = false
 
   
-  now.value = next.value
+  now.value+= val
   const color = textoNow.value.color == '#00FF00' ? '#00AF00' : '#FFFFFF'
   // misaStore.setTextoLive(now.value)
   // misaStore.actualizarTextoFullScreen(textoNow.value)

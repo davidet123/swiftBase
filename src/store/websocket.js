@@ -21,8 +21,10 @@ export const useWebsocketStore = defineStore('websocket', {
     arrayValues: [],
     factorVolumen: 0.7,
     URLWebsocket: 'ws://localhost:8001',
+    pythonURLWebsocket:  'ws://localhost:8005',
     texto: null,
-    excelData: null
+    excelData: null,
+    testPython: "null",
   }),
   getters: {
     nivelVumetro (state) {
@@ -60,6 +62,68 @@ export const useWebsocketStore = defineStore('websocket', {
       const docRef = doc(db, 'settings', 'websocket')
       await updateDoc(docRef, {url: payload})
     },
+
+    conectarPythonWS() {
+
+       // Crea una nueva conexión.
+       this.socket = new WebSocket(this.pythonURLWebsocket);
+       // let state = document.querySelector(".websocketOff")
+       const self = this
+ 
+       // console.log(this.socket)
+       
+       // Abre la conexión
+       this.socket.addEventListener('open', function (event) {
+         self.connectionState = event.currentTarget.readyState
+         self.socket.send('Conexión websocket establecida');
+       })
+       this.socket.addEventListener('close', function(event) {
+         self.connectionState = event.currentTarget.readyState
+         console.log(event)
+         self.valor = 0
+         // incializar_vumetro(0)
+         // state.classList.remove("websocketOn")
+         // state.classList.add("websocketOff")
+       })
+       this.socket.addEventListener('error', function (event) {
+         // incializar_vumetro(0)
+         self.connectionState = event.currentTarget.readyState
+         self.valor = 0
+         self.socket.close()
+       })
+       
+       // Escucha por mensajes
+       this.socket.addEventListener('message', function (event) {
+        //  console.log(JSON.parse(event.data))
+ 
+        //  const datos = JSON.parse(event.data)
+        // console.log(typeof(event.data))
+
+
+        const data = event.data
+
+        const parts = data.match(/\[([^\]]+)\]/g);
+
+        // Convertir cada parte en un array de números
+        const arrayOfArrays = parts.map(part => {
+          // Eliminar los corchetes y dividir por comas
+          return part.replace(/[\[\]]/g, '').split(',').map(Number);
+        })
+        // console.log(arrayOfArrays)
+
+
+  
+
+        // const temp1 = data.substring(1, data.length-1)
+
+        // const temp2 = temp1.split(",")
+
+        // const final = temp2.map(val => parseInt(val))
+        self.testPython = arrayOfArrays
+         
+       });
+
+    },
     conectarWS() {
       // Crea una nueva conexión.
       this.socket = new WebSocket(this.URLWebsocket);
@@ -90,7 +154,7 @@ export const useWebsocketStore = defineStore('websocket', {
       
       // Escucha por mensajes
       this.socket.addEventListener('message', function (event) {
-        // console.log(JSON.parse(event.data))
+        console.log(JSON.parse(event.data))
 
         const datos = JSON.parse(event.data)
         

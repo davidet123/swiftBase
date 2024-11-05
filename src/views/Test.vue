@@ -4,6 +4,11 @@
       <video id="myVideoId" width="620" height="349" autoplay muted playsinline/>
     </v-col>
   </v-row>
+  <v-row>
+    <v-col>
+      <video preload="" tabindex="-1" style="" src="blob:https://player.vimeo.com/ccd44a90-9293-4255-b25c-eac6a67ca867"></video>
+    </v-col>
+  </v-row>
   <!-- <v-row>
     <v-col class="text-center">
       X:{{ x }} y:{{ y }}
@@ -15,6 +20,12 @@
       <video id="video1"  autoplay muted />
     </v-col>
   </v-row> -->
+  <v-row>
+    <v-col>
+      <v-btn @click="startClock" color="success">START CLOCK</v-btn>
+      <v-btn @click="stopClock" color="success">STOP CLOCK</v-btn>
+    </v-col>
+  </v-row>
   <v-row>
     <v-col cols="12" class="text-center">EXCEL</v-col>
     <v-col class="text-center">
@@ -156,6 +167,14 @@
 
   websocketStore.conectarWS()
 
+  // RELOJ
+  const startClock = () => {
+    swiftConnectionStore.startClock("Clock")
+  }
+  const stopClock = () => {
+    swiftConnectionStore.startClock("Clock")
+  }
+
   // EXCEL
 
   const actualizarExcel = () => websocketStore.actualizarExcel()
@@ -284,8 +303,8 @@
   const hoja = computed(() => gSheetStore.getValoresHoja)
   // console.log(hoja.value)
   
-  // swiftConnectionStore.startConnection()
-  // swiftConnectionStore.startVideo()
+  swiftConnectionStore.startConnection()
+  swiftConnectionStore.startVideo()
   
   // Prueba websocket
 
@@ -393,16 +412,18 @@
       for (let i = 0; i <= 2; i++) {
         texto += titulares.value[i] + " "
       }
-      console.log(texto)
+      console.log(titular)
 
-      swiftConnectionStore.rtRemote.updateFields('TICKER::slugTextTEXT', "String",  titular.replace(/\r\n|\n\r|\n|\r/g, ' '))
-      // swiftConnectionStore.rtRemote.updateFields('TICKER::Ticker', "Contents",  titular.replace(/\r\n|\n\r|\n|\r/g, ' '))
+      // swiftConnectionStore.rtRemote.updateFields('TICKER::slugTextTEXT', "String",  titular.replace(/\r\n|\n\r|\n|\r/g, ' '))
+      // swiftConnectionStore.playMethod("TEXTO")
+      swiftConnectionStore.bringOn("TEXTO")
+      console.log(titular)
+      swiftConnectionStore.rtRemote.updateFields('TEXTO::TICKERTCKR', "Contents",  titular.replace(/\r\n|\n\r|\n|\r/g, ' '))
       // swiftConnectionStore.rtRemote.updateFields('TICKER::slugTextTEXT', "String",  titular.replace(/[\r\n]/g, ' '))
-      swiftConnectionStore.rtRemote.updateFields('TICKER::ticker', "NumberCycles",  10)
-      swiftConnectionStore.cueGraphic("TICKER")
+      // swiftConnectionStore.rtRemote.updateFields('TICKER::ticker', "NumberCycles",  10)
+      // swiftConnectionStore.cueGraphic("TICKER")
       // console.log(titulares.value[1])
       // swiftConnectionStore.rtRemote.updateFields('TICKER::TITULARTEXT', "String", titulares.value[8])
-      // swiftConnectionStore.bringOn("TICKER")
       tickerLive = true
       console.log("tickerlive true")
     } else {
