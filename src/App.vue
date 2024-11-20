@@ -34,17 +34,17 @@
     misaStore.conectarWS()
     if(futbolStore.getPartidos.length == 0) {
       console.log("onbeforemount")
-      await futbolStore.cargarJugadores()
-      await futbolStore.cargarEquipos()
-      await futbolStore.cargarCompeticiones()
+      // await futbolStore.cargarJugadores()
+      // await futbolStore.cargarEquipos()
+      // await futbolStore.cargarCompeticiones()
     
-      await futbolStore.cargarPartidos()
-      await futbolStore.cargarMarcadores()
-      await rotulosStore.cargarRotulos()
+      // await futbolStore.cargarPartidos()
+      // await futbolStore.cargarMarcadores()
+      // await rotulosStore.cargarRotulos()
       // await gSheetStore.getLista()
       // await misaStore.cargartextoMisa()
 
-      basketStore.setPartidoBasket()
+      // basketStore.setPartidoBasket()
       // basketStore.resetPartidoBasket()
     }
 

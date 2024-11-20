@@ -201,6 +201,13 @@ actions: {
   añadidoOff() {
     if(this.rtRemote) this.rtRemote.playMethod("MARCADOR::descuentoOff")
   },
+  customMetodo(grafico, metodo) {
+    if(this.rtRemote) this.rtRemote.playMethod(`${grafico}::${metodo}`)
+  },
+
+  playGraphic(metodo) {
+    if(this.rtRemote) this.rtRemote.playGraphic(metodo)
+  }
   
 
 

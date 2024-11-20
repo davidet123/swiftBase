@@ -5,8 +5,8 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="2" offset="4" class="text-center"><v-btn :disabled="partidoCreado" color="success" size="x-small" to="/addpartidobalonmano">NUEVO PARTIDO</v-btn></v-col>
-      <v-col cols="2" class="text-center"><v-btn :disabled="!partidoCreado" color="error" size="x-small" @click="reset">RESET</v-btn></v-col>
+      <v-col cols="2" offset="4" class="text-center"><v-btn  color="success" size="x-small" to="/addpartidobalonmano">NUEVO PARTIDO</v-btn></v-col>
+      <v-col cols="2" class="text-center"><v-btn  color="error" size="x-small" @click="reset">RESET</v-btn></v-col>
     </v-row>
     <div v-if="partidoCreado">
       <v-card class="ma-5">
@@ -27,7 +27,11 @@
               </span>
               <span v-else>
                 <div><h4>{{ key.toUpperCase() }}</h4></div>
-                <div><h5>{{ value }}</h5></div>             
+                <div v-if="key=='equipo_arbitral'">
+                  <h5>{{ value.arbitro1 }}</h5>            
+                  <h5>{{ value.arbitro2 }}</h5>
+                </div>             
+                <div v-else><h5>{{ value }}</h5></div>             
               </span>
             </v-col>
           </v-row>
@@ -50,7 +54,7 @@
 <script setup>
 import { storeToRefs } from "pinia"
 import { useBalonmanoStore } from "../../store/balonmano"
-import { onBeforeMount } from "vue";
+import { onBeforeMount } from "vue"
 
 onBeforeMount(() => {
   balonmanoStore.cargarDatosLS()
@@ -64,6 +68,7 @@ const reset = () => balonmanoStore.resetBalonmanoLS()
 
 const anchoColumna = key => {
   if(key === "local" || key === "visitante") return 6
+  if(key === "equipo_arbitral") return 12
   return 3
 }
 

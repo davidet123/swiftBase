@@ -4,11 +4,11 @@
       <video id="myVideoId" width="620" height="349" autoplay muted playsinline/>
     </v-col>
   </v-row>
-  <v-row>
+  <!-- <v-row>
     <v-col>
       <video preload="" tabindex="-1" style="" src="blob:https://player.vimeo.com/ccd44a90-9293-4255-b25c-eac6a67ca867"></video>
     </v-col>
-  </v-row>
+  </v-row> -->
   <!-- <v-row>
     <v-col class="text-center">
       X:{{ x }} y:{{ y }}
@@ -165,7 +165,7 @@
 
 
 
-  websocketStore.conectarWS()
+  // websocketStore.conectarWS()
 
   // RELOJ
   const startClock = () => {
@@ -174,6 +174,57 @@
   const stopClock = () => {
     swiftConnectionStore.startClock("Clock")
   }
+
+
+  // MIDI
+
+
+  // document.addEventListener('keyup', e => {
+  //   console.log(e)
+  //   if(e == "gf") console.log(e)
+  // })
+  let controllerIndex = null
+  window.addEventListener("gamepadconnected", (e) => {
+    // console.log(
+    //   "Gamepad connected at index %d: %s. %d buttons, %d axes.",
+    //   e.gamepad.index,
+    //   e.gamepad.id,
+    //   e.gamepad.buttons.length,
+    //   e.gamepad.axes.length,
+    // );
+    console.log(e.gamepad)
+    const gamepad = e.gamepad
+    controllerIndex=gamepad.index
+
+  });
+  window.addEventListener("gamepaddisconnected", (e) => {
+    controllerIndex=null
+
+  });
+  // navigator.requestMIDIAccess().then(access => {
+  //   // access.onstatechange(e => console.log(e))
+  //   console.log(access)
+  // })
+
+  // const success = MIDIAccess => {
+  //   console.log(MIDIAccess)
+  //   const inputs = MIDIAccess.inputs
+
+  //   inputs.forEach(input => {
+  //     input.addEventListener('midimessage', handleInput) 
+  //   })
+  // }
+
+  // const handleInput = input => {
+  //   console.log(input)
+  // }
+
+  // const  failure = fail => console.log(fail)
+
+  // if(navigator.requestMIDIAccess) {
+  //   navigator.requestMIDIAccess().then(success, failure)
+  // }
+
 
   // EXCEL
 

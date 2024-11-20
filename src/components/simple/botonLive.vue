@@ -3,7 +3,7 @@
   variant="flat" 
   :color="!live ? 'success' : 'error'"
    @click="insertarGrafico(nombre)" 
-   size="small">
+   size="x-small">
     <h6>{{ nombre }} | LIVE</h6>
     </v-btn>  
     <!-- <p>{{ rotulo_cargado }}</p> -->

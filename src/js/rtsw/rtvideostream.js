@@ -99,7 +99,9 @@ function RTVideoStream(rtswProtocol, protocolId, paramVideoId)
 	}
 
 	this.createPeerConnection = function() {
-		var servers = {"iceServers": [{"url": "stun:stun.l.google.com:19302"}]};
+		var servers = {"iceServers": []};
+		// var servers = {"iceServers": [{"urls": "stun:stun.l.google.com:19302"}]};
+		// var servers = {"iceServers": [{"url": "stun:stun.l.google.com:19302"}]};
 
 		try {
 			this.peerConnection = new RTCPeerConnection(servers);
