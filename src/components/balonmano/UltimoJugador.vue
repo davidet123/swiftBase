@@ -345,54 +345,11 @@ import { useEventListener } from '@/composables/event';
     liveBtn.value[tipo] = !liveBtn.value[tipo]
   }
 
-  // useEventListener(document, 'keydown', e => keydownHandler(e))
-  // const removedEventListener = e => console.log(e)
-
-  // const keydownHandler = e => {
-  //   if(e.key === " ") liveGoles('goles', jugador.value)
-  //   e.preventDefault()
-  //   console.log(e.key)
-  // }
-
-  // document.addEventListener("keypress", e => {
-  //   console.log(e.key)
-  // })
-
-  // onBeforeMount(() => {
-  //   console.log("beforeMpount")
-  // })
-  // onMounted(() => {
-  //   console.log("mounbted")
-  // })
-  // onUpdated(() => {
-  //   // document.addEventListener("keypress", e => {
-  //   //   console.log(e.key)
-  //   // })
-  //   console.log("updated")
-  // })
-
-  // onUnmounted(() => {
-  //   console.log("unmounted")
-  // })
-  // onBeforeUnmount(() => {
-  //   console.log("before unmount")
-  // })
-  
 
 
 
-  // watch(() => estadisticaManual.value, val =>  {
-  //   if(jugador.value !== val.jugador) return
-  //   console.log(jugador.value)
-  //   switch (val.tipo) {
-  //     case "LIVE INFO":
-  //       console.log("ultimo jugador")
-  //       // gol(1)
-  //       break;
-  //     default:
-  //       break
-  //     }
-  //       balonmanoStore.setEstadisticaManual(false)
+  // watch(() => liveBtn.value, val =>  {
+  //   console.log(val)
 
   // }, {deep: true})
 

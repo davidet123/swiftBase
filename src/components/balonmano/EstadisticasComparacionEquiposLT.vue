@@ -1,6 +1,6 @@
 <template>
   <v-row class="ma-0 pa-0">
-    <v-col class=text-center>
+    <v-col class="text-center azul">
       <v-btn class="ml-1" size="x-small" :color="!liveBtn.tiros ? 'success' : 'error'" @click="liveStats('tiros')">STATS TIROS</v-btn>
       <v-btn class="ml-1" size="x-small" :color="!liveBtn.paradas ? 'success' : 'error'" @click="liveStats('paradas')">STATS PARADAS</v-btn>
       <v-btn class="ml-1" size="x-small" :color="!liveBtn.tiro7m ? 'success' : 'error'" @click="liveStats('tiro7m')">STATS 7M</v-btn>
@@ -118,3 +118,10 @@ const liveStats = tipo => {
 
 
 </script>
+
+<style scoped>
+.azul {
+  background-color: darkslategray;
+}
+
+</style>

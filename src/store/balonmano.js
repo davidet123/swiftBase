@@ -57,7 +57,13 @@ export const useBalonmanoStore = defineStore('balonmanoStore', {
       parte: 1,
       tiempo: 0
     },
-    partidoCreado: false
+    partidoCreado: false,
+    estadoBotonesMarcador: null,
+    estadoBotonesMarcadorCargados: false,
+    estadoCronosMarcador: null,
+    estadoCronosMarcadorCargados: false,
+
+
 
   }),
   getters: {
@@ -88,12 +94,36 @@ export const useBalonmanoStore = defineStore('balonmanoStore', {
       if(equipo === "local") return this.suspensionesActivasLocal
       if(equipo === "visitante") return this.suspensionesActivasVisitante
     },
+    guardarEstadoBotonesMarcador(estado) {
+      if(estado) localStorage.setItem('estadoBotonesMarcadorBalonmano', JSON.stringify(estado))
+    },
+    cargarEstadoBotonesMarcador() {
+      const datos = JSON.parse(localStorage.getItem('estadoBotonesMarcadorBalonmano'))
+      if(!datos) return
+      this.estadoBotonesMarcador = datos
+    },
+    setEstadoBotonesMarcadorCargados(val) {
+      this.estadoBotonesMarcadorCargados = val
+    },
+    guardarEstadoCronosMarcador(estado) {
+      if(estado) localStorage.setItem('estadoCronosMarcadorBalonmano', JSON.stringify(estado))
+    },
+    cargarEstadoCronosMarcador() {
+      const datos = JSON.parse(localStorage.getItem('estadoCronosMarcadorBalonmano'))
+      if(!datos) return
+      this.estadoCronosMarcador = datos
+    },
+    setEstadoCronosMarcadorCargados(val) {
+      this.estadoCronosMarcadorCargados = val
+    },
 
 
 
 
     cargarDatosLS() {
       const datos = JSON.parse(localStorage.getItem('datosBalonmano'))
+      this.cargarEstadoBotonesMarcador()
+      this.cargarEstadoCronosMarcador()
       // localStorage.setItem('datosBalonmanoTest', JSON.stringify(datos))
       if(!datos) this.resetBalonmanoLS()
       this.partido = datos.partido
