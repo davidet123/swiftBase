@@ -1,4 +1,7 @@
 import { defineStore } from "pinia";
+import { useSwiftConnectionStore } from "./swiftConnection"
+
+
 
 export const useBalonmanoStore = defineStore('balonmanoStore', {
   state: () => ({
@@ -116,10 +119,6 @@ export const useBalonmanoStore = defineStore('balonmanoStore', {
     setEstadoCronosMarcadorCargados(val) {
       this.estadoCronosMarcadorCargados = val
     },
-
-
-
-
     cargarDatosLS() {
       const datos = JSON.parse(localStorage.getItem('datosBalonmano'))
       this.cargarEstadoBotonesMarcador()
@@ -203,6 +202,150 @@ export const useBalonmanoStore = defineStore('balonmanoStore', {
       if(b === 0) return "0%"
       const valor = Math.round(a/b*100)
       return `${valor}%`
+    },
+    // METODOS COMPARTIDOS
+    
+    mostrarInfoLiveTarjeta  (tipo, jugador, equipo, live)  {
+      const swiftConnectionStore = useSwiftConnectionStore()
+      let equipoAMostrar
+      let metodoInfoPlayer
+      let tarjetaAmarilla  = "false"
+      let tarjetaRoja  = "false"
+      let tarjetaAzul  = "false"
+  
+      if(equipo === "local") {
+        equipoAMostrar = "HOME"
+        metodoInfoPlayer = "infoPlayerHome"
+      }
+      if(equipo === "visitante") {
+        equipoAMostrar = "AWAY"
+        metodoInfoPlayer = "infoPlayerAway"
+      }
+      if(!live) {
+
+        const textoTop = `${jugador.dorsal} ${jugador.nombre} ${jugador.apellido.toUpperCase()}`
+        let textoBot
+    
+        if(tipo === "info_tarjeta_amarilla") {
+          textoBot = "YELLOW CARD"
+          tarjetaAmarilla = "true"
+        }
+        if(tipo === "info_tarjeta_roja") {
+          textoBot = "RED CARD"
+          tarjetaRoja = "true"
+        }
+        if(tipo === "info_tarjeta_azul") {
+          textoBot = "BLUE CARD"
+          tarjetaAzul = "true"
+        }
+        
+    
+        swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_GRUPO_GOL`, "Display", "false")
+        swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_GRUPO_TARJETA`, "Display", "true")
+        swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_TARJETA_TOPTEXT`, "String", textoTop)
+        swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_TARJETA_BOTTEXT`, "String", textoBot)
+        swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_TARJETA_AMARILLA_GRUPO`, "Display", tarjetaAmarilla)
+        swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_TARJETA_ROJA_GRUPO`, "Display", tarjetaRoja)
+        swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_TARJETA_AZUL_GRUPO`,"Display", tarjetaAzul)
+    
+        swiftConnectionStore.customMetodo("MARCADOR", `${metodoInfoPlayer}In`)
+      } else {
+        
+        swiftConnectionStore.customMetodo("MARCADOR", `${metodoInfoPlayer}Out`)
+      }
+  
+        
+    },
+    mostrarLiveParadas  (jugador, equipo, partido, live)  {
+      
+      const swiftConnectionStore = useSwiftConnectionStore()
+      let equipoAMostrar
+      let metodoInfoPlayer
+      let tirosContrario
+      
+      if(equipo === "local") {
+        equipoAMostrar = "HOME"
+        metodoInfoPlayer = "infoPlayerHome"
+        tirosContrario = partido.visitante.estadistica_equipo.tiros
+      }
+      if(equipo === "visitante") {
+        equipoAMostrar = "AWAY"
+        metodoInfoPlayer = "infoPlayerAway"
+        tirosContrario = partido.local.estadistica_equipo.tiros
+      }
+      if(!live) {
+        const acierto = parseInt((jugador.estadistica.paradas / tirosContrario)*100)
+        const textoTop = `${jugador.dorsal} ${jugador.nombre} ${jugador.apellido.toUpperCase()}`
+        const textoBot = `${jugador.estadistica.paradas} SAVES, pct ${acierto}% `
+        swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_GRUPO_GOL`, "Display", "true")
+        swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_GRUPO_TARJETA`, "Display", "false")
+        swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_GOL_TOPTEXT`, "String", textoTop)
+        swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_GOL_BOTTEXT`, "String", textoBot)
+        swiftConnectionStore.customMetodo("MARCADOR", `${metodoInfoPlayer}In`)
+
+      } else {
+        swiftConnectionStore.customMetodo("MARCADOR", `${metodoInfoPlayer}Out`)
+      }
+
+    },
+    mostrarInfoGoles (jugador, equipo, live) {
+      const swiftConnectionStore = useSwiftConnectionStore()
+      let equipoAMostrar
+      let metodoInfoPlayer
+      
+      if(equipo === "local") {
+        equipoAMostrar = "HOME"
+        metodoInfoPlayer = "infoPlayerHome"
+      }
+      if(equipo === "visitante") {
+        equipoAMostrar = "AWAY"
+        metodoInfoPlayer = "infoPlayerAway"
+      }
+      if(!live) {
+
+        const acierto = parseInt((jugador.estadistica.goles / jugador.estadistica.tiros)*100) ||"0"
+        const textoTop = `${jugador.dorsal} ${jugador.nombre} ${jugador.apellido.toUpperCase()}`
+        const textoBot = `${jugador.estadistica.goles} GOALS, ${jugador.estadistica.tiros} ATTEMPTS, pct ${acierto}%`
+        swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_GRUPO_GOL`, "Display", "true")
+        swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_GRUPO_TARJETA`, "Display", "false")
+        swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_GOL_TOPTEXT`, "String", textoTop)
+        swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_GOL_BOTTEXT`, "String", textoBot)
+        swiftConnectionStore.customMetodo("MARCADOR", `${metodoInfoPlayer}In`)
+      } else {
+        swiftConnectionStore.customMetodo("MARCADOR", `${metodoInfoPlayer}Out`)
+      }
+
+      
+    },
+    mostratLiveTarjeta (tipo, jugador, equipo, color, partido, live) {
+      const swiftConnectionStore = useSwiftConnectionStore()
+      if(!live) {
+
+        let tarjetaAmarilla  = "false"
+        let tarjetaRoja  = "false"
+        let tarjetaAzul  = "false"
+        
+        if(color === "amarilla") tarjetaAmarilla = "true"
+        if(color === "roja") tarjetaRoja = "true"
+        if(color === "azul") tarjetaAzul = "true"
+        const textoTop = `${jugador.dorsal} ${jugador.nombre} ${jugador.apellido.toUpperCase()}`
+  
+  
+        swiftConnectionStore.playGraphic('DSK_INFO_TARJETA')
+        swiftConnectionStore.cueGraphic('DSK_INFO_TARJETA')
+    
+        swiftConnectionStore.rtRemote.updateFields("DSK_INFO_TARJETA::SUPERIORTEXT","String", textoTop)
+        swiftConnectionStore.rtRemote.updateFields("DSK_INFO_TARJETA::ESCUDOSHDR", "Shader", partido[equipo].escudo)
+        swiftConnectionStore.rtRemote.updateFields("DSK_INFO_TARJETA::TARJETA_AMARILLA_GRUPO", "Display", tarjetaAmarilla)
+        swiftConnectionStore.rtRemote.updateFields("DSK_INFO_TARJETA::TARJETA_ROJA_GRUPO", "Display", tarjetaRoja)
+        swiftConnectionStore.rtRemote.updateFields("DSK_INFO_TARJETA::TARJETA_AZUL_GRUPO","Display", tarjetaAzul)
+  
+        swiftConnectionStore.bringOn('DSK_INFO_TARJETA')
+      } else {
+        swiftConnectionStore.takeOff('DSK_INFO_TARJETA')
+      }
     }
+    
+      
   }
 })

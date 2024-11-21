@@ -15,16 +15,6 @@
     <EstadisticasComparacionEquiposLT />
 
   </div>
-  <!-- <v-row>
-    <v-col class="text-center">
-      <v-btn class="ml-1" size="x-small" :color="!liveBtn.statsTiros ? 'success' : 'error'" @click="liveStats('statsTiros')">STATS TIROS</v-btn>
-      <v-btn class="ml-1" size="x-small" :color="!liveBtn.statsParadas ? 'success' : 'error'" @click="liveStats('statsParadas')">STATS PARADAS</v-btn>
-      <v-btn class="ml-1" size="x-small" :color="!liveBtn.stats7m ? 'success' : 'error'" @click="liveStats('stats7m')">STATS 7M</v-btn>
-      <v-btn class="ml-1" size="x-small" :color="!liveBtn.statsTotalShots ? 'success' : 'error'" @click="liveStats('statsTotalShots')">STATS TOTAL_SHOTS</v-btn>
-      <v-btn class="ml-1" size="x-small" :color="!liveBtn.statsShotsOnGoal ? 'success' : 'error'" @click="liveStats('statsShotsOnGoal')">STATS SHOTS_ON_GOAL</v-btn>
-      <v-btn class="ml-1" size="x-small" :color="!liveBtn.statsSuspensionMinutes ? 'success' : 'error'" @click="liveStats('statsSuspensionMinutes')">STATS SUSPENSION_MINUTES</v-btn>
-    </v-col>
-  </v-row> -->
   <v-row class="ma-0">
     <v-col class="text-center">
       <UltimoJugador :datos="ultimoJugador" v-if="ultimoJugador"/>
@@ -43,7 +33,7 @@
            <PorteroBalonmano :jugador="jugador" :equipo="equipo"/>
         </v-col>
       </v-row>
-      <v-row>
+      <v-row class="ma-0 pa-0">
         <v-col cols="11">
           <v-text-field v-model="dorsalBuscado[equipo]" @update:focused="foco($event)"></v-text-field>
         </v-col>
@@ -129,15 +119,16 @@
   const cerrarEstadisticaManual = val => {
     balonmanoStore.setEstadisticaManual(val)
     balonmanoStore.setUltimoJugador(val)
-    addEstadisticaManual.value = false
+    // addEstadisticaManual.value = false
   }
 
   const cerrarDialog = () => {
-    console.log("CERRAR")
+    
     dialog.value = false
     numJugador.value = null
     numEquipo.value = null
     numEstadistica.value = 1
+    addEstadisticaManual.value = false
   }
   
   const limpiar = equipo => {
@@ -151,7 +142,7 @@
 
   const activarTiempoMuertoLT = data => {
     const equipo = data.nombre.toLowerCase().split(" ")[1]
-    // console.log(data)
+    
     if(data.live) {
       swiftConnectionStore.playGraphic('TIEMPO_MUERTO_LT')
       swiftConnectionStore.cueGraphic('TIEMPO_MUERTO_LT')
@@ -293,76 +284,11 @@
         case " ":
           e.preventDefault()
           break;
-        // case "ENTER":
-        //   if(numEstadistica.value === 1) {
-        //     const dorsal = parseInt(numJugador.value)
-        //     // console.log(!(numJugador.value && dorsal))
-        //     if(!(numJugador.value && dorsal))  {
-        //       numJugador.value = null
-        //       return
-        //     }
-        //   }
-        //   if(numEstadistica.value === 2) {
-            
-        //     if(!(parseInt(numEquipo.value) === 1 || parseInt(numEquipo.value) === 2))  {
-        //       numEquipo.value = null
-        //       return
-        //     }
-        //   }
-        //   numEstadistica.value ++
-        //   if(numEstadistica.value === 3) {
-            
-        //     // console.log(jugadorManual.value)
-        //     equipoManual = numEquipo.value === "1" ? 'local' : 'visitante'
-        //     jugadorManual.value = partido.value[equipoManual].jugadores.find(el => el.dorsal == numJugador.value) || null
-            
-        //     // jugadorManual.value = partido.value[equipoManual].jugadores.find(el => console.log(el.dorsal))
-        //   }
-        //   if(numEstadistica.value === 4) {
-        //     const datos = {
-        //       tipo: tipoEstadisticaManual.value,
-        //       equipo: equipoManual,
-        //       jugador: jugadorManual.value
-        //     }
-        //     // emit("aceptar", datos)
-        //     cerrarEstadisticaManual(datos)
-        //     // console.log(datos)
-        //     numJugador.value = null
-        //     numEquipo.value = null
-        //     dialog.value = false
-        //     // numEstadistica.value = 1
-        //   }
-        //   break;
+        default:
+          console.log("Ninguna acción asignada a la tecla " + tecla)
       }
     }
 
   useEventListener(document, 'keydown', e => keydownHandler(e))
-
-
-  // onBeforeMount(() => {
-  //   // console.log("beforeMpount")
-  //   // console.log(getEventListeners(document))
-  //   document.addEventListener('keydown', e => keydownHandler(e))
-  //   // console.log(listAllEventListeners())
-  // })
-  // onMounted(() => {
-  //   // console.log(listAllEventListeners())
-  // })
-
-  // onBeforeUnmount(() => {
-  //   console.log("beforeunomunt")
-  //   document.removeEventListener("keydown", e => keydownHandler(e))
-  // })
-
-  
-
-  // watch(() => jugadorManual.value, val => {
-  //   console.log(val)
-  // })
-
-
- 
-
-
 
 </script>

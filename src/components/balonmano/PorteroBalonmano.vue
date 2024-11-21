@@ -3,7 +3,7 @@
     <v-row >
       <v-col class="tarjeta my-0 pt-1" >
         <v-card>
-          <v-card-title>
+          <v-card-title class="ma-0 pa-0">
             <v-row class="ml-1 pr-6">
               <v-col cols="3">
                 <h6>{{ jugador.dorsal }} - {{ jugador.nombre }} {{ jugador.apellido }} (GK)</h6>
@@ -11,7 +11,7 @@
               
             </v-row>
           </v-card-title>
-          <v-card-text>
+          <v-card-text class="ma-0">
               <v-row>
                 <v-col cols="12">
                 <v-row>

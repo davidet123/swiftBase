@@ -322,23 +322,6 @@
     balonmanoStore.guardarPartido()
   }
 
-  const iniciarSuspension = () => {
-    // partido.value[equipo.value].suspensiones_activas += 1
-    swiftConnectionStore.customMetodo("MARCADOR", `${posicionCronoSuspension.value}Start`)
-    balonmanoStore.guardarPartido()
-  }
-
-  const pararSuspension = () => {
-    swiftConnectionStore.customMetodo("MARCADOR", `${posicionCronoSuspension.value}Stop`)
-    balonmanoStore.guardarPartido()
-  }
-
-  const resetSuspension = () => {
-    swiftConnectionStore.customMetodo("MARCADOR", `${posicionCronoSuspension.value}Reset`)
-    partido.value[equipo.value].suspensiones_activas -= 1
-    balonmanoStore.guardarPartido()
-  }
-
   const liveBtn = ref({
     disparos_efectuados: false,
     goles: false,
@@ -357,124 +340,19 @@
 
   })
   const liveParadas = (tipo, jugador) => {
-    let equipoAMostrar
-    let metodoInfoPlayer
-    let tirosContrario
-    
-    if(equipo.value === "local") {
-      equipoAMostrar = "HOME"
-      metodoInfoPlayer = "infoPlayerHome"
-      tirosContrario = partido.value["visitante"].estadistica_equipo.tiros
-    }
-    if(equipo.value === "visitante") {
-      equipoAMostrar = "AWAY"
-      metodoInfoPlayer = "infoPlayerAway"
-      tirosContrario = partido.value["local"].estadistica_equipo.tiros
-    }
-    if(liveBtn.value.paradas == false) {
-      const acierto = parseInt((jugador.estadistica.paradas / tirosContrario)*100) || "0"
-      const textoTop = `${jugador.dorsal} ${jugador.nombre} ${jugador.apellido.toUpperCase()}`
-      const textoBot = `${jugador.estadistica.paradas} SAVES, pct ${acierto}% `
-      swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_GRUPO_GOL`, "Display", "true")
-      swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_GRUPO_TARJETA`, "Display", "false")
-      swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_GOL_TOPTEXT`, "String", textoTop)
-      swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_GOL_BOTTEXT`, "String", textoBot)
-      swiftConnectionStore.customMetodo("MARCADOR", `${metodoInfoPlayer}In`)
-    } else if(liveBtn.value.paradas == true) {
-      swiftConnectionStore.customMetodo("MARCADOR", `${metodoInfoPlayer}Out`)
-
-    }
+    balonmanoStore.mostrarLiveParadas(jugador, equipo.value, partido.value, liveBtn.value.paradas)
     liveBtn.value.paradas = !liveBtn.value.paradas
-
   }
 
   const liveGoles = (tipo, jugador) => {
-    let equipoAMostrar
-    let metodoInfoPlayer
-    
-    if(equipo.value === "local") {
-      equipoAMostrar = "HOME"
-      metodoInfoPlayer = "infoPlayerHome"
-    }
-    if(equipo.value === "visitante") {
-      equipoAMostrar = "AWAY"
-      metodoInfoPlayer = "infoPlayerAway"
-    }
-    if(liveBtn.value.goles == false) {
-      const acierto = parseInt((jugador.estadistica.goles / jugador.estadistica.tiros)*100)
-      const textoTop = `${jugador.dorsal} ${jugador.nombre} ${jugador.apellido.toUpperCase()}`
-      const textoBot = `${jugador.estadistica.goles} GOALS, ${jugador.estadistica.tiros} ATTEMPTS, pct ${acierto}%`
-      swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_GRUPO_GOL`, "Display", "true")
-      swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_GRUPO_TARJETA`, "Display", "false")
-      swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_GOL_TOPTEXT`, "String", textoTop)
-      swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_GOL_BOTTEXT`, "String", textoBot)
-      swiftConnectionStore.customMetodo("MARCADOR", `${metodoInfoPlayer}In`)
-    } else if(liveBtn.value.goles == true) {
-      swiftConnectionStore.customMetodo("MARCADOR", `${metodoInfoPlayer}Out`)
-
-    }
+    balonmanoStore.mostrarInfoGoles(jugador, equipo.value, liveBtn.value.goles)
     liveBtn.value.goles = !liveBtn.value.goles
 
   }
 
   const infoLiveTarjeta = (tipo, jugador) => {
-    let equipoAMostrar
-    let metodoInfoPlayer
-    let tarjetaAmarilla  = "false"
-    let tarjetaRoja  = "false"
-    let tarjetaAzul  = "false"
-
-    if(equipo.value === "local") {
-      equipoAMostrar = "HOME"
-      metodoInfoPlayer = "infoPlayerHome"
-    }
-    if(equipo.value === "visitante") {
-      equipoAMostrar = "AWAY"
-      metodoInfoPlayer = "infoPlayerAway"
-    }
-    if(liveBtn.value[tipo] == false) {
-      const textoTop = `${jugador.dorsal} ${jugador.nombre}`
-      let textoBot
-
-      if(tipo === "info_tarjeta_amarilla") {
-        textoBot = "YELLOW CARD"
-        tarjetaAmarilla = "true"
-      }
-      if(tipo === "info_tarjeta_roja") {
-        textoBot = "RED CARD"
-        tarjetaRoja = "true"
-      }
-      if(tipo === "info_tarjeta_azul") {
-        textoBot = "BLUE CARD"
-        tarjetaAzul = "true"
-      }
-      
-
-      swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_GRUPO_GOL`, "Display", "false")
-      swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_GRUPO_TARJETA`, "Display", "true")
-      swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_TARJETA_TOPTEXT`, "String", textoTop)
-      swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_TARJETA_BOTTEXT`, "String", textoBot)
-      swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_TARJETA_AMARILLA_GRUPO`, "Display", tarjetaAmarilla)
-      swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_TARJETA_ROJA_GRUPO`, "Display", tarjetaRoja)
-      swiftConnectionStore.rtRemote.updateFields(`MARCADOR::PLAYER_INFO_${equipoAMostrar}_TARJETA_AZUL_GRUPO`,"Display", tarjetaAzul)
-
-      swiftConnectionStore.customMetodo("MARCADOR", `${metodoInfoPlayer}In`)
-
-
-      // partido.value[equipo.value].suspensiones_activas += 1
-      // swiftConnectionStore.customMetodo(swiftConnectionStore.customMetodo("MARCADOR", `${posicionCronoSuspension.value}In`))
-      // bringOn()
-    } else if(liveBtn.value[tipo] == true) {
-
-      swiftConnectionStore.customMetodo("MARCADOR", `${metodoInfoPlayer}Out`)
-      // partido.value[equipo.value].suspensiones_activas -= 1
-      // swiftConnectionStore.customMetodo(swiftConnectionStore.customMetodo("MARCADOR", `${posicionCronoSuspension.value}Out`))
-      // takeOff()
-    }
+    balonmanoStore.mostrarInfoLiveTarjeta(tipo, jugador, equipo.value, liveBtn.value[tipo])
     liveBtn.value[tipo] = !liveBtn.value[tipo]
-
-
-    
   }
 
   const liveSuspension = () => {
@@ -493,32 +371,7 @@
   }
 
   const liveTarjeta = (tipo, jugador, color) => {
-    if(!liveBtn.value[tipo]) {
-      
-      let tarjetaAmarilla  = "false"
-      let tarjetaRoja  = "false"
-      let tarjetaAzul  = "false"
-      
-      if(color === "amarilla") tarjetaAmarilla = "true"
-      if(color === "roja") tarjetaRoja = "true"
-      if(color === "azul") tarjetaAzul = "true"
-
-      const textoTop = `${jugador.dorsal} ${jugador.nombre} ${jugador.apellido.toUpperCase()}`
-
-      swiftConnectionStore.playGraphic('DSK_INFO_TARJETA')
-      swiftConnectionStore.cueGraphic('DSK_INFO_TARJETA')
-  
-      swiftConnectionStore.rtRemote.updateFields("DSK_INFO_TARJETA::SUPERIORTEXT","String", textoTop)
-      swiftConnectionStore.rtRemote.updateFields("DSK_INFO_TARJETA::ESCUDOSHDR", "Shader", partido.value[equipo.value].escudo)
-      swiftConnectionStore.rtRemote.updateFields("DSK_INFO_TARJETA::TARJETA_AMARILLA_GRUPO", "Display", tarjetaAmarilla)
-      swiftConnectionStore.rtRemote.updateFields("DSK_INFO_TARJETA::TARJETA_ROJA_GRUPO", "Display", tarjetaRoja)
-      swiftConnectionStore.rtRemote.updateFields("DSK_INFO_TARJETA::TARJETA_AZUL_GRUPO","Display", tarjetaAzul)
-
-      swiftConnectionStore.bringOn('DSK_INFO_TARJETA')
-    } else {
-      swiftConnectionStore.takeOff('DSK_INFO_TARJETA')
-
-    }
+    balonmanoStore.mostratLiveTarjeta(tipo, jugador, equipo.value, color, partido.value, liveBtn.value[tipo])
     liveBtn.value[tipo] = !liveBtn.value[tipo]
   }
 
@@ -544,19 +397,6 @@
     }
     liveBtn.value[tipo] = !liveBtn.value[tipo]
 
-  }
-
-  const live = (tipo, nombre, dorsal, tipoStr, valor) => {
-    if(liveBtn.value[tipo] == false) {
-      swiftConnectionStore.playGraphic("EST_INDIVIDUAL")
-      
-      swiftConnectionStore.bringOn("EST_INDIVIDUAL")
-      // bringOn()
-    } else if(liveBtn.value[tipo] == true) {
-      swiftConnectionStore.takeOff("EST_INDIVIDUAL")
-      // takeOff()
-    }
-    liveBtn.value[tipo] = !liveBtn.value[tipo]
   }
 
 </script>
