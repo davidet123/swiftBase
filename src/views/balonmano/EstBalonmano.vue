@@ -263,6 +263,13 @@
           dorsalBuscado.value.local = null
           dorsalBuscado.value.visitante = null
           break;
+        case "E":
+          addEstadisticaManual.value = true
+          tipoEstadisticaManual.value = "suspensiones"
+          dialog.value = true
+          dorsalBuscado.value.local = null
+          dorsalBuscado.value.visitante = null
+          break;
         case "A":
           balonmanoStore.setMarcadorManual({tipo: "MARCADOR"})
           break;

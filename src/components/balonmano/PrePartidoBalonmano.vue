@@ -273,12 +273,14 @@
       const encuentro = partido.value
 
       const equipos = ['local', 'visitante']
+      const minutosSuspensionesLocal = encuentro.local.estadistica_equipo.suspensiones * 2
+      const minutosSuspensionesVisitante = encuentro.visitante.estadistica_equipo.suspensiones * 2
       const estadisticaLocal = [
         porcentaje(encuentro.local.estadistica_equipo.goles, encuentro.local.estadistica_equipo.tiros),
         porcentaje(encuentro.local.estadistica_equipo.paradas, encuentro.visitante.estadistica_equipo.tiros),
         encuentro.local.estadistica_equipo.penalti7m_efectuados.toString(),
         porcentaje(encuentro.local.estadistica_equipo.penalti7m_anotados, encuentro.local.estadistica_equipo.penalti7m_efectuados),
-        encuentro.local.estadistica_equipo.suspensiones.toString(),
+        minutosSuspensionesLocal.toString(),
         encuentro.local.estadistica_equipo.tarjetas_amarillas.toString()
       ]
       const estadisticaVisitante = [
@@ -286,7 +288,7 @@
         porcentaje(encuentro.visitante.estadistica_equipo.paradas, encuentro.local.estadistica_equipo.tiros),
         encuentro.visitante.estadistica_equipo.penalti7m_efectuados.toString(),
         porcentaje(encuentro.visitante.estadistica_equipo.penalti7m_anotados, encuentro.visitante.estadistica_equipo.penalti7m_efectuados),
-        encuentro.visitante.estadistica_equipo.suspensiones.toString(),
+        minutosSuspensionesVisitante.toString(),
         encuentro.visitante.estadistica_equipo.tarjetas_amarillas.toString()
       ]
       swiftConnectionStore.playGraphic('ESTADISTICAS')

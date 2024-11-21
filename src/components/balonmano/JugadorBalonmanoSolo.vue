@@ -103,11 +103,14 @@
                           </v-col>
                         </v-row>
                         <v-row>
-                          <v-col class="text-center" cols="3" offset="3">
+                          <v-col class="text-center" cols="3">
                             <v-btn size="x-small" color="success" @click="penaltiAnotado(1)">+</v-btn>
                           </v-col>
                           <v-col class="text-center" cols="3">
                             <v-btn size="x-small" color="error" @click="penaltiAnotado(-1)">-</v-btn>
+                          </v-col>
+                          <v-col class="text-center" cols="3">
+                            <v-btn size="x-small" :color="!liveBtn.tiro7m ? 'success' : 'error'" @click="livetiro7m('tiro7m', jugador)">LIVE</v-btn>
                           </v-col>
                         </v-row>
                       </v-col>
@@ -128,7 +131,7 @@
                         <v-btn size="x-small" color="error" @click="suspension(-1)">-</v-btn>
                       </v-col>
                       <v-col cols="2">
-                        <v-btn size="x-small" :color="!liveBtn.suspension ? 'success' : 'error'" @click="liveSuspension()">LIVE</v-btn>
+                        <v-btn size="x-small" :disabled="jugador.estadistica.suspensiones === 0" :color="!liveBtn.suspensiones ? 'success' : 'error'" @click="infoLiveSuspension('suspensiones', jugador)">LIVE</v-btn>
                       </v-col>
                     </v-row>
                   </v-row>
@@ -222,7 +225,7 @@
               </v-row>
             <v-row>
               <v-col cols="12" class="caja_jugador">
-                <v-btn size="x-small" :color="!liveBtn.dsk_info ? 'success' : 'error'" @click="liveDskInfo('dsk_info', jugador)">INFO_DSK</v-btn>
+                <v-btn size="x-small" :disabled="true" :color="!liveBtn.dsk_info ? 'success' : 'error'" @click="liveDskInfo('dsk_info', jugador)">INFO_DSK</v-btn>
                 <v-btn size="x-small" :color="!liveBtn.tarjeta_amarilla ? 'success' : 'error'" @click="liveTarjeta('tarjeta_amarilla', jugador, 'amarilla')">INFO_DSK_T_AM</v-btn>
                 <v-btn size="x-small" :color="!liveBtn.tarjeta_roja ? 'success' : 'error'" @click="liveTarjeta('tarjeta_roja', jugador, 'roja')">INFO_DSK_T_R</v-btn>
                 <v-btn size="x-small" :color="!liveBtn.tarjeta_azul ? 'success' : 'error'" @click="liveTarjeta('tarjeta_azul', jugador, 'azul')">INFO_DSK_T_AZ</v-btn>
@@ -328,7 +331,7 @@
     tiro7m_efectuados: false,
     tiro7m: false,
     disparos_al_arco: false,
-    suspension: false,
+    suspensiones: false,
     info_tarjeta_amarilla: false,
     info_tarjeta_roja: false,
     info_tarjeta_azul: false,
@@ -341,17 +344,23 @@
   })
   const liveParadas = (tipo, jugador) => {
     balonmanoStore.mostrarLiveParadas(jugador, equipo.value, partido.value, liveBtn.value.paradas)
-    liveBtn.value.paradas = !liveBtn.value.paradas
+    liveBtn.value[tipo] = !liveBtn.value[tipo]
   }
 
   const liveGoles = (tipo, jugador) => {
     balonmanoStore.mostrarInfoGoles(jugador, equipo.value, liveBtn.value.goles)
-    liveBtn.value.goles = !liveBtn.value.goles
+    liveBtn.value[tipo] = !liveBtn.value[tipo]
 
   }
 
   const infoLiveTarjeta = (tipo, jugador) => {
     balonmanoStore.mostrarInfoLiveTarjeta(tipo, jugador, equipo.value, liveBtn.value[tipo])
+    liveBtn.value[tipo] = !liveBtn.value[tipo]
+  }
+
+  const infoLiveSuspension = (tipo, jugador) => {
+    if(jugador.estadistica.suspensiones === 0) return
+    balonmanoStore.mostrarInfoLiveSuspension(jugador, equipo.value, liveBtn.value[tipo])
     liveBtn.value[tipo] = !liveBtn.value[tipo]
   }
 
@@ -371,7 +380,13 @@
   }
 
   const liveTarjeta = (tipo, jugador, color) => {
-    balonmanoStore.mostratLiveTarjeta(tipo, jugador, equipo.value, color, partido.value, liveBtn.value[tipo])
+    balonmanoStore.mostratLiveTarjeta(jugador, equipo.value, color, partido.value, liveBtn.value[tipo])
+    liveBtn.value[tipo] = !liveBtn.value[tipo]
+  }
+
+  const livetiro7m = (tipo, jugador) => {
+    console.log(liveBtn.value[tipo])
+    balonmanoStore.mostrarInfoLiveTiro7m(jugador, equipo.value, liveBtn.value[tipo])
     liveBtn.value[tipo] = !liveBtn.value[tipo]
   }
 

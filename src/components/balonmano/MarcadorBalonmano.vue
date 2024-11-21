@@ -49,12 +49,15 @@
           </v-row>
           <!-- TIMEOUT -->
           <v-row>
-            <v-col cols="6">
+            <v-col class="text-center">
+              <v-btn class="mr-1" size="x-small" :color="!liveBtn.timeout ? 'success' : 'error'" @click="activarTimeOut('timeout')">TIME OUT</v-btn>
+            </v-col>
+            <!-- <v-col cols="6">
               <BotonLive nombre="TIMEOUT HOME" @activar="activarTimeOut" />
             </v-col>
             <v-col cols="6">
               <BotonLive nombre="TIMEOUT AWAY" @activar="activarTimeOut" />
-            </v-col>
+            </v-col> -->
           </v-row>
 
           <!-- EDITAR ESTADISTICAS -->
@@ -226,16 +229,16 @@
             <v-col cols="9">
               <v-row >
                 <v-col cols="5" class="ma-1 pa-1 text-center">
-                  <v-btn :disabled="cronoBtn.crono" size="x-small" @click="ajustarSuspension('HOME', 'TOP')" color="teal"><h6>ENVIAR HOME TOP</h6></v-btn>
+                  <v-btn :disabled="!tiempoAjusteSuspensiones" size="x-small" @click="ajustarSuspension('HOME', 'TOP')" color="teal"><h6>ENVIAR HOME TOP</h6></v-btn>
                 </v-col>
                 <v-col cols="5" class="ma-1 pa-1 text-center">
-                  <v-btn :disabled="cronoBtn.crono" size="x-small" @click="ajustarSuspension('AWAY', 'TOP')" color="teal"><h6>ENVIAR AWAY TOP</h6></v-btn>
+                  <v-btn :disabled="!tiempoAjusteSuspensiones" size="x-small" @click="ajustarSuspension('AWAY', 'TOP')" color="teal"><h6>ENVIAR AWAY TOP</h6></v-btn>
                 </v-col>
                 <v-col cols="5" class="ma-1 pa-1 text-center">
-                  <v-btn :disabled="cronoBtn.crono" size="x-small" @click="ajustarSuspension('HOME', 'BOT')" color="teal"><h6>ENVIAR HOME BOT</h6></v-btn>
+                  <v-btn :disabled="!tiempoAjusteSuspensiones" size="x-small" @click="ajustarSuspension('HOME', 'BOT')" color="teal"><h6>ENVIAR HOME BOT</h6></v-btn>
                 </v-col>
                 <v-col cols="5" class="ma-1 pa-1 text-center">
-                  <v-btn :disabled="cronoBtn.crono" size="x-small" @click="ajustarSuspension('AWAY', 'BOT')" color="teal"><h6>ENVIAR AWAY BOT</h6></v-btn>
+                  <v-btn :disabled="!tiempoAjusteSuspensiones" size="x-small" @click="ajustarSuspension('AWAY', 'BOT')" color="teal"><h6>ENVIAR AWAY BOT</h6></v-btn>
                 </v-col>
               </v-row>
             </v-col>
@@ -295,6 +298,7 @@
     statsTotalShots: false,
     statsShotsOnGoal: false,
     statsSuspensionMinutes: false,
+    timeout: false
   })
   const  cronoBtn = ref({
     tiempo: 0,
@@ -413,9 +417,11 @@
 
       tempLiveBtn = JSON.parse(JSON.stringify(liveBtn.value))
 
+
       if(liveBtn.value.emptyGoalHome) swiftConnectionStore.customMetodo(grafico, "emptyGoalOutHome")
       if(liveBtn.value.emptyGoalAway) swiftConnectionStore.customMetodo(grafico, "emptyGoalOutAway")
-
+      
+      
 
       if(liveBtn.value.statsTiros || liveBtn.value.statsParadas || liveBtn.value.stats7m || liveBtn.value.statsTotalShots || liveBtn.value.statsShotsOnGoal || liveBtn.value.statsSuspensionMinutes ) swiftConnectionStore.customMetodo(grafico, "statisticsOut")
       
@@ -427,7 +433,13 @@
 
 
 
-      setTimeout(() => swiftConnectionStore.takeOff('MARCADOR'), 500)
+      setTimeout(() => {
+        swiftConnectionStore.takeOff('MARCADOR')
+        if(liveBtn.value.timeout) {
+          swiftConnectionStore.customMetodo(grafico, "timeoutOut")
+          liveBtn.value.timeout = false
+        }
+      }, 500)
       
     }
     liveBtn.value.marcador = !liveBtn.value.marcador
@@ -514,10 +526,21 @@
 
   // TIMEOUT ================================================
 
-  const activarTimeOut = data => {
-    if(!liveBtn.value.marcador) return
-    if(data.live) swiftConnectionStore.customMetodo("MARCADOR", "timeoutIn")
-    if(!data.live) swiftConnectionStore.customMetodo("MARCADOR", "timeoutOut")
+  // const activarTimeOut = () => {
+  //   if(!liveBtn.value.timeout) return
+  //   if(data.live) swiftConnectionStore.customMetodo("MARCADOR", "timeoutIn")
+  //   if(!data.live) swiftConnectionStore.customMetodo("MARCADOR", "timeoutOut")
+  // }
+
+  const activarTimeOut = (tipo, jugador) => {
+    if(!liveBtn.value[tipo]) {
+      swiftConnectionStore.customMetodo("MARCADOR", "timeoutIn")
+
+      } else {
+        swiftConnectionStore.customMetodo("MARCADOR", "timeoutOut")
+      }
+    
+    liveBtn.value[tipo] = !liveBtn.value[tipo]
   }
   
   // Parte

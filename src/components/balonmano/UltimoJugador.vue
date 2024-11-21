@@ -6,6 +6,7 @@
         <v-col class="text-center">
             <v-btn v-if="!jugador.portero" class="mx-1" size="x-small" :color="!liveBtn.goles ? 'success' : 'error'" @click="liveGoles('goles', jugador)"><h6>LIVE GOLES</h6></v-btn>
             <v-btn v-else class="mx-1" size="x-small" :color="!liveBtn.paradas ? 'success' : 'error'" @click="liveParadas('paradas', jugador)"><h6>LIVE PARADAS</h6></v-btn>
+            <v-btn size="x-small" :disabled="jugador.estadistica.suspensiones === 0" :color="!liveBtn.suspensiones ? 'success' : 'error'" @click="infoLiveSuspension('suspensiones', jugador)"><h6>LIVE 2 MIN</h6></v-btn>
             <!-- <v-btn class="mx-1" size="x-small" :color="!liveBtn.suspension ? 'success' : 'error'" @click="liveSuspension()"><h6>LIVE SUSPENSION</h6></v-btn> -->
             <v-btn class="mx-1" size="x-small" :color="!liveBtn.info_tarjeta_amarilla ? 'success' : 'error'" @click="infoLiveTarjeta('info_tarjeta_amarilla',jugador)"><h6>LIVE T-A</h6></v-btn>
             <v-btn class="mx-1" size="x-small" :color="!liveBtn.info_tarjeta_roja ? 'success' : 'error'" @click="infoLiveTarjeta('info_tarjeta_roja',jugador)"><h6>LIVE T-R</h6></v-btn>
@@ -23,7 +24,6 @@
 
   import { computed, ref, toRefs } from 'vue'
   import { useBalonmanoStore } from "../../store/balonmano"
-  import { useSwiftConnectionStore } from "../../store/swiftConnection"
   import { storeToRefs } from 'pinia'
   
 
@@ -33,9 +33,9 @@
 
   
   const balonmanoStore = useBalonmanoStore()
-  const swiftConnectionStore = useSwiftConnectionStore()
   
-  const { partido, suspensionesActivasLocal, suspensionesActivasVisitante, marcador, ultimoJugador, estadisticaManual } = storeToRefs(balonmanoStore)
+  
+  const { partido, suspensionesActivasLocal, suspensionesActivasVisitante } = storeToRefs(balonmanoStore)
 
   const jugador = computed(() => datos.value.jugador)
   const equipo = computed(() => datos.value.equipo)
@@ -57,7 +57,7 @@
     tiro7m_efectuados: false,
     tiro7m: false,
     disparos_al_arco: false,
-    suspension: false,
+    suspensiones: false,
     info_tarjeta_amarilla: false,
     info_tarjeta_roja: false,
     info_tarjeta_azul: false,
@@ -69,18 +69,24 @@
 
   })
   const liveParadas = (tipo, jugador) => {
-    balonmanoStore.mostrarLiveParadas(jugador, equipo.value, partido.value, liveBtn.value.paradas)
-    liveBtn.value.paradas = !liveBtn.value.paradas
+    balonmanoStore.mostrarLiveParadas(jugador, equipo.value, partido.value, liveBtn.value[tipo])
+    liveBtn.value[tipo] = !liveBtn.value[tipo]
   }
 
   const liveGoles = (tipo, jugador) => {
-    balonmanoStore.mostrarInfoGoles(jugador, equipo.value, liveBtn.value.goles)
-    liveBtn.value.goles = !liveBtn.value.goles
-
+    console.log(tipo, jugador)
+    balonmanoStore.mostrarInfoGoles(jugador, equipo.value, liveBtn.value[tipo])
+    liveBtn.value[tipo] = !liveBtn.value[tipo]
   }
 
   const infoLiveTarjeta = (tipo, jugador) => {
     balonmanoStore.mostrarInfoLiveTarjeta(tipo, jugador, equipo.value, liveBtn.value[tipo])
+    liveBtn.value[tipo] = !liveBtn.value[tipo]
+  }
+
+  const infoLiveSuspension = (tipo, jugador) => {
+    if(jugador.estadistica.suspensiones === 0) return
+    balonmanoStore.mostrarInfoLiveSuspension(jugador, equipo.value, liveBtn.value[tipo])
     liveBtn.value[tipo] = !liveBtn.value[tipo]
   }
 
