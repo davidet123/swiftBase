@@ -24,6 +24,11 @@
                   <v-btn color="blue" size="x-small" @click="gol('local', -1)">-</v-btn>
                 </v-col>
               </v-row>
+              <v-row class="ma-0 pa-0">
+                <v-col class="text-center">
+                  <h5>Último gol: <span :class="colorUltimoGol(marcador.tiempoUltimoGolLocal)">{{ tiempoStr (marcador.tiempoUltimoGolLocal) }}</span></h5>
+                </v-col>
+              </v-row>
             </v-col>
             <v-col cols="6" class="text-center">
               <div><h4>{{ partido.visitante.nombre }}</h4></div>
@@ -34,12 +39,18 @@
                   <v-btn color="blue" size="x-small" @click="gol('visitante', -1)">-</v-btn>
                 </v-col>
               </v-row>
+              <v-row class="ma-0 pa-0">
+                <v-col class="text-center">
+                  <h5>Último gol: <span :class="colorUltimoGol(marcador.tiempoUltimoGolVisitante)">{{ tiempoStr (marcador.tiempoUltimoGolVisitante) }}</span></h5>
+                </v-col>
+              </v-row>
             </v-col>
           </v-row>
           <!-- EMPTY GOAL -->
-          <v-row>
+          <v-row class="ma-0 pa-0">
             <v-col cols="6">
               <v-btn class="mr-1" size="x-small" :color="!liveBtn.emptyGoalHome ? 'success' : 'error'" @click="liveEmptyGoal('HOME')">EMPTY GOAL HOME</v-btn>
+              
               <!-- <BotonLive nombre="EMPTY GOAL HOME" @activar="activarEmptyGoal" /> -->
             </v-col>
             <v-col cols="6">
@@ -48,7 +59,7 @@
             </v-col>
           </v-row>
           <!-- TIMEOUT -->
-          <v-row>
+          <v-row class="ma-0 pa-0">
             <v-col class="text-center">
               <v-btn class="mr-1" size="x-small" :color="!liveBtn.timeout ? 'success' : 'error'" @click="activarTimeOut('timeout')">TIME OUT</v-btn>
             </v-col>
@@ -61,15 +72,15 @@
           </v-row>
 
           <!-- EDITAR ESTADISTICAS -->
-          <v-row class="mt" style="border-top: 1px solid black;">
+          <v-row class="mt-0 mb-1" style="border-top: 1px solid black;">
             <v-col class="text-center">
               <h4 class="mb-2">Editar Estadisticas</h4>
               <v-btn size = "x-small" @click="toggleEditarEstadisticas" :color="!editarEstadisticas ? 'success' : 'error'">EDITAR ESTADISTICAS</v-btn>
             </v-col>
           </v-row>
-          <v-row class="ma-0 pa-0"> <!-- ESTADISTICAS MARCADOR -->
+          <v-row class="my-0 pa-0" style="border-top: 1px solid black;"> <!-- ESTADISTICAS MARCADOR -->
             <v-col class="text-center mt-1 pa-0" cols="12">
-              <h5>ESTADISTICAS</h5>
+              <h5>ESTADISTICAS EN MARCADOR</h5>
 
             </v-col>
             <v-col class="text-center">
@@ -263,6 +274,7 @@
   import { useSwiftConnectionStore } from "../../store/swiftConnection"
   import { computed, onBeforeMount, ref, watch } from "vue"
   import BotonLive from "../simple/botonLive.vue"
+  import { tiempoStr } from "@/composables/helpersBalonmano"
 
 
 
@@ -276,6 +288,11 @@
   swiftConnectionStore.startVideo()
 
   const foco = e => balonmanoStore.setEditando(e)
+
+ 
+  // balonmanoStore.guardarPartido()
+
+  console.log(marcador.value)
 
 
   // VARIABLES GLOBALES
@@ -319,11 +336,13 @@
     if(equipo === "local") {
       marcador.value.local += val
       swiftConnectionStore.rtRemote.updateFields("MARCADOR::GOLES_LOCALTEXT","String", marcador.value.local)
+      if(val > 0) marcador.value.tiempoUltimoGolLocal = 0
     }
     if(equipo === "visitante") {
 
       marcador.value.visitante += val
       swiftConnectionStore.rtRemote.updateFields("MARCADOR::GOLES_VISITANTETEXT","String", marcador.value.visitante)
+      if(val > 0) marcador.value.tiempoUltimoGolVisitante = 0
     }
 
     if(marcador.value[equipo] < 0) marcador.value[equipo] = 0
@@ -380,6 +399,11 @@
       // swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Minute", tiempo.minutos)     
       // swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Second", tiempo.segundos)
       
+      // PONER EL TIEMPO EN EL MARCADOR
+
+
+      swiftConnectionStore.rtRemote.updateFields("MARCADOR::TEMPORIZADOR_MARCADORTEXT","String", tiempoStr(marcador.value.tiempo)) 
+      
       
       
       // ENVIO PARTE
@@ -399,17 +423,17 @@
       
       
       swiftConnectionStore.bringOn('MARCADOR')
-      setTimeout(() => {
-    // COMPROBAR GRAFICOS ABIERTOS ANTERIORMENTE
+  //     setTimeout(() => {
+  //   // COMPROBAR GRAFICOS ABIERTOS ANTERIORMENTE
 
-      if(liveBtn.value.emptyGoalHome) swiftConnectionStore.customMetodo(grafico, "emptyGoalInHome")
-      if(liveBtn.value.emptyGoalAway) swiftConnectionStore.customMetodo(grafico, "emptyGoalInAway")
-      if(liveBtn.value.penaltiHomeTop) swiftConnectionStore.customMetodo(grafico, "penaltiHomeTopIn")
-      if(liveBtn.value.penaltiHomeBot) swiftConnectionStore.customMetodo(grafico, "penaltiHomeBotIn")
-      if(liveBtn.value.penaltiAwayTop) swiftConnectionStore.customMetodo(grafico, "penaltiAwayTopIn")
-      if(liveBtn.value.penaltiAwayBot) swiftConnectionStore.customMetodo(grafico, "penaltiAwayBotIn")
-
-      }, 500)
+    
+  // }, 300)
+    if(liveBtn.value.emptyGoalHome) swiftConnectionStore.customMetodo(grafico, "emptyGoalInHome")
+    if(liveBtn.value.emptyGoalAway) swiftConnectionStore.customMetodo(grafico, "emptyGoalInAway")
+    if(liveBtn.value.penaltiHomeTop) swiftConnectionStore.customMetodo(grafico, "penaltiHomeTopIn")
+    if(liveBtn.value.penaltiHomeBot) swiftConnectionStore.customMetodo(grafico, "penaltiHomeBotIn")
+    if(liveBtn.value.penaltiAwayTop) swiftConnectionStore.customMetodo(grafico, "penaltiAwayTopIn")
+    if(liveBtn.value.penaltiAwayBot) swiftConnectionStore.customMetodo(grafico, "penaltiAwayBotIn")
       
     } else if (liveBtn.value.marcador) {
       // QUITAR EL RESTO DE ELEMENTOS DE MARCADOR
@@ -431,15 +455,19 @@
       if(liveBtn.value.penaltiAwayTop) swiftConnectionStore.customMetodo(grafico, "penaltiAwayTopOut")
       if(liveBtn.value.penaltiAwayBot) swiftConnectionStore.customMetodo(grafico, "penaltiAwayBotOut")
 
-
-
-      setTimeout(() => {
-        swiftConnectionStore.takeOff('MARCADOR')
+      swiftConnectionStore.takeOff('MARCADOR')
         if(liveBtn.value.timeout) {
           swiftConnectionStore.customMetodo(grafico, "timeoutOut")
           liveBtn.value.timeout = false
         }
-      }, 500)
+
+      // setTimeout(() => {
+      //   swiftConnectionStore.takeOff('MARCADOR')
+      //   if(liveBtn.value.timeout) {
+      //     swiftConnectionStore.customMetodo(grafico, "timeoutOut")
+      //     liveBtn.value.timeout = false
+      //   }
+      // }, 500)
       
     }
     liveBtn.value.marcador = !liveBtn.value.marcador
@@ -551,19 +579,23 @@
     balonmanoStore.guardarPartido()
   }
   
-  // Temporizador
+  // Temporizador ==============================================================================================================
 
+  
+  
   const nuevoTiempo = ref(null)
   
-  let crono 
+  let crono = null
   let cronoIniciado = ref(false)
-
+  let tiempoInicio = 0
+  let tiempoPausa = 0
+  
   const convertirSegundos = tiempo => {
     const minutos = Math.floor(tiempo / 60)
     const segundos = tiempo - (minutos * 60)
     return {minutos, segundos}
   }
-
+  
   const tiempoASegundos = tiempo => {
     const minutos = parseInt(tiempo.split(":")[0])
     const segundos = parseInt(tiempo.split(":")[1])
@@ -571,14 +603,26 @@
   }
   const enviarNuevoTiempo = () => {
     marcador.value.tiempo = tiempoASegundos(nuevoTiempo.value)
+    // tiempoPausa = marcador.value.tiempo
+    // tiempoInicio = Date.now() - tiempoPausa * 1000
     const tiempo = convertirSegundos(marcador.value.tiempo)
+    swiftConnectionStore.rtRemote.updateFields("MARCADOR::TEMPORIZADOR_MARCADORTEXT","String", tiempoStr(marcador.value.tiempo)) 
     
-    swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Minute", tiempo.minutos)     
-    swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Second", tiempo.segundos)
-    // swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Milisec", 0)
-    swiftConnectionStore.rtRemote.updateFields("MARCADOR::TEMPORIZADORTEXT","String", tiempoStr(marcador.value.tiempo))
+    // swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Minute", tiempo.minutos)     
+    // swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Second", tiempo.segundos)
+    // // swiftConnectionStore.rtRemote.updateFields("MARCADOR::clock","Milisec", 0)
+    // swiftConnectionStore.rtRemote.updateFields("MARCADOR::TEMPORIZADORTEXT","String", tiempoStr(marcador.value.tiempo))
     
   }
+
+  // ENVIAR TIEMPO CUANDO SE ACTIUALIZA LA PAGINA
+  // let reload = false
+  // if(!reload) {
+  //   console.log(marcador.value)
+  //   tiempoPausa = marcador.value.tiempo
+  //   tiempoInicio = Date.now() - tiempoPausa * 1000
+  //   reload = true
+  // }
   
   let tiempoPartido = computed(() => marcador.value.tiempo)
 
@@ -591,6 +635,7 @@
     // swiftConnectionStore.playGraphic("MARCADOR_INICIO_PARTE")
     // swiftConnectionStore.cueGraphic("MARCADOR_INICIO_PARTE")
     if(estado === "start") {
+      cronoIniciado.value = true
       
       if(marcador.value.tiempo) {
         const tiempo = convertirSegundos(marcador.value.tiempo)
@@ -611,7 +656,7 @@
       // swiftConnectionStore.rtRemote.updateFields("MARCADOR_INICIO_PARTE::INICIO_PARTE_CLOCK","Minute", tiempo.minutos)     
       // swiftConnectionStore.rtRemote.updateFields("MARCADOR_INICIO_PARTE::INICIO_PARTE_CLOCK","Second", tiempo.segundos)
       // swiftConnectionStore.rtRemote.updateFields("MARCADOR_INICIO_PARTE::INICIO_PARTE_CLOCK","Milisec", 0)
-      // swiftConnectionStore.customMetodo(swiftConnectionStore.customMetodo("MARCADOR_INICIO_PARTE", `startClockInicioParte`))
+      swiftConnectionStore.customMetodo(swiftConnectionStore.customMetodo("MARCADOR_INICIO_PARTE", `startClockInicioParte`))
       
       
       
@@ -629,13 +674,38 @@
       swiftConnectionStore.endTransaction()
 
       cronoBtn.value.crono = true
+      tiempoInicio = Date.now() - tiempoPausa * 1000
+
       crono = setInterval(() => {
-          if (marcador.value.tiempo >= 1800) return
+        // const now = Date.now()
+        // marcador.value.tiempo = Math.floor((now - tiempoInicio) / 1000)
+        // if(marcador.value.tiempo >= 1800) {
+        //   temporizador('stop')
+        // }
+          if (marcador.value.tiempo >= 1799) {
+            clearInterval(crono)
+            cronoBtn.value.crono = false
+
+          }
           marcador.value.tiempo ++
+          marcador.value.tiempoUltimoGolLocal ++
+          marcador.value.tiempoUltimoGolVisitante ++
           cronoBtn.value.tiempo = marcador.value.tiempo
+
+          // console.log(tiempoStr(marcador.value.tiempo))
+
+
+
+
+
+
+          
+          swiftConnectionStore.rtRemote.updateFields("MARCADOR::TEMPORIZADOR_MARCADORTEXT","String", tiempoStr(marcador.value.tiempo)) 
           
         }, 1000)
       } else if (estado === "stop") {
+
+        cronoIniciado.value = false
 
       // PARAR CRONOS SUSPENSION
 
@@ -648,6 +718,8 @@
       // swiftConnectionStore.customMetodo(swiftConnectionStore.customMetodo("MARCADOR_INICIO_PARTE", `stopClockInicioParte`))
       cronoBtn.value.crono = false
       clearInterval(crono)
+      // tiempoPausa = marcador.value.tiempo
+      // console.log(crono)
       balonmanoStore.guardarPartido()
 
 
@@ -660,12 +732,17 @@
       // swiftConnectionStore.customMetodo(swiftConnectionStore.customMetodo("MARCADOR_INICIO_PARTE", `resetClockInicioParte`))
       cronoBtn.value.crono = false
       marcador.value.tiempo = 0
+      marcador.value.tiempoUltimoGolLocal = 0
+      marcador.value.tiempoUltimoGolVisitante = 0
       balonmanoStore.guardarPartido()
     }
   }
   
   const ajustarTiempo = val => {
     marcador.value.tiempo += val
+    // nuevoTiempo.value = tiempoStr(marcador.value.tiempo)
+    // swiftConnectionStore.rtRemote.updateFields("MARCADOR::TEMPORIZADOR_MARCADORTEXT","String", tiempoStr(marcador.value.tiempo)) 
+    // enviarNuevoTiempo()
   }
 
   // CRONOS SUSPENSIONES
@@ -711,16 +788,22 @@
   
   // HELPERS=======================================================
 
-
-  const tiempoStr = seconds => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
+  const colorUltimoGol = tiempo => {
     
-    const formattedMinutes = String(minutes).padStart(2, '0');
-    const formattedSeconds = String(remainingSeconds).padStart(2, '0');
-    
-    return `${formattedMinutes}:${formattedSeconds}`;
+    if(tiempo >= 120) return "text-red font-weight-black text-subtitle-2"
+    return "text-black"
   }
+
+
+  // const tiempoStr = seconds => {
+  //   const minutes = Math.floor(seconds / 60);
+  //   const remainingSeconds = seconds % 60;
+    
+  //   const formattedMinutes = String(minutes).padStart(2, '0');
+  //   const formattedSeconds = String(remainingSeconds).padStart(2, '0');
+    
+  //   return `${formattedMinutes}:${formattedSeconds}`;
+  // }
   
   
   const hex_to_swift = hex => {
@@ -738,9 +821,9 @@
   }
 
   
-  onBeforeMount(() => {
-    balonmanoStore.cargarDatosLS()
-  })
+  // onBeforeMount(() => {
+  //   balonmanoStore.cargarDatosLS()
+  // })
 
   watch(() => marcadorManual.value, val => {
     switch (val.tipo) {

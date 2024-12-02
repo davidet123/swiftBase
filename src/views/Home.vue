@@ -10,31 +10,31 @@
       </v-row>
       <v-row>
         <v-col class="text-center">
-          <h3>APLICACIONS</h3>
+          <h3>APLICACIONES</h3>
         </v-col>
       </v-row>
       <v-row>
         <v-col class="text-center">
-          <v-btn @click="cargarFutbol" class="botonFutbol">FUTBOL</v-btn>
-          <v-btn to="/basket">BASKET</v-btn>
-          <v-btn to="/menutenis">TENIS</v-btn>
-          <v-btn to="/menubalonmano">BALONMANO</v-btn>
-          <v-btn to="/vumetro">VUMETRO</v-btn>
-          <v-btn to="/simple">GRAFISME SIMPLE</v-btn>
-          <v-btn to="/menumisa">MISA</v-btn>
-          <v-btn to="/menuretransmision">RETRANSMISION</v-btn>
+          <v-btn @click="cargarFutbol" class="boton-home">FUTBOL</v-btn>
+          <v-btn to="/basket" class="boton-home">BASKET</v-btn>
+          <v-btn to="/menutenis" class="boton-home">TENIS</v-btn>
+          <v-btn to="/menubalonmano" class="boton-home">BALONMANO</v-btn>
+          <v-btn to="/vumetro" class="boton-home">VUMETRO</v-btn>
+          <v-btn to="/simple" class="boton-home">GRAFISME SIMPLE</v-btn>
+          <v-btn to="/menumisa" class="boton-home">MISA</v-btn>
+          <v-btn to="/menuretransmision" class="boton-home">RETRANSMISION</v-btn>
           <!-- <v-btn to="/controlmisa">CONTROL MISA</v-btn> -->
-          <v-btn to="/test">TEST</v-btn>
+          <v-btn to="/test" class="boton-home">TEST</v-btn>
         </v-col>
       </v-row>
       <v-row>
         <v-col class="text-center">
-          <h3>AJUSTOS</h3>
+          <h3>AJUSTES</h3>
         </v-col>
       </v-row>
       <v-row>
         <v-col class="text-center">
-          <v-btn to="/settings">SETTINGS</v-btn>
+          <v-btn to="/settings" color="error">SETTINGS</v-btn>
         </v-col>
       </v-row>
       <!-- <div class="text-center">
@@ -136,6 +136,7 @@
 </script>
 
 <style>
+
   .main_bg {
     background-color: black;
     color: white
@@ -146,8 +147,17 @@
   .botonFutbol {
     color: black !important;
   }
-  /* .boton {
+  .boton-home {
     color: black !important;
     background-color: white !important;
-  } */
+    margin: 0 3px;
+    width: 150px;
+  }
+  .boton-home:hover {
+    color: white !important;
+    background-color: rgba(0, 149, 79, 0.88) !important;
+    margin: 0 3px;
+    width: 150px;
+  }
+
 </style>

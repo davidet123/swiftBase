@@ -63,6 +63,7 @@
         </v-col>
         <v-col cols="2">
             <BotonLive nombre="ESTADISTICAS" @activar="activarEstadisticas"/>
+            <BotonLive nombre="TOP SCORERS" @activar="activarTopScorers"/>
         </v-col>
         <v-col cols="2">
             <BotonLive nombre="MARCADOR INFERIOR" @activar="marcadorInferior"/>
@@ -173,42 +174,60 @@
   
       
       
-      let jugadoresIzquierda = ""
+      let nombreJugadoresIzquierda = ""
+      let apellidosJugadoresIzquierda = ""
       let dorsalesIzquierda = ""
-      let jugadoresDerecha = ""
+      let posicionIzquierda = ""
+      let nombreJugadoresDerecha = ""
+      let apellidosJugadoresDerecha = ""
+      let posicionDerecha = ""
       let dorsalesDerecha = ""
       
       for(let i = 0; i<=7; i++) {
         if(datosEquipo.jugadores[i]) {
-          jugadoresIzquierda += capitalize(datosEquipo.jugadores[i].nombre) + " " + datosEquipo.jugadores[i].apellido.toUpperCase()
-          if(datosEquipo.jugadores[i].capitan) jugadoresIzquierda += " (C)"
-          if(datosEquipo.jugadores[i].portero) jugadoresIzquierda += " (GK)"
+          nombreJugadoresIzquierda += capitalize(datosEquipo.jugadores[i].nombre)
+          apellidosJugadoresIzquierda += datosEquipo.jugadores[i].apellido.toUpperCase()
+          if(datosEquipo.jugadores[i].capitan) posicionIzquierda += " (C)"
+          if(datosEquipo.jugadores[i].portero) posicionIzquierda += " (GK)"
           dorsalesIzquierda += datosEquipo.jugadores[i].dorsal
         } else {
-          jugadoresIzquierda += ""
+          nombreJugadoresIzquierda += ""
+          apellidosJugadoresIzquierda += ""
+          posicionIzquierda += ""
           dorsalesIzquierda += ""
         }
-        jugadoresIzquierda += "~"
+        nombreJugadoresIzquierda += "~"
+        apellidosJugadoresIzquierda += "~"
+        posicionIzquierda += "~"
         dorsalesIzquierda += "~"
       }
   
-      jugadoresIzquierda = jugadoresIzquierda.slice(0, -1)
+      nombreJugadoresIzquierda = nombreJugadoresIzquierda.slice(0, -1)
+      apellidosJugadoresIzquierda = apellidosJugadoresIzquierda.slice(0, -1)
+      posicionIzquierda = posicionIzquierda.slice(0, -1)
       dorsalesIzquierda = dorsalesIzquierda.slice(0, -1)
       
       for(let i = 8; i < totalJugadores; i++) {
         if(datosEquipo.jugadores[i].nombre) {
-          jugadoresDerecha += capitalize(datosEquipo.jugadores[i].nombre) + " " + datosEquipo.jugadores[i].apellido.toUpperCase()
-          if(datosEquipo.jugadores[i].capitan) jugadoresDerecha += " (C)"
-          if(datosEquipo.jugadores[i].portero) jugadoresDerecha += " (GK)"
+          nombreJugadoresDerecha += capitalize(datosEquipo.jugadores[i].nombre)
+          apellidosJugadoresDerecha += datosEquipo.jugadores[i].apellido.toUpperCase()
+          if(datosEquipo.jugadores[i].capitan) posicionDerecha += " (C)"
+          if(datosEquipo.jugadores[i].portero) posicionDerecha += " (GK)"
           dorsalesDerecha += datosEquipo.jugadores[i].dorsal
         } else {
-          jugadoresDerecha += ""
+          nombreJugadoresDerecha += ""
+          apellidosJugadoresDerecha += ""
+          posicionDerecha += ""
           dorsalesDerecha += ""
         }
-        jugadoresDerecha += "~"
+        nombreJugadoresDerecha += "~"
+        apellidosJugadoresDerecha += "~"
+        posicionDerecha += "~"
         dorsalesDerecha += "~"
       }
-      jugadoresDerecha = jugadoresDerecha.slice(0, -1)
+      nombreJugadoresDerecha = nombreJugadoresDerecha.slice(0, -1)
+      apellidosJugadoresDerecha = apellidosJugadoresDerecha.slice(0, -1)
+      posicionDerecha = posicionDerecha.slice(0, -1)
       dorsalesDerecha = dorsalesDerecha.slice(0, -1)
 
       // ENVIAR A SWIFT
@@ -221,9 +240,13 @@
       swiftConnectionStore.rtRemote.updateFields("LINE_UP::PAISTEXT","String", datosEquipo.pais)
       swiftConnectionStore.rtRemote.updateFields("LINE_UP::ESCUDO_EQUIPOSHDR", "Shader", datosEquipo.escudo)
       swiftConnectionStore.rtRemote.updateFields("LINE_UP::DORSAL_IZQUIERDATEXT","String", dorsalesIzquierda)
-      swiftConnectionStore.rtRemote.updateFields("LINE_UP::NOMBRE_IZQUIERDATEXT","String", jugadoresIzquierda)
+      swiftConnectionStore.rtRemote.updateFields("LINE_UP::NOMBRE_IZQUIERDATEXT","String", nombreJugadoresIzquierda)
+      swiftConnectionStore.rtRemote.updateFields("LINE_UP::APELLIDO_IZQUIERDATEXT","String", apellidosJugadoresIzquierda)
+      swiftConnectionStore.rtRemote.updateFields("LINE_UP::POSICION_IZQUIERDATEXT","String", posicionIzquierda)
       swiftConnectionStore.rtRemote.updateFields("LINE_UP::DORSAL_DERECHATEXT","String", dorsalesDerecha)
-      swiftConnectionStore.rtRemote.updateFields("LINE_UP::NOMBRE_DERECHATEXT","String", jugadoresDerecha)
+      swiftConnectionStore.rtRemote.updateFields("LINE_UP::NOMBRE_DERECHATEXT","String", nombreJugadoresDerecha)
+      swiftConnectionStore.rtRemote.updateFields("LINE_UP::APELLIDO_DERECHATEXT","String", apellidosJugadoresDerecha)
+      swiftConnectionStore.rtRemote.updateFields("LINE_UP::POSICION_DERECHATEXT","String", posicionDerecha)
   
       swiftConnectionStore.bringOn('LINE_UP')
     }  else {
@@ -318,6 +341,77 @@
     } else {
       swiftConnectionStore.takeOff('ESTADISTICAS')
     }
+  }
+
+  const activarTopScorers = data => {
+    console.log(data)
+    const grafico = "TOP_SCORERS"
+    if(data.live) {
+
+      const parteSTR = textoParte(marcador.value.parte)
+      const encuentro = partido.value
+      
+
+      swiftConnectionStore.playGraphic(grafico)
+      swiftConnectionStore.cueGraphic(grafico)
+
+      swiftConnectionStore.rtRemote.updateFields("TOP_SCORERS::PARTE_TOP_SCORERSTEXT","String", parteSTR)
+      swiftConnectionStore.rtRemote.updateFields("TOP_SCORERS::TOP_SCORERS_MARCADORTEXT","String", `${encuentro.local.estadistica_equipo.goles} - ${encuentro.visitante.estadistica_equipo.goles}`)
+
+
+      const equipos = ['local', 'visitante']
+      equipos.forEach(equipo =>{
+        let team = equipo === `local` ? 'HOME' : 'AWAY'
+        let nombres = ""
+        let apellidos = ""
+        let valor = ""
+        swiftConnectionStore.rtRemote.updateFields(`TOP_SCORERS::ESCUDO_${team}SHDR`, "Shader", encuentro[equipo].escudo)
+        swiftConnectionStore.rtRemote.updateFields(`TOP_SCORERS::NOMBRE_EQUIPO_${team}TEXT`,"String", encuentro[equipo].nombre)
+
+        topScorers(equipo).forEach(jugador => {
+          console.log(jugador)
+          if(jugador.estadistica.goles >= 1) {
+            nombres += jugador.nombre
+            apellidos += jugador.apellido
+            valor += jugador.estadistica.goles
+          } else {
+            nombres += ""
+            apellidos += ""
+            valor += ""
+          }
+          nombres += "~"
+          apellidos += "~"
+          valor += "~"
+        })
+        nombres = nombres.slice(0, -1)
+        apellidos = apellidos.slice(0, -1)
+        valor = valor.slice(0, -1)
+
+        swiftConnectionStore.rtRemote.updateFields(`TOP_SCORERS::TOP_SCORER_${team}_NOMBRETEXT`,"String", nombres)
+        swiftConnectionStore.rtRemote.updateFields(`TOP_SCORERS::TOP_SCORER_${team}_APELLIDOSTEXT`,"String", apellidos)
+        swiftConnectionStore.rtRemote.updateFields(`TOP_SCORERS::TOP_SCORER_${team}_GOLESTEXT`,"String", valor)
+
+
+        console.log(nombres, apellidos, valor)
+      })
+
+
+
+      
+      swiftConnectionStore.bringOn(grafico)
+
+
+
+
+    } else {
+      swiftConnectionStore.takeOff(grafico)
+    }
+  }
+
+
+  const topScorers = equipo => {
+    const jugadores = partido.value[equipo].jugadores.sort((a,b) => b.estadistica.goles - a.estadistica.goles)
+    return jugadores.slice(0,6)
   }
 
   const marcadorInferior = data => {

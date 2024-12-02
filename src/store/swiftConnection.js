@@ -171,7 +171,7 @@ actions: {
   },
   bringOn (metodo) {
     console.log(metodo + "::bringOn")
-    if(this.rtRemote) this.rtRemote.playGraphic(metodo)
+    // if(this.rtRemote) this.rtRemote.playGraphic(metodo)
     if(this.rtRemote) this.rtRemote.playMethod(metodo + "::bringOn")
   },
   takeOff (metodo) {

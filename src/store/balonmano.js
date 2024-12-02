@@ -54,12 +54,15 @@ export const useBalonmanoStore = defineStore('balonmanoStore', {
     //     }
     //   }
     // },
-    marcador: {
-      local: 0,
-      visitante: 0,
-      parte: 1,
-      tiempo: 0
-    },
+    // marcador: {
+    //   local: 0,
+    //   visitante: 0,
+    //   parte: 1,
+    //   tiempo: 0,
+    //   tiempoUltimoGolLocal: 0,
+    //   tiempoUltimoGolVisitante: 0,
+    // },
+    marcador: null,
     partidoCreado: false,
     estadoBotonesMarcador: null,
     estadoBotonesMarcadorCargados: false,
@@ -128,6 +131,7 @@ export const useBalonmanoStore = defineStore('balonmanoStore', {
       this.partido = datos.partido
       this.marcador = datos.marcador
       this.partidoCreado = datos.partidoCreado
+      console.log(this.marcador)
     },
 
     resetBalonmanoLS() {
@@ -180,7 +184,9 @@ export const useBalonmanoStore = defineStore('balonmanoStore', {
           local: 0,
           visitante: 0,
           parte: 1,
-          tiempo: 0
+          tiempo: 0,
+          tiempoUltimoGolLocal: 0,
+          tiempoUltimoGolVisitante: 0,
         },
         partidoCreado: false
       }
@@ -318,6 +324,7 @@ export const useBalonmanoStore = defineStore('balonmanoStore', {
     },
     mostratLiveTarjeta (jugador, equipo, color, partido, live) {
       const swiftConnectionStore = useSwiftConnectionStore()
+      console.log(live)
       if(!live) {
 
         let tarjetaAmarilla  = "false"

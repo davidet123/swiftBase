@@ -290,7 +290,7 @@ const router = useRouter()
 const balonmanoStore = useBalonmanoStore()
 const { partido, tipoEquipo } = storeToRefs(balonmanoStore)
 
-balonmanoStore.cargarDatosLS()
+// balonmanoStore.cargarDatosLS()
 
 
 // Constantes

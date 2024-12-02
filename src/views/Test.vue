@@ -24,6 +24,8 @@
     <v-col>
       <v-btn @click="startClock" color="success">START CLOCK</v-btn>
       <v-btn @click="stopClock" color="success">STOP CLOCK</v-btn>
+      <v-btn @click="clockIn(true)" color="success">clock In</v-btn>
+      <v-btn @click="clockIn(false)" color="success">clock Out</v-btn>
     </v-col>
   </v-row>
   <v-row>
@@ -168,11 +170,73 @@
   // websocketStore.conectarWS()
 
   // RELOJ
+
+  const clockIn = val => {
+    if(val) {
+      console.log(val)
+      swiftConnectionStore.playGraphic("Clock")
+      swiftConnectionStore.bringOn("Clock")
+      // swiftConnectionStore.customMetodo("Clock", "clockIn")
+
+      
+    }else if(!val) swiftConnectionStore.takeOff("Clock")
+  }
+
+  function convertirMilisegundos(milisegundos) {
+    // Convertir a minutos
+    // const minutos = Math.floor(milisegundos / 60000);
+    // Resto en milisegundos para calcular segundos
+    const restoMilisegundos = milisegundos % 60000;
+    // Convertir a segundos
+    const segundos = Math.floor(restoMilisegundos / 1000);
+    // Centésimas (una sola cifra)
+    const centesimas = Math.floor((restoMilisegundos % 1000) / 100);
+
+    // Formatear como m:ss:z (con ceros iniciales si es necesario)
+    // const minutosStr = minutos.toString();
+    const segundosStr = segundos.toString().padStart(2, '0');
+
+    return `${segundosStr}:${centesimas}`;
+  }
+  function convertirMilisegundosAMinutosSegundos(milisegundos) {
+    // Convertir a segundos
+    const totalSegundos = Math.floor(milisegundos / 1000);
+
+    // Calcular minutos y segundos
+    const minutos = Math.floor(totalSegundos / 60);
+    const segundos = totalSegundos % 60;
+
+    // Formatear con ceros iniciales si es necesario
+    const minutosFormateados = minutos.toString().padStart(2, '0');
+    const segundosFormateados = segundos.toString().padStart(2, '0');
+
+    return `${minutosFormateados}:${segundosFormateados}`;
+}
+  let tiempo = 65000
+
+  let temporizadorTest
   const startClock = () => {
-    swiftConnectionStore.startClock("Clock")
+    
+    temporizadorTest = setInterval(() => {
+      if(tiempo >= 60000) {
+        swiftConnectionStore.rtRemote.updateFields('clock::relojTEXT', "String", convertirMilisegundosAMinutosSegundos(tiempo))
+
+      } else {
+
+        swiftConnectionStore.rtRemote.updateFields('clock::relojTEXT', "String", convertirMilisegundos(tiempo))
+      }
+      
+      // console.log(convertirMilisegundos(tiempo))
+      // console.log(tiempo)
+      tiempo -= 100
+      if(tiempo < 0) stopClock()
+    },100)
+
+    // swiftConnectionStore.startClock("Clock")
   }
   const stopClock = () => {
-    swiftConnectionStore.startClock("Clock")
+    // swiftConnectionStore.startClock("Cl
+    clearInterval(temporizadorTest)
   }
 
 

@@ -7,7 +7,7 @@
   </v-row>
   <v-row>
     <v-col>
-      <MarcadorBalonmano />
+      <MarcadorBalonmano v-if="marcador"/>
 
     </v-col>
   </v-row>

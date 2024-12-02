@@ -7,21 +7,23 @@
       <v-btn class="ml-1" size="x-small" :color="!liveBtn.statsTotalShotsLT ? 'success' : 'error'" @click="liveStats('statsTotalShotsLT')">STATS TOTAL_SHOTS</v-btn>
       <v-btn class="ml-1" size="x-small" :color="!liveBtn.statsShotsOnGoalLT ? 'success' : 'error'" @click="liveStats('statsShotsOnGoalLT')">STATS SHOTS_ON_GOAL</v-btn>
       <v-btn class="ml-1" size="x-small" :color="!liveBtn.suspensiones ? 'success' : 'error'" @click="liveStats('suspensiones')">STATS SUSPENSION_MINUTES</v-btn>
+      <v-btn class="ml-1" size="x-small" :color="!liveBtn.lastGoal ? 'success' : 'error'" @click="liveStats('lastGoal')">STATS LAST_GOAL</v-btn>
 
     </v-col>
   </v-row>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useBalonmanoStore } from '@/store/balonmano'
 import { useSwiftConnectionStore } from '@/store/swiftConnection';
 import { storeToRefs } from 'pinia';
+import { tiempoStr } from '@/composables/helpersBalonmano';
 
 const balonmanoStore = useBalonmanoStore()
 const swiftConnectionStore = useSwiftConnectionStore()
 
-const { partido } = storeToRefs(balonmanoStore) 
+const { partido, marcador } = storeToRefs(balonmanoStore) 
 
 
 
@@ -34,6 +36,7 @@ const liveBtn = ref({
   statsTotalShotsLT: false,
   statsShotsOnGoalLT: false,
   suspensiones: false,
+  lastGoal: false
 
 })
 
@@ -83,6 +86,13 @@ const liveStats = tipo => {
       textCenterBot = "MINUTES"
       textRight = `${partido.value.visitante.estadistica_equipo.suspensiones * 2} min`
 
+    } else if(tipo === "lastGoal") {
+
+      textLeft = tiempoStr(marcador.value.tiempoUltimoGolLocal)
+      textCenterTop = "TIME SINCE LAST GOAL"
+      textCenterBot = "MINUTES"
+      textRight = tiempoStr(marcador.value.tiempoUltimoGolVisitante)
+
     }
 
     const escudoLocal = partido.value.local.escudo
@@ -103,6 +113,7 @@ const liveStats = tipo => {
       // swiftConnectionStore.customMetodo("LT_MATCH_ESTATISTICS_X_1", "bringOn")
 
       swiftConnectionStore.bringOn('LT_MATCH_ESTATISTICS_X_1')
+      // swiftConnectionStore.customMetodo('LT_MATCH_ESTATISTICS_X_1', 'matchStatisticsIn')
       console.log("bringon")
 
 
@@ -112,6 +123,19 @@ const liveStats = tipo => {
     }
     liveBtn.value[tipo] = !liveBtn.value[tipo]
   }
+
+  watch(()=> marcador.value, val => {
+    if(liveBtn.value.lastGoal) {
+      const textLeft = tiempoStr(val.tiempoUltimoGolLocal)
+      const textRight = tiempoStr(val.tiempoUltimoGolVisitante)
+
+      swiftConnectionStore.rtRemote.updateFields("LT_MATCH_ESTATISTICS_x_1::MATCH_STATISTICS_HOME_VALUETEXT","String", textLeft)
+      swiftConnectionStore.rtRemote.updateFields("LT_MATCH_ESTATISTICS_x_1::MATCH_STATISTICS_AWAY_VALUETEXT","String", textRight)
+
+    }
+  }, {
+    deep: true
+  })
 
 
 

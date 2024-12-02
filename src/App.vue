@@ -14,6 +14,7 @@
   import { useRotulosStore } from "./store/rotulos"
   import { usegSheetStore } from "./store/gSheet"
   import { useMisaStore } from "./store/misa"
+  import { useBalonmanoStore } from './store/balonmano'
   import { onMounted, onBeforeMount } from 'vue'
 
   const futbolStore = usegFutbolStore()
@@ -22,10 +23,12 @@
   const gSheetStore = usegSheetStore()
   const futbolWebsocket = useFutbolWebsocketStore()
   const misaStore = useMisaStore()
+  const balonmanoStore = useBalonmanoStore()
 
   // Cargar desde firebase
 
   onBeforeMount(async () => {
+    balonmanoStore.cargarDatosLS()
     // gSheetStore.getListaCrevillent()
     // console.log(futbolStore.getPartidos)
     // futbolWebsocket.getLocalStorage()

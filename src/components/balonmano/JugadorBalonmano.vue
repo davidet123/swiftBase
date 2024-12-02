@@ -279,8 +279,14 @@
     jugador.value.estadistica.goles += val
     partido.value[equipo.value].estadistica_equipo.goles += val
     if(!editarEstadisticas.value) marcador.value[equipo.value] += val
-    if(equipo.value === 'local') swiftConnectionStore.rtRemote.updateFields("MARCADOR::GOLES_LOCALTEXT","String", marcador.value[equipo.value])
-    if(equipo.value === 'visitante') swiftConnectionStore.rtRemote.updateFields("MARCADOR::GOLES_VISITANTETEXT","String", marcador.value[equipo.value])
+    if(equipo.value === 'local') {
+      swiftConnectionStore.rtRemote.updateFields("MARCADOR::GOLES_LOCALTEXT","String", marcador.value[equipo.value])
+      if(val > 0 && !editarEstadisticas.value) marcador.value.tiempoUltimoGolLocal = 0
+    }
+    if(equipo.value === 'visitante') {
+      swiftConnectionStore.rtRemote.updateFields("MARCADOR::GOLES_VISITANTETEXT","String", marcador.value[equipo.value])
+      if(val > 0 && !editarEstadisticas.value) marcador.value.tiempoUltimoGolVisitante = 0
+    }
     disparo(val)
     balonmanoStore.guardarPartido()
   }
@@ -396,7 +402,7 @@
   }
 
   const liveTarjeta = (tipo, jugador, color) => {
-    balonmanoStore.mostratLiveTarjeta(tipo, jugador, equipo.value, color, partido.value, liveBtn.value[tipo])
+    balonmanoStore.mostratLiveTarjeta(jugador, equipo.value, color, partido.value, liveBtn.value[tipo])
     liveBtn.value[tipo] = !liveBtn.value[tipo]
   }
 

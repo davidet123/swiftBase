@@ -56,9 +56,9 @@ import { storeToRefs } from "pinia"
 import { useBalonmanoStore } from "../../store/balonmano"
 import { onBeforeMount } from "vue"
 
-onBeforeMount(() => {
-  balonmanoStore.cargarDatosLS()
-})
+// onBeforeMount(() => {
+//   balonmanoStore.cargarDatosLS()
+// })
 
 
 const balonmanoStore = useBalonmanoStore()
