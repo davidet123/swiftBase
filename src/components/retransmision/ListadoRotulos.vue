@@ -70,6 +70,8 @@
   }
 
   const checkOnAir = () => {
+    console.log(onAir.value)
+
     return onAir.value.map(el => el.id).includes(rotuloActivo.value)
 
 
@@ -134,7 +136,11 @@
       retransmisionStore.guardarRetransmision()
     }  
     if(e.key === " ") {
-      if(!checkOnAir()) retransmisionStore.setRotuloLive(rotuloActivo.value)
+      console.log(checkOnAir())
+      if(!checkOnAir()) {
+        retransmisionStore.setRotuloLive(rotuloActivo.value)
+      }
+      console.log(onAir.value)
     }
     // rotuloLive.value = null
   }

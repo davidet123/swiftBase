@@ -241,6 +241,7 @@
         tipoDesplegableElegido: tipoDesplegableElegido.value
       }
       nuevoGrafico.datosDesplegable.rango = rango
+      console.log(tipoDesplegableElegido.value)
       retransmisionStore.addGrafico(nuevoGrafico)
     } else {
       grafico.value.titulo = nombreGrafico.value

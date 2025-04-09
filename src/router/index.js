@@ -42,6 +42,7 @@ import PartidoTenis from '../views/tenis/PartidoTenis.vue'
 import MenuBalonmano from '../views/balonmano/MenuBalonmano.vue'
 import AddPartidoBalonmano from '../views/balonmano/AddPartidoBalonmano.vue'
 import EstBalonmano from '../views/balonmano/EstBalonmano.vue'
+import SpeechRecognition from '@/views/SpeechRecognition.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -266,6 +267,11 @@ const router = createRouter({
       path: '/estbalonmano',
       name: 'estbalonmano',
       component: EstBalonmano
+    },
+    {
+      path: '/speechrecognition',
+      name: 'estbalospeechrecognitionnmano',
+      component: SpeechRecognition
     },
   ]
 })

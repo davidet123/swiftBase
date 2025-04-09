@@ -10,7 +10,8 @@
         <div id="contenido">
           <span v-if="rotulo.desplegable"> {{ numRotuloDesplegable }}</span>
           <span class="textoIndividual" v-for="(value, key) in rotulo.contenido" :key="key">
-             {{ value }}
+            <p>{{ value }}</p>
+             
           </span>
         </div>
       </div>

@@ -131,11 +131,13 @@
     listaRotulos.value.push(rotulo)
     retransmisionStore.setGuardado(false)
     retransmisionStore.setDragGrafico(false)
+    console.log(listaRotulos.value)
     // console.log(evento)
   }
 
   const getEvento = item => {
     evento = item
+    console.log(evento)
   }
 
   watch(() => retransmisionActiva.value, val => {

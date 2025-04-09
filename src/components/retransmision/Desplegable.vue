@@ -51,6 +51,7 @@
   watch(() => numGraficoSeleccionado.value, val => {
     const datos = listaGSheet.value.find(el => el.numero == val)
     retransmisionStore.setDesplagableElegido(datos, rotulo.value.id, val)
+    document.activeElement.blur()
     desplegableActivo.value = false
   })
 </script>

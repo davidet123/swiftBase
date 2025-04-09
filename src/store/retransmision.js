@@ -419,6 +419,7 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       try {
         const res = await this.getData(url)
         this.listaGSheet = res
+        
 
       } catch (error) {
         console.log(err);
@@ -432,6 +433,7 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       try {
         const res = await this.getData(url)
         this.listaGSheet = res
+        // console.log(res)
 
       } catch (error) {
         console.log(err);
