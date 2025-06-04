@@ -21,7 +21,7 @@
     </v-col>
   </v-row>
   <v-row class="ma-0">
-    <v-col cols="6"v-for="equipo in tipoEquipo" :key="equipo">
+    <v-col cols="6" v-for="equipo in tipoEquipo" :key="equipo">
       <v-row>
         <v-col class="text-center">
           <BotonLive :nombre="`T-O ${equipo.toUpperCase()}`"  @activar="activarTiempoMuertoLT" />
@@ -59,7 +59,7 @@
         <v-col cols="1" class=text-center><p>SUSP.</p></v-col>
         <v-col cols="3" class=text-center><p>TARJETAS</p></v-col>
       </v-row>
-      <v-row class="pa-0 ma-0" v-for="(jugador, index) in partido[equipo].jugadores":key="jugador.id" v-if="!dorsalBuscado[equipo]">
+      <v-row class="pa-0 ma-0" v-for="(jugador, index) in partido[equipo].jugadores" :key="jugador.id" v-if="!dorsalBuscado[equipo]">
         <v-col cols="12">
           <JugadorBalonmano :jugador="jugador" :equipo="equipo"/>
         </v-col>

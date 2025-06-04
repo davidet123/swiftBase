@@ -285,20 +285,26 @@
 
 <style scoped>
   .contenedor {
-    display: flex;
+    display: inline-block; /* Cambiado de flex a inline-block */
     height: 100%;
+    flex-shrink: 0; /* Evita que se reduzcan */
   }
 
   .contenedorGraficos {
     height: 100%;
-    width: 150px;
+    width: 150px; /* Ancho fijo para cada gráfico */
+    min-width: 150px; /* Asegura que no se reduzca */
     background-color: rgb(55, 55, 55);
     border: 1px solid white;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; 
+    justify-content: space-between;
     align-items: center;
-    padding: 5px
+    padding: 5px;
+    cursor: grab; /* Mejor feedback al arrastrar */
+  }
+  .contenedorGraficos:active {
+    cursor: grabbing; /* Cambia el cursor al arrastrar */
   }
 
   .numero {

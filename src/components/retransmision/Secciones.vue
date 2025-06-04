@@ -38,8 +38,9 @@
         <v-text-field
           v-model="nombreSeccion"
         ></v-text-field>
-        <v-btn @click="aceptar()" color="error">ACEPTAR</v-btn>
+        <v-btn @click="aceptar()" color="success">ACEPTAR</v-btn>
         <v-btn @click="dialog=false" color="primary">CANCELAR</v-btn>
+        <v-btn @click="eliminarSeccion()" color="error">ELIMINAR</v-btn>
       </v-card-text>
     </v-card>
 
@@ -94,6 +95,10 @@ const aceptar = () => {
   dialog.value = false
   editar = false
 
+}
+
+const eliminarSeccion = () => {
+  console.log(seccion.value)
 }
 
 
