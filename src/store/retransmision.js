@@ -1,4 +1,5 @@
 import Retransmision from '@/views/retransmision/Retransmision.vue'
+import { generarId } from '@/composables/idGenerator'
 import { defineStore } from 'pinia'
 
 
@@ -191,7 +192,8 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
         id:'s01',
         activo: false,
         titulo: "INICIO",
-        elementoLive: 0
+        elementoLive: 0,
+        orden: 0
       },
       // {
       //   id:'s02',
@@ -209,7 +211,8 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       id:'splus',
       activo: false,
       titulo: "AÑADIR",
-      elementoLive: false
+      elementoLive: false,
+      orden: 100
       },
       
     ],
@@ -239,16 +242,23 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       this.seccionActiva = payload
     },
     addSeccion (titulo) {
-      let id = `s${this.secciones.length}`
+      let id = `s-${generarId()}`
       const item = {
         id,
         activo: false,
         titulo,
-        elementoLive: 0
+        elementoLive: 0,
+        orden: this.secciones.length - 1
       }
       const index = this.secciones.length -1
       this.secciones.splice(index, 0,item)
       this.seccionActiva = id
+      this.guardado = false
+    },
+    eliminarSeccion(id) {
+      const temp = this.secciones.filter(el =>  el.id !== id)
+      console.log(temp)
+      this.secciones = temp
       this.guardado = false
     },
     addLiveToSeccion (seccion, valor) {
@@ -257,7 +267,8 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       this.guardado = false
     },
     addGrafico (payload) {
-      let id = `g${this.listaGraficos.length}`
+      // let id = `g${this.listaGraficos.length}`
+      let id = `g-${generarId()}`
       payload.id = id
       const index = this.listaGraficos.length -1
       this.listaGraficos.splice(index, 0,payload)
@@ -592,13 +603,15 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
           id:'s01',
           activo: false,
           titulo: "INICIO",
-          elementoLive: 0
+          elementoLive: 0,
+          orden: 0
         },
         {
         id:'splus',
         activo: false,
         titulo: "AÑADIR",
-        elementoLive: false
+        elementoLive: false,
+        orden: 100
         },
       ]
       this.seccionActiva = 's01'

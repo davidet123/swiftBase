@@ -10,7 +10,7 @@
     <div class="contenido" >
       {{ seccion.titulo }}
     </div>
-    <div>
+    <div v-if="seccion.titulo !== 'INICIO'">
       <v-icon
         icon="mdi-menu"
         @click="editarSeccion(seccion.titulo)"
@@ -67,6 +67,8 @@ const activarSeccion = id => retransmisionStore.setSeccionActiva(id)
 // const añadirSeccion = () => retransmisionStore.addSeccion()
 const añadirSeccion = () => dialog.value = true
 
+console.log(seccion.value)
+
 
 const dialog = ref(false)
 const nombreSeccion = ref(null)
@@ -86,6 +88,7 @@ const editarSeccion = (titulo) => {
 }
 const aceptar = () => { 
   if(!editar) {
+    // console.log(nombreSeccion.value)
     retransmisionStore.addSeccion(nombreSeccion.value)
   } else {
     
@@ -98,8 +101,11 @@ const aceptar = () => {
 }
 
 const eliminarSeccion = () => {
-  console.log(seccion.value)
+  retransmisionStore.eliminarSeccion(seccion.value.id)
+  dialog.value = false
+  editar = false
 }
+
 
 
 </script>

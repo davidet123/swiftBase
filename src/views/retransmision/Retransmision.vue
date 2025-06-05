@@ -144,7 +144,7 @@
 
 
   
-  const seccionesOrdenadas = secciones.value.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0))
+  const seccionesOrdenadas = computed(() => secciones.value.sort((a,b) => (a.orden > b.orden) ? 1 : ((b.orden > a.orden) ? -1 : 0)))
   
   const live = false
 
@@ -162,6 +162,7 @@
   let evento = null
 
   const onDrop = (event) => {
+
     if(!dragGrafico.value) return
     if(!seccionActiva.value ) return
     const item = event.dataTransfer.getData('item')
@@ -174,6 +175,8 @@
     contenido = {...temp}
 
     const nuevaId = generarId()
+
+    console.log(evento)
 
     const rotulo = {
       id: `r${nuevaId}`,
@@ -188,14 +191,15 @@
       live: false,
       datosDesplegable: evento.datosDesplegable,
       tipoDesplegableElegido: evento.tipoDesplegableElegido,
-      numeroDesplegable: null
+      numeroDesplegable: null,
+      crawl: evento.crawl
       // graficoSwift: evento.graficoSwift
 
     }
     listaRotulos.value.push(rotulo)
     retransmisionStore.setGuardado(false)
     retransmisionStore.setDragGrafico(false)
-    console.log(listaRotulos.value)
+    // console.log(listaRotulos.value)
     // console.log(evento)
   }
 
@@ -207,7 +211,7 @@
 
   const getEvento = item => {
     evento = item
-    console.log(evento)
+    // console.log(evento)
   }
 
   watch(() => retransmisionActiva.value, val => {

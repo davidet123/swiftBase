@@ -1,9 +1,9 @@
 <template>
-  <div class="contenedor" @dblclick="editarGrafico">
+  <div class="contenedor" @dblclick="editarGrafico" ref="contenedorEl">
     <div v-if="!add" class="contenedorGraficos" draggable="true" @dragstart="startDrag($event, grafico)">
       <div class="numero">{{ orden + 1 }}</div>
-      <div id="texto"><p>{{ grafico.titulo}}</p></div>
-      <div id="tipo"><p>{{ grafico.clase}}</p></div>
+      <div id="texto" ref="tituloEl" :style="{ fontSize: fontSize + 'px' }">{{ titulo}}</div>
+      <div id="tipo" :style="{ fontSize:' 14px' }">{{ grafico.clase}}</div>
     </div>  
     <div v-else class="contenedorGraficos numero">
       <div class="add" @click="addGrafico()">
@@ -43,7 +43,24 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="12" v-if="!desplegable">
+            <v-col cols="4" v-if="!desplegable" class="ma-0 pa-0">
+              <h3>Crawl</h3>              
+                <v-checkbox
+                label="Crawl"
+                v-model="crawl"
+              ></v-checkbox> 
+            </v-col>
+            <v-col cols="4" class="ma-0 pa-0">
+              <h4>Desplegable</h4>
+              <v-checkbox
+                label="Desplegable"
+                v-model="desplegable"
+              ></v-checkbox>
+            </v-col>
+          </v-row>
+          <v-row>
+            
+            <v-col cols="8" v-if="!desplegable">
               <h3>Campos Swift</h3>
               <v-row>
                 <v-col cols="4" v-for="nombre in nombreCampoSwift" :key="nombre.id">
@@ -118,14 +135,6 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="4" class="text-center ma-0 pa-0">
-              <v-checkbox
-                label="Desplegable"
-                v-model="desplegable"
-              ></v-checkbox>
-            </v-col>
-          </v-row>
-          <v-row>
             <v-col class="text-center">
 
               <v-btn @click="aceptar()" color="success" size="small">ACEPTAR</v-btn>
@@ -144,7 +153,7 @@
 
 <script setup>
 
-  import { computed, ref, toRefs, watch } from 'vue'
+  import { computed, onMounted, ref, toRefs, watch, nextTick } from 'vue'
   import { useRetransmisionStore } from '@/store/retransmision'
   import { storeToRefs } from 'pinia';
 
@@ -163,6 +172,8 @@
     lista.pop()
     return lista
   })
+
+  const titulo = computed(() => grafico.value.titulo.replace(/_/g, ' '))
 
   const add = computed(() => grafico.value.clase === 'ADD')
 
@@ -188,6 +199,7 @@
   })
   const tipoDesplegable = ref(['gSheet','EXCEL'])
   const tipoDesplegableElegido = ref(grafico.value.tipoDesplegableElegido || null)
+  const crawl = ref(grafico.value.crawl || false)
 
 
   
@@ -201,13 +213,15 @@
   }
 
   const addGrafico = () => {
-    console.log(grafico.value)
+    console.log(editar.value)
     claseGrafico.value = null
+    editar.value = false
     dialog.value = true
   }
 
   const eliminarGrafico = id => {
     retransmisionStore.eliminarGrafico(id)
+    editar.value = false
     dialog.value = false
   }
 
@@ -239,11 +253,13 @@
         desplegable: desplegable.value,
         nombreCampoSwift: nombreCampoSwift.value,
         datosDesplegable: datosDesplegable.value,
-        tipoDesplegableElegido: tipoDesplegableElegido.value
+        tipoDesplegableElegido: tipoDesplegableElegido.value,
+        crawl: crawl.value
       }
       nuevoGrafico.datosDesplegable.rango = rango
       // console.log(nuevoGrafico)
       retransmisionStore.addGrafico(nuevoGrafico)
+      console.log(nuevoGrafico)
     } else {
       grafico.value.titulo = nombreGrafico.value
       grafico.value.nombre = nombreGrafico.value
@@ -254,13 +270,14 @@
       grafico.value.datosDesplegable = datosDesplegable.value
       grafico.value.datosDesplegable.rango = rango
       grafico.tipoDesplegableElegido = tipoDesplegableElegido.value
+      grafico.crawl = crawl.value
 
       // console.log(tipoDesplegableElegido.value)
     }
 
     dialog.value = false
     editar.value = false
-    console.log(grafico.value)
+    // console.log(grafico.value)
   }
 
   const editarGrafico = () => {
@@ -273,6 +290,36 @@
     dialog.value = true
   }
 
+  const fontSize = ref(16) // tamaño inicial
+  const contenedor = ref(null)
+  const tituloEl = ref(null)
+  const contenedorEl = ref(null)
+
+  const ajustarTamaño = async () => {
+    await nextTick() // Espera a que el DOM se actualice
+    
+    if (!tituloEl.value || !contenedorEl.value) return
+    
+    const maxWidth = 150 // Ancho máximo del contenedorGraficos
+    fontSize.value = 16 // Resetear al tamaño inicial
+    
+    // Función para verificar si el texto desborda
+    const checkOverflow = () => {
+      tituloEl.value.style.fontSize = `${fontSize.value}px`
+      return tituloEl.value.scrollWidth > maxWidth
+    }
+    
+    // Reducir el tamaño hasta que quepa o llegue al mínimo de 8px
+    while (checkOverflow() && fontSize.value > 8) {
+      fontSize.value--
+      await nextTick() // Esperar a que se aplique el cambio
+    }
+  }
+
+  onMounted(() => {
+    ajustarTamaño()
+  })
+
   watch(() => lineasTexto.value, val => {
     nombreCampoSwift.value = []
     for(let i = 1; i <= val; i++) {
@@ -280,6 +327,10 @@
       nombreCampoSwift.value.push(data)
 
     }
+  })
+
+  watch(titulo, () => {
+    ajustarTamaño()
   })
 
 </script>
@@ -292,9 +343,12 @@
   }
 
   .contenedorGraficos {
-    height: 100%;
-    width: 150px; /* Ancho fijo para cada gráfico */
-    min-width: 150px; /* Asegura que no se reduzca */
+    height: 100px;
+    min-height: 100px;
+
+    width: 150px;
+    min-width: 150px;
+    max-width: 150px;
     background-color: rgb(55, 55, 55);
     border: 1px solid white;
     display: flex;
@@ -302,8 +356,29 @@
     justify-content: space-between;
     align-items: center;
     padding: 5px;
-    cursor: grab; /* Mejor feedback al arrastrar */
+    cursor: grab;
+    overflow: hidden;
+    white-space: nowrap;
   }
+
+  #texto {
+    white-space: nowrap; /* Evita el salto de línea */
+    overflow: hidden; /* Oculta el texto que desborde */
+    text-overflow: ellipsis; /* Añade puntos suspensivos si el texto es muy largo */
+    max-width: 100%; /* No puede ser más ancho que su contenedor */
+    text-align: center; /* Centra el texto */
+  }
+  /* .contenedorGraficos {
+    height: 100%;
+    width: 150px;
+    background-color: rgb(55, 55, 55);
+    border: 1px solid white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 5px
+  } */
   .contenedorGraficos:active {
     cursor: grabbing; /* Cambia el cursor al arrastrar */
   }
@@ -311,7 +386,7 @@
   .numero {
     color: red;
     font-weight: bold;
-    font-size: 2em;
+    font-size: 20px;
   }
 
   .add {

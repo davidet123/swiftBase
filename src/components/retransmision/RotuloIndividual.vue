@@ -79,10 +79,25 @@
     grafico = parseInt(rotulo.value.lineasTexto) === 0 ? rotulo.value.nombre : rotulo.value.titulo
     swiftConnectionStore.rtRemote.playGraphic(grafico)
     if(!rotulo.value.live) {
+      console.log(rotulo.value)
 
+      
       for(let campo in rotulo.value.contenido) {
-        swiftConnectionStore.rtRemote.updateFields(grafico + "::" + campo + "TEXT", "String", rotulo.value.contenido[campo])
+        // console.log(campo)
+      
+        if(rotulo.value.crawl) {
+          console.log(grafico)
+          // swiftConnectionStore.rtRemote.updateFields(grafico + "::" + campo + "TCKR", "Contents",  rotulo.value.contenido[campo], ' ')
+          // swiftConnectionStore.rtRemote.updateFields(grafico + "::" + campo + "TCKR", "Contents",  titular.replace(/\r\n|\n\r|\n|\r/g, ' '))
+          swiftConnectionStore.rtRemote.updateFields(grafico + "::" + campo + "TEXT", "String", rotulo.value.contenido[campo])
+        } else {
+            swiftConnectionStore.rtRemote.updateFields(grafico + "::" + campo + "TEXT", "String", rotulo.value.contenido[campo])
+          
+        }
+      
       }
+
+
       swiftConnectionStore.rtRemote.playMethod(grafico + "::bringOn")
       retransmisionStore.addLiveToSeccion(seccionActiva.value, 1)
     } else {
@@ -136,11 +151,48 @@
     
     
   }
-  .contenido {
+
+  #contenido {
+    font-size: 12px;
+    display: flex;
+    padding-left: 1.5em;
+    overflow: hidden; /* Evita desbordamiento */
+  }
+  /* .textoIndividual {
+    margin-right: 5px;
+    white-space: nowrap;      
+    overflow: hidden;         
+    text-overflow: ellipsis; 
+    max-width: 70%;         
+  } */
+
+  .textoIndividual {
+    margin-right: 5px;
+    white-space: nowrap; /* Evita saltos de línea */
+    overflow: hidden; /* Oculta el exceso de texto */
+    text-overflow: ellipsis; /* Muestra "..." si el texto es muy largo */
+    flex-shrink: 1; /* Permite que se encoja si no hay espacio */
+  }
+  .textoRotulo {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Ocupa todo el espacio disponible */
+    min-width: 0; /* Permite que el texto se trunque correctamente */
+  }
+
+  
+  /* .contenido {
     display: flex;
     width: 100%;
     padding-left: 10px;
     justify-content: space-between;
+  } */
+   .contenido {
+    display: flex;
+    width: 100%;
+    padding-left: 10px;
+    justify-content: space-between;
+    overflow: hidden; /* Evita que el contenido interno desborde */
   }
 
   .activo {
@@ -165,7 +217,7 @@
 
   #actions {
     display: flex;
-
+    flex-shrink: 0; /* Evita que se encoja (mantiene su tamaño) */
   }
 
   #actions div {
