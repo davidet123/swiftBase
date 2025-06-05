@@ -427,16 +427,17 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
 
       }
     },
-    async getDataExcel (pagina) {
+    async getDataExcel (pagina, rango) {
       const url = `http://localhost:8500/excel/${pagina.toUpperCase()}`
+      console.log(url)
 
       try {
         const res = await this.getData(url)
         this.listaGSheet = res
-        // console.log(res)
+        console.log(res)
 
       } catch (error) {
-        console.log(err);
+        console.log(error);
         this.gSheetLoading = false
 
       }      

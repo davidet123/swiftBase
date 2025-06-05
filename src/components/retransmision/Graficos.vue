@@ -201,6 +201,7 @@
   }
 
   const addGrafico = () => {
+    console.log(grafico.value)
     claseGrafico.value = null
     dialog.value = true
   }
@@ -226,7 +227,7 @@
     const fila = datosDesplegable.value.filas
     const col = numeroAColumna(datosDesplegable.value.columnas)
     const rango = `A1:${col}${fila}`
-    console.log(rango)
+    // console.log(grafico.value)
     if(!editar.value) {
 
       const nuevoGrafico = {
@@ -241,7 +242,7 @@
         tipoDesplegableElegido: tipoDesplegableElegido.value
       }
       nuevoGrafico.datosDesplegable.rango = rango
-      console.log(tipoDesplegableElegido.value)
+      // console.log(nuevoGrafico)
       retransmisionStore.addGrafico(nuevoGrafico)
     } else {
       grafico.value.titulo = nombreGrafico.value
@@ -254,7 +255,7 @@
       grafico.value.datosDesplegable.rango = rango
       grafico.tipoDesplegableElegido = tipoDesplegableElegido.value
 
-      console.log(tipoDesplegableElegido.value)
+      // console.log(tipoDesplegableElegido.value)
     }
 
     dialog.value = false
@@ -265,7 +266,7 @@
   const editarGrafico = () => {
     editar.value = true
     if(grafico.value.clase === "ADD") return
-    console.log(grafico.value)
+    // console.log(grafico.value)
 
 
 

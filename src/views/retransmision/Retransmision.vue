@@ -98,6 +98,7 @@
   import ListadoRotulos from '@/components/retransmision/ListadoRotulos.vue'
   import Control from '@/components/retransmision/Control.vue'
   import Comandos from '@/components/retransmision/Comandos.vue'
+  import { generarId } from "@/composables/idGenerator"
 
 
   const swiftConnectionStore = useSwiftConnectionStore()
@@ -172,8 +173,10 @@
     }
     contenido = {...temp}
 
+    const nuevaId = generarId()
+
     const rotulo = {
-      id: `r${listaRotulos.value.length + 1}`,
+      id: `r${nuevaId}`,
       numero: parseInt(`${listaRotulos.value.length + 1}`),
       nombre: evento.nombre,
       titulo: evento.titulo,
@@ -194,6 +197,12 @@
     retransmisionStore.setDragGrafico(false)
     console.log(listaRotulos.value)
     // console.log(evento)
+  }
+
+  const getNuevaId = () => {
+    const temp = `r${listaRotulos.value.length + 1}`
+    const rotuloValido = listaRotulos.value.find(el => el.id === temp)
+    console.log(rotuloValido)
   }
 
   const getEvento = item => {

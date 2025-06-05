@@ -29,6 +29,7 @@
       </div>
       <div id="controlActions">
         <v-btn size="x-small" color="error">ACEPTAR</v-btn>
+        <v-btn size="x-small" color="success" @click="recargarRotulos">RECARGAR ROTULOS</v-btn>
       </div>
     </div>
   </div>
@@ -54,9 +55,23 @@
 
   const { rotuloActivo } = toRefs(props)
 
+
+
   const rotulo = computed(() => retransmisionStore.listaRotulos.find(el => el.id === rotuloActivo.value))
 
   const foco = e => retransmisionStore.setEdit(e)
+
+  const recargarRotulos = () => {
+
+    console.log(rotulo.value.datosDesplegable.tipo)
+    const hoja = rotulo.value.datosDesplegable.hoja
+    const rango = rotulo.value.datosDesplegable.rango
+    if(rotulo.value.datosDesplegable.tipo === 'gSheet') {
+    retransmisionStore.getDataGS(hoja, rango)
+    } else if (rotulo.value.datosDesplegable.tipo === 'EXCEL'){
+    retransmisionStore.getDataExcel(hoja, rango)
+    }
+  }
 
 
 

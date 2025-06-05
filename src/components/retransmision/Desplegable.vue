@@ -39,7 +39,7 @@
 
     retransmisionStore.getDataGS(hoja, rango)
   } else if (rotulo.value.datosDesplegable.tipo === 'EXCEL'){
-    retransmisionStore.getDataExcel(hoja)
+    retransmisionStore.getDataExcel(hoja, rango)
   }
   
 

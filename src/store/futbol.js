@@ -2931,6 +2931,7 @@ export const usegFutbolStore = defineStore('futbol', {
               let marcador = change.doc.data()
               marcador.id_marcador = change.doc.id
               this.marcadores.push(marcador)
+              console.log("Settings cargados")
             } else if (change.type === "modified") {
               let nuevo_marcador = change.doc.data()
               nuevo_marcador.id_marcador = change.doc.id
