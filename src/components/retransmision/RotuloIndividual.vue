@@ -86,10 +86,12 @@
         // console.log(campo)
       
         if(rotulo.value.crawl) {
-          console.log(grafico)
-          // swiftConnectionStore.rtRemote.updateFields(grafico + "::" + campo + "TCKR", "Contents",  rotulo.value.contenido[campo], ' ')
+          console.log(grafico + "::" + campo + "TCKR", "Contents",  rotulo.value.contenido[campo], ' ')
+          swiftConnectionStore.playGraphic(grafico)
+          swiftConnectionStore.cueGraphic(grafico)
+          swiftConnectionStore.rtRemote.updateFields(grafico + "::" + campo + "TCKR", "Contents",  rotulo.value.contenido[campo])
           // swiftConnectionStore.rtRemote.updateFields(grafico + "::" + campo + "TCKR", "Contents",  titular.replace(/\r\n|\n\r|\n|\r/g, ' '))
-          swiftConnectionStore.rtRemote.updateFields(grafico + "::" + campo + "TEXT", "String", rotulo.value.contenido[campo])
+          // swiftConnectionStore.rtRemote.updateFields(grafico + "::" + campo + "TEXT", "String", rotulo.value.contenido[campo])
         } else {
             swiftConnectionStore.rtRemote.updateFields(grafico + "::" + campo + "TEXT", "String", rotulo.value.contenido[campo])
           
