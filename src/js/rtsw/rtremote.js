@@ -94,7 +94,7 @@ function RTRemote(rtswProtocol, protocolId)
 			else
 				data.parameters[key] = value;
 		}
-    console.log(data)
+    // console.log(data)
 		
 		trace(JSON.stringify(data));
 
