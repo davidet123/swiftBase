@@ -288,6 +288,13 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       this.guardado = false
       
     },
+    checkRotuloLiveEnFuncion(id) {
+      // console.log(id)
+      const rotuloSeleccionado = this.listaRotulos.find(el => el.id === id)
+      
+      return this.onAir.some(el => el.titulo === rotuloSeleccionado.titulo)
+
+    },
 
     setRotuloActivo (payload) {
       // console.log("setrotuloactivo")

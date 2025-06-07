@@ -81,7 +81,7 @@
     grafico = parseInt(rotulo.value.lineasTexto) === 0 ? rotulo.value.nombre : rotulo.value.titulo
     swiftConnectionStore.rtRemote.playGraphic(grafico)
     if(!rotulo.value.live) {
-      console.log(rotulo.value)
+      // console.log(rotulo.value)
 
       
       for(let campo in rotulo.value.contenido) {

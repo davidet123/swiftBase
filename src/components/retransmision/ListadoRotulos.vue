@@ -112,7 +112,7 @@
         
         const temp = listaRotulos.value.find(el => el.id === rotuloActivo.value)
         const data = {
-          titulo: temp.nombre,
+          titulo: temp.titulo,
           tecla: e.key,
           id: temp.id
         }
@@ -136,8 +136,8 @@
       retransmisionStore.guardarRetransmision()
     }  
     if(e.key === " ") {
-      // console.log(checkOnAir())
-      if(!checkOnAir()) {
+      // console.log(retransmisionStore.checkRotuloLiveEnFuncion(rotuloActivo.value))
+      if(!checkOnAir() && !retransmisionStore.checkRotuloLiveEnFuncion(rotuloActivo.value)) {
         retransmisionStore.setRotuloLive(rotuloActivo.value)
       }
       // console.log(onAir.value)
