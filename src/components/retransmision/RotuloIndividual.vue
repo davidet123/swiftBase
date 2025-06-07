@@ -74,6 +74,8 @@
   const  rotuloDirecto = computed(() => rotulo.value.live ? {'background-color': '#ff0000'} : {'background-color': rotuloActivado.value['background-color']})
   // const live = ref(false)
 
+  
+  
   const activarRotulo = () => {
     let grafico = null
     grafico = parseInt(rotulo.value.lineasTexto) === 0 ? rotulo.value.nombre : rotulo.value.titulo
@@ -129,6 +131,8 @@
 
   watch(() => rotuloLive.value, val => {
     if(val === id.value) {
+      const seccion = retransmisionStore.buscarSeccion(val)
+      if(seccion !== seccionActiva.value) return
       activarRotulo()
       retransmisionStore.setRotuloLive(null)
     }

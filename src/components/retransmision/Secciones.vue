@@ -6,9 +6,9 @@
     @click="activarSeccion(seccion.id)"
   >
     <div class="orden"
-      :style="seccion.elementoLive >= 1 ? 'background-color: #ff0000' : 'background-color: #686867'">{{ orden +1 }}</div>
+      :style="elementosLiveEnSeccion ? 'background-color: #ff0000' : 'background-color: #686867'">{{ orden +1 }}</div>
     <div class="contenido" >
-      {{ seccion.titulo }}
+      {{ seccion.titulo }} - {{ elementosLiveEnSeccion }}
     </div>
     <div v-if="seccion.titulo !== 'INICIO'">
       <v-icon
@@ -67,7 +67,8 @@ const activarSeccion = id => retransmisionStore.setSeccionActiva(id)
 // const añadirSeccion = () => retransmisionStore.addSeccion()
 const añadirSeccion = () => dialog.value = true
 
-console.log(seccion.value)
+const elementosLiveEnSeccion = computed(() => retransmisionStore.buscarElementoLiveEnSeccion(seccion.value.id))
+
 
 
 const dialog = ref(false)

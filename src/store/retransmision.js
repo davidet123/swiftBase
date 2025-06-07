@@ -255,6 +255,10 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       this.seccionActiva = id
       this.guardado = false
     },
+    buscarSeccion(id) {
+      const temp = this.listaRotulos.find(el => el.id === id)
+      return temp.seccion
+    },
     eliminarSeccion(id) {
       const temp = this.secciones.filter(el =>  el.id !== id)
       console.log(temp)
@@ -265,6 +269,10 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       const temp = this.secciones.find(sec => sec.id === seccion)
       temp.elementoLive += valor
       this.guardado = false
+    },
+    buscarElementoLiveEnSeccion(seccion) {
+      const rotulos = this.listaRotulos.filter(el => el.seccion === seccion)
+      return rotulos.some(el => el.live)
     },
     addGrafico (payload) {
       // let id = `g${this.listaGraficos.length}`

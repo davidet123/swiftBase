@@ -145,7 +145,7 @@
     // rotuloLive.value = null
   }
 
-  console.log(listaRotulos.value)
+  // console.log(listaRotulos.value)
 </script>
 
 <style scoped>

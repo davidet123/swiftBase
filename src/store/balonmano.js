@@ -131,7 +131,7 @@ export const useBalonmanoStore = defineStore('balonmanoStore', {
       this.partido = datos.partido
       this.marcador = datos.marcador
       this.partidoCreado = datos.partidoCreado
-      console.log(this.marcador)
+      // console.log(this.marcador)
     },
 
     resetBalonmanoLS() {
