@@ -136,6 +136,7 @@
       retransmisionStore.guardarRetransmision()
     }  
     if(e.key === " ") {
+      e.preventDefault()
       // console.log(retransmisionStore.checkRotuloLiveEnFuncion(rotuloActivo.value))
       if(!checkOnAir() && !retransmisionStore.checkRotuloLiveEnFuncion(rotuloActivo.value)) {
         retransmisionStore.setRotuloLive(rotuloActivo.value)
