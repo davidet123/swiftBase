@@ -57,6 +57,13 @@
                 v-model="desplegable"
               ></v-checkbox>
             </v-col>
+            <v-col cols="4" class="ma-0 pa-0">
+              <h4>VUMETRO</h4>
+              <v-checkbox
+                label="Vumetro"
+                v-model="vumetro"
+              ></v-checkbox>
+            </v-col>
           </v-row>
           <v-row>
             
@@ -201,6 +208,8 @@
   const tipoDesplegableElegido = ref(grafico.value.tipoDesplegableElegido || null)
   const crawl = ref(grafico.value.crawl || false)
 
+  const vumetro = ref(grafico.value.vumetro || false)
+
 
   
 
@@ -254,7 +263,8 @@
         nombreCampoSwift: nombreCampoSwift.value,
         datosDesplegable: datosDesplegable.value,
         tipoDesplegableElegido: tipoDesplegableElegido.value,
-        crawl: crawl.value
+        crawl: crawl.value,
+        vumetro: vumetro.value
       }
       nuevoGrafico.datosDesplegable.rango = rango
       // console.log(nuevoGrafico)
@@ -271,6 +281,7 @@
       grafico.value.datosDesplegable.rango = rango
       grafico.tipoDesplegableElegido = tipoDesplegableElegido.value
       grafico.crawl = crawl.value
+      grafico.vumetro = vumetro.value
 
       // console.log(tipoDesplegableElegido.value)
     }

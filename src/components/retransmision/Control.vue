@@ -24,12 +24,15 @@
       <div id="contenidoDesplegable" v-if="rotulo.desplegable">
         <Desplegable :rotulo="rotulo" />
       </div>
+      <div id="vumetro" v-if="rotulo.vumetro">
+        <ControlVumetro />
+      </div>
       <div class="error" v-if="error">
         <h3>{{ error }}</h3>
       </div>
       <div id="controlActions">
         <v-btn size="x-small" color="error">ACEPTAR</v-btn>
-        <v-btn size="x-small" color="success" @click="recargarRotulos">RECARGAR ROTULOS</v-btn>
+        <v-btn size="x-small" color="success" @click="recargarRotulos" v-if="rotulo.desplegable">RECARGAR ROTULOS</v-btn>
       </div>
     </div>
   </div>
@@ -42,6 +45,7 @@
   import { useRetransmisionStore } from '@/store/retransmision'
   import { ref } from 'vue';
   import Desplegable from '@/components/retransmision/Desplegable.vue'
+  import ControlVumetro from './ControlVumetro.vue';
   import { storeToRefs } from 'pinia'
 
 
@@ -58,6 +62,8 @@
 
 
   const rotulo = computed(() => retransmisionStore.listaRotulos.find(el => el.id === rotuloActivo.value))
+
+  console.log(rotulo.value)
 
   const foco = e => retransmisionStore.setEdit(e)
 

@@ -192,7 +192,8 @@
       datosDesplegable: evento.datosDesplegable,
       tipoDesplegableElegido: evento.tipoDesplegableElegido,
       numeroDesplegable: null,
-      crawl: evento.crawl
+      crawl: evento.crawl,
+      vumetro: evento.vumetro
       // graficoSwift: evento.graficoSwift
 
     }
