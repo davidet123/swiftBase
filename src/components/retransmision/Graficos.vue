@@ -172,7 +172,7 @@
 
   const { grafico, orden } = toRefs(props)
 
-  const { listaGraficos } = storeToRefs(retransmisionStore)
+  const { listaGraficos, edit } = storeToRefs(retransmisionStore)
 
   const listadoGraficos = computed(() => {
     const lista = [...listaGraficos.value]
@@ -224,6 +224,7 @@
   const addGrafico = () => {
     console.log(editar.value)
     claseGrafico.value = null
+    edit.value = true
     editar.value = false
     dialog.value = true
   }
@@ -288,10 +289,12 @@
 
     dialog.value = false
     editar.value = false
+    edit.value = false
     // console.log(grafico.value)
   }
 
   const editarGrafico = () => {
+    edit.value = true
     editar.value = true
     if(grafico.value.clase === "ADD") return
     // console.log(grafico.value)
@@ -406,6 +409,7 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    font-size: 30px;
 
   }
 

@@ -55,7 +55,7 @@
   const retransmisionStore = useRetransmisionStore()
   const swiftConnectionStore = useSwiftConnectionStore()
 
-  const { rotuloActivo, desplegableElegido, rotuloDesplegable, seccionActiva, listaGraficos, rotuloLive } = storeToRefs(retransmisionStore)
+  const { rotuloActivo, desplegableElegido, rotuloDesplegable, seccionActiva, listaGraficos, rotuloLive, error } = storeToRefs(retransmisionStore)
 
   const props = defineProps(["rotulo"])
 
@@ -63,6 +63,14 @@
 
   const seleccionarRotulo = (e) => {
     if(e.target.nodeName !== 'I') retransmisionStore.setRotuloActivo(rotulo.value.id)
+    const tipoDesplegable = rotulo.value.datosDesplegable.tipo
+    // console.log(tipoDesplegable)
+    if(tipoDesplegable === "EXCEL") {
+      const hoja = rotulo.value.datosDesplegable.hoja
+      const rango = rotulo.value.datosDesplegable.rango
+      retransmisionStore.getDataExcel(hoja, rango)
+    }
+    // const rotulo = retransmisionStore.buscarRotulo
 
   }
 
@@ -83,19 +91,31 @@
     if(!rotulo.value.live) {
       // console.log(rotulo.value)
 
+      if (rotulo.value.titulo === "VUMETRO") {
+        swiftConnectionStore.cueGraphic(grafico)
+        swiftConnectionStore.rtRemote.updateFields('VUMETRO::VALOR_VUMETROTEXT','String',"0")
+        swiftConnectionStore.rtRemote.updateFields("CLIP_VUMETRO","Translate","231, 560")
+        swiftConnectionStore.rtRemote.updateFields("CLIP_VUMETRO_PEAKING_MAX","Translate","231, 560")
+      }
+
       
       for(let campo in rotulo.value.contenido) {
-        // console.log(campo)
+        // console.log(rotulo.value.contenido[campo])
+        if(rotulo.value.contenido[campo] === null) error.value = "FALTA RELLENAR CAMPO"
+        if(rotulo.value.contenido[campo] === null) return
+        // error.value = null
       
-        if(rotulo.value.crawl || rotulo.value .titulo === "CRAWL") {
+        if(rotulo.value.titulo === "CRAWL") {
+        // if(rotulo.value.crawl || rotulo.value.titulo === "CRAWL") {
           console.log(grafico + "::" + campo + "TCKR", "Contents",  rotulo.value.contenido[campo], ' ')
           swiftConnectionStore.playGraphic(grafico)
           swiftConnectionStore.cueGraphic(grafico)
           swiftConnectionStore.rtRemote.updateFields(grafico + "::TITULARTCKR", "Contents",  rotulo.value.contenido['TITULAR'])
           // swiftConnectionStore.rtRemote.updateFields(grafico + "::" + campo + "TCKR", "Contents",  titular.replace(/\r\n|\n\r|\n|\r/g, ' '))
           // swiftConnectionStore.rtRemote.updateFields(grafico + "::" + campo + "TEXT", "String", rotulo.value.contenido[campo])
-        } else {
-            swiftConnectionStore.rtRemote.updateFields(grafico + "::" + campo + "TEXT", "String", rotulo.value.contenido[campo])
+        }  else {
+          swiftConnectionStore.rtRemote.updateFields(grafico + "::" + campo + "TEXT", "String", rotulo.value.contenido[campo])
+
         }
       
       }

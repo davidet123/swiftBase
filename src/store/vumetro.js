@@ -59,19 +59,36 @@ export const useVumetroStore = defineStore('vumetro', {
     },
     async startMic() {
       try {
-        this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
+      //   this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
 
+      //   if (this.audioContext.state === 'suspended') {
+      //     await this.audioContext.resume()
+      //   }
+
+      //   this.analyser = this.audioContext.createAnalyser()
+      //   this.analyser.fftSize = 2048 // Más precisión en el dominio temporal
+      //   const bufferLength = this.analyser.fftSize
+      //   this.dataArray = new Uint8Array(bufferLength)
+
+      //   this.gainNode = this.audioContext.createGain()
+      //   this.gainNode.gain.value = 1
+      if (!this.audioContext) {
+          this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
+        }
+        
         if (this.audioContext.state === 'suspended') {
           await this.audioContext.resume()
         }
 
         this.analyser = this.audioContext.createAnalyser()
-        this.analyser.fftSize = 2048 // Más precisión en el dominio temporal
-        const bufferLength = this.analyser.fftSize
-        this.dataArray = new Uint8Array(bufferLength)
+        this.analyser.fftSize = 2048
+        this.dataArray = new Uint8Array(this.analyser.fftSize)
 
-        this.gainNode = this.audioContext.createGain()
-        this.gainNode.gain.value = 1
+        // Siempre crea el gainNode si no existe
+        if (!this.gainNode) {
+          this.gainNode = this.audioContext.createGain()
+          this.gainNode.gain.value = this.currentGain
+        }
 
         const constraints = {
           audio: {
@@ -117,9 +134,21 @@ export const useVumetroStore = defineStore('vumetro', {
     },
 
     setGain(value) {
-      this.currentGain = parseFloat(value)
+      // this.currentGain = parseFloat(value)
+      // if (this.gainNode) {
+      //   this.gainNode.gain.value = this.currentGain
+      // }
+      // Actualiza siempre el estado
+      this.currentGain = parseFloat(value);
+      
+      // Si hay un gainNode activo, actualiza su valor
       if (this.gainNode) {
-        this.gainNode.gain.value = this.currentGain
+        this.gainNode.gain.value = this.currentGain;
+      }
+      
+      // Si hay un audioElement (para archivos), actualiza su volumen
+      if (this.audioElement) {
+        this.audioElement.volume = this.currentGain;
       }
     },
 

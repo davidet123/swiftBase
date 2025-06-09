@@ -295,6 +295,9 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       return this.onAir.some(el => el.titulo === rotuloSeleccionado.titulo)
 
     },
+    buscarRotulo(payload) {
+      return this.listaRotulos.find(el => el.id === payload)
+    },
 
     setRotuloActivo (payload) {
       // console.log("setrotuloactivo")

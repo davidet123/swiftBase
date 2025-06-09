@@ -93,7 +93,7 @@ const swiftConnectionStore = useSwiftConnectionStore()
 
 const graficoIn = grafico => {
   // Resetear vumetro
-  swiftConnectionStore.rtRemote.updateFields('VALOR_VUMETRO::VALOR_VUMETROTEXT','String',"0")
+  swiftConnectionStore.rtRemote.updateFields('VUMETRO::VALOR_VUMETROTEXT','String',"0")
   swiftConnectionStore.rtRemote.updateFields("CLIP_VUMETRO","Translate","231, 560")
   swiftConnectionStore.playGraphic(grafico)
   swiftConnectionStore.bringOn(grafico)
@@ -115,9 +115,20 @@ const audioElement = computed(() => vumetro.audioElement);
 
 const isSeeking = ref(false);
 
-const gain = computed({
-  get: () => vumetro.gainNode?.gain.value ?? 1,
-  set: (value) => vumetro.setGain(value)
+// const gain = computed({
+//   get: () => vumetro.gainNode?.gain.value ?? 1,
+//   set: (value) => vumetro.setGain(value)
+// })
+  const gain = computed({
+    get: () => vumetro.currentGain,
+    set: (value) => vumetro.setGain(value)
+  })
+
+  // Asegurarte de que el audioContext se inicialice si no existe
+  watch(() => vumetro.isListening, (isListening) => {
+    if (isListening && !vumetro.audioContext) {
+      vumetro.audioContext = new (window.AudioContext || window.webkitAudioContext)()
+    }
 })
 
 function onFileSelected(event) {
