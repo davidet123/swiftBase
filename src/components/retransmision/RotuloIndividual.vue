@@ -8,9 +8,12 @@
         <!-- {{ rotuloDesplegable }} -->
         <div id="titulo">{{ rotulo.nombre}}</div>
         <div id="contenido">
-          <span v-if="rotulo.desplegable"> {{ numRotuloDesplegable }}</span>
-          <span class="textoIndividual" v-for="(value, key) in rotulo.contenido" :key="key">
-            <p>{{ value }}</p>
+          <span v-if="rotulo.desplegable" class="numeroRotulo"> {{ numRotuloDesplegable }}</span>
+          <span class="textoIndividual">
+            <div  v-for="(value, key) in rotulo.contenido" :key="key" class="contenidoRotulos">
+              <p>{{ value }}</p><p> - </p>
+
+            </div>
              
           </span>
         </div>
@@ -178,31 +181,35 @@
   }
 
   #contenido {
-    font-size: 12px;
-    display: flex;
-    padding-left: 1.5em;
-    overflow: hidden; /* Evita desbordamiento */
-  }
-  /* .textoIndividual {
-    margin-right: 5px;
-    white-space: nowrap;      
-    overflow: hidden;         
-    text-overflow: ellipsis; 
-    max-width: 70%;         
-  } */
+    display: grid;
+    grid-template-columns: auto 1fr; /* Columna fija para número, flexible para texto */
+    align-items: center;
+    gap: 8px; /* Espacio entre columnas */
+}
 
-  .textoIndividual {
-    margin-right: 5px;
-    white-space: nowrap; /* Evita saltos de línea */
-    overflow: hidden; /* Oculta el exceso de texto */
-    text-overflow: ellipsis; /* Muestra "..." si el texto es muy largo */
-    flex-shrink: 1; /* Permite que se encoja si no hay espacio */
-  }
+.numeroRotulo {
+  font-size: 14px;
+    white-space: nowrap;
+    padding-right: 8px;
+}
+
+.textoIndividual {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    gap: 10px;
+}
   .textoRotulo {
     display: flex;
     flex-direction: column;
     flex-grow: 1; /* Ocupa todo el espacio disponible */
     min-width: 0; /* Permite que el texto se trunque correctamente */
+  }
+
+  .contenidoRotulos {
+    display: flex;
+    justify-content: space-between;
   }
 
   
