@@ -79,7 +79,11 @@
 
   const numRotuloDesplegable = computed(() => rotulo.value.numeroDesplegable ? rotulo.value.numeroDesplegable + " - " : "")
 
-  const rotuloActivado = computed(() => rotulo.value.id === rotuloActivo.value ? {'background-color': '#024f64'} : {'background-color': '#686867'})
+  const colorRotulo = () => {
+    return !rotulo.value.desplegable ? {'background-color': '#686867'} : {'background-color': '#414f3d'}
+  }
+
+  const rotuloActivado = computed(() => rotulo.value.id === rotuloActivo.value ? {'background-color': '#024f64'} : colorRotulo())
 
  
   const  rotuloDirecto = computed(() => rotulo.value.live ? {'background-color': '#ff0000'} : {'background-color': rotuloActivado.value['background-color']})
