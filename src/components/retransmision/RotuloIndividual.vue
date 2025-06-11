@@ -4,7 +4,7 @@
     <div class="contenido" @click="seleccionarRotulo($event)">
     <!-- <div class="contenido" @click="seleccionarRotulo($event.target.className)"> -->
 
-      <div class="textoRotulo" @click="seleccionarRotulo($event)">
+      <div class="textoRotulo">
         <!-- {{ rotuloDesplegable }} -->
         <div id="titulo">{{ rotulo.nombre}}</div>
         <div id="contenido">
@@ -65,7 +65,8 @@
   const { rotulo } = toRefs(props)
 
   const seleccionarRotulo = (e) => {
-    if(e.target.nodeName !== 'I') retransmisionStore.setRotuloActivo(rotulo.value.id)
+    if(e.target.nodeName === 'I') return
+    retransmisionStore.setRotuloActivo(rotulo.value.id)
     const tipoDesplegable = rotulo.value.datosDesplegable.tipo
     // console.log(tipoDesplegable)
     if(tipoDesplegable === "EXCEL") {
@@ -158,8 +159,8 @@
 
   watch(() => rotuloLive.value, val => {
     if(val === id.value) {
-      const seccion = retransmisionStore.buscarSeccion(val)
-      if(seccion !== seccionActiva.value) return
+      // const seccion = retransmisionStore.buscarSeccion(val)
+      // if(seccion !== seccionActiva.value) return
       activarRotulo()
       retransmisionStore.setRotuloLive(null)
     }

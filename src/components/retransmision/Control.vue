@@ -30,9 +30,10 @@
       <div class="error" v-if="error">
         <h3>{{ error }}</h3>
       </div>
-      <div id="controlActions">
+      <div id="controlActions" >
         <v-btn size="x-small" color="error">ACEPTAR</v-btn>
         <v-btn size="x-small" color="success" @click="recargarRotulos" v-if="rotulo.desplegable">RECARGAR ROTULOS</v-btn>
+        <v-btn size="x-small" color="primary" @click="cambioLive()">CAMBIO ESTADO ROTULO</v-btn>
       </div>
     </div>
   </div>
@@ -61,9 +62,12 @@
 
 
 
+
+
   const rotulo = computed(() => retransmisionStore.listaRotulos.find(el => el.id === rotuloActivo.value))
 
   console.log(rotulo.value)
+  const cambioLive = () => rotulo.value.live = !rotulo.value.live
 
   const foco = e => retransmisionStore.setEdit(e)
 
@@ -99,6 +103,15 @@
   color: red;
   display: flex;
   justify-content: center;
+}
+
+
+
+#controlActions {
+  padding: 0 20px;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 }
 
 </style>

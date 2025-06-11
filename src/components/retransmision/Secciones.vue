@@ -8,7 +8,7 @@
     <div class="orden"
       :style="elementosLiveEnSeccion ? 'background-color: #ff0000' : 'background-color: #686867'">{{ orden +1 }}</div>
     <div class="contenido" >
-      {{ seccion.titulo }} - {{ elementosLiveEnSeccion }}
+      {{ seccion.titulo }}
     </div>
     <div v-if="seccion.titulo !== 'INICIO'">
       <v-icon

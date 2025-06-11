@@ -28,6 +28,10 @@ export const useVumetroStore = defineStore('vumetro', {
     peakSpeed: 6,
     peakHold: 400,
     valorMaximoVumetro: 130,
+    curveExponent: 1.8, // Valor entre 1.5-3 (1.8 es buen balance)
+    maxDbValue: 130,    // Valor máximo para dB (level130)
+    minMapped: 231,     // Valor mínimo para levelMapped
+    maxMapped: 421      // Valor máximo para levelMapped
   }),
 
   getters: {
@@ -40,7 +44,7 @@ export const useVumetroStore = defineStore('vumetro', {
     scaled130(state) {
       return Math.round(state.level130)
     },
-    roundedPeakLevel: state => Math.round(state.peakLevel)
+    roundedPeakLevel: state => Math.round(state.peakLevel),
   },
 
   actions: {
@@ -92,7 +96,10 @@ export const useVumetroStore = defineStore('vumetro', {
 
         const constraints = {
           audio: {
-            deviceId: this.selectedDeviceId ? { exact: this.selectedDeviceId } : undefined
+            deviceId: this.selectedDeviceId ? { exact: this.selectedDeviceId } : undefined,
+            echoCancellation: false,
+            noiseSuppression: false,
+            autoGainControl: false
           }
         }
         const stream = await navigator.mediaDevices.getUserMedia(constraints)
@@ -180,22 +187,45 @@ export const useVumetroStore = defineStore('vumetro', {
         
         const maxLevel = Math.max(...this.dataArray);
         const normalizedLevel = maxLevel / 255; // Normalizar a 0-1
-        
-        // Calcular dB en escala 0-130 (como en tu versión)
-        this.levelDb = normalizedLevel * this.valorMaximoVumetro;
-        
-        // Mapear a tu rango 231-421
-        // this.levelMapped = Math.round(this.mapRange(normalizedLevel, 0, 1, 231, 421));
-        const rawMapped = this.mapRange(this.level130, 0, this.valorMaximoVumetro, 231, 421)
-        const step = 6.3
-        const steppedMapped = ((rawMapped - 231) / step) * step + 231
 
-        // Asegúrate de no pasarte del rango permitido
-        this.levelMapped = Math.max(231, Math.min(421, steppedMapped))
+        // Obtener el valor crudo en dB (0-130)
+        const rawDb = normalizedLevel * this.valorMaximoVumetro;
         
-        // Escala 0-130
-        this.level130 = Math.round(this.levelDb);
-        this.lastDbUpdate = now
+        // Aplicar la curva a ambos valores
+        const curvedValues = this.applyCurve(rawDb);
+        
+        // Asignar los valores curveados
+        this.levelDb = rawDb; // Mantenemos el dB original para referencia
+        this.level130 = Math.round(curvedValues.db) // dB con curva aplicada (0-130)
+        this.levelMapped = curvedValues.mapped; // Valor mapeado con misma curva (231-421)
+        
+        this.lastDbUpdate = now;
+
+        
+        
+        // // Calcular dB en escala 0-130 (como en tu versión)
+        // this.levelDb = normalizedLevel * this.valorMaximoVumetro;
+        
+        // // Mapear a tu rango 231-421
+        // // this.levelMapped = Math.round(this.mapRange(normalizedLevel, 0, 1, 231, 421));
+        // const rawMapped = this.mapRange(this.level130, 0, this.valorMaximoVumetro, 231, 421)
+        // const step = 6.3
+        // const steppedMapped = ((rawMapped - 231) / step) * step + 231
+
+        // // Asegúrate de no pasarte del rango permitido
+        // this.levelMapped = Math.max(231, Math.min(421, steppedMapped))
+        
+        // // Escala 0-130
+        // this.level130 = Math.round(this.levelDb);
+
+        // // Mapeo con curva exponencial ajustable
+        // const exponent = 2.2; // Más alto = más sensible en altos niveles
+        // const normalized = this.level130 / this.valorMaximoVumetro;
+        // const curved = Math.pow(normalized, exponent);
+        // this.levelMapped = Math.round(231 + curved * (421 - 231));
+
+
+        // this.lastDbUpdate = now
         // PEAKING
         const nowPeaking = Date.now()
 
@@ -212,8 +242,29 @@ export const useVumetroStore = defineStore('vumetro', {
       }
       this.animationFrame = requestAnimationFrame(() => this.updateLevel());
     },
+    // mapRange(value, inMin, inMax, outMin, outMax) {
+    //   return ((value - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin
+    // },
     mapRange(value, inMin, inMax, outMin, outMax) {
-      return ((value - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin
+        // Normalizar el valor entre 0 y 1
+        const normalized = (value - inMin) / (inMax - inMin);
+        // Aplicar curva exponencial (puedes ajustar el 2.5 para más/menos curvatura)
+        const curved = Math.pow(normalized, 2.5); 
+        // Mapear al rango de salida
+        return curved * (outMax - outMin) + outMin;
+    },
+    applyCurve(value) {
+    // Normaliza el valor (0-1) dentro del rango dB
+    const normalized = Math.min(1, Math.max(0, value / this.maxDbValue));
+    
+    // Aplica curva exponencial
+    const curved = Math.pow(normalized, this.curveExponent);
+    
+    // Calcula ambos valores de forma consistente
+      return {
+        db: curved * this.maxDbValue,          // level130 (0-130)
+        mapped: this.minMapped + curved * (this.maxMapped - this.minMapped) // levelMapped (231-421)
+      };
     },
     async loadAudioFile(file) {
   try {
