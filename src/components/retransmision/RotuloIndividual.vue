@@ -105,6 +105,9 @@
         swiftConnectionStore.rtRemote.updateFields("CLIP_VUMETRO","Translate","231, 560")
         swiftConnectionStore.rtRemote.updateFields("CLIP_VUMETRO_PEAKING_MAX","Translate","231, 560")
       }
+      if (rotulo.value.lineasTexto === 0) {
+        swiftConnectionStore.cueGraphic(grafico)
+      }
 
       
       for(let campo in rotulo.value.contenido) {

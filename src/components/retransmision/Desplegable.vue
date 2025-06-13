@@ -8,14 +8,17 @@
       item-title="label"
       item-value="numero"
       :active="desplegableActivo"
+      :min-width="anchoDesplegable"
+      @update:focused="cogerFoco"
     >
     </v-select>
   </div>
   <!-- {{ listaGSheet }} -->
+    {{ desplegableActivo }}
 </template>
 
 <script setup>
-  import { ref, toRefs, watch } from "vue"
+  import { computed, ref, toRefs, watch } from "vue"
   import { useRetransmisionStore } from '@/store/retransmision'
 
 
@@ -35,6 +38,11 @@
   const rango = rotulo.value.datosDesplegable.rango
 
   const desplegableActivo = ref(false)
+
+  const cogerFoco = e => desplegableActivo.value = e
+
+  // const anchoDesplegable = computed(() => !desplegableActivo.value ? '1700px' : '1560px')
+  const anchoDesplegable = ref('930px')
   if(rotulo.value.datosDesplegable.tipo === 'gSheet') {
 
     retransmisionStore.getDataGS(hoja, rango)
@@ -53,6 +61,15 @@
     retransmisionStore.setDesplagableElegido(datos, rotulo.value.id, val)
     document.activeElement.blur()
     desplegableActivo.value = false
+  })
+
+
+  watch(() => desplegableActivo.value, val => {
+    if(val) { 
+      anchoDesplegable.value = '1600px'
+    } else {
+      anchoDesplegable.value = '930px'
+    }
   })
 </script>
 

@@ -30,6 +30,7 @@
           <v-col>
             <Control
               :rotuloActivo="rotuloActivo"
+              @activarCuentaAtras="activarCuentaAtras"
             />
   
           </v-col>
@@ -213,6 +214,10 @@
   const getEvento = item => {
     evento = item
     // console.log(evento)
+  }
+
+  const activarCuentaAtras = nombreGrafico => {
+    swiftConnectionStore.customMetodo(nombreGrafico, 'iniciarCuentaAtras')
   }
 
   watch(() => retransmisionActiva.value, val => {

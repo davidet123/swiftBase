@@ -27,6 +27,9 @@
       <div id="vumetro" v-if="rotulo.vumetro">
         <ControlVumetro />
       </div>
+      <div id="cuentaAtras" v-if="rotulo.nombre === 'CUENTA_ATRAS'">
+        <v-btn color="success" size="x-small" @click="iniciarCuentaAtras()" :disabled="!rotulo.live">INICIAR CUENTA ATRAS</v-btn>
+      </div>
       <div class="error" v-if="error">
         <h3>{{ error }}</h3>
       </div>
@@ -56,6 +59,8 @@
 
   const props = defineProps(["rotuloActivo"])
 
+  const emit = defineEmits(["activarCuentaAtras"])
+
   // const emit = defineEmits(["evento"])
 
   const { rotuloActivo } = toRefs(props)
@@ -81,6 +86,12 @@
     } else if (rotulo.value.datosDesplegable.tipo === 'EXCEL'){
     retransmisionStore.getDataExcel(hoja, rango)
     }
+  }
+
+  const iniciarCuentaAtras = () => {
+
+    emit('activarCuentaAtras', rotulo.value.nombre)
+
   }
 
 
@@ -112,6 +123,11 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
+}
+#cuentaAtras {
+  display: flex;
+  justify-content: center;
+  color: white !important;
 }
 
 </style>

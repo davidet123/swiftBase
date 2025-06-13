@@ -20,6 +20,12 @@
               class="ml-2"
               @click="retransmisionStore.eliminarRetransmision(retrans.idRetransmision)"
               >ELIMINAR</v-btn>
+              <v-btn
+              color="primary"
+              size="x-small"
+              class="ml-2"
+              @click="retransmisionStore.duplicarRetransmision(retrans.idRetransmision)"
+              >DUPLICAR</v-btn>
             </v-col>
           </v-row>
 

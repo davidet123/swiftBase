@@ -240,6 +240,7 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
     },
     setSeccionActiva (payload) {
       this.seccionActiva = payload
+      this.rotuloActivo = null
     },
     addSeccion (titulo) {
       let id = `s-${generarId()}`
@@ -576,6 +577,16 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       
 
       // console.log(retransmision)
+    },
+    duplicarRetransmision  (id) {
+      const retransmision = this.listadoRetransmisiones.find(el => el.idRetransmision === id)
+      const retransmisionDuplicada = JSON.parse(JSON.stringify(retransmision))
+      retransmisionDuplicada.idRetransmision = Date.now()
+      retransmisionDuplicada.nombreRetransmision += " - Copia"
+      this.listadoRetransmisiones.push(retransmisionDuplicada)
+      localStorage.setItem('listadoRetransmisiones', JSON.stringify(this.listadoRetransmisiones))
+
+      // console.log(retransmisionDuplicada)
     },
     eliminarRetransmision (id) {
       // const retransmision = this.listadoRetransmisiones.find(el => el.idRetransmision === id)
