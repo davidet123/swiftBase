@@ -33,7 +33,8 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
     ],
     desplegableElegido: null, // NUMERO ROTULO ELEGIDO EN EL DESPLEGABLE
     rotuloDesplegable: null, // NUMERO E ID ROTULO ELEGIDO EN EL DESPLEGABLE
-  
+    tipoDesplegableAnterior: null, 
+    rotuloParaTakeOff: null,
     rotuloActivo: null,
     rotuloLive: null,
     listaRotulosLive: [],
@@ -318,6 +319,9 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       }
       this.guardado = false
     },
+    cambioLive(rotulo) {
+      rotulo.live = !rotulo.live
+    },
     eliminarRotulo (id) {
       const temp = this.listaRotulos.filter(el =>  el.id !== id)
       this.listaRotulos = temp
@@ -337,6 +341,9 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       // console.log(this.rotuloActivo)
       console.log(this.listaRotulos)
     },
+    quitarTodosLosRotulos() {
+      
+    },
     crearID() {
       let fin = false
       const ids = this.listaRotulos.map(el => el.id)
@@ -350,7 +357,7 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       return nuevaId
     },
     setDesplagableElegido (datos, idRotulo, desplegableElegido) {
-      console.log(idRotulo)
+      // console.log(idRotulo)
 
       const grafico = this.listaGraficos.find(el => el.titulo === datos.grafico)
       if(!grafico) {
@@ -459,12 +466,12 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
     },
     async getDataExcel (pagina, rango) {
       const url = `http://localhost:8500/excel/${pagina.toUpperCase()}`
-      console.log(url)
+      // console.log(url)
 
       try {
         const res = await this.getData(url)
         this.listaGSheet = res
-        console.log(res)
+        // console.log(res)
 
       } catch (error) {
         console.log(error);

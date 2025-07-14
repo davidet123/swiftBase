@@ -28,7 +28,7 @@ export const useVumetroStore = defineStore('vumetro', {
     peakSpeed: 6,
     peakHold: 400,
     valorMaximoVumetro: 130,
-    curveExponent: 1.8, // Valor entre 1.5-3 (1.8 es buen balance)
+    curveExponent: 1, // Valor entre 1.5-3 (1.8 es buen balance)
     maxDbValue: 130,    // Valor máximo para dB (level130)
     minMapped: 231,     // Valor mínimo para levelMapped
     maxMapped: 421      // Valor máximo para levelMapped

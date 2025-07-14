@@ -231,14 +231,14 @@ function formatTime(seconds) {
   return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
 }
 
-onUnmounted(() => {
-  cleanupAudioListeners()
-  vumetro.stopMic()
-  vumetro.stopFileAudio()
-  if (audioElement.value) {
-    audioElement.value.removeEventListener('timeupdate', updateTime);
-  }
-})
+// onUnmounted(() => {
+//   cleanupAudioListeners()
+//   vumetro.stopMic()
+//   vumetro.stopFileAudio()
+//   if (audioElement.value) {
+//     audioElement.value.removeEventListener('timeupdate', updateTime);
+//   }
+// })
 
 watch(audioElement, (newElement) => {
   if (newElement) {

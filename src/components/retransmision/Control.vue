@@ -73,6 +73,7 @@
 
   console.log(rotulo.value)
   const cambioLive = () => rotulo.value.live = !rotulo.value.live
+  // const cambioLive = () => retransmisionStore.cambioLive(rotulo.value)
 
   const foco = e => retransmisionStore.setEdit(e)
 
