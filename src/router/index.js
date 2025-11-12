@@ -43,6 +43,8 @@ import MenuBalonmano from '../views/balonmano/MenuBalonmano.vue'
 import AddPartidoBalonmano from '../views/balonmano/AddPartidoBalonmano.vue'
 import EstBalonmano from '../views/balonmano/EstBalonmano.vue'
 import SpeechRecognition from '@/views/SpeechRecognition.vue'
+import MenuVoleibol from '@/views/voleibol/MenuVoleibol.vue'
+import EstVoleibol from '@/views/voleibol/EstVoleibol.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -133,11 +135,11 @@ const router = createRouter({
       name: 'vumetro',
       component: Vumetro
     },
-    {
-      path: '/basket',
-      name: 'basket',
-      component: Basket
-    },
+    // {
+    //   path: '/basket',
+    //   name: 'basket',
+    //   component: Basket
+    // },
     {
       path: '/basket',
       name: 'basket',
@@ -272,6 +274,16 @@ const router = createRouter({
       path: '/speechrecognition',
       name: 'estbalospeechrecognitionnmano',
       component: SpeechRecognition
+    },
+    {
+      path: '/voleibol',
+      name: 'menuVoleibol',
+      component: MenuVoleibol
+    },
+    {
+      path: '/estvoleibol',
+      name: 'estvoleibol',
+      component: EstVoleibol
     },
   ]
 })

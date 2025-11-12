@@ -40,14 +40,14 @@
 <script setup>
 
 import { useRouter } from 'vue-router';
-import { usegBasketStore } from "../../store/basket"
+import { useBasketStore } from "../../store/basket"
 import { storeToRefs } from 'pinia'
 import PartidoBasketIndividual from "../../components/basket/PartidoBasketIndividual.vue"
 
 
 const router = useRouter()
 
-const basketStore = usegBasketStore()
+const basketStore = useBasketStore()
 
 const { partidoBasket, marcadorBasket } = storeToRefs(basketStore)
 

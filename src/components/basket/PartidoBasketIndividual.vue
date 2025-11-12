@@ -48,14 +48,14 @@
 
 <script setup>
   import { computed } from "vue";
-  import { usegBasketStore } from "../../store/basket"
+  import { useBasketStore } from "../../store/basket"
   import { storeToRefs } from 'pinia'
   import { useRouter } from "vue-router"
 
 
   const router = useRouter()
 
-  const basketStore = usegBasketStore()
+  const basketStore = useBasketStore()
 
   const { partidoBasket, marcadorBasket } = storeToRefs(basketStore)
 

@@ -42,7 +42,12 @@
                 <v-col cols="12">
                   <v-row>
                     <v-col cols="12">
-                      <p class="text-h3">12:45</p>
+                      <p class="text-h5">{{ formatGameClock(marcadorBasket.temporizador.gameClock) }}</p>
+                      <!-- <p class="text-h5">{{ marcadorBasket.temporizador.gameClock }}</p> -->
+                    </v-col>
+                    <v-col cols="12">
+                      <!-- <p class="text-h5">{{ marcadorBasket.temporizador.possessionClock }}</p> -->
+                      <p class="text-h5">{{ formatPossessionClock(marcadorBasket.temporizador.possessionClock) }}</p>
                     </v-col>
                   </v-row>
                   <v-row>
@@ -127,11 +132,11 @@
 <script setup>
 
   import { useRoute, useRouter } from 'vue-router'
-  import { usegBasketStore } from "../../store/basket"
+  import { useBasketStore } from "../../store/basket"
   import { storeToRefs } from 'pinia'
   import { computed, ref } from 'vue'
 
-  const basketStore = usegBasketStore()
+  const basketStore = useBasketStore()
 
   const { marcadorBasket } = storeToRefs(basketStore)
 
@@ -177,9 +182,46 @@
     updateMarcador()
   }
 
-   const updateMarcador = () => {
-    basketStore.updateMarcadorBasket(marcador.value)
-   } 
+  const updateMarcador = () => {
+  basketStore.updateMarcadorBasket(marcador.value)
+  } 
+
+  const formatGameClock = (gameClock) => {
+    if (typeof gameClock !== 'string') return ''
+    const m = gameClock.match(/^(\d{2}):(\d{2})\.(\d{2})$/)
+    if (!m) return gameClock
+
+    const mm = parseInt(m[1], 10)
+    const ss = parseInt(m[2], 10)
+    const dc = parseInt(m[3], 10)
+
+    const totalSec = mm * 60 + ss + dc / 100
+
+    if (totalSec >= 60) {
+      // Mostrar minutos y segundos
+      return `${m[1]}:${m[2]}`;
+    }
+
+    // Mostrar segundos con 1 decimal
+    return `${ss}.${Math.ceil(dc / 10)}`
+  }
+
+  const formatPossessionClock = (possessionClock) => {
+    if (typeof possessionClock !== 'string') return ''
+    const m = possessionClock.match(/^(\d{2})\.(\d)$/)
+    if (!m) return possessionClock
+
+    const s = parseInt(m[1], 10)
+    const d = parseInt(m[2], 10)
+    const val = s + d / 10
+
+    // < 5 s → 1 decimal
+    if (val < 5) return `${s}.${d}`
+
+    // ≥ 5 s → entero con CEIL para no “caer” antes de tiempo
+    const shown = Math.ceil(val)
+    return String(shown)
+  }
 
 </script>
 

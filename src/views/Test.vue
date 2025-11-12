@@ -23,7 +23,7 @@
 
 
   <!-- TIEMPO AEMET -->
-   <v-row>
+   <!-- <v-row>
     <v-col>
       {{ datosTiempo["root"].nombre["_text"] }}
     </v-col>
@@ -34,7 +34,7 @@
       {{ pred.hora }} - {{ pred.temperatura }}
     </v-col>
 
-   </v-row>
+   </v-row> -->
   <v-row>
     <v-col>
       <v-btn @click="startClock" color="success">START CLOCK</v-btn>
@@ -188,25 +188,25 @@
 
   // xmlReaderStore.getTiempoXML()
 
-  const getDatosTiempo = async () => {
-    try {
-      const res = await fetch('http://localhost:3000')
-      const data = await res.json()
-      console.log(data)
-      return data
-    } catch (e) {
+  // const getDatosTiempo = async () => {
+  //   try {
+  //     const res = await fetch('http://localhost:3000')
+  //     const data = await res.json()
+  //     console.log(data)
+  //     return data
+  //   } catch (e) {
       
-    }
-  }
-  const datosTiempo = await getDatosTiempo()
+  //   }
+  // }
+  // const datosTiempo = await getDatosTiempo()
 
-  const datosTemperaturaTemp = datosTiempo["root"].prediccion.dia[0].temperatura
-  const datosTemperatura = datosTemperaturaTemp.map(el => {
-    return {
-      hora: el["_attributes"].periodo,
-      temperatura: el["_text"]
-    }
-  })
+  // const datosTemperaturaTemp = datosTiempo["root"].prediccion.dia[0].temperatura || null
+  // const datosTemperatura = datosTemperaturaTemp.map(el => {
+  //   return {
+  //     hora: el["_attributes"].periodo,
+  //     temperatura: el["_text"]
+  //   }
+  // })
   // const crearObjetoTiempo = () => {
 
 
@@ -221,8 +221,8 @@
   //   // console.log(datosTiempo["root"].prediccion.dia[0])
   // }
   
-  // crearObjetoTiempo()
-  const prediccion = ref(datosTiempo["root"].prediccion.dia)
+  // // crearObjetoTiempo()
+  // const prediccion = ref(datosTiempo["root"].prediccion.dia)
   // console.log(prediccion.value)
 
 

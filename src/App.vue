@@ -9,26 +9,29 @@
 <script setup>
   import {  RouterView } from 'vue-router'
   import { usegFutbolStore } from "./store/futbol"
-  import { usegBasketStore } from "./store/basket"
+  import { useBasketStore } from "./store/basket"
   import { useFutbolWebsocketStore } from "./store/futbolWebsocket"
   import { useRotulosStore } from "./store/rotulos"
   import { usegSheetStore } from "./store/gSheet"
   import { useMisaStore } from "./store/misa"
   import { useBalonmanoStore } from './store/balonmano'
+  import { useVoleiStore } from './store/voleibol'
   import { onMounted, onBeforeMount } from 'vue'
 
   const futbolStore = usegFutbolStore()
-  const basketStore = usegBasketStore()
+  const basketStore = useBasketStore()
   const rotulosStore = useRotulosStore()
   const gSheetStore = usegSheetStore()
   const futbolWebsocket = useFutbolWebsocketStore()
   const misaStore = useMisaStore()
   const balonmanoStore = useBalonmanoStore()
+  const voleiStore = useVoleiStore()
 
   // Cargar desde firebase
 
   onBeforeMount(async () => {
     balonmanoStore.cargarDatosLS()
+    voleiStore.cargarPartidoVoleibol()
     // gSheetStore.getListaCrevillent()
     // console.log(futbolStore.getPartidos)
     // futbolWebsocket.getLocalStorage()

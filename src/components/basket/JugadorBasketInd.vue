@@ -1,7 +1,8 @@
 <template>
   <v-row class="pa-5 mx-5">
     <v-col cols="12">
-      <v-expansion-panels>
+      {{ jugador }} 
+      <!-- <v-expansion-panels>
         <v-expansion-panel>
           <v-expansion-panel-title class="nombre_jugador">
 
@@ -11,7 +12,7 @@
             text
           </v-expansion-panel-text>
         </v-expansion-panel>
-      </v-expansion-panels>
+      </v-expansion-panels> -->
 
     </v-col>
     

@@ -207,6 +207,19 @@ actions: {
 
   playGraphic(metodo) {
     if(this.rtRemote) this.rtRemote.playGraphic(metodo)
+  },
+  hex_to_swift(hex) {
+    
+    hex = hex.slice(1)
+    
+    // Dividir el color en componentes RGB y Alfa (si existe)
+    const r = parseInt(hex.substring(0, 2), 16) / 255
+    const g = parseInt(hex.substring(2, 4), 16) / 255
+    const b = parseInt(hex.substring(4, 6), 16) / 255
+    const a = hex.length === 8 ? parseInt(hex.substring(6, 8), 16) / 255 : 1.0
+    
+    return `${parseFloat(r.toFixed(6))},${parseFloat(g.toFixed(6))},${parseFloat(b.toFixed(6))},${parseFloat(a.toFixed(6))}`
+    
   }
   
 

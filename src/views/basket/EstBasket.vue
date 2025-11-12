@@ -22,27 +22,53 @@
 
     </v-col>
   </v-row>
-  <v-row>
+  <!-- <v-row>
     <v-col cols="12" v-for="(est, index) in arrayEstadisticas" :key="index">
       {{ est }}
     </v-col>
-  </v-row>
+  </v-row> -->
 
 </template>
 
 <script setup>
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 import MarcadorBasket from '@/components/basket/MarcadorBasket'
 import JugadorBasketInd from '@/components/basket/JugadorBasketInd'
 
-import { usegBasketStore } from "../../store/basket"
+import { useBasketFeed } from '@/composables/useBasketFeed'
+
+import { useBasketStore } from "../../store/basket"
 import { storeToRefs } from 'pinia'
 
-import { ref, computed } from 'vue'
+import { useDatosBaloncestoStore } from '@/store/datosBaloncesto'
 
-const basketStore = usegBasketStore()
+const datosBaloncestoStore = useDatosBaloncestoStore()
+
+
+const { connect, disconnect, enableVisibilityPause } = useBasketFeed()
+
+let removeVis = null
+onMounted(() => {
+  connect()
+  removeVis = enableVisibilityPause()
+})
+onUnmounted(() => {
+  if (removeVis) removeVis()
+  disconnect()
+})
+
+
+
+
+const basketStore = useBasketStore()
 const { partidoBasket, marcadorBasket } = storeToRefs(basketStore)
+const { roster, players } = storeToRefs(datosBaloncestoStore)
 
+console.log(players.value)
+const jugadoresLocal = computed(() => players.value.filter(jug => jug.team === 'home'))
+const jugadoresVisitante = computed(() => players.value.filter(jug => jug.team === 'away'))
+// console.log(players.value)
 
 const equipos = computed(() => [partidoBasket.value.equipo_local, partidoBasket.value.equipo_visitante])
 

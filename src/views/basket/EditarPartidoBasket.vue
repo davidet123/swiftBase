@@ -139,14 +139,14 @@
 <script setup>
 
   import { useRoute, useRouter } from 'vue-router'
-  import { usegBasketStore } from "../../store/basket"
+  import { useBasketStore } from "../../store/basket"
   import { storeToRefs } from 'pinia'
   import { computed } from 'vue'
 
   const route = useRoute()
   const router = useRouter()
 
-  const basketStore = usegBasketStore()
+  const basketStore = useBasketStore()
 
   const id = route.params.id
 
@@ -165,11 +165,13 @@
   // console.log(equipos.value)
 
   const editarPartido = () => {
-    basketStore.updatePartidoBasket(nuevoPartido.value)
+    // basketStore.updatePartidoBasket(nuevoPartido.value
+    basketStore.guardarEnLocalStorage()
   }
 
   const resetPartido = () => {
-    basketStore.resetPartidoBasket()
+    // basketStore.resetPartidoBasket()
+    basketStore.resetPartidoYMarcador()
   }
 
   const volver = () => router.push('/basket')
