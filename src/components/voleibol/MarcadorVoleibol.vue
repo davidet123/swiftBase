@@ -10,7 +10,7 @@
     </v-card-title>
     <v-card-text>
       <v-row>
-        <v-col cols="4" class="text-center">
+        <v-col cols="3" class="text-center">
           <v-row>
             <v-col cols="5" class="text-center">
               <h1 :class="saque === 'local' ? 'text-decoration-underline' : 'text-decoration-none'">{{ equipoLocal.abreviatura }}</h1>
@@ -44,7 +44,8 @@
             </v-row>
           </v-row>          
         </v-col>
-        <v-col cols="6">
+        <v-col cols="5" class="text-center">
+          <BotonLive :nombre="'MARCADOR_BAJO'" @activar="activarMarcadorBajo"/>
           <v-table>
             <thead>
               <tr>
@@ -78,22 +79,29 @@
           </v-table>
 
         </v-col>
-          <v-col cols="2" class="text-center">
-            <h3 class="mb-2">SETS</h3>
-            <h4>LOCAL</h4>
-            <h2>{{ marcador.setsLocal }}</h2>
+          <v-col cols="4" class="text-center">
+            <h4>SET ACTUAL</h4>
+            <h2>{{ marcador.setActivo }}</h2>
             <v-row>
-              <v-col cols="12" class="text-center">
-                <v-btn color="success" size="x-small" @click="set('local', 1)">+</v-btn>
-                <v-btn color="error" size="x-small" @click="set('local', -1)">-</v-btn>
+              <v-col cols="6">
+                <h4>LOCAL</h4>
+                <h2>{{ marcador.setsLocal }}</h2>
+                <v-row>
+                  <v-col cols="12" class="text-center">
+                    <v-btn color="success" size="x-small" @click="set('local', 1)">+</v-btn>
+                    <v-btn color="error" size="x-small" @click="set('local', -1)">-</v-btn>
+                  </v-col>
+                </v-row>
               </v-col>
-            </v-row>
-            <h4>VISITANTE</h4>
-            <h2>{{ marcador.setsVisitante }}</h2>
-            <v-row>
-              <v-col cols="12" class="text-center">
-                <v-btn color="success" size="x-small" @click="set('visitante', 1)">+</v-btn>
-                <v-btn color="error" size="x-small" @click="set('visitante', -1)">-</v-btn>
+              <v-col cols="6">
+                <h4>VISITANTE</h4>
+                <h2>{{ marcador.setsVisitante }}</h2>
+                <v-row>
+                  <v-col cols="12" class="text-center">
+                    <v-btn color="success" size="x-small" @click="set('visitante', 1)">+</v-btn>
+                    <v-btn color="error" size="x-small" @click="set('visitante', -1)">-</v-btn>
+                  </v-col>
+                </v-row>
               </v-col>
             </v-row>
           </v-col>
@@ -161,7 +169,7 @@
       
 
       // ENVIO DATOS MARCADOR
-      
+
       // ENVIO PUNTOS
       swiftConnectionStore.rtRemote.updateFields("MARCADOR::PUNTOS_LOCALTEXT","String", marcador.value.puntosLocal)
       swiftConnectionStore.rtRemote.updateFields("MARCADOR::PUNTOS_VISITANTETEXT","String", marcador.value.puntosVisitante)
@@ -189,7 +197,49 @@
   }
     
   }
+  const activarMarcadorBajo = payload => {
+    swiftConnectionStore.playGraphic(payload.nombre)
 
+    if(payload.live) {
+      for(let i = 0; i < 5; i++) {
+        if(marcador.value.parcialesLocal[i] === 0 && marcador.value.parcialesVisitante[i] === 0) {
+          swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::FONDO_SET_${i + 1}_LOCALSHDR`, "Display", "false")
+          swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::FONDO_SET_${i + 1}_VISITANTESHDR`, "Display", "false")
+          swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::SET${i + 1}_LOCALSHDR`,"MaterialDiffuse", swiftConnectionStore.hex_to_swift('#FFFFFF'))
+          swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::SET${i + 1}_VISITANTESHDR`,"MaterialDiffuse", swiftConnectionStore.hex_to_swift('#FFFFFF'))
+
+        }
+      }
+      
+
+      // ENVIAR VALORES AL MARCADOR BAJO
+      
+      for(let i = 0; i < 5; i++) {
+        swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::SET${i + 1}_LOCALTEXT`,`String`, marcador.value.parcialesLocal[i])
+        swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::SET${i + 1}_VISITANTETEXT`,`String`, marcador.value.parcialesVisitante[i])
+        swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::SETS_LOCALTEXT`,`String`, marcador.value.setsLocal)
+        swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::SETS_VISITANTETEXT`,`String`, marcador.value.setsVisitante)
+        if(marcador.value.parcialesLocal[i] > marcador.value.parcialesVisitante[i]) {
+          swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::FONDO_SET_${i + 1}_LOCALSHDR`, "Display", "true")
+          swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::FONDO_SET_${i + 1}_VISITANTESHDR`, "Display", "false")
+          swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::SET${i + 1}_LOCALSHDR`,"MaterialDiffuse", swiftConnectionStore.hex_to_swift('#FFFFFF'))
+          swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::SET${i + 1}_VISITANTESHDR`,"MaterialDiffuse", swiftConnectionStore.hex_to_swift('#000000'))
+
+        } else if(marcador.value.parcialesLocal[i] < marcador.value.parcialesVisitante[i]) {
+          swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::FONDO_SET_${i + 1}_LOCALSHDR`, "Display", "false")
+          swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::FONDO_SET_${i + 1}_VISITANTESHDR`, "Display", "true")
+          swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::SET${i + 1}_LOCALSHDR`,"MaterialDiffuse", swiftConnectionStore.hex_to_swift('#000000'))
+          swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::SET${i + 1}_VISITANTESHDR`,"MaterialDiffuse", swiftConnectionStore.hex_to_swift('#FFFFFF'))
+      }
+    }
+      
+      swiftConnectionStore.bringOn(payload.nombre)
+    } else {
+      swiftConnectionStore.takeOff(payload.nombre)
+    }
+
+    
+  }
   const cambioSaque = () => {
     voleiStore.cambiarSaque()
   }
