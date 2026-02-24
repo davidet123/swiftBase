@@ -654,7 +654,9 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       this.listaGSheet = null
       
       this.guardarRetransmision()
+    },
+    editarRetransmision() {
+      localStorage.setItem('listadoRetransmisiones', JSON.stringify(this.listadoRetransmisiones))
     }
   }
-
 })

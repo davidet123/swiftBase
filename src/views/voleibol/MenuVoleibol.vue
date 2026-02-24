@@ -61,6 +61,11 @@
             >
             </v-text-field>
             <v-text-field
+              label="Abreviatura"
+              v-model="equipo.abreviatura"
+            >
+            </v-text-field>
+            <v-text-field
               label="Ciudad"
               v-model="equipo.ciudad"
             >

@@ -42,7 +42,24 @@ export const useVoleiStore = defineStore('voleiStore', {
       parcialesVisitante: [0,0,0,0,0],
       saque: 'local',
       setActivo: 1
-    }
+    },
+    DSKS: [
+      {
+        tipo: 'narracion',
+        nombre: null,
+        cargo: null
+      },
+      {
+        tipo: 'comentaris1',
+        nombre: null,
+        cargo: null
+      },
+      {
+        tipo: 'comentaris2',
+        nombre: null,
+        cargo: null
+      },
+    ]
   }),
   getters: {
     getEquipoLocal(state) {

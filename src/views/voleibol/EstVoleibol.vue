@@ -1,12 +1,22 @@
 <template>
+  <v-row>
+    <v-col class="py-0">
+      <MarcadorVoleibol />
+    </v-col>
+  </v-row>
+  <v-row>
+    <v-col class="py-0">
+      <BotonesVoleibol />
+    </v-col>
+  </v-row>
   <div> 
-    <MarcadorVoleibol />
   </div>
 </template>
 
 <script setup>
 
   import MarcadorVoleibol from '@/components/voleibol/MarcadorVoleibol.vue'
+  import BotonesVoleibol from '@/components/voleibol/BotonesVoleibol.vue'
   import { useSwiftConnectionStore } from '@/store/swiftConnection'
   import { storeToRefs } from 'pinia' 
 
@@ -17,6 +27,7 @@
 
   if(!rtRemote.value) swiftConnectionStore.startConnection()
 
+  
 
 
 

@@ -51,15 +51,19 @@
 
   import { useRetransmisionStore } from '@/store/retransmision'
   import { useSwiftConnectionStore } from "../../store/swiftConnection"
+  import { useVumetroStore } from '@/store/vumetro'
   import { storeToRefs } from 'pinia'
 
   const emit = defineEmits(["setLive"])
 
   const retransmisionStore = useRetransmisionStore()
   const swiftConnectionStore = useSwiftConnectionStore()
+  const vumetroStore = useVumetroStore()
 
   const { rotuloActivo, rotuloParaTakeOff, desplegableElegido, rotuloDesplegable, seccionActiva, listaGraficos, rotuloLive, error } = storeToRefs(retransmisionStore)
 
+  const { levelMapped } = storeToRefs(vumetroStore)
+  
   const props = defineProps(["rotulo"])
 
   const { rotulo } = toRefs(props)
@@ -103,8 +107,8 @@
       if (rotulo.value.titulo === "VUMETRO") {
         swiftConnectionStore.cueGraphic(grafico)
         swiftConnectionStore.rtRemote.updateFields('VUMETRO::VALOR_VUMETROTEXT','String',"0")
-        swiftConnectionStore.rtRemote.updateFields("CLIP_VUMETRO","Translate","231, 560")
-        swiftConnectionStore.rtRemote.updateFields("CLIP_VUMETRO_PEAKING_MAX","Translate","231, 560")
+        swiftConnectionStore.rtRemote.updateFields("CLIP_VUMETRO","Translate", `${levelMapped.value}, 560`)
+        swiftConnectionStore.rtRemote.updateFields("CLIP_VUMETRO_PEAKING_MAX","Translate", `${levelMapped.value}, 560`)
       }
       if (rotulo.value.lineasTexto === 0) {
         swiftConnectionStore.cueGraphic(grafico)
@@ -113,9 +117,9 @@
       
       for(let campo in rotulo.value.contenido) {
         // console.log(rotulo.value.contenido[campo])
+        error.value = null
         if(rotulo.value.contenido[campo] === null) error.value = "FALTA RELLENAR CAMPO"
         if(rotulo.value.contenido[campo] === null) return
-        // error.value = null
       
         if(rotulo.value.titulo === "CRAWL") {
         // if(rotulo.value.crawl || rotulo.value.titulo === "CRAWL") {

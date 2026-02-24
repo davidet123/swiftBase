@@ -24,6 +24,7 @@
           <v-btn to="/menumisa" class="boton-home">MISA</v-btn>
           <v-btn to="/menuretransmision" class="boton-home">RETRANSMISION</v-btn>
           <!-- <v-btn to="/controlmisa">CONTROL MISA</v-btn> -->
+          <v-btn to="/voleibol" class="boton-home">VOLEIBOL</v-btn>
           <v-btn to="/test" class="boton-home">TEST</v-btn>
         </v-col>
       </v-row>

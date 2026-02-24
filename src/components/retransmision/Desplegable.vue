@@ -42,6 +42,9 @@
       <p>{{ rotulo.numeroDesplegable }}</p>
       <p v-for="(texto, id) in rotulo.contenido">{{ texto }}</p>
     </div>
+    <div class="desplegableLive">
+      <v-btn :color="!rotulo.live ? 'green' : 'error'" size="x-small" @click="goLive()">LIVE</v-btn>
+    </div>
     <div class="botonEnviar">
       <v-btn color="teal" size="x-small" @click="cambioTexto()" :disabled="!activarCambioTexto">CAMBIO TEXTO</v-btn>
     </div>
@@ -73,7 +76,7 @@
   const { rotulo } = toRefs(props)
 
   
-  const { listaGSheet, desplegableElegido, tipoDesplegableAnterior, rotuloParaTakeOff } = storeToRefs(retransmisionStore)
+  const { listaGSheet, desplegableElegido, tipoDesplegableAnterior, rotuloParaTakeOff, rotuloActivo } = storeToRefs(retransmisionStore)
   const hoja = rotulo.value.datosDesplegable.hoja
   const rango = rotulo.value.datosDesplegable.rango
 
@@ -98,6 +101,11 @@
   }
 
   const error = ref(null)
+
+  const goLive = () => {
+    // console.log(rotulo.value)
+    retransmisionStore.setRotuloLive(rotuloActivo.value)
+  }
   
 
   // if(!listaGSheet.value) retransmisionStore.getData()
@@ -118,7 +126,7 @@
 
 
   watch(() => numGraficoSeleccionado.value, val => {
-    // console.log(val)
+    
 
     const datos = listaGSheet.value.find(el => el.numero == val)
 
@@ -168,6 +176,7 @@
   width: 50%;
 }
 
+
 .seleccionManual {
   width: 50%;
 }
@@ -177,6 +186,14 @@
   width: 100%;
   justify-content: space-between;
 }
+.desplegableLive, .botonEnviar {
+  display: flex;
+  width: 33%;
+  justify-content: center;
+  align-items: center;
+}
+
+
 
 .textosDesplegable {
   width: 70%;

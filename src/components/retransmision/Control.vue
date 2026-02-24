@@ -35,7 +35,7 @@
       </div>
       <div id="controlActions" >
         <v-btn size="x-small" color="error">ACEPTAR</v-btn>
-        <v-btn size="x-small" color="success" @click="recargarRotulos" v-if="rotulo.desplegable">RECARGAR ROTULOS</v-btn>
+        <v-btn size="x-small" color="orange-darken-1" @click="recargarRotulos" v-if="rotulo.desplegable">RECARGAR ROTULOS</v-btn>
         <v-btn size="x-small" color="primary" @click="cambioLive()">CAMBIO ESTADO ROTULO</v-btn>
       </div>
     </div>

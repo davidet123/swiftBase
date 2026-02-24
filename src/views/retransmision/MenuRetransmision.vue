@@ -7,25 +7,38 @@
       <v-card>
         <v-card-text>
           <v-row>
-            <v-col cols="8"><h4>{{ retrans.nombreRetransmision }} |  {{  fechaCreacion(retrans.idRetransmision) }}</h4></v-col>
-            <v-col cols="4">
+
+            <v-col cols="7" v-if="editando !== retrans.idRetransmision"><h4>{{ retrans.nombreRetransmision }} |  {{  fechaCreacion(retrans.idRetransmision) }}</h4></v-col>
+            <v-col cols="7" v-else>
+              <v-text-field v-model="retrans.nombreRetransmision"></v-text-field>
+            </v-col>
+            <v-col cols="5">
               <v-btn
               color="success"
               size="x-small"
+              :disabled="editando == retrans.idRetransmision"
               @click="cargarRetransmision(retrans.idRetransmision)"
               >CARGAR</v-btn>
               <v-btn
               color="error"
               size="x-small"
               class="ml-2"
+              :disabled="editando == retrans.idRetransmision"
               @click="retransmisionStore.eliminarRetransmision(retrans.idRetransmision)"
               >ELIMINAR</v-btn>
               <v-btn
               color="primary"
               size="x-small"
               class="ml-2"
+              :disabled="editando == retrans.idRetransmision"
               @click="retransmisionStore.duplicarRetransmision(retrans.idRetransmision)"
               >DUPLICAR</v-btn>
+              <v-btn
+              color="orange-darken-1"
+              size="x-small"
+              class="ml-2"
+              @click="editarRetransmision(retrans.idRetransmision)"
+              ><span v-if="editando !== retrans.idRetransmision">EDITAR</span><span v-else>TERMINAR EDICIOM</span></v-btn>
             </v-col>
           </v-row>
 
@@ -85,6 +98,8 @@
 
   const cargar = ref(true)
 
+  const editando = ref(null)
+
   retransmisionStore.cargarRetransmisiones()
   const nombreRetransmision = ref(null)
 
@@ -101,6 +116,15 @@
     if(!nombre) return
     retransmisionStore.crearRetransmision(nombre)
     router.push('/retransmision')
+  }
+
+  const editarRetransmision = id => {
+    if(editando.value) {
+      retransmisionStore.editarRetransmision(id)
+      editando.value = null
+      return
+    }
+    editando.value = id
   }
 
 

@@ -167,7 +167,9 @@
       swiftConnectionStore.rtRemote.updateFields("MARCADOR::COLOR_LOCALSHDR","MaterialDiffuse", swiftConnectionStore.hex_to_swift(equipos.value.local.color))
       swiftConnectionStore.rtRemote.updateFields("MARCADOR::COLOR_VISITANTESHDR","MaterialDiffuse", swiftConnectionStore.hex_to_swift(equipos.value.visitante.color))
       
-
+      // ENVIO ABREVIATURAS
+      swiftConnectionStore.rtRemote.updateFields("MARCADOR::NOMBRE_LOCALTEXT","String", equipos.value.local.abreviatura)
+      swiftConnectionStore.rtRemote.updateFields("MARCADOR::NOMBRE_VISITANTETEXT","String", equipos.value.visitante.abreviatura)
       // ENVIO DATOS MARCADOR
 
       // ENVIO PUNTOS
@@ -201,30 +203,35 @@
     swiftConnectionStore.playGraphic(payload.nombre)
 
     if(payload.live) {
+      // OCULTAR SETS SIN PUNTUACION
       for(let i = 0; i < 5; i++) {
         if(marcador.value.parcialesLocal[i] === 0 && marcador.value.parcialesVisitante[i] === 0) {
           swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::FONDO_SET_${i + 1}_LOCALSHDR`, "Display", "false")
           swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::FONDO_SET_${i + 1}_VISITANTESHDR`, "Display", "false")
           swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::SET${i + 1}_LOCALSHDR`,"MaterialDiffuse", swiftConnectionStore.hex_to_swift('#FFFFFF'))
           swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::SET${i + 1}_VISITANTESHDR`,"MaterialDiffuse", swiftConnectionStore.hex_to_swift('#FFFFFF'))
-
         }
       }
       
 
       // ENVIAR VALORES AL MARCADOR BAJO
+      // ENVIAR NOMBRES
+      swiftConnectionStore.rtRemote.updateFields("MARCADOR_BAJO::NOMBRE_LOCALTEXT","String", equipos.value.local.nombre)
+      swiftConnectionStore.rtRemote.updateFields("MARCADOR_BAJO::NOMBRE_VISITANTETEXT","String", equipos.value.visitante.nombre)
+
+      // ENVIAR PUNTOS
       
       for(let i = 0; i < 5; i++) {
         swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::SET${i + 1}_LOCALTEXT`,`String`, marcador.value.parcialesLocal[i])
         swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::SET${i + 1}_VISITANTETEXT`,`String`, marcador.value.parcialesVisitante[i])
         swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::SETS_LOCALTEXT`,`String`, marcador.value.setsLocal)
         swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::SETS_VISITANTETEXT`,`String`, marcador.value.setsVisitante)
+        // RESALTAR EL SET QUE VA GANANDO
         if(marcador.value.parcialesLocal[i] > marcador.value.parcialesVisitante[i]) {
           swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::FONDO_SET_${i + 1}_LOCALSHDR`, "Display", "true")
           swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::FONDO_SET_${i + 1}_VISITANTESHDR`, "Display", "false")
           swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::SET${i + 1}_LOCALSHDR`,"MaterialDiffuse", swiftConnectionStore.hex_to_swift('#FFFFFF'))
           swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::SET${i + 1}_VISITANTESHDR`,"MaterialDiffuse", swiftConnectionStore.hex_to_swift('#000000'))
-
         } else if(marcador.value.parcialesLocal[i] < marcador.value.parcialesVisitante[i]) {
           swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::FONDO_SET_${i + 1}_LOCALSHDR`, "Display", "false")
           swiftConnectionStore.rtRemote.updateFields(`MARCADOR_BAJO::FONDO_SET_${i + 1}_VISITANTESHDR`, "Display", "true")

@@ -11,7 +11,7 @@ export const useVumetroStore = defineStore('vumetro', {
     isListening: false,
     levelDb: 0,
     level130: 0,   // de 0 a 130
-    levelMapped: 231,
+    levelMapped: 158,
     animationFrame: null,
     audioDevices: [],
     selectedDeviceId: null,
@@ -23,15 +23,15 @@ export const useVumetroStore = defineStore('vumetro', {
     audioFileSource: null,
     dbUpdateInterval: 50, // ms entre actualizaciones de dB
     lastDbUpdate: 0,
-    peakLevel: 231,         // valor máximo retenido
+    peakLevel: 158,         // valor máximo retenido
     peakLastUpdated: Date.now(), // para controlar el tiempo de inactividad
     peakSpeed: 6,
     peakHold: 400,
     valorMaximoVumetro: 130,
     curveExponent: 1, // Valor entre 1.5-3 (1.8 es buen balance)
     maxDbValue: 130,    // Valor máximo para dB (level130)
-    minMapped: 231,     // Valor mínimo para levelMapped
-    maxMapped: 421      // Valor máximo para levelMapped
+    minMapped: 158,     // Valor mínimo para levelMapped
+    maxMapped: 337      // Valor máximo para levelMapped
   }),
 
   getters: {
@@ -235,9 +235,9 @@ export const useVumetroStore = defineStore('vumetro', {
         }
         const timeSincePeak = nowPeaking - this.peakLastUpdated
 
-        if (timeSincePeak > this.peakHold && this.peakLevel > 231) {
+        if (timeSincePeak > this.peakHold && this.peakLevel > this.minMapped) {
           // Disminuir suavemente el pico (por ejemplo, 2 unidades por frame)
-          this.peakLevel = Math.max(231, this.peakLevel - this.peakSpeed)
+          this.peakLevel = Math.max(this.minMapped, this.peakLevel - this.peakSpeed)
         }
       }
       this.animationFrame = requestAnimationFrame(() => this.updateLevel());

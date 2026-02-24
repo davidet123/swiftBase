@@ -16,8 +16,8 @@
     vumetro.fetchAudioDevices()
   })
 
-  swiftConnectionStore.startVideo()
-  swiftConnectionStore.startConnection()
+  // swiftConnectionStore.startVideo()
+  // swiftConnectionStore.startConnection()
 
   // 🔧 Definir la función throttle localmente
   function throttle(fn, delay) {

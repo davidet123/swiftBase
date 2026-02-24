@@ -10,6 +10,7 @@ state: () => ({
   URLSwift: "ws:localhost:5555",
   videoStream: null,
   rtRemote: null,
+  rtProject: null,
   swiftConnectionStatus: 0,
   fileName: null,
   graficosLive: null,
@@ -27,6 +28,35 @@ actions: {
     this.URLWebsocket = payload
     const docRef = doc(db, 'settings', 'swift')
     await updateDoc(docRef, {url: payload})
+  },
+  startProject() { 
+
+    const rtConnection = new RTConnection(this.URLSwift, 5, 2);
+    const self = this
+    rtConnection.onOpen = async function() {
+      trace("Connection opened");
+      self.rtProject = await new RTProject(rtConnection, 'projectProtocol')
+      
+      self.rtProject.onGetDirectoryListing = this.handleDirectoryListing.bind(this);
+      self.rtProject.onGetFile = this.handleGetFile.bind(this);
+      self.rtProject.onReady = function() {
+        console.log('RTPROJECT_READY');
+      };
+    
+      console.log('RTPROJECT_INITIALIZED');
+    }
+    rtConnection.onReady = function() {
+
+    }
+    // rtConnection.onClose = function() {
+    //   trace("Connection Closed, try again…");
+    //   // If the connection closes, attempt to reopen it.
+    //   this.swiftConnectionStatus = 0
+    //   self.startVideo();
+    //   }
+
+    // this.rtProject = new RTProject(this.rtConnection1, 'projectProtocol');
+
   },
   startVideo() {
     const rtConnection = new RTConnection(this.URLSwift, 5, 2);
@@ -135,21 +165,6 @@ actions: {
       if(e.data.status === "undefined") return
       console.log(e)
     }
-  },
-  getStatus(type, filter) {
-    // console.log(type, filter)
-    // console.log("status store")
-
-    if(this.rtRemote) {
-      this.rtRemote.getStatus(type, filter)
-      // this.rtRemote.callbackRecieve = function (e) {
-      //   console.log(e.data)
-      // }
-      // return this.rtRemote.getStatus(type, filter)
-      
-    } 
-    // console.log(status)
-
   },
   cambiarImagen() {
     // console.log(this.rtRemote)
