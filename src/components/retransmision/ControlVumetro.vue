@@ -51,7 +51,7 @@
       <div class="mt-4">
         <p>Nivel dB: {{ vumetro.dbLevel }}</p>
         <p>Escala 0-130: {{ vumetro.scaled130 }}</p>
-        <p>Escala 231-421: {{ vumetro.mappedLevel }}</p>
+        <p>Escala {{ minMapped }}-{{ maxMapped }}: {{ vumetro.mappedLevel }}</p>
         <p>Valor pico retenido: {{ vumetro.peakLevel }}</p>
       </div>
 
@@ -104,7 +104,7 @@ const graficoOut = grafico => {
 }
 
 
-const { valorMaximoVumetro } = storeToRefs(vumetro)
+const { valorMaximoVumetro, maxMapped, minMapped } = storeToRefs(vumetro)
 const isPlaying = ref(false)
 const isFilePlaying = ref(false)
 const currentTime = ref(0)

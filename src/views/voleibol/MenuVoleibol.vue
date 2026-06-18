@@ -71,22 +71,34 @@
             >
             </v-text-field>
           </div>
-          <div>
-            <v-color-picker
-            v-model="equipo.color"
-            
+          <div class="d-flex align-center flex-column justify-center mb-4">
+            <div class="d-flex flex-column align-center" style="position: relative; height: 60px; width: 60px;">
               
-              
-              flat
-            ></v-color-picker>
+              <!-- <v-icon icon="mdi-tshirt-crew" size="x-large" :color="equipo.color.top" style="position: absolute; bottom: 5px; z-index: 1;"></v-icon>
+              <v-icon icon="mdi-toy-brick" size="medium" class="mt-n2" :color="equipo.color.bottom" style="position: absolute; top: 0; z-index: 2;"></v-icon> -->
+              <v-icon 
+                icon="mdi-toy-brick" 
+                :size="25" 
+                :color="equipo.color.bottom"
+                class="reflect-y"
+                style="position: absolute; bottom: 3px; z-index: 1;"
+              ></v-icon>
 
+              <v-icon 
+                icon="mdi-tshirt-crew" 
+                :size="42" 
+                :color="equipo.color.top"
+                style="position: absolute; top: 0; z-index: 2;"
+              ></v-icon>
+            </div>
+            <v-btn @click="abrirDialog(equipo)" color="success" size="x-small" flat>ELEGIR COLOR</v-btn>
           </div>
           <div>
             <h3 class="text-center">JUGADORES</h3>
           </div>
           <div v-for="(jugador, index) in equipo.jugadores" :key="index">
             <v-row>
-              <v-col cols="2" class="my-0 py-0">
+              <v-col cols="1" class="my-0 py-0">
                 <v-text-field
                   label="Dorsal"
                   v-model="jugador.dorsal"
@@ -94,13 +106,22 @@
                 >
                 </v-text-field>
               </v-col>
-              <v-col cols="10" class="my-0 py-0">
+              <v-col cols="8" class="my-0 py-0">
                 <v-text-field
                   label="Nombre"
                   v-model="jugador.nombre"
                   density="compact"
                 >
                 </v-text-field>
+              </v-col>
+              <v-col cols="3" class="my-0 py-0">
+                <v-select
+                   :items="posicionesVoleibol"
+                   label="Posición"
+                   v-model="jugador.posicion"
+                   density="compact"
+                >
+                </v-select>
               </v-col>
             </v-row>
 
@@ -122,15 +143,21 @@
       <v-btn color="error" @click="empezarPartido()">EMPEZAR PARTIDO</v-btn>
     </v-col>
   </v-row>
+  <div>
+    <SelectorColor :dialog="dialog" :equipo="equipoElegido" @cerrar="cerrarDialog"/>
+  </div>
 </template>
 
 <script setup>
+  import SelectorColor from '@/components/voleibol/SelectorColor.vue'
 
   import { useVoleiStore } from '@/store/voleibol.js'
   import { useSwiftConnectionStore } from '@/store/swiftConnection'
   import { storeToRefs } from 'pinia'
   import { computed, ref } from 'vue'
-  import router from '@/router'
+  import router from '@/router' 
+
+  import { defineAsyncComponent } from 'vue'
 
   const voleiStore = useVoleiStore()
   const swiftConnectionStore = useSwiftConnectionStore()
@@ -139,9 +166,31 @@
 
   const fecha = ref(null)
 
+  const dialog = ref(false)
+  const equipoElegido = ref(null)
+
+  const abrirDialog = (equipo) => {
+    dialog.value = true
+    equipoElegido.value = equipo
+  }
+
+  const cerrarDialog = () => {
+    dialog.value = false
+    voleiStore.guardarPartidoVoleibol()
+    // equipoElegido.value = null
+  }
+
   const aceptar = () => {
     voleiStore.guardarDatos(fecha.value)
   }
+
+  const posicionesVoleibol = [
+    "Líbero",
+    "Opuesto",
+    "Central",
+    "Receptor",
+    "Colocador"
+  ]
 
   // const equipoLocal = computed(() => equipos.value.local)
   // console.log(equipoLocal.value)
@@ -181,8 +230,10 @@
 
     // ENVIAR EL COLOR AL MARCADOR
 
-      // swiftConnectionStore.rtRemote.updateFields("MARCADOR::COLOR_AWAY_TOPSHDR","MaterialDiffuse", hex_to_swift(partido.value.visitante.colorTop))
-      // swiftConnectionStore.rtRemote.updateFields("MARCADOR::COLOR_AWAY_BOTSHDR","MaterialDiffuse", hex_to_swift(partido.value.visitante.colorBottom))
+      // swiftConnectionStore.rtRemote.updateFields("MARCADOR::COLOR_LOCAL_TOPSHDR","MaterialDiffuse", hex_to_swift(partido.value.local.color.top))
+      // swiftConnectionStore.rtRemote.updateFields("MARCADOR::COLOR_LOCAL_BOTSHDR","MaterialDiffuse", hex_to_swift(partido.value.local.color.bottom))
+      // swiftConnectionStore.rtRemote.updateFields("MARCADOR::COLOR_VISITANTE_TOPSHDR","MaterialDiffuse", hex_to_swift(partido.value.visitante.color.top))
+      // swiftConnectionStore.rtRemote.updateFields("MARCADOR::COLOR_VISITANTE_BOTSHDR","MaterialDiffuse", hex_to_swift(partido.value.visitante.color.bottom))
 
 
 
@@ -202,5 +253,10 @@
 </script>
 
 <style scoped>
+
+.reflect-y {
+  /* Invierte el elemento verticalmente */
+  transform: scaleY(-1);
+}
 
 </style>

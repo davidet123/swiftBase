@@ -97,9 +97,10 @@
   
   
   const activarRotulo = () => {
+    console.log(rotuloParaTakeOff.value)
     // if(rotulo.value.desplegable && rotulo.value.titulo !== rotuloParaTakeOff.value) return
     let grafico = null
-    grafico = parseInt(rotulo.value.lineasTexto) === 0 ? rotulo.value.nombre : rotulo.value.titulo
+    grafico = parseInt(rotulo.value.lineasTexto) === 0 ? rotulo.value.titulo : rotulo.value.titulo
     swiftConnectionStore.rtRemote.playGraphic(grafico)
     if(!rotulo.value.live) {
       // console.log(rotulo.value)
@@ -142,7 +143,8 @@
         retransmisionStore.editListaRotulosLive(rotulo.value.id, rotulo.value.live)
         rotulo.value.live = !rotulo.value.live
 
-      } else {
+      } else { 
+        //DESPLEGABLE
         if(!rotuloParaTakeOff.value || rotulo.value.titulo === rotuloParaTakeOff.value ) {
           swiftConnectionStore.rtRemote.playMethod(grafico + "::bringOn")
           retransmisionStore.addLiveToSeccion(seccionActiva.value, 1)
@@ -161,13 +163,14 @@
         rotulo.value.live = !rotulo.value.live
 
       } else {
-        if(rotulo.value.titulo === rotuloParaTakeOff.value) {
-          swiftConnectionStore.rtRemote.playMethod(grafico + "::takeOff")
-          retransmisionStore.addLiveToSeccion(seccionActiva.value, -1)
-          rotuloParaTakeOff.value = null
-          retransmisionStore.editListaRotulosLive(rotulo.value.id, rotulo.value.live)
-          rotulo.value.live = !rotulo.value.live
-        }
+        swiftConnectionStore.rtRemote.playMethod(rotuloParaTakeOff.value + "::takeOff")
+        retransmisionStore.addLiveToSeccion(seccionActiva.value, -1)
+        rotuloParaTakeOff.value = null
+        retransmisionStore.editListaRotulosLive(rotulo.value.id, rotulo.value.live)
+        rotulo.value.live = !rotulo.value.live
+        // if(rotulo.value.titulo === rotuloParaTakeOff.value) {
+        //   // console.log(rotuloParaTakeOff.value)
+        // }
       }
     }  
     // retransmisionStore.editListaRotulosLive(rotulo.value.id, rotulo.value.live)

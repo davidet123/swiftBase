@@ -11,7 +11,7 @@ export const useVumetroStore = defineStore('vumetro', {
     isListening: false,
     levelDb: 0,
     level130: 0,   // de 0 a 130
-    levelMapped: 158,
+    levelMapped: 197,
     animationFrame: null,
     audioDevices: [],
     selectedDeviceId: null,
@@ -30,8 +30,8 @@ export const useVumetroStore = defineStore('vumetro', {
     valorMaximoVumetro: 130,
     curveExponent: 1, // Valor entre 1.5-3 (1.8 es buen balance)
     maxDbValue: 130,    // Valor máximo para dB (level130)
-    minMapped: 158,     // Valor mínimo para levelMapped
-    maxMapped: 337      // Valor máximo para levelMapped
+    minMapped: 197,     // Valor mínimo para levelMapped
+    maxMapped: 378      // Valor máximo para levelMapped
   }),
 
   getters: {

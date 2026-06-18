@@ -236,6 +236,7 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       this.guardado = valor
     },
     setEdit(valor) {
+      console.log(valor)
       this.edit = valor
       this.guardado = false
     },
@@ -356,9 +357,29 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       }
       return nuevaId
     },
-    setDesplagableElegido (datos, idRotulo, desplegableElegido) {
-      // console.log(idRotulo)
+    // setDesplagableElegido (datos, idRotulo, desplegableElegido) {
+    //   // console.log(idRotulo)
 
+    //   const grafico = this.listaGraficos.find(el => el.titulo === datos.grafico)
+    //   if(!grafico) {
+    //     this.error = "NO EXISTE EL GRAFICO " + datos.grafico
+    //     this.desplegableElegido = null
+    //     return
+    //   }
+    //   const rotulo = this.listaRotulos.find(el => el.id === idRotulo)
+    //   rotulo.lineasTexto = grafico.lineasTexto
+    //   rotulo.contenido = datos.contenido
+    //   rotulo.titulo = datos.grafico
+    //   rotulo.numeroDesplegable = desplegableElegido
+
+    //   this.desplegableElegido = desplegableElegido
+    //   this.rotuloDesplegable = {idRotulo, desplegableElegido}
+
+    //   this.error = null
+    //   this.guardado = false
+    // },
+
+    setDesplagableElegido(datos, idRotulo, desplegableElegido) {
       const grafico = this.listaGraficos.find(el => el.titulo === datos.grafico)
       if(!grafico) {
         this.error = "NO EXISTE EL GRAFICO " + datos.grafico
@@ -366,14 +387,17 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
         return
       }
       const rotulo = this.listaRotulos.find(el => el.id === idRotulo)
-      rotulo.lineasTexto = grafico.lineasTexto
-      rotulo.contenido = datos.contenido
-      rotulo.titulo = datos.grafico
-      rotulo.numeroDesplegable = desplegableElegido
+      
+      // Actualización atómica para evitar desincronización reactiva
+      Object.assign(rotulo, {
+        lineasTexto: grafico.lineasTexto,
+        contenido: { ...datos.contenido },  // copia para romper referencia compartida
+        titulo: datos.grafico,
+        numeroDesplegable: desplegableElegido
+      })
 
       this.desplegableElegido = desplegableElegido
-      this.rotuloDesplegable = {idRotulo, desplegableElegido}
-
+      this.rotuloDesplegable = { idRotulo, desplegableElegido }
       this.error = null
       this.guardado = false
     },
@@ -456,6 +480,8 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       try {
         const res = await this.getData(url)
         this.listaGSheet = res
+        console.log(res[2])
+        console.log(res[19])
         
 
       } catch (error) {
@@ -471,7 +497,7 @@ export const useRetransmisionStore = defineStore('retransmisionStore', {
       try {
         const res = await this.getData(url)
         this.listaGSheet = res
-        // console.log(res)
+        console.log(res)
 
       } catch (error) {
         console.log(error);

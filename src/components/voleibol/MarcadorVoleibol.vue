@@ -24,8 +24,6 @@
             </v-col>
             <v-col cols="2">
               <v-btn size="x-small" color="teal" @click="cambioSaque()">SAQUE</v-btn>
-              
-
             </v-col>
             <v-col cols="5" class="text-center">
               <h1 :class="saque === 'visitante' ? 'text-decoration-underline' : 'text-decoration-none'">{{ equipoVisitante.abreviatura }}</h1>
@@ -39,6 +37,7 @@
             </v-col>
             <v-row>
               <v-col>
+                <h3 class="blinking-red">{{ puntoDeSet }}</h3>
                 <BotonLive :nombre="`MARCADOR`"  @activar="activarMarcador" />
               </v-col>
             </v-row>
@@ -139,9 +138,9 @@
   const punto = (equipo, val) => {
     voleiStore.actualizarPunto(equipo, val)
     if(equipo === 'local') {
-      swiftConnectionStore.rtRemote.updateFields("MARCADOR::PUNTOS_LOCALTEXT","String", marcador.value.puntosLocal)
+      swiftConnectionStore.rtRemote.updateFields("MARCADOR::PUNTOS_LOCALTEXT","String", marcador.value.parcialesLocal[marcador.value.setActivo - 1])
     } else if(equipo === 'visitante') {
-      swiftConnectionStore.rtRemote.updateFields("MARCADOR::PUNTOS_VISITANTETEXT","String", marcador.value.puntosVisitante)
+      swiftConnectionStore.rtRemote.updateFields("MARCADOR::PUNTOS_VISITANTETEXT","String", marcador.value.parcialesVisitante[marcador.value.setActivo - 1])
     }
   }
   
@@ -152,7 +151,19 @@
     } else if(equipo === 'visitante') {
       swiftConnectionStore.rtRemote.updateFields("MARCADOR::SETS_VISITANTETEXT","String", marcador.value.setsVisitante)
     }
+    swiftConnectionStore.rtRemote.updateFields("MARCADOR::PUNTOS_LOCALTEXT","String", marcador.value.parcialesLocal[marcador.value.setActivo - 1])
+    swiftConnectionStore.rtRemote.updateFields("MARCADOR::PUNTOS_VISITANTETEXT","String", marcador.value.parcialesVisitante[marcador.value.setActivo - 1])
   }
+
+  const puntoDeSet = computed(() => {
+    if(marcador.value.puntosLocal >= 24 && marcador.value.puntosLocal - marcador.value.puntosVisitante >= 1) {
+      return 'PUNTO DE SET LOCAL'
+    } else if(marcador.value.puntosVisitante >= 24 && marcador.value.puntosVisitante - marcador.value.puntosLocal >= 1) {
+      return 'PUNTO DE SET VISITANTE'
+    } else {
+      return null
+    }
+  })
 
 
   let marcadorActivo = false
@@ -164,9 +175,14 @@
 
       // ENVIO COLORES
 
-      swiftConnectionStore.rtRemote.updateFields("MARCADOR::COLOR_LOCALSHDR","MaterialDiffuse", swiftConnectionStore.hex_to_swift(equipos.value.local.color))
-      swiftConnectionStore.rtRemote.updateFields("MARCADOR::COLOR_VISITANTESHDR","MaterialDiffuse", swiftConnectionStore.hex_to_swift(equipos.value.visitante.color))
+      // swiftConnectionStore.rtRemote.updateFields("MARCADOR::COLOR_LOCALSHDR","MaterialDiffuse", swiftConnectionStore.hex_to_swift(equipos.value.local.color))
+      // swiftConnectionStore.rtRemote.updateFields("MARCADOR::COLOR_VISITANTESHDR","MaterialDiffuse", swiftConnectionStore.hex_to_swift(equipos.value.visitante.color))
       
+
+      swiftConnectionStore.rtRemote.updateFields("MARCADOR::COLOR_LOCAL_TOPSHDR","MaterialDiffuse", swiftConnectionStore.hex_to_swift(equipos.value.local.color.top))
+      swiftConnectionStore.rtRemote.updateFields("MARCADOR::COLOR_LOCAL_BOTSHDR","MaterialDiffuse", swiftConnectionStore.hex_to_swift(equipos.value.local.color.bottom))
+      swiftConnectionStore.rtRemote.updateFields("MARCADOR::COLOR_VISITANTE_TOPSHDR","MaterialDiffuse", swiftConnectionStore.hex_to_swift(equipos.value.visitante.color.top))
+      swiftConnectionStore.rtRemote.updateFields("MARCADOR::COLOR_VISITANTE_BOTSHDR","MaterialDiffuse", swiftConnectionStore.hex_to_swift(equipos.value.visitante.color.bottom))
       // ENVIO ABREVIATURAS
       swiftConnectionStore.rtRemote.updateFields("MARCADOR::NOMBRE_LOCALTEXT","String", equipos.value.local.abreviatura)
       swiftConnectionStore.rtRemote.updateFields("MARCADOR::NOMBRE_VISITANTETEXT","String", equipos.value.visitante.abreviatura)
@@ -266,5 +282,22 @@
 </script>
 
 <style scoped>
+
+.colorPuntoDeSet {
+  color: red;
+  font-weight: bold;
+}
+
+.blinking-red {
+  color: red;
+  font-weight: bold;
+  animation: blink 1s step-start infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
 
 </style>

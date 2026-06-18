@@ -43,8 +43,8 @@ import MenuBalonmano from '../views/balonmano/MenuBalonmano.vue'
 import AddPartidoBalonmano from '../views/balonmano/AddPartidoBalonmano.vue'
 import EstBalonmano from '../views/balonmano/EstBalonmano.vue'
 import SpeechRecognition from '@/views/SpeechRecognition.vue'
-import MenuVoleibol from '@/views/voleibol/MenuVoleibol.vue'
-import EstVoleibol from '@/views/voleibol/EstVoleibol.vue'
+// import MenuVoleibol from '@/views/voleibol/MenuVoleibol.vue'
+// import EstVoleibol from '@/views/voleibol/EstVoleibol.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -278,12 +278,13 @@ const router = createRouter({
     {
       path: '/voleibol',
       name: 'menuVoleibol',
-      component: MenuVoleibol
+      // En lugar de component: MenuVoleibol, usa esto:
+      component: () => import('@/views/voleibol/MenuVoleibol.vue')
     },
     {
       path: '/estvoleibol',
       name: 'estvoleibol',
-      component: EstVoleibol
+      component: () => import('@/views/voleibol/EstVoleibol.vue')
     },
   ]
 })

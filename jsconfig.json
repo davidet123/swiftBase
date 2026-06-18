@@ -1,5 +1,20 @@
 {
   "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "jsx": "preserve",
+    "checkJs": false,
+    "lib": ["ESNext", "Dom", "Dom.Iterable"]
+  },
+  "exclude": ["node_modules", "dist"]
+}
+
+/* {
+  "compilerOptions": {
     "target": "es5",
     "module": "esnext",
     "baseUrl": "./",
@@ -16,4 +31,4 @@
       "scripthost"
     ]
   }
-}
+} */

@@ -11,9 +11,9 @@ export const useVoleiStore = defineStore('voleiStore', {
         nombre: "Equipo Local",
         abreviatura: "LOC",
         ciudad: "Ciudad Local",
-        color: "#ffffff",
+        color: {top: "#ffffff", bottom: "#ffffff"},
         jugadores: [
-          {dorsal: null, nombre: null}
+          {dorsal: null, nombre: null, posicion: null}
         ]
   
       },
@@ -21,9 +21,9 @@ export const useVoleiStore = defineStore('voleiStore', {
         nombre: "Equipo Visitante",
         abreviatura: "VIS",
         ciudad: "Ciudad Visitante",
-        color: "#ffffff",
+        color: {top: "#ffffff", bottom: "#ffffff"},
         jugadores: [
-          {dorsal: null, nombre: null}
+          {dorsal: null, nombre: null, posicion: null}
         ]
   
       },
@@ -74,9 +74,9 @@ export const useVoleiStore = defineStore('voleiStore', {
           nombre: "Equipo Local",
           abreviatura: "LOC",
           ciudad: "Ciudad Local",
-          color: "#ffffff",
+          color: {top: "#ffffff", bottom: "#ffffff"},
           jugadores: [
-            {dorsal: null, nombre: null}
+            {dorsal: null, nombre: null, posicion: null}
           ]
     
         },
@@ -84,9 +84,9 @@ export const useVoleiStore = defineStore('voleiStore', {
           nombre: "Equipo Visitante",
           abreviatura: "VIS",
           ciudad: "Ciudad Visitante",
-          color: "#ffffff",
+          color: {top: "#ffffff", bottom: "#ffffff"},
           jugadores: [
-            {dorsal: null, nombre: null}
+            {dorsal: null, nombre: null, posicion: null}
           ]
     
         },

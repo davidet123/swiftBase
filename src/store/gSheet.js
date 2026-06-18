@@ -107,6 +107,7 @@ export const usegSheetStore = defineStore('gSheet', {
             id
           }
           listadodesdeGS.push(data)
+          
           valorId++
         })
 
@@ -115,6 +116,7 @@ export const usegSheetStore = defineStore('gSheet', {
         // localStorage.setItem('listadoCrevillent', JSON.stringify(this.listaCrevillent))
         localStorage.setItem('listaGSheet', JSON.stringify(this.listaGSheet))
         this.gSheetLoading = false
+        console.log(this.listaGSheet[0])
       }).catch(err=>{
         console.log(err);
         this.gSheetLoading = false
